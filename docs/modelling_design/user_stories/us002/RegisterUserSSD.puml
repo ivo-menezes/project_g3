@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Administrator -> System: Request a new user registration
+Administrator <-- System: Request information about user
+Administrator -> System: Give name, e-mail, phone number and photo (optional)
+Administrator <-- System: Confirm a user registration
+@enduml
