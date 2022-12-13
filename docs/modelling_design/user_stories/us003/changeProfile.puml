@@ -5,5 +5,5 @@
 Administrator -> System: Requests to change profile of user acount
 Administrator <-- System: Authorization granted
 Administrator -> System: Give new profile to user
-Administrator <-- System: Confirm a new user profile
+Administrator <-- System: Confirm new user profile
 @enduml
