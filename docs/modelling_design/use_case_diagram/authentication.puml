@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+
+:System user: As User
+rectangle Authentication {
+
+User -- (Sign in)
+User -- (Change password)
+User -- (Logout)
+}
+@enduml

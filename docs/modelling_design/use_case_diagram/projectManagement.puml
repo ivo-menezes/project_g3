@@ -1,0 +1,53 @@
+@startuml
+left to right direction
+:System user: <|-- :Manager:
+:System user: <|-- :Team Member:
+:Team Member:<|-- :Project Manager:
+:Team Member:<|-- :Scrum Master:
+:Team Member:<|-- :Product Owner:
+
+rectangle "Project Management"{
+
+:System user: As User
+
+User -- (Search project)
+
+:Manager: As Manager
+
+Manager -- (Create projects)
+Manager -- (Manage resources)
+Manager -- (Search all projects)
+Manager -- (Edit Project)
+Manager -- (View All allocation reports)
+
+:Team Member: As "Team Member"
+
+"Team Member" -- (Create Sprint Backlog)
+"Team Member" -- (Add user story to the Sprint Backlog)
+"Team Member" -- (Register tasks)
+"Team Member" -- (Register work tasks done)
+"Team Member" -- (Update tasks)
+"Team Member" -- (View the status of activities in the project)
+"Team Member" -- (View own allocation reports)
+
+:Project Manager: As "Project Manager"
+
+"Project Manager" -- (Edit Project)
+"Project Manager" -- (View KPI report)
+"Project Manager" -- (Export KPI report)
+
+:Product Owner: As "Product Owner"
+
+"Product Owner" -- (Create user stories)
+"Product Owner" -- (Add user stories to the project backlog)
+"Product Owner" -- (Edit user stories)
+"Product Owner" -- (Remove user stories)
+"Product Owner" -- (View KPI report)
+
+:Scrum Master: As "Scrum Master"
+
+"Scrum Master" -- (Scrum ceremonies)
+
+}
+
+@enduml

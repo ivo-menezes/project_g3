@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+:System user: As User
+User <|-- :Administrator:
+
+rectangle "User Administration" {
+
+:Administrator: As Administrator
+Administrator -- (Register users)
+Administrator -- (List all system users)
+Administrator -- (Search for users)
+Administrator -- (Associate profiles with the users)
+Administrator -- (Edit other user account information)
+User -- (Edit some of her/his profile data)
+}
+
+@enduml
