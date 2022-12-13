@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e68cc09-1a25-4a5a-a980-56bcb3a37c56" name="Changes" comment="">
+    <list default="true" id="3e68cc09-1a25-4a5a-a980-56bcb3a37c56" name="Changes" comment="Domain model: Analysis: Corrections to draft">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/modelling_design/domain_model_diagram/domain_model_diagram.puml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modelling_design/domain_model_diagram/domain_model_diagram.puml" afterDir="false" />
     </list>
@@ -87,6 +87,14 @@
       <workItem from="1670931686035" duration="2967000" />
       <workItem from="1670940113423" duration="739000" />
     </task>
+    <task id="LOCAL-00001" summary="Domain model: Analysis: Corrections to draft">
+      <created>1670945059122</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670945059122</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,5 +110,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Domain model: Analysis: Corrections to draft" />
+    <option name="LAST_COMMIT_MESSAGE" value="Domain model: Analysis: Corrections to draft" />
   </component>
 </project>
