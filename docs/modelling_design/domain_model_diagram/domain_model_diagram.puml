@@ -1,7 +1,8 @@
 @startuml
 skinparam style strictuml
 
-Entity Admin
+
+Class Admin
 Class "User account"
 Class Profile
 Class Manager
@@ -13,12 +14,15 @@ Class "Project manager"
 Class "Product owner"
 Class "Scrum master"
 Class "Team member"
+Class Sprints
+Class "Scrum ceremonies"
+Class Tasks
 
 
 
 Admin "1" -- "1..*   " "User account": registers, edits, lists, (in)activates >
 Admin "1" -- "2..*        " Profile: creates, associates >
-Admin "1 " .. "1  " Profile: is a >
+Admin "1" .. "1  " Profile: is a >
 Manager "1      ".."1" Profile: is a >
 Manager "1 " -- "*" "User role" : assigns >
 User "1..*" .. "1" Profile: is a >
@@ -27,8 +31,18 @@ Manager "1"-- "1..*" Project: creates >
 "User in Project" "1" -- "1..*" User: belongs <
 "User in Project" "1" -- "1..*" "User role": assigned <
 "User in Project" "1 " -- "1" Project : has <
+Project "1" -- "1..*" Tasks: includes >
+Project "1" -- "1..*" Sprints: includes >
+Project "1" -- "1..*" "Scrum ceremonies": includes >
+Project "1" -- "1..*" "User stories": includes >
 "Project manager" "1..*" .. "1" "User role": is a >
+"Project manager" "         1" -- "   1" Project: edits >
 "Product owner" "1..*" .. "1" "User role": is a >
-"Scrum master" "1..*" .. "1" "User role": is a >
 "Team member" "1..*" .. "1" "User role": is a >
+"Team member" "1..*"-- "1..*" "Tasks": creates >
+"Product owner" "1" -- "1..*" "User stories": creates >
+"Scrum master" "1..*" .. "1" "User role": is a >
+"Scrum master" "1" -- "1..*" "Scrum ceremonies": leads? >
+
+
 @enduml
