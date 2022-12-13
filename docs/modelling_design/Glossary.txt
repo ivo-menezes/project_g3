@@ -3,7 +3,7 @@
 - Activity ("Actividade"): The same as Task.
 - Administrator Profile ("Administrador, perfil de"): Profile responsible for creating and managing User Accounts and Profiles, associate User Accounts to Profiles and general system configurations. When the system is installed, a User Account with this Profile is automatically created.
 - Allocation Report ("Relatório de Alocação"): Report containing information about the Projects to which each Resource is assigned at each time.
-- Burnout Chart: Graphical representation of the Tasks left to do in a Sprint vs time.
+- Burndown Chart: Graphical representation of the Tasks left to do in a Sprint vs time.
 - Credentials ("Credenciais"): Information required for a person to access the system: email and password.
 - Cost Performance Index (CPI): A measure of cost-effectiveness in a Project. It represents the amount of work done per unit of cost spent.
 - Gantt format ("formato de Gantt"): A type of bar chart that illustrates a project schedule.
