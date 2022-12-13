@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+Administrator -> System: Requests to change profile of user acount
+Administrator <-- System: Authorization granted
+Administrator -> System: Give new profile to user
+Administrator <-- System: Confirm a new user profile
+@enduml
