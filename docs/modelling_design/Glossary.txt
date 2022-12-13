@@ -15,9 +15,9 @@
 - Product Backlog Grooming: Decomposition of a broad User Story into several more detailed User Stories. Only done by the Product Owner on the User Stories in the Product Backlog.
 - Product Owner (PO): A Role that can be associated with a User within a Project over a certain time period. Creates User Stories, and selects which to include in a Sprint Backlog with the Team Members.
 - Profile ("Perfil"): Attribute of a User Account that limits which functionalities it has access to. One of [Administrator, Manager, User].
-- Project ("Projecto"): Concerted effort with a set goal. The base entity to associate Activities and Resources.
+- Project ("Projeto"): Concerted effort with a set goal. The base entity to associate Activities and Resources.
 - Project Backlog: The ordered set (by priority) of all User Stories to be implemented in a Project. Created by the Product Owner of the Project.
-- Project Registration ("Registo de Projecto"): The creation of a Project, done by a Manager.
+- Project Registration ("Registo de Projeto"): The creation of a Project, done by a Manager.
 - Project Timeline: Planned time period for a Project. Divided into Sprints.
 - Report ("Relatório"): Document containing information relating to a Project.
 - Resource ("Recurso"): Any System User with a User Profile that contributes to a Project.
