@@ -9,6 +9,11 @@ Class User
 Class "User role"
 Class Project
 Class "User in Project"
+Class "Project manager"
+Class "Product owner"
+Class "Scrum master"
+Class "Team member"
+
 
 
 Admin "1" -- "1..*   " "User account": registers, edits, lists, (in)activates >
@@ -16,10 +21,14 @@ Admin "1" -- "2..*        " Profile: creates, associates >
 Admin "1 " .. "1  " Profile: is a >
 Manager "1      ".."1" Profile: is a >
 Manager "1 " -- "*" "User role" : assigns >
-User "1" .. "     1" Profile: is a >
+User "1..*" .. "1" Profile: is a >
 "User account" "1   "--"1 " Profile: assigned >
 Manager "1"-- "1..*" Project: creates >
-"User in Project" "1 " -- "1..*" User: belongs <
-"User in Project" "1 " -- "1..*" "User role": used <
+"User in Project" "1" -- "1..*" User: belongs <
+"User in Project" "1" -- "1..*" "User role": assigned <
 "User in Project" "1 " -- "1" Project : has <
+"Project manager" "1..*" .. "1" "User role": is a >
+"Product owner" "1..*" .. "1" "User role": is a >
+"Scrum master" "1..*" .. "1" "User role": is a >
+"Team member" "1..*" .. "1" "User role": is a >
 @enduml
