@@ -13,6 +13,10 @@ Class "Project manager"
 Class "Product owner"
 Class "Scrum master"
 Class "Team member"
+Class "User stories"
+Class "Tasks"
+Class "Sprints"
+Class "Scrum ceremonies"
 
 
 
@@ -31,4 +35,15 @@ Manager "1"-- "1..*" Project: creates >
 "Product owner" "1..*" .. "1" "User role": is a >
 "Scrum master" "1..*" .. "1" "User role": is a >
 "Team member" "1..*" .. "1" "User role": is a >
+"Project" "1" -- "1..*" "User stories": includes >
+"Project" "1" -- "1..*" "Tasks": includes >
+"Project" "1" -- "1..*" "Sprints": includes >
+"Project" "1" -- "1..*" "Scrum ceremonies": includes >
+"Product owner" "1" -- "1..*" "User stories": creates >
+"Team member" "1..*" -- "1..*" "Tasks": creates >
+"Project manager" "1" -- "1" "Project": edits >
+"Scrum master" "1" -- "1..*" "Scrum ceremonies": leads? >
+
+
+
 @enduml
