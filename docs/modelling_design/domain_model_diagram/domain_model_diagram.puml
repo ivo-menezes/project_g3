@@ -10,13 +10,14 @@ Class "User role"
 Class Project
 
 
-Admin "1" -- "1..*  " "User account": creates, edits, lists, (in)activates
-Admin "1   " -- "2..*" Profile: creates
-Manager "1     ".."1" Profile: "is a"
-Manager "1 " -- "*" "User role" : assigns
-User "1   " .. "1" Profile: "is a"
-User "1"-- "*" "User role": is given
-"User account" "1 "--"1 " Profile: assigned
-Manager "1"-- "1..*" Project: creates
-"User role" "1" -- "1..*  " Project: participates
+Admin "1" -- "1..*   " "User account": creates, edits, lists, (in)activates >
+Admin "1" -- "2..*        " Profile: creates >
+Admin "1 " .. "1  " Profile: is a >
+Manager "1      ".."1" Profile: is a >
+Manager "1 " -- "*" "User role" : assigns >
+User "1" .. "     1" Profile: is a >
+User "1"-- "*" "User role": is given >
+"User account" "1   "--"1 " Profile: assigned >
+Manager "1"-- "1..*" Project: creates >
+"User role" "1 " -- "1..*   " Project: participates >
 @enduml
