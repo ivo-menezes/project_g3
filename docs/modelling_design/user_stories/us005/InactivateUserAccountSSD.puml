@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Administrator -> System: Selects active User Account
+Administrator -> System: Requests User Account inactivation
+Administrator <-- System: Confirms User Account inactivation
+
+@enduml
