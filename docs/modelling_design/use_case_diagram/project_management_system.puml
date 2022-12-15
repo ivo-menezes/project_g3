@@ -1,13 +1,14 @@
 @startuml
 left to right direction
 
-:Profile: as User
-User <|-- :Administrator:
-User <|-- :Manager:
-User <|-- :Team Member:
-User <|-- :Project Manager:
-User <|-- :Scrum Master:
-User <|-- :Product Owner:
+:Profile: as Profile
+Profile <|-- :Administrator:
+Profile <|-- :User:
+Profile <|-- :Manager:
+:User:<|-- :Team Member:
+:User:<|-- :Product Owner:
+:User:<|-- :Project Manager:
+:User:<|-- :Scrum Master:
 
 rectangle "Project Management System"{
 
