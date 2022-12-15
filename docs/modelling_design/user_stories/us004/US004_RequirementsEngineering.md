@@ -25,8 +25,8 @@ There is a dependency to US002. There must already be registered users in order 
 
 *Input Data:*
 
-- Enter a name or choose all users. 
+- Choose all users, with option of using an attribute. 
 
 *Output Data:*
 
-- A list of one or all users and respective status.
+- A list of all users and respective status, depending on the search choice.
