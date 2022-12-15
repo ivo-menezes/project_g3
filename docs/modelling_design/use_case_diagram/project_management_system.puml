@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+
+:Profile: as User
+User <|-- :Administrator:
+User <|-- :Manager:
+User <|-- :Team Member:
+User <|-- :Project Manager:
+User <|-- :Scrum Master:
+User <|-- :Product Owner:
+
+rectangle "Project Management System"{
+
+User -- (Sign in)
+User -- (Change password)
+User -- (Logout)
+User -- (Search project)
+
+:Administrator: as Administrator
+Administrator -- (Register users)
+Administrator -- (List all system users)
+Administrator -- (Search for users)
+Administrator -- (Associate profiles with the users)
+Administrator -- (Edit other user account information \n including activating/inactivating)
+
+:Manager: as Manager
+Manager -- (Create projects)
+Manager -- (Manage resources)
+Manager -- (Search all projects)
+Manager -- (Access to all projects)
+Manager -- (Edit Project)
+Manager -- (View All allocation reports)
+
+:Team Member: as "Team Member"
+"Team Member" -- (Create Sprint Backlog)
+"Team Member" -- (Add user story to the Sprint Backlog)
+"Team Member" -- (Create tasks)
+"Team Member" -- (Edit tasks)
+"Team Member" -- (Update tasks)
+"Team Member" -- (Register work tasks done)
+"Team Member" -- (View the status of activities in the project)
+"Team Member" -- (View own allocation reports)
+
+:Project Manager: as "Project Manager"
+"Project Manager" -- (List the information of all projects that manages)
+"Project Manager" -- (Edit Project)
+"Project Manager" -- (View KPI report)
+"Project Manager" -- (Export KPI report)
+
+:Product Owner: as "Product Owner"
+"Product Owner" -- (List the information of all projects that manages)
+"Product Owner" -- (Create user stories)
+"Product Owner" -- (Add user stories to the project backlog)
+"Product Owner" -- (Edit user stories)
+"Product Owner" -- (Remove user stories)
+"Product Owner" -- (View KPI report)
+
+:Scrum Master: as "Scrum Master"
+"Scrum Master" -- (List the information of all projects that manages)
+"Scrum Master" -- (Scrum ceremonies)
+}
+@enduml
