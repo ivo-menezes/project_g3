@@ -6,18 +6,16 @@ As Administrator, I want to get a list of all user accounts and their status.
 
 ### **1.2 – Customer Specifications and Clarifications**
 
-From the specifications document:
-- "The system should have an administration area, which allows the Administrator to […] List all system users; Search for users with availability of at least the following fields: E-mail; Profile […].
+**From the specifications document:**
+- "The system should have an administration area, which allows the Administrator to […] List all system users; Search for users with availability of at least the following fields: E-mail; Profile […]."
 
-From the client clarifications:
-*Question: What’s the meaning of “status”?
-*Answer: The user can have two status: Active or Inactive.
+**From the client clarifications:**
+- *Question:* What’s the meaning of “status”?
+- *Answer:* The user can have two status: Active or Inactive.
 
 ### **1.3 – Acceptance criteria**
 
-- **AC1**: Administrator must be able to search all users.
-- **AC2**: All users, with no exception, must be displayed in the list.
-- **AC3**: User status, active or inactive, must be displayed in the list.
+- Awaiting further information regarding Acceptance criteria;
 
 ### **1.4 – Found out dependencies**
 
@@ -25,8 +23,10 @@ There is a dependency to US002. There must already be registered users in order 
 
 ### **1.5 – Input and output data**
 
-Input Data:
+*Input Data:*
 
-Output Data:
+- Enter a name or choose all users. 
 
--A list of all users and their status
+*Output Data:*
+
+- A list of one or all users and respective status.
