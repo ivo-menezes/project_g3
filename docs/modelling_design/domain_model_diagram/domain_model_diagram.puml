@@ -4,46 +4,48 @@ skinparam style strictuml
 
 
 
-Class Admin
-Class "User account"
-Class Profile
-Class Manager
-Class User
-Class "User role"
-Class Project
-Class "Project User"
-Class "Project manager"
-Class "Product owner"
-Class "Scrum master"
-Class "Team member"
-Class Sprints
-Class "Scrum ceremonies"
-Class Tasks
+Rectangle Admin
+Rectangle Profile
+Rectangle Manager
+Rectangle User
+Rectangle Project
+Rectangle "Project User"
+Rectangle "Project manager"
+Rectangle "Product owner"
+Rectangle "Scrum master"
+Rectangle "Team member"
+Rectangle Sprints
+Rectangle "Scrum ceremonies"
+Rectangle Tasks
+Rectangle "User stories"
 
 
-
-Admin "1" -- "1..*" "User account": registers, edits, lists, (in)activates >
+'Admin "1" -- "1..*" "User account": registers, edits, lists, (in)activates >
 Admin "1" -- "2..*" Profile: creates, associates >
 Admin "1" --|> "1    " Profile
 Manager "1   "--|>"      1" Profile
-Manager "1 " -- "*" "User role" : assigns >
+'Manager "1 " -- "*" "User role" : assigns >
 User "1" --|> "1" Profile
-"User account" "1 "--"1 " Profile: assigned >
-Manager "1 "-- "1..*" Project: creates >
+'"User account" "1 "--"1 " Profile: assigned >
+Manager "1 "-- "1..*" Project: created <
 "Project User" "1..*" -- "1" User: belongs <
-"Project User" "1" -- "1..*" "User role": assigned <
+'"Project User" "1" -- "1..*" "User role": assigned <
 "Project User" "1..*" -- "1       " Project : has <
 Project "1" -- "      1..* " Tasks: includes >
 Project "1" -- "1..*" Sprints: includes >
 Project "1 " -- "1..*      " "Scrum ceremonies": includes >
 Project "1" -- "1..*      " "User stories": includes >
-"Project manager" --|> "User role"
+Project "1" -- "1..*" "Team member": includes >
+Project "1" -- "1" "Scrum master": includes >
+Project "1" -- "1" "Product owner": includes >
+Project "1" -- "1" "Project manager": includes >
+'"Project manager" --|> "User role"
 "Project manager" "         1" -- "   1" Project: edits >
-"Product owner" --|> "User role"
-"Team member" --|> "User role"
+'"Product owner" --|> "User role"
+'"Team member" --|> "User role"
 "Team member" "1..*"-- "1..*" "Tasks": creates >
 "Product owner" "              1" -- "1..*" "User stories": creates >
-"Scrum master" --|> "User role"
+'"Scrum master" --|> "User role"
 "Scrum master" "1" -- "1..*" "Scrum ceremonies": leads? >
 
 
