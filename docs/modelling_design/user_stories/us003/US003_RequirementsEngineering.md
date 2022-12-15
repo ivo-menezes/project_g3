@@ -12,11 +12,11 @@ As Administrator, I want to change the profile of a user account.
 
 **From the client clarifications:**
 
-- *Question:* Is it possible to associate the “Administrator profile” to any other user?
+- *Question:* Is it possible to associate the “Administrator profile” to any other user account?
 - *Answer:* Yes, see US001.
 
 
-- *Question:* What user account information should be open to administrator edition?
+- *Question:* Should it be possible to perform any further alterations to the user account besides switching the profile?
 - *Answer:*
 
 ### **1.3 – Acceptance criteria**
@@ -33,7 +33,7 @@ There is a dependency to US004. The administrator must be able to search for the
 
 Input Data:
 
-Selected Data: Username, user profile field.
+Search user, select current profile and switch to the intended profile.
 
 Output Data:
 
