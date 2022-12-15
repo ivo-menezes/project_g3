@@ -8,7 +8,7 @@ left to right direction
 
 rectangle "Project Management"{
 
-:System user: As User
+:System user: as User
 
 User -- (Search project)
 
@@ -30,13 +30,13 @@ Manager -- (View All allocation reports)
 "Team Member" -- (View the status of activities in the project)
 "Team Member" -- (View own allocation reports)
 
-:Project Manager: As "Project Manager"
+:Project Manager: as "Project Manager"
 
 "Project Manager" -- (Edit Project)
 "Project Manager" -- (View KPI report)
 "Project Manager" -- (Export KPI report)
 
-:Product Owner: As "Product Owner"
+:Product Owner: as "Product Owner"
 
 "Product Owner" -- (Create user stories)
 "Product Owner" -- (Add user stories to the project backlog)
@@ -44,7 +44,7 @@ Manager -- (View All allocation reports)
 "Product Owner" -- (Remove user stories)
 "Product Owner" -- (View KPI report)
 
-:Scrum Master: As "Scrum Master"
+:Scrum Master: as "Scrum Master"
 
 "Scrum Master" -- (Scrum ceremonies)
 
