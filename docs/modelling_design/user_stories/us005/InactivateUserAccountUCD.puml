@@ -5,7 +5,7 @@ Profile <|-- :Administrator:
 
 rectangle "Project Management System"{
 :Administrator: as Administrator
-Administrator -- (Edit other user account information \n including activating)
+Administrator -- (Edit other user account information \n including inactivating)
 }
 
 @enduml
