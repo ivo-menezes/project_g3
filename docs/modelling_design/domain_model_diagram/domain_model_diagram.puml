@@ -12,20 +12,15 @@ skinparam groupInheritance 3
  }
 
   class "Project User" {
-  ID User
+  Role
   Code Project
   Start Date
   End Date
   }
 
  class Project{
- Roles
  Code
  Name
- Project Manager
- Product Owner
- Scrum Master
- Project team
  Description
  Start Date
  Sprint duration
@@ -36,6 +31,7 @@ skinparam groupInheritance 3
  Typology
  Project Status
  Budget
+ Report
 }
 
 Profile <|-- Manager
