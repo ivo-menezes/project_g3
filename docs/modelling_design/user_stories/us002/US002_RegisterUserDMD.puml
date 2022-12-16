@@ -1,0 +1,22 @@
+@startuml
+skinparam style strictuml
+left to right direction
+skinparam groupInheritance 3
+
+ class "Profile Account" as Profile {
+   Type Profile
+   Name
+   E-mail
+   Phone number
+   Photo: [0..1]
+   'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
+   Status
+ }
+
+Profile <|-- Manager
+Profile <|-- User
+Profile <|-- Administrator
+
+Administrator "1" -- "2..*" Profile: creates >
+
+@enduml
