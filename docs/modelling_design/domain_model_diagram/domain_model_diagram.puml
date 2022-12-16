@@ -1,55 +1,56 @@
 @startuml
 skinparam style strictuml
-'skinparam groupInheritance 3
+left to right direction
+skinparam groupInheritance 3
 
-Rectangle Admin
-Rectangle Profile
-Rectangle Manager
-Rectangle User
-Rectangle Project
-Rectangle "Project User"
-Rectangle "Project manager"
-Rectangle "Product owner"
-Rectangle "Scrum master"
-Rectangle "Team member"
-Rectangle "User stories"
-Rectangle "Project backlog"
-Rectangle "Sprint backlog"
-'Rectangle Sprints
-'Rectangle "Scrum ceremonies"
-'Rectangle Tasks
+ class Profile {
+   Type Profile
+   Name
+   E-mail
+   Phone number
+   Photo optional
+ }
 
-'Admin "1" -- "1..*" "User account": registers, edits, lists, (in)activates >
-Admin "1" -- "2..*     " Profile: creates, associates >
-Admin --|> Profile
-Manager --|> Profile
-'Manager "1 " -- "*" "User role" : assigns >
-User --|> Profile
-'"User account" "1 "--"1 " Profile: assigned >
-Manager "1"-- "1..*" Project: created <
-"Project User" "1..*" -- "1" User: belongs <
-'"Project User" "1" -- "1..*" "User role": assigned <
+  class "Project User" {
+  ID User
+  Code Project
+  Start Date
+  End Date
+  }
+
+ class Project{
+ Roles
+ Code
+ Name
+ Project Manager
+ Product Owner
+ Scrum Master
+ Project team
+ Description
+ Start Date
+ Sprint duration
+ Number of planned sprints
+ End Date
+ Customer
+ Business Sector
+ Typology
+ Project Status
+ Budget
+}
+
+Profile <|-- Manager
+Profile <|-- User
+Profile <|-- Admin
+
+Admin "1" -- "2..*" Profile: creates, associates >
+Manager "1"--- "1..*" Project: created <
+User "1" -- "1..*" "Project User": belongs >
 "Project User" "1..*" -- "1" Project : has <
-'Project "1" -- "      1..* " Tasks: included <
-'Project "1" -- "1..*" Sprints: included <
-'Project "1 " -- "1..*      " "Scrum ceremonies": included <
-'Project "1" -- "1..*      " "User stories": includes >
 Project "1" -- "1..*" "Team member": included <
 Project "1" -- "1" "Scrum master": included <
 Project "1" -- "1" "Product owner": included <
 Project "1" -- "1  " "Project manager": included <
 Project "1" -- "1" "Project backlog": has <
 Project "1" -- "1..*" "Sprint backlog": has <
-"Project backlog" -- "User stories": contained <
-"Sprint backlog" -- "User stories": contained <
-'"Project manager" --|> "User role"
 "Project manager" "1" -- "1..*" Project: edits >
-'"Product owner" --|> "User role"
-'"Team member" --|> "User role"
-'"Team member" "1..*"-- "1..*" "Tasks": creates >
-'"Product owner" "              1" -- "1..*" "User stories": creates >
-'"Scrum master" --|> "User role"
-'"Scrum master" "1" -- "1..*" "Scrum ceremonies": leads? >
-
-
 @enduml
