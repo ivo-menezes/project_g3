@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+
+Profile <|-- :Administrator:
+
+rectangle "Project Management System"{
+:Administrator: as Administrator
+Administrator -- (List all system users)
+Administrator -- (Get status all system users)
+}
+
+@enduml
