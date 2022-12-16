@@ -38,9 +38,9 @@ skinparam groupInheritance 3
 
 Profile <|-- Manager
 Profile <|-- User
-Profile <|-- Admin
+Profile <|-- Administrator
 
-Admin "1" -- "2..*" Profile: creates, associates >
+Administrator "1" -- "2..*" Profile: creates, associates, lists, activates, inactivates >
 Manager "1"--- "1..*" Project: created <
 User "1" -- "1..*" "Project User": belongs >
 "Project User" "1..*" -- "1" Project : has <
