@@ -3,29 +3,26 @@ skinparam style strictuml
 left to right direction
 skinparam groupInheritance 3
 
- class Profile {
+ class "Profile Account" as Profile {
    Type Profile
    Name
    E-mail
    Phone number
-   Photo optional
+   Photo: [0..1]
+   'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
+   Status
  }
 
   class "Project User" {
-  ID User
+  Role
   Code Project
   Start Date
   End Date
   }
 
  class Project{
- Roles
  Code
  Name
- Project Manager
- Product Owner
- Scrum Master
- Project team
  Description
  Start Date
  Sprint duration
@@ -36,6 +33,7 @@ skinparam groupInheritance 3
  Typology
  Project Status
  Budget
+ Report
 }
 
 Profile <|-- Manager
