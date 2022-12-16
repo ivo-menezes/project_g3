@@ -10,8 +10,8 @@
 | Noteworthy Events             | Registration, ProfileChange, UserAllocation, SprintCeremonies                                     |
 | Descriptions of things        |                                                                                                   |
 | Catalogs                      |                                                                                                   |
-| Containers of things          | UserStory, ProjectBacklog, SprintBacklog , Sprint, ProjectTimeline, Project                       |
-| Elements in containers        | Task (some containers are also elements in container. Needs editing)                              |
+| Containers of things          | UserList, UserStory, ProjectBacklog, SprintBacklog , Sprint, ProjectTimeline, Project             |
+| Elements in containers        | Users, Tasks (some containers are also elements in container. Needs editing)                      |
 | (Other) Organizations         |                                                                                                   | 
 | Other (external) Systems      | LegacyPlatform                                                                                    |
 | Records of Finance, work, etc | Budget                                                                                            |
