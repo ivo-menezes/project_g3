@@ -8,7 +8,8 @@ skinparam groupInheritance 3
    Name
    E-mail
    Phone number
-   Photo optional
+   Photo: [0..1]
+   'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
  }
 
   class "Project User" {
