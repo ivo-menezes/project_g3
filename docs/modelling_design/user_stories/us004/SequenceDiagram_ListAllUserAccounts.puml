@@ -1,0 +1,21 @@
+@startuml
+
+actor Administrator  as Administrator #white
+participant "List Controller" as Profile #white
+participant "Profile Account" as Account #white
+
+Administrator ->  Profile : 1. Request list of all user account (profile account) and their status
+activate Profile #FFBBBB
+
+Profile --> Account : 2. Verify first user account (profile account) and status
+Account --> Profile : 2.1 List first user account (profile account) and status
+
+loop#Gold #LightBlue
+   Profile <--> Account : Continue verifying and listing
+end
+
+Profile --> Account : 3. Verify last user account (profile account) and status
+Account --> Profile : 3.1 List last user account (profile account) and status
+
+Administrator <-- Profile: All user (profile account) and status listed
+@enduml
