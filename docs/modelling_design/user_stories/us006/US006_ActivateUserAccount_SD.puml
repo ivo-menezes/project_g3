@@ -1,0 +1,21 @@
+@startuml
+
+actor Administrator  as Administrator #white
+participant "Status UI" as UI #white
+participant "Status Controller" as Controller #white
+participant "Profile Account" as Account #white
+
+'Administrator ->  Controller : 1.Choose account and request activation
+Administrator ->  UI : 1. Choose account and request activation
+activate UI #FFBBBB
+'activate Controller #FFBBBB
+
+UI -> Controller: 1.1. changeStatus(email)
+activate Controller #FFBBBB
+Controller -> Account: 1.1.1. changeStatus(email)
+activate Account #FFBBBB
+deactivate Account
+deactivate Controller
+
+UI --> Administrator: 1.2 Successfully activated
+@enduml
