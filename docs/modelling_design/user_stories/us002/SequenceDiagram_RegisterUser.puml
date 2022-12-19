@@ -1,0 +1,22 @@
+@startuml
+
+actor Administrator  as Administrator #white
+participant "Profile Controller" as Profile #white
+participant "Profile Account" as Account #white
+
+Administrator ->  Profile : 1.Register user (name,email, phone number, status)
+activate Profile #FFBBBB
+
+Profile -> Profile: 2.Check email (email)
+activate Profile #DarkSalmon
+deactivate Profile #DarkSalmon
+
+alt#Gold #LightBlue If user already exists
+   Administrator <-- Profile : Register Rejected
+end
+
+Profile -> Account : 3.Register user (name,email, phone number, status)
+Profile <-- Account: Registered user
+
+Administrator <-- Profile: Successfully registered
+@enduml
