@@ -18,5 +18,4 @@ deactivate Account
 deactivate Controller
 
 UI --> Administrator: 1.2 Successfully activated
-
 @enduml
