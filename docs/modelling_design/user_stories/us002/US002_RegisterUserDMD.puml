@@ -17,6 +17,6 @@ Profile <|-- Manager
 Profile <|-- User
 Profile <|-- Administrator
 
-Administrator "1" -- "2..*" Profile: creates >
+Administrator "1" -- "2..*" Profile: registers >
 
 @enduml

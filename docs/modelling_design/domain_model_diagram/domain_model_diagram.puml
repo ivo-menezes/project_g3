@@ -40,15 +40,15 @@ Profile <|-- Manager
 Profile <|-- User
 Profile <|-- Administrator
 
-Administrator "1" -- "2..*" Profile: creates, associates, lists, activates, inactivates >
-Manager "1"--- "1..*" Project: created <
+Administrator "1" -- "2..*" Profile: registers, associates, lists, activates, inactivates >
+Manager "1"--- "1..*" Project: creates >
 User "1" -- "1..*" "Project User": belongs >
-"Project User" "1..*" -- "1" Project : has <
+"Project User" "1..*" -- "1" Project : participates >
 Project "1" -- "1..*" "Team member": included <
 Project "1" -- "1" "Scrum master": included <
 Project "1" -- "1" "Product owner": included <
 Project "1" -- "1  " "Project manager": included <
-Project "1" -- "1" "Project backlog": has <
-Project "1" -- "1..*" "Sprint backlog": has <
+Project "1" -- "1" "Project backlog": comprises <
+Project "1" -- "1..*" "Sprint backlog": comprises <
 "Project manager" "1" -- "1..*" Project: edits >
 @enduml
