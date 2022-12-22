@@ -7,14 +7,15 @@ participant "Profile Account" as Account #white
 
 
 Administrator ->  UI: Request list of all users (profile account) and their status
-
+activate Administrator #FFBBBB
 activate UI #FFBBBB
-UI -> Controller: listUserAccount()
+UI -> Controller: listUserAccounts()
 
 activate Controller #FFBBBB
-Controller -> Account: listUserAccount()
+Controller -> Account: listUserAccounts()
 
-Controller --> UI: User account (profile account) and status listed
+'Controller --> UI: User account (profile account) and status listed
 
 UI --> Administrator: Retrieve list
+deactivate Administrator #FFBBBB
 @enduml
