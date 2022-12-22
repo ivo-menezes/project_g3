@@ -1,22 +1,31 @@
 @startuml
 
 actor Administrator  as Administrator #white
-participant "Profile Controller" as Profile #white
+participant "Register User UI" as UI #white
+participant "Register User Controller" as Controller #white
 participant "Profile Account" as Account #white
 
-Administrator ->  Profile : 1.Register user (name,email, phone number, status)
-activate Profile #FFBBBB
+activate Administrator #FFBBBB
+Administrator ->  UI : Register user (name, email, phone number, photo)
+activate UI #FFBBBB
+UI -> Controller : registerUser(name, email, phone number, photo)
 
-Profile -> Profile: 2.Check email (email)
-activate Profile #DarkSalmon
-deactivate Profile #DarkSalmon
+activate Controller #FFBBBB
+Controller -> Controller : verifyEmailExists(email)
+activate Controller #E9967A
 
+'Números dentro da caixa?
 alt#Gold #LightBlue If user already exists
-   Administrator <-- Profile : Register Rejected
+   UI <-- Controller : Email already exists
+   Administrator <-- UI : Register rejected
 end
+deactivate Controller
 
-Profile -> Account : 3.Register user (name,email, phone number, status)
-Profile <-- Account: Registered user
+Controller -> Account : create(name,email, phone number, photo)
+activate Account #FFBBBB
+Account -->"acc : profileAccount" **
+'Controller -> Account : validateProfile(name,email, phone number, photo)
 
-Administrator <-- Profile: Successfully registered
+UI --> Administrator : User registered
+
 @enduml
