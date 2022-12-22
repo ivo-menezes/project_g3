@@ -1,0 +1,48 @@
+@startuml
+skinparam linetype ortho
+
+class "ProfileAccount" as Account
+class "RegisterUserController" as ResController
+class "ChangeProfileController" as ChangeController
+class "ListController"
+class "StatusController"
+
+note "Access restricted to Admin Profile" as N2
+Account .. N2
+
+class Account {
+profile : Profile
+name : String
+email : String
+phone : String
+photo : Photo
+isActive : boolean
+create(name, email, phone, photo)
+changeProfile(email, profile)
+listUserAccounts()
+changeStatus(email)
+}
+
+class ResController {
+registerUser(name, email, phone, photo)
+}
+
+class ChangeController {
+changeProfile(email, profile)
+profileCheck(email, profile)
+}
+
+class ListController {
+listUserAccounts()
+}
+
+class StatusController {
+changeStatus(email)
+}
+
+Account <-- Account
+Account <.. ResController
+Account <.. ChangeController
+Account <.. ListController
+Account <..StatusController
+@enduml
