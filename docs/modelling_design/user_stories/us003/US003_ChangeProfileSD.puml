@@ -1,22 +1,22 @@
 @startuml
 
 actor Administrator  as Administrator #white
-participant "Profile Controller" as Profile #white
+participant "Change Profile UI" as UI #white
+participant "Change Profile Controller" as Controller #white
 participant "Profile Account" as Account #white
 
-Administrator ->  Profile : 1. Associate profile to user (profile)
-activate Profile #FFBBBB
-
-Profile -> Profile: 2.Check user profile (profile)
-activate Profile #DarkSalmon
-deactivate Profile #DarkSalmon
+Administrator ->  UI : Associate profile to user (profile)
+UI -> Controller :  changeProfile()
+activate Controller #FFBBBB
+Controller -> Controller: profileCheck(profile)
+activate Controller #DarkSalmon
+deactivate Controller #DarkSalmon
 
 alt#Gold #LightBlue If new profile is user profile
-   Administrator <-- Profile : Profile already assigned
+Administrator <-- Controller : Profile already assigned
 end
 
-Profile -> Account : 3.Associate profile to user (profile)
-Profile <-- Account: Associated profile
-
-Administrator <-- Profile: Successfully associated
+Controller -> Account : Associate profile to user (profile)
+activate Account #FFBBBB
+Administrator <-- UI: Successfully associated
 @enduml
