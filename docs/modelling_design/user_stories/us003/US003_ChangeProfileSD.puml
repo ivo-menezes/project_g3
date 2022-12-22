@@ -6,19 +6,19 @@ participant "Change Profile Controller" as Controller #white
 participant "Profile Account" as Account #white
 
 activate Administrator #FFBBBB
-Administrator ->  UI : Associate profile to user (profile)
+Administrator ->  UI : Associate profile to user (email, profile)
 activate UI #FFBBBB
-UI -> Controller :  changeProfile()
+UI -> Controller :  changeProfile(email, profile)
 activate Controller #FFBBBB
-Controller -> Controller: profileCheck(profile)
+Controller -> Controller: profileCheck(email, profile)
 activate Controller #DarkSalmon
-deactivate Controller #DarkSalmon
+
 
 alt#Gold #LightBlue If new profile is user profile
 Administrator <-- Controller : Profile already assigned
 end
-
-Controller -> Account : Associate profile to user (profile)
+deactivate Controller #DarkSalmon
+Controller -> Account : changeProfile (email, profile)
 activate Account #FFBBBB
 Administrator <-- UI: Successfully associated
 @enduml
