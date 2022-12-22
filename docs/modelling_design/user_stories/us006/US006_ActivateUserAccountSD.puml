@@ -6,16 +6,16 @@ participant "Status Controller" as Controller #white
 participant "Profile Account" as Account #white
 
 'Administrator ->  Controller : 1.Choose account and request activation
-Administrator ->  UI : 1. Choose account and request activation
+Administrator ->  UI : Choose account and request activation (email)
 activate UI #FFBBBB
 'activate Controller #FFBBBB
-
-UI -> Controller: 1.1. changeStatus(email)
+activate Administrator #FFBBBB
+UI -> Controller: changeStatus(email)
 activate Controller #FFBBBB
-Controller -> Account: 1.1.1. changeStatus(email)
+Controller -> Account: changeStatus(email)
 activate Account #FFBBBB
 deactivate Account
 deactivate Controller
 
-UI --> Administrator: 1.2 Successfully activated
+UI --> Administrator: Successfully activated
 @enduml
