@@ -5,7 +5,9 @@ participant "Change Profile UI" as UI #white
 participant "Change Profile Controller" as Controller #white
 participant "Profile Account" as Account #white
 
+activate Administrator #FFBBBB
 Administrator ->  UI : Associate profile to user (profile)
+activate UI #FFBBBB
 UI -> Controller :  changeProfile()
 activate Controller #FFBBBB
 Controller -> Controller: profileCheck(profile)
