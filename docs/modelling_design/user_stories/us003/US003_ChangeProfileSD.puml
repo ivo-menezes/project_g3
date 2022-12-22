@@ -1,9 +1,9 @@
 @startuml
 
 actor Administrator  as Administrator #white
-participant "Change Profile UI" as UI #white
-participant "Change Profile Controller" as Controller #white
-participant "Profile Account" as Account #white
+participant "ChangeProfileUI" as UI #white
+participant "ChangeProfileController" as Controller #white
+participant "ProfileAccount" as Account #white
 
 activate Administrator #FFBBBB
 Administrator ->  UI : Associate profile to user (email, profile)

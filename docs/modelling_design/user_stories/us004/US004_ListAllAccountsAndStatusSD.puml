@@ -1,9 +1,9 @@
 @startuml
 
 actor Administrator as Administrator #white
-participant "List User UI" as UI #white
-participant "List Controller" as Controller #white
-participant "Profile Account" as Account #white
+participant "ListUserUI" as UI #white
+participant "ListController" as Controller #white
+participant "ProfileAccount" as Account #white
 
 
 Administrator ->  UI: Request list of all users (profile account) and their status

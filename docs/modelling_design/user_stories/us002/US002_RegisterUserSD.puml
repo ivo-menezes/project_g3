@@ -1,14 +1,14 @@
 @startuml
 
 actor Administrator  as Administrator #white
-participant "Register User UI" as UI #white
-participant "Register User Controller" as Controller #white
-participant "Profile Account" as Account #white
+participant "RegisterUserUI" as UI #white
+participant "RegisterUserController" as Controller #white
+participant "ProfileAccount" as Account #white
 
 activate Administrator #FFBBBB
-Administrator ->  UI : Register user (name, email, phone number, photo)
+Administrator ->  UI : Register user (name, email, phone, photo)
 activate UI #FFBBBB
-UI -> Controller : registerUser(name, email, phone number, photo)
+UI -> Controller : registerUser(name, email, phone, photo)
 
 activate Controller #FFBBBB
 Controller -> Controller : verifyEmailExists(email)
@@ -21,7 +21,7 @@ alt#Gold #LightBlue If user already exists
 end
 deactivate Controller
 
-Controller -> Account : create(name,email, phone number, photo)
+Controller -> Account : create(name,email, phone, photo)
 activate Account #FFBBBB
 Account -->"acc : profileAccount" **
 'Controller -> Account : validateProfile(name,email, phone number, photo)

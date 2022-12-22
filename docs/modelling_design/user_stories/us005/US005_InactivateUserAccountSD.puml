@@ -1,9 +1,9 @@
 @startuml
 
 actor Administrator  as Administrator #white
-participant "Status UI" as UI #white
-participant "Status Controller" as Controller #white
-participant "Profile Account" as Account #white
+participant "StatusUI" as UI #white
+participant "StatusController" as Controller #white
+participant "ProfileAccount" as Account #white
 
 'Administrator ->  Controller : 1.Choose account and request inactivation
 Administrator ->  UI : Choose account and request inactivation (email)
