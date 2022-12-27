@@ -1,54 +1,103 @@
 @startuml
-skinparam style strictuml
-left to right direction
-skinparam groupInheritance 3
+!theme plain
 
- class "Profile Account" as Profile {
-   Type Profile
-   Name
-   E-mail
-   Phone number
-   Photo: [0..1]
-   'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
-   Status
- }
+'--- part relevant to sprint 1
 
-  class "Project User" {
-  Role
-  Code Project
-  Start Date
-  End Date
-  }
-
- class Project{
- Code
- Name
- Description
- Start Date
- Sprint duration
- Number of planned sprints
- End Date
- Customer
- Business Sector
- Typology
- Project Status
- Budget
- Report
+Object "Profile Account" as Account {
+Name
+Phone Number
+Email
+Photo: [0..1]
+Account Status: [Active, Inactive]
 }
 
-Profile <|-- Manager
-Profile <|-- User
-Profile <|-- Administrator
+together {
+Object Administrator
+Object Manager
+Object User
+}
 
-Administrator "1" -- "2..*" Profile: registers, associates, lists, activates, inactivates >
-Manager "1"--- "1..*" Project: creates >
-User "1" -- "1..*" "Project User": belongs >
-"Project User" "1..*" -- "1" Project : participates >
-Project "1" -- "1..*" "Team member": included <
-Project "1" -- "1" "Scrum master": included <
-Project "1" -- "1" "Product owner": included <
-Project "1" -- "1  " "Project manager": included <
-Project "1" -- "1" "Project backlog": comprises <
-Project "1" -- "1..*" "Sprint backlog": comprises <
-"Project manager" "1" -- "1..*" Project: edits >
+Account <|-- Administrator
+Account <|-- Manager
+Account <|-- User
+
+
+Object Project {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Customer
+Business Sector
+Typology
+Project Status
+Budget
+' Report could be its own conceptual class but we are not modelling with detail yet
+Report
+}
+
+' following the Association Class Role pattern (Fig.11) from "Modeling Roles"
+' Role attributes does not include Project Code because Larman says to avoid attributes that are like "foreign keys" (p.126)
+Object Role {
+Role Name
+Start Date
+End Date
+Cost Per Hour
+/ Percentage of Allocation
+}
+
+' here "Controls" includes "creates,lists,changes profile, activates, inactivates"
+' following Larman p.113 to be parsimonious about associations
+Administrator "1" -up- "*" Account : Controls >
+Manager "1" -down- "*" Project : Manages >
+User "1" -down- "*" Role: Performs >
+Role "*" -left- "1" Project: Participates in >
+
+
+'--- additional stuff, not much detail for sprint 1
+' put enduml tag before this comment to shorten diagram
+Object "Product Backlog" as PB
+
+Object "User Story" as US {
+US Number
+Actor
+Description
+Acceptance Criteria
+}
+
+Object Sprint {
+Sprint Number
+Start Date
+End Date
+}
+
+Object "Sprint Backlog" as SB
+
+Object Task {
+Name
+Description
+Start Date
+End Date
+Effort Estimate
+Task Type
+Hours Spent
+Percentage of Execution
+}
+
+Project "1" -down- "*" Sprint: Entails >
+Project "1" -left- "1" PB: Includes >
+PB "1" -down- "*" US: Collects >
+Sprint "1" -down- "1" SB: Defines >
+US "*" -right- "1" SB: Picked into >
+
+SB "0..*" -right- "*" Task: Implemented in >
+Role "1" -down- "*" Task: Works on >
+'note on link: The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM.
+
+note "The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM." as N1
+Task .down. N1
+
 @enduml
