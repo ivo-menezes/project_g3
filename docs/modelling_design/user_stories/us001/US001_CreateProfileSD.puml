@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+hide footbox
+actor Administrator  as Administrator
+participant ": CreateProfileUI" as UI
+participant ": CreateProfileController" as Controller
+participant ": ProfileList" as List
+
+activate Administrator #FFBBBB
+Administrator ->  UI : Create Profile (profile name)
+activate UI #FFBBBB
+UI -> Controller : createProfile(profileName)
+activate Controller #FFBBBB
+Controller -> List : createProfile(profileName)
+activate List #FFBBBB
+
+'List -> List : profileNameExists(profileName)
+
+List -->"profile : Profile" **
+List -> List : add(profile)
+
+UI --> Administrator : Confirms Profile creation
+@enduml
