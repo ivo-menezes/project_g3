@@ -1,24 +1,26 @@
 @startuml
+!theme plain
+hide footbox
 
-actor Administrator  as Administrator #white
-participant "ChangeProfileUI" as UI #white
-participant "ChangeProfileController" as Controller #white
-participant "ProfileAccount" as Account #white
-
-activate Administrator #FFBBBB
-Administrator ->  UI : Associate profile to user (email, profile)
-activate UI #FFBBBB
-UI -> Controller :  changeProfile(email, profile)
-activate Controller #FFBBBB
-Controller -> Controller: profileCheck(email, profile)
-activate Controller #DarkSalmon
+actor Administrator
+participant ": ChangeProfileUI" as UI
+participant ": ChangeProfileController" as Controller
+participant ": AccountList" as AccountList
+participant ": ProfileList" as ProfileList
+participant "account : ProfileAccount" as Account
+participant "profile : Profile" as Profile
 
 
-alt#Gold #LightBlue If new profile is user profile
-Administrator <-- Controller : Profile already assigned
-end
-deactivate Controller #DarkSalmon
-Controller -> Account : changeProfile (email, profile)
-activate Account #FFBBBB
-Administrator <-- UI: Successfully associated
+activate Administrator
+Administrator -> UI : Associate profile to user (user, profile)
+activate UI
+UI -> Controller : changeProfile(email, profileName)
+activate Controller
+Controller -> AccountList : account = getAccount(email)
+activate AccountList
+Controller -> ProfileList : profile = getProfile(profileName)
+Controller -> Account : setProfile(profile)
+activate Account
+deactivate Account
+UI --> Administrator : Confirms new user profile
 @enduml
