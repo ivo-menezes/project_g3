@@ -4,13 +4,12 @@ left to right direction
 skinparam groupInheritance 3
 
  class "Profile Account" as Profile {
-   Type Profile
    Name
-   E-mail
    Phone number
+   Email
    Photo: [0..1]
    'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
-   Status
+   Account Status: [Active, Inactive]
  }
 
 Profile <|-- Manager
