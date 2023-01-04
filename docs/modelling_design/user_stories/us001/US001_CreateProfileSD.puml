@@ -4,6 +4,7 @@ hide footbox
 actor Administrator  as Administrator
 participant ": CreateProfileUI" as UI
 participant ": CreateProfileController" as Controller
+participant ": Services" as Services
 participant ": ProfileList" as List
 
 activate Administrator #FFBBBB
@@ -11,13 +12,15 @@ Administrator ->  UI : Create Profile (profile name)
 activate UI #FFBBBB
 UI -> Controller : createProfile(profileName)
 activate Controller #FFBBBB
-Controller -> List : createProfile(profileName)
+Controller -> Services : createProfile(profileName)
+activate Services #FFBBBB
+Services -> List : createProfile(profileName)
 activate List #FFBBBB
-
-'List -> List : profileNameExists(profileName)
 
 List -->"profile : Profile" **
 List -> List : add(profile)
 
+Services --> Controller : Confirms Profile creation
+Controller --> UI : Confirms Profile creation
 UI --> Administrator : Confirms Profile creation
 @enduml
