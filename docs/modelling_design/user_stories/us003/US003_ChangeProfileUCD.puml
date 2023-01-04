@@ -1,10 +1,9 @@
 @startuml
 left to right direction
 
-Profile <|-- :Administrator:
+"Administrator"
 
 rectangle "Project Management System"{
-:Administrator: as Administrator
 Administrator -- (Associate profiles with the users)
 }
 
