@@ -1,21 +1,24 @@
 @startuml
-
+!theme plain
+hide footbox
 actor Administrator  as Administrator #white
-participant "StatusUI" as UI #white
-participant "StatusController" as Controller #white
-participant "ProfileAccount" as Account #white
+participant ": StatusUI" as UI #white
+participant ": StatusController" as Controller #white
+participant ": Services" as Services #white
+participant ": AccountList" as Account #white
 
 'Administrator ->  Controller : 1.Choose account and request activation
 Administrator ->  UI : Choose account and request activation (email)
 activate UI #FFBBBB
-'activate Controller #FFBBBB
 activate Administrator #FFBBBB
 UI -> Controller: changeStatus(email)
 activate Controller #FFBBBB
-Controller -> Account: changeStatus(email)
-activate Account #FFBBBB
-deactivate Account
+Controller -> Services : changeStatus(email)
+activate Services #FFBBBB
+Services -> Account: changeStatus(email)
+Services --> Controller : Successfully activated
+deactivate Services
+Controller --> UI : Successfully activated
 deactivate Controller
-
 UI --> Administrator: Successfully activated
 @enduml
