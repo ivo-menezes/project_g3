@@ -2,8 +2,6 @@
 'https://plantuml.com/sequence-diagram
 
 
-Administrator -> System: Requests to change profile of user account
-Administrator <-- System: Authorization granted
-Administrator -> System: Gives new profile to user
-Administrator <-- System: Confirms new user profile
+Administrator -> System: Change user profile
+Administrator <-- System: Confirms profile change
 @enduml

@@ -14,7 +14,7 @@ participant "account : ProfileAccount" as Account
 
 
 activate Administrator #FFBBBB
-Administrator -> UI : Associate profile to user (user, profile)
+Administrator -> UI : Change user profile (user, profile)
 activate UI #FFBBBB
 UI -> Controller : changeProfile(email, profileName)
 activate Controller #FFBBBB
@@ -30,7 +30,7 @@ Services -> Account : setProfile(profile)
 activate Account #FFBBBB
 deactivate Account #FFBBBB
 
-Services --> Controller : Confirms new user profile
-Controller --> UI : Confirms new user profile
-UI --> Administrator : Confirms new user profile
+Services --> Controller : Confirms profile change
+Controller --> UI : Confirms profile change
+UI --> Administrator : Confirms profile change
 @enduml
