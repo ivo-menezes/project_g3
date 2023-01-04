@@ -1,21 +1,53 @@
 @startuml
+!theme plain
+hide footbox
 
-actor Administrator as Administrator #white
-participant "ListUserUI" as UI #white
-participant "ListController" as Controller #white
-participant "ProfileAccount" as Account #white
+actor Administrator as Administrator
+participant ": ListAccountsUI" as UI
+participant ": ListAccountsController" as Controller
+participant ": Services" as Services
+participant "accountStatusList : List<accountStatusDTO>" as DTOList
+participant "accountStatus : accountStatusDTO" as DTO
+participant "account : Account" as account
 
+participant ": AccountList" as AccountList
 
-Administrator ->  UI: Request list of all users (profile account) and their status
 activate Administrator #FFBBBB
+Administrator ->  UI: Requests list of all user account and their status
+
 activate UI #FFBBBB
 UI -> Controller: listUserAccounts()
 
 activate Controller #FFBBBB
-Controller -> Account: listUserAccounts()
+Controller -> Services: listUserAccounts()
 
-'Controller --> UI: User account (profile account) and status listed
+activate Services #FFBBBB
+Services -> DTOList ** : create
 
-UI --> Administrator: Retrieve list
+loop for each account
+Services -> AccountList : account = getAccountAtIndex()
+activate AccountList #FFBBBB
+deactivate AccountList
+Services -> account : email = getEmail()
+activate account #FFBBBB
+deactivate account
+Services -> account : status = getStatus()
+activate account #FFBBBB
+deactivate account
+
+Services -> DTO ** : create(email, status)
+
+DTOList -> DTOList : add(accountStatus)
+activate DTOList #FFBBBB
+deactivate DTOList
+end
+
+Services --> Controller : accountStatusList
+deactivate Services
+
+Controller --> UI : accountStatusList
+deactivate UI
+
+UI --> Administrator: Displays list of user accounts and their status
 deactivate Administrator #FFBBBB
 @enduml
