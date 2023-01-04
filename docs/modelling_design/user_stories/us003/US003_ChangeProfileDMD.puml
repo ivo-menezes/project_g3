@@ -3,7 +3,7 @@ skinparam style strictuml
 left to right direction
 skinparam groupInheritance 3
 
- class "Profile Account" as Profile {
+ class "Profile Account" {
    Name
    Phone number
    Email
@@ -12,10 +12,9 @@ skinparam groupInheritance 3
    Account Status: [Active, Inactive]
  }
 
-Profile <|-- Manager
-Profile <|-- User
-Profile <|-- Administrator
+ class Profile {
+ Name
+ }
 
-Administrator "1" -- "2..*" Profile: associates >
-
+"Profile Account" "1..*" -- "1" Profile: Admin changes user profile <
 @enduml
