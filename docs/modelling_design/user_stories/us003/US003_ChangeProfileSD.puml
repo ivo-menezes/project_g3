@@ -5,32 +5,22 @@ hide footbox
 actor Administrator
 participant ": ChangeProfileUI" as UI
 participant ": ChangeProfileController" as Controller
-participant ": Services" as Services
 participant ": AccountList" as AccountList
 participant ": ProfileList" as ProfileList
-participant "profile : Profile" as Profile
 participant "account : ProfileAccount" as Account
+participant "profile : Profile" as Profile
 
 
-
-activate Administrator #FFBBBB
-Administrator -> UI : Change user profile (user, profile)
-activate UI #FFBBBB
+activate Administrator
+Administrator -> UI : Associate profile to user (user, profile)
+activate UI
 UI -> Controller : changeProfile(email, profileName)
-activate Controller #FFBBBB
-Controller -> Services : changeProfile(email, profileName)
-activate Services #FFBBBB
-Services -> AccountList : getAccount(email)
-activate AccountList #FFBBBB
-deactivate AccountList
-Services -> ProfileList : getProfile(profileName)
-activate ProfileList #FFBBBB
-deactivate ProfileList #FFBBBB
-Services -> Account : setProfile(profile)
-activate Account #FFBBBB
-deactivate Account #FFBBBB
-
-Services --> Controller : Confirms profile change
-Controller --> UI : Confirms profile change
-UI --> Administrator : Confirms profile change
+activate Controller
+Controller -> AccountList : account = getAccount(email)
+activate AccountList
+Controller -> ProfileList : profile = getProfile(profileName)
+Controller -> Account : setProfile(profile)
+activate Account
+deactivate Account
+UI --> Administrator : Confirms new user profile
 @enduml

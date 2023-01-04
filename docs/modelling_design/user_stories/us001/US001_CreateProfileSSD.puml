@@ -1,6 +1,8 @@
 @startuml
+'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Create Profile (profile name)
+Administrator -> System: Starts Profile creation
+Administrator <-- System: Requests Profile designation
+Administrator -> System: Gives Profile designation
 Administrator <-- System: Confirms Profile creation
-
 @enduml
