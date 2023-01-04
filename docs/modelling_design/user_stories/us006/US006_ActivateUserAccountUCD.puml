@@ -1,11 +1,10 @@
 @startuml
 left to right direction
-
-Profile <|-- :Administrator:
+"Administrator"
 
 rectangle "Project Management System"{
 :Administrator: as Administrator
-Administrator -- (Edit other user account information \n including activating)
+Administrator -- (Activate user account)
 }
 
 @enduml
