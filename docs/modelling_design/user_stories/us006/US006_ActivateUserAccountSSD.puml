@@ -1,8 +1,6 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Selects inactive User Account
-Administrator -> System: Requests User Account activation
-Administrator <-- System: Confirms User Account activation
+Administrator -> System: Choose account and request activation (email)
+Administrator <-- System: Successfully activated
 
 @enduml
