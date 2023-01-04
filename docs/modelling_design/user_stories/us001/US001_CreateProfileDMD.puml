@@ -1,0 +1,13 @@
+@startuml
+skinparam linetype ortho
+skinparam style strictuml
+left to right direction
+skinparam groupInheritance 3
+
+class "Profile" {
+  Name
+}
+
+Profile "1" -- "2..*" Profile: Created by Admin >
+
+@enduml
