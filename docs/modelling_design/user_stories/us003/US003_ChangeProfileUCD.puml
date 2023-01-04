@@ -4,7 +4,7 @@ left to right direction
 "Administrator"
 
 rectangle "Project Management System"{
-Administrator -- (Associate profiles with the users)
+Administrator -- (Change user profile)
 }
 
 @enduml
