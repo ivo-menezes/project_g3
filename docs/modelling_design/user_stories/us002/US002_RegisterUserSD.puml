@@ -4,6 +4,7 @@ hide footbox
 actor Administrator  as Administrator
 participant ": RegisterUserUI" as UI
 participant ": RegisterUserController" as Controller
+participant ": Services" as Services
 participant ": AccountList" as List
 
 activate Administrator #FFBBBB
@@ -11,11 +12,17 @@ Administrator ->  UI : Register user (name, email, phone, photo)
 activate UI #FFBBBB
 UI -> Controller : registerUser(name, email, phone, photo)
 activate Controller #FFBBBB
-Controller -> List : registerUser(name, email, phone, photo)
+Controller -> Services : registerUser(name, email, phone, photo)
+activate Services #FFBBBB
+Services-> List : registerUser(name, email, phone, photo)
 activate List #FFBBBB
 
-List -->" newAccount : ProfileAccount" **
+
+List -->" newAccount : Account" **
 List -> List : add(newAccount)
 
+Services --> Controller : newAccount registered
+Controller --> UI : newAccount registered
 UI --> Administrator : newAccount registered
+
 @enduml
