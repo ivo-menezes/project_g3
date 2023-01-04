@@ -1,7 +1,7 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Requests list of user accounts
-Administrator <-- System: Returns list of all user accounts and their status
+Administrator -> System: Requests list of user accounts and their status
+Administrator <-- System: Displays list of user accounts and their status
 
 @enduml
