@@ -6,8 +6,8 @@ actor Administrator as Administrator
 participant ": ListAccountsUI" as UI
 participant ": ListAccountsController" as Controller
 participant ": Services" as Services
-participant "accountStatusList : List<accountStatusDTO>" as DTOList
-participant "accountStatus : accountStatusDTO" as DTO
+participant "AccountList : List<AccountDTO>" as DTOList
+participant "account : AccountDTO" as DTO
 participant "account : Account" as account
 
 participant ": AccountList" as AccountList
@@ -25,7 +25,7 @@ activate Services #FFBBBB
 Services -> DTOList ** : create
 
 loop for each account
-Services -> AccountList : account = getAccountAtIndex()
+Services -> AccountList : account = getAccountAtIndex(i)
 activate AccountList #FFBBBB
 deactivate AccountList
 Services -> account : email = getEmail()
@@ -37,7 +37,7 @@ deactivate account
 
 Services -> DTO ** : create(email, status)
 
-DTOList -> DTOList : add(accountStatus)
+Services -> DTOList : add(accountStatus)
 activate DTOList #FFBBBB
 deactivate DTOList
 end
@@ -46,6 +46,7 @@ Services --> Controller : accountStatusList
 deactivate Services
 
 Controller --> UI : accountStatusList
+deactivate Controller
 deactivate UI
 
 UI --> Administrator: Displays list of user accounts and their status
