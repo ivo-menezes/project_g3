@@ -1,0 +1,42 @@
+@startuml
+
+class ListAccountsUI {
+}
+
+class ListAccountsController{
+listAccounts()
+}
+
+class Services {
+accountList : AccountList
+listAccounts()
+}
+
+class Account {
+profile : Profile
+name : String
+email : String
+phone : String
+photo : Photo
+isActive : boolean
+}
+
+class AccountList {
+accounts: List<Account>
+getAccountAtIndex(index)
+}
+
+class AccountDTO {
+email : String
+isActive : boolean
+create(email, status)
+}
+
+AccountList --> Account
+Services ..> Account
+Services ..> AccountList
+ListAccountsController ..> Services
+ListAccountsUI ..> ListAccountsController
+Services --> AccountDTO
+
+@enduml
