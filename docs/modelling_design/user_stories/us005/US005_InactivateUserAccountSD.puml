@@ -6,7 +6,8 @@ actor Administrator  as Administrator #white
 participant ": StatusUI" as UI #white
 participant ": StatusController" as Controller #white
 participant ": Services" as Services #white
-participant ": AccountList" as Account #white
+participant ": AccountList" as AccountList #white
+participant "account : Account" as Account #white
 
 'Administrator ->  Controller : 1.Choose account and request inactivation
 Administrator ->  UI : Choose account and request inactivation (email)
@@ -17,7 +18,12 @@ UI -> Controller: changeStatus(email)
 activate Controller #FFBBBB
 Controller -> Services: changeStatus(email)
 activate Services #FFBBBB
-Services -> Account: changeStatus(email)
+Services -> AccountList: account = getAccount(email)
+activate AccountList #FFBBBB
+deactivate AccountList
+Services -> Account: inactivateAccount()
+activate Account #FFBBBB
+deactivate Account
 Services --> Controller : Successfully inactivated
 deactivate Services
 Controller --> UI : Successfully inactivated
