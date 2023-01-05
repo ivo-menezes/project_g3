@@ -1,25 +1,19 @@
 @startuml
 
-class Profile {
-name : String
-}
+' UIs
+class CreateProfileUI {}
+class RegisterAccountUI {}
+class ChangeProfileUI {}
+class ListAccountsUI {}
+class AccountStatusUI {}
 
-class ProfileList {
-profiles : List<Profile>
-save(profile)
-getProfile(profileName)
-}
-
-class ListAccountsController{
-listAccounts()
-}
-
+' Controllers
 class CreateProfileController {
 createProfile(profileName)
 }
 
 class RegisterAccountController {
-createProfile(profileName)
+registerAccount(name, email, phone)
 registerAccount(name, email, phone, photo)
 }
 
@@ -27,19 +21,28 @@ class ChangeProfileController {
 changeProfile(email, newProfileName)
 }
 
-class AccountStatusController {
-changeAccountStatus(email, inactive)
+class ListAccountsController{
+listAccounts()
 }
 
+class AccountStatusController {
+changeAccountStatus(email, newStatus)
+}
+
+' Business Layer
 class Services {
 accountList : AccountList
 profileList: ProfileList
 listAccounts()
 createProfile(profileName)
+registerAccount(name, email, phone)
 registerAccount(name, email, phone, photo)
 changeProfile(email, newProfileName)
-changeAccountStatus(email, inactive)
+changeAccountStatus(email, newStatus)
+}
 
+class Profile {
+name : String
 }
 
 class Account {
@@ -52,6 +55,20 @@ isActive : boolean
 inactivateAccount()
 }
 
+class AccountDTO {
+email : String
+isActive : boolean
+create(email, status)
+}
+
+' Data Access Layer
+
+class ProfileList {
+profiles : List<Profile>
+getProfile(profileName)
+save(profile)
+}
+
 class AccountList {
 accounts: List<Account>
 getAccountAtIndex(index)
@@ -60,27 +77,30 @@ save(newAccount)
 getAccount(email)
 }
 
-class AccountDTO {
-email : String
-isActive : boolean
-create(email, status)
-}
+' Associations and dependencies
 
-Services ..> Account
+CreateProfileUI ..> CreateProfileController
+CreateProfileController ..> Services
+Services ..> ProfileList
+Services ..> Profile
+ProfileList "1" --> "*" Profile : has
+
+RegisterAccountUI ..> RegisterAccountController
+RegisterAccountController ..> Services
 Services ..> AccountList
-Services --> AccountDTO
+Services ..> Account
+Account ..> Profile
+AccountList "1" --> "*" Account : has
 
-AccountList --> Account
-
-UI ..> ListAccountsController
-UI ..> CreateProfileController
-UI ..> RegisterAccountController
-UI ..> ChangeProfileController
-UI ..> AccountStatusController
+ChangeProfileUI ..> ChangeProfileController
+ChangeProfileController ..> Services
 
 ListAccountsController ..> Services
-CreateProfileController ..> Services
-RegisterAccountController ..> Services
-ChangeProfileController..> Services
+ListAccountsUI ..> ListAccountsController
+Services ..> AccountDTO
+AccountDTO ..> Account
+
 AccountStatusController ..> Services
+AccountStatusUI ..> AccountStatusController
+
 @enduml
