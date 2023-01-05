@@ -6,20 +6,20 @@ actor Administrator as Administrator
 participant ": ListAccountsUI" as UI
 participant ": ListAccountsController" as Controller
 participant ": Services" as Services
-participant "AccountList : List<AccountDTO>" as DTOList
-participant "account : AccountDTO" as DTO
+participant "lsAccounts : List<AccountDTO>" as DTOList
+participant "accountDTO : AccountDTO" as DTO
 participant "account : Account" as account
 
 participant ": AccountList" as AccountList
 
 activate Administrator #FFBBBB
-Administrator ->  UI: Requests list of all user account and their status
+Administrator ->  UI: Requests list of user\naccounts and their status
 
 activate UI #FFBBBB
-UI -> Controller: listUserAccounts()
+UI -> Controller: listAccounts()
 
 activate Controller #FFBBBB
-Controller -> Services: listUserAccounts()
+Controller -> Services: listAccounts()
 
 activate Services #FFBBBB
 Services -> DTOList ** : create
@@ -37,18 +37,18 @@ deactivate account
 
 Services -> DTO ** : create(email, status)
 
-Services -> DTOList : add(accountStatus)
+Services -> DTOList : add(accountDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
 end
 
-Services --> Controller : accountStatusList
+Services --> Controller : lsAccounts
 deactivate Services
 
-Controller --> UI : accountStatusList
+Controller --> UI : lsAccounts
 deactivate Controller
 deactivate UI
 
-UI --> Administrator: Displays list of user accounts and their status
+UI --> Administrator: Displays list of user\naccounts and their status
 deactivate Administrator #FFBBBB
 @enduml
