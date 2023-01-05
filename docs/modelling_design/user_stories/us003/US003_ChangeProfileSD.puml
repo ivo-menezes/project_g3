@@ -9,7 +9,7 @@ participant ": Services" as Services
 participant ": AccountList" as AccountList
 participant ": ProfileList" as ProfileList
 participant "profile : Profile" as Profile
-participant "account : ProfileAccount" as Account
+participant "account : Account" as Account
 
 
 

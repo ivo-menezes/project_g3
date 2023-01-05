@@ -18,7 +18,7 @@ Services -> List : registerAccount(name, email, phone, photo)
 activate List #FFBBBB
 
 'List -> List : emailExists(email)
-List -->" newAccount : ProfileAccount" ** : create(name, email, phone, photo)
+List -->" newAccount : Account" ** : create(name, email, phone, photo)
 List -> List : add(newAccount)
 List --> Services : Confirms new account registered
 Services --> Controller : Confirms new account registered
