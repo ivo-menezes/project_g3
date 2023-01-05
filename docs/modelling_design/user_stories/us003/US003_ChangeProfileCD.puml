@@ -1,0 +1,40 @@
+@startuml
+
+class ChangeProfileUI {}
+
+class ChangeProfileController {
+changeProfile(email, newProfileName)
+}
+
+class Services {
+accountList : AccountList
+profileList : ProfileList
+changeProfile(email, newProfileName)
+}
+
+class AccountList {
+accounts : List<Account>
+getAccount(email)
+}
+
+class ProfileList {
+getProfile(profileName)
+}
+
+class Account {
+name : String
+email : String
+phone : String
+photo : Photo
+profile : Profile
+isActive : boolean
+}
+
+ChangeProfileUI ..> ChangeProfileController
+ChangeProfileController ..> Services
+Services ..> AccountList
+Services ..> ProfileList
+Services ..> Account
+AccountList "1" --> "*" Account : has
+
+@enduml
