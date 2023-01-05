@@ -12,9 +12,6 @@ Profile <|-- :Manager:
 
 rectangle "Project Management System"{
 
-User -- (Sign in)
-User -- (Change password)
-User -- (Logout)
 User -- (Search project)
 
 :Administrator: as Administrator
