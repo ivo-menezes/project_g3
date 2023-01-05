@@ -16,14 +16,14 @@ participant "account : ProfileAccount" as Account
 activate Administrator #FFBBBB
 Administrator -> UI : Change user profile (user, profile)
 activate UI #FFBBBB
-UI -> Controller : changeProfile(email, profileName)
+UI -> Controller : changeProfile(email, newProfileName)
 activate Controller #FFBBBB
-Controller -> Services : changeProfile(email, profileName)
+Controller -> Services : changeProfile(email, newProfileName)
 activate Services #FFBBBB
-Services -> AccountList : getAccount(email)
+Services -> AccountList : account = getAccount(email)
 activate AccountList #FFBBBB
 deactivate AccountList
-Services -> ProfileList : getProfile(profileName)
+Services -> ProfileList : profile = getProfile(newProfileName)
 activate ProfileList #FFBBBB
 deactivate ProfileList #FFBBBB
 Services -> Account : setProfile(profile)
