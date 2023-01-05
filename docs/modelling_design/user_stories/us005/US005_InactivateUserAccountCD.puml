@@ -1,0 +1,35 @@
+@startuml
+
+class AccountStatusUI {
+}
+
+class Account {
+profile : Profile
+name : String
+email : String
+phone : String
+photo : Photo
+isActive : boolean
+}
+
+class AccountStatusController {
+changeAccountStatus(email, inactive)
+}
+
+class Services {
+accountList : AccountList
+changeAccountStatus(email, inactive)
+}
+
+class "AccountList" {
+accounts: List<Account>
+getAccount(email)
+}
+
+Services ..> Account
+Services ..> "AccountList"
+AccountList --> Account
+AccountStatusController ..> Services
+AccountStatusUI ..> AccountStatusController
+
+@enduml
