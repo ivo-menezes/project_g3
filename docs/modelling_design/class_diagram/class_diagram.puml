@@ -1,14 +1,46 @@
 @startuml
-skinparam linetype ortho
 
-class "ProfileAccount" as Account
-class "RegisterUserController" as ResController
-class "ChangeProfileController" as ChangeController
-class "ListController"
-class "StatusController"
+class Profile {
+name : String
+}
 
-note "Access restricted to Admin Profile" as N2
-Account .. N2
+class ProfileList {
+profiles : List<Profile>
+save(profile)
+getProfile(profileName)
+}
+
+class ListAccountsController{
+listAccounts()
+}
+
+class CreateProfileController {
+createProfile(profileName)
+}
+
+class RegisterAccountController {
+createProfile(profileName)
+registerAccount(name, email, phone, photo)
+}
+
+class ChangeProfileController {
+changeProfile(email, newProfileName)
+}
+
+class AccountStatusController {
+changeAccountStatus(email, inactive)
+}
+
+class Services {
+accountList : AccountList
+profileList: ProfileList
+listAccounts()
+createProfile(profileName)
+registerAccount(name, email, phone, photo)
+changeProfile(email, newProfileName)
+changeAccountStatus(email, inactive)
+
+}
 
 class Account {
 profile : Profile
@@ -17,32 +49,38 @@ email : String
 phone : String
 photo : Photo
 isActive : boolean
-create(name, email, phone, photo)
-changeProfile(email, profile)
-listUserAccounts()
-changeStatus(email)
+inactivateAccount()
 }
 
-class ResController {
-registerUser(name, email, phone, photo)
+class AccountList {
+accounts: List<Account>
+getAccountAtIndex(index)
+registerAccount(name, email, phone, photo)
+save(newAccount)
+getAccount(email)
 }
 
-class ChangeController {
-changeProfile(email, profile)
-profileCheck(email, profile)
+class AccountDTO {
+email : String
+isActive : boolean
+create(email, status)
 }
 
-class ListController {
-listUserAccounts()
-}
+Services ..> Account
+Services ..> AccountList
+Services --> AccountDTO
 
-class StatusController {
-changeStatus(email)
-}
+AccountList --> Account
 
-Account <-- Account
-Account <.. ResController
-Account <.. ChangeController
-Account <.. ListController
-Account <..StatusController
+UI ..> ListAccountsController
+UI ..> CreateProfileController
+UI ..> RegisterAccountController
+UI ..> ChangeProfileController
+UI ..> AccountStatusController
+
+ListAccountsController ..> Services
+CreateProfileController ..> Services
+RegisterAccountController ..> Services
+ChangeProfileController..> Services
+AccountStatusController ..> Services
 @enduml
