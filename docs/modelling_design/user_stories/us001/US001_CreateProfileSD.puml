@@ -8,7 +8,7 @@ participant ": Services" as Services
 participant ": ProfileList" as List
 
 activate Administrator #FFBBBB
-Administrator ->  UI : Create Profile (profile name)
+Administrator ->  UI : Create profile (profile name)
 activate UI #FFBBBB
 UI -> Controller : createProfile(profileName)
 activate Controller #FFBBBB
@@ -16,11 +16,15 @@ Controller -> Services : createProfile(profileName)
 activate Services #FFBBBB
 Services -> List : createProfile(profileName)
 activate List #FFBBBB
-
-List -->"profile : Profile" **
+'List -> List : profileNameExists(profileName)
+List -->"profile : Profile" ** : create(profileName)
 List -> List : add(profile)
-
-Services --> Controller : Confirms Profile creation
-Controller --> UI : Confirms Profile creation
-UI --> Administrator : Confirms Profile creation
+List --> Services : Confirms profile creation
+deactivate List
+Services --> Controller : Confirms profile creation
+deactivate Services
+Controller --> UI : Confirms profile creation
+deactivate Controller
+UI --> Administrator : Confirms profile creation
+deactivate UI
 @enduml
