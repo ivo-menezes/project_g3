@@ -1,7 +1,6 @@
 @startuml
 
-class ListAccountsUI {
-}
+class ListAccountsUI {}
 
 class ListAccountsController{
 listAccounts()
@@ -32,11 +31,12 @@ isActive : boolean
 create(email, status)
 }
 
-AccountList --> Account
+AccountList "1" --> "*" Account : has
 Services ..> Account
 Services ..> AccountList
 ListAccountsController ..> Services
 ListAccountsUI ..> ListAccountsController
-Services --> AccountDTO
+Services ..> AccountDTO
+AccountDTO ..> Account
 
 @enduml
