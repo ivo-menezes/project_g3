@@ -1,0 +1,30 @@
+@startuml
+
+class CreateProfileUI {
+}
+
+class CreateProfileController {
+createProfile(profileName)
+}
+
+class Services {
+profileList : ProfileList
+createProfile(profileName)
+}
+
+class ProfileList {
+profiles : List<Profile>
+save(newProfile)
+}
+
+class Profile {
+name : String
+}
+
+CreateProfileUI ..> CreateProfileController
+CreateProfileController ..> Services
+Services ..> ProfileList
+Services ..> Profile
+ProfileList "1" --> "*" Profile : has
+
+@enduml
