@@ -18,11 +18,13 @@ User -- (Logout)
 User -- (Search project)
 
 :Administrator: as Administrator
+Administrator -- (Create profile)
 Administrator -- (Register users)
-Administrator -- (List all system users)
+Administrator -- (List all accounts)
 Administrator -- (Search for users)
-Administrator -- (Associate profiles with the users)
-Administrator -- (Edit other user account information \n including activating/inactivating)
+Administrator -- (Change user profile)
+Administrator -- (Inactivate user account)
+Administrator -- (Activate user account)
 
 :Manager: as Manager
 Manager -- (Create projects)
