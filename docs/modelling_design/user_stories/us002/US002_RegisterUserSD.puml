@@ -26,6 +26,9 @@ deactivate List
 'List -> List : add(newAccount)
 'List --> Services : Confirms new account registration
 Services --> Controller : Confirms new account registration
+deactivate Services
 Controller --> UI : Confirms new account registration
+deactivate Controller
 UI --> Administrator : Confirms new account registration
+deactivate UI
 @enduml
