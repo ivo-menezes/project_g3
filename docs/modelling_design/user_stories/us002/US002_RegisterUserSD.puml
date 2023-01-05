@@ -5,7 +5,9 @@ actor Administrator  as Administrator
 participant ": RegisterAccountUI" as UI
 participant ": RegisterAccountController" as Controller
 participant ": Services" as Services
-participant " newAccount : Account"
+participant ": ProfileList" as ProfileList
+participant " defaultProfile : Profile"
+participant " newAccount : Account" as newAccount
 participant ": AccountList" as List
 
 activate Administrator #FFBBBB
@@ -15,7 +17,10 @@ UI -> Controller : registerAccount(name, email, phone, photo)
 activate Controller #FFBBBB
 Controller -> Services : registerAccount(name, email, phone, photo)
 activate Services #FFBBBB
-Services -->" newAccount : Account" ** : newAccount = create(name, email, phone, photo)
+Services -> ProfileList : defaultProfile = getProfile("User")
+activate ProfileList #FFBBBB
+deactivate ProfileList
+Services --> newAccount ** : newAccount = create(name, email, phone, photo, defaultProfile)
 Services -> List : save(newAccount)
 
 activate List #FFBBBB

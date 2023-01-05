@@ -1,0 +1,48 @@
+@startuml
+
+class RegisterAccountUI {}
+
+class RegisterAccountController {
+registerAccount(name, email, phone)
+registerAccount(name, email, phone, photo)
+}
+
+class Services {
+accountList : AccountList
+profileList : ProfileList
+registerAccount(name, email, phone)
+registerAccount(name, email, phone, photo)
+}
+
+class ProfileList {
+profiles: List<Profile>
+}
+
+class AccountList {
+accounts : List<Account>
+save(newAccount)
+}
+
+class Profile {
+name: String
+}
+
+class Account {
+name : String
+email : String
+phone : String
+photo : Photo
+profile : Profile
+isActive : boolean
+}
+
+RegisterAccountUI ..> RegisterAccountController
+RegisterAccountController ..> Services
+Services ..> ProfileList
+Services ..> Profile
+Services ..> AccountList
+Services ..> Account
+Account ..> Profile
+AccountList "1" --> "*" Account : has
+
+@enduml
