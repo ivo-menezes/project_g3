@@ -3,8 +3,8 @@
 hide footbox
 
 actor Administrator  as Administrator #white
-participant ": StatusUI" as UI #white
-participant ": StatusController" as Controller #white
+participant ": AccountStatusUI" as UI #white
+participant ": AccountStatusController" as Controller #white
 participant ": Services" as Services #white
 participant ": AccountList" as AccountList #white
 participant "account : Account" as Account #white
@@ -14,9 +14,9 @@ Administrator ->  UI : Choose account and request inactivation (email)
 activate UI #FFBBBB
 'activate Controller #FFBBBB
 activate Administrator #FFBBBB
-UI -> Controller: changeStatus(email)
+UI -> Controller: changeAccountStatus(email, inactive)
 activate Controller #FFBBBB
-Controller -> Services: changeStatus(email)
+Controller -> Services: changeAccountStatus(email, inactive)
 activate Services #FFBBBB
 Services -> AccountList: account = getAccount(email)
 activate AccountList #FFBBBB
