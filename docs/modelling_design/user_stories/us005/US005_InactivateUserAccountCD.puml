@@ -28,7 +28,7 @@ getAccount(email)
 
 Services ..> Account
 Services ..> "AccountList"
-AccountList --> Account
+AccountList "1" --> "*" Account : has
 AccountStatusController ..> Services
 AccountStatusUI ..> AccountStatusController
 
