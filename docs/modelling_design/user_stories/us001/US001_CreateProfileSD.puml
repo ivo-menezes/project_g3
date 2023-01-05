@@ -5,7 +5,7 @@ actor Administrator  as Administrator
 participant ": CreateProfileUI" as UI
 participant ": CreateProfileController" as Controller
 participant ": Services" as Services
-participant "profile : Profile" as profile
+participant "newProfile : Profile" as profile
 participant ": ProfileList" as List
 
 activate Administrator #FFBBBB
@@ -15,8 +15,8 @@ UI -> Controller : createProfile(profileName)
 activate Controller #FFBBBB
 Controller -> Services : createProfile(profileName)
 activate Services #FFBBBB
-Services --> profile ** : profile = create(profileName)
-Services -> List : add(profile)
+Services --> profile ** : newProfile = create(profileName)
+Services -> List : save(newProfile)
 'List -> List : profileNameExists(profileName)
 
 activate List #FFBBBB

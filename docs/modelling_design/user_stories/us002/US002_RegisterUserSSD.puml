@@ -1,6 +1,6 @@
 @startuml
 
 Administrator -> System: Register user (name, email, phone, photo)
-Administrator <-- System: new account registered
+Administrator <-- System: Confirms new account registration
 
 @enduml

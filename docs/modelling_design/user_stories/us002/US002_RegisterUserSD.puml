@@ -5,6 +5,7 @@ actor Administrator  as Administrator
 participant ": RegisterAccountUI" as UI
 participant ": RegisterAccountController" as Controller
 participant ": Services" as Services
+participant " newAccount : Account"
 participant ": AccountList" as List
 
 activate Administrator #FFBBBB
@@ -14,14 +15,17 @@ UI -> Controller : registerAccount(name, email, phone, photo)
 activate Controller #FFBBBB
 Controller -> Services : registerAccount(name, email, phone, photo)
 activate Services #FFBBBB
-Services -> List : registerAccount(name, email, phone, photo)
+Services -->" newAccount : Account" ** : newAccount = create(name, email, phone, photo)
+Services -> List : save(newAccount)
+
 activate List #FFBBBB
+deactivate List
 
 'List -> List : emailExists(email)
-List -->" newAccount : Account" ** : create(name, email, phone, photo)
-List -> List : add(newAccount)
-List --> Services : Confirms new account registered
-Services --> Controller : Confirms new account registered
-Controller --> UI : Confirms new account registered
-UI --> Administrator : Confirms new account registered
+
+'List -> List : add(newAccount)
+'List --> Services : Confirms new account registration
+Services --> Controller : Confirms new account registration
+Controller --> UI : Confirms new account registration
+UI --> Administrator : Confirms new account registration
 @enduml
