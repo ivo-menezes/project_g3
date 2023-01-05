@@ -17,7 +17,7 @@ Controller -> Services : createProfile(profileName)
 activate Services #FFBBBB
 Services --> profile ** : newProfile = create(profileName)
 Services -> List : save(newProfile)
-'List -> List : profileNameExists(profileName)
+
 
 activate List #FFBBBB
 deactivate List
