@@ -44,5 +44,6 @@ Services ..> AccountList
 Services ..> Account
 Account ..> Profile
 AccountList "1" --> "*" Account : has
+ProfileList "1" --> "*" Profile : has
 
 @enduml
