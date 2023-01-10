@@ -3,7 +3,7 @@
 class RegisterAccountUI {}
 
 class RegisterAccountController {
-services : Services
+
 registerAccount(name, email, phone)
 registerAccount(name, email, phone, photo)
 }
@@ -16,11 +16,9 @@ registerAccount(name, email, phone, photo)
 }
 
 class ProfileList {
-profiles: List<Profile>
 }
 
 class AccountList {
-accounts : List<Account>
 save(newAccount)
 }
 
@@ -37,14 +35,14 @@ profile : Profile
 isActive : boolean
 }
 
-RegisterAccountUI o-- RegisterAccountController
-RegisterAccountController o-- Services
-Services o-- ProfileList
+RegisterAccountUI "     1" o-- "        1" RegisterAccountController
+RegisterAccountController "     1" o-- "        1" Services
+Services "                               1" o-- "        1" ProfileList
 Services ..> Profile
-Services o-- AccountList
+Services "        1" o-- "             1" AccountList
 Services ..> Account
 Account ..> Profile
-AccountList "1" *-- "*" Account : has
-ProfileList "1" *-- "*" Profile : has
+AccountList "  1" *-- "   *" Account : has
+ProfileList "1" *-- "                  *" Profile : has
 
 @enduml
