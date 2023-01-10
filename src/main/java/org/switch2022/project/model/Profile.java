@@ -17,4 +17,8 @@ public class Profile {
             isValid = true;
         } return isValid;
     }
+
+    public String getProfileName() {
+        return profileName;
+    }
 }
