@@ -20,8 +20,8 @@ Services -> List : save(newProfile)
 
 
 activate List #FFBBBB
-deactivate List
 
+List --> Services : Confirms profile creation
 deactivate List
 Services --> Controller : Confirms profile creation
 deactivate Services
