@@ -21,10 +21,10 @@ class Profile {
 name : String
 }
 
-CreateProfileUI ..> CreateProfileController
-CreateProfileController ..> Services
-Services ..> ProfileList
+CreateProfileUI o-- CreateProfileController
+CreateProfileController o-- Services
+Services o-- ProfileList
 Services ..> Profile
-ProfileList "1" --> "*" Profile : has
+ProfileList "1" *-- "*" Profile : has
 
 @enduml
