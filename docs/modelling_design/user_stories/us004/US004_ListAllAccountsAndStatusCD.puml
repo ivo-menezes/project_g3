@@ -3,6 +3,7 @@
 class ListAccountsUI {}
 
 class ListAccountsController{
+services : Services
 listAccounts()
 }
 
@@ -28,14 +29,13 @@ getAccountAtIndex(index)
 class AccountDTO {
 email : String
 isActive : boolean
-create(email, status)
 }
 
-AccountList "1" --> "*" Account : has
+AccountList "1" *-- "*" Account : has
 Services ..> Account
-Services ..> AccountList
-ListAccountsController ..> Services
-ListAccountsUI ..> ListAccountsController
+Services o-- AccountList
+ListAccountsController o-- Services
+ListAccountsUI o-- ListAccountsController
 Services ..> AccountDTO
 AccountDTO ..> Account
 
