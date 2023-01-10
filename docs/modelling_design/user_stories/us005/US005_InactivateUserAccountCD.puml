@@ -10,6 +10,7 @@ email : String
 phone : String
 photo : Photo
 isActive : boolean
+inactivateAccount()
 }
 
 class AccountStatusController {
