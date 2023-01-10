@@ -28,6 +28,7 @@ activate ProfileList #FFBBBB
 deactivate ProfileList #FFBBBB
 Services -> Account : setProfile(profile)
 activate Account #FFBBBB
+Account --> Services : Confirms profile change
 deactivate Account #FFBBBB
 
 Services --> Controller : Confirms profile change
