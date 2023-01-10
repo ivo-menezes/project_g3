@@ -3,6 +3,7 @@
 class RegisterAccountUI {}
 
 class RegisterAccountController {
+services : Services
 registerAccount(name, email, phone)
 registerAccount(name, email, phone, photo)
 }

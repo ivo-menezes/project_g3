@@ -4,6 +4,7 @@ class CreateProfileUI {
 }
 
 class CreateProfileController {
+services : Services
 createProfile(profileName)
 }
 
