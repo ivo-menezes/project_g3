@@ -24,6 +24,7 @@ Services --> newAccount ** : newAccount = create(name, email, phone, photo, defa
 Services -> List : save(newAccount)
 
 activate List #FFBBBB
+List --> Services : Confirms new account registration
 deactivate List
 
 'List -> List : emailExists(email)
