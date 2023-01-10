@@ -3,12 +3,12 @@
 class ListAccountsUI {}
 
 class ListAccountsController{
-services : Services
+'services : Services
 listAccounts()
 }
 
 class Services {
-accountList : AccountList
+'accountList : AccountList
 listAccounts()
 }
 
@@ -22,7 +22,7 @@ isActive : boolean
 }
 
 class AccountList {
-accounts: List<Account>
+'accounts: List<Account>
 getAccountAtIndex(index)
 }
 
@@ -33,9 +33,9 @@ isActive : boolean
 
 AccountList "1" *-- "*" Account : has
 Services ..> Account
-Services o-- AccountList
-ListAccountsController o-- Services
-ListAccountsUI o-- ListAccountsController
+Services "1" o-- "1" AccountList
+ListAccountsController "1" o-- "1" Services
+ListAccountsUI "1" o-- "1" ListAccountsController
 Services ..> AccountDTO
 AccountDTO ..> Account
 
