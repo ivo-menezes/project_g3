@@ -21,6 +21,7 @@ activate AccountList #FFBBBB
 deactivate AccountList
 Services -> Account: activateAccount()
 activate Account #FFBBBB
+Account --> Services : Successfully activated
 deactivate Account
 Services --> Controller : Successfully activated
 deactivate Services
