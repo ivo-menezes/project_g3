@@ -28,4 +28,17 @@ class AccountTest {
     void checkIfNameIsNull(){
 
     }
+
+    @Test
+    void checkIfProfileIsSet() {
+        // arrange
+        Profile firstProfile = new Profile("User");
+        Profile secondProfile = new Profile("Manager");
+        Account account = new Account("Joana","xxxxx@gmail.com","22255588", firstProfile);
+        Account testAccount = new Account("Joana", "xxxxx@gmail.com","22255588", secondProfile);
+        // act
+        account.setProfile(secondProfile);
+        // assert
+        assertEquals(testAccount, account);
+    }
 }

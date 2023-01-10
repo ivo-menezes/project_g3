@@ -43,4 +43,8 @@ public class Account {
     public int hashCode() {
         return Objects.hash(name, email, phone, photo, profile, isActive);
     }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 }
