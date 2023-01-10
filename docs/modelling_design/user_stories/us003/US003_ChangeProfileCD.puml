@@ -3,6 +3,7 @@
 class ChangeProfileUI {}
 
 class ChangeProfileController {
+services : Services
 changeProfile(email, newProfileName)
 }
 
@@ -30,11 +31,11 @@ profile : Profile
 isActive : boolean
 }
 
-ChangeProfileUI ..> ChangeProfileController
-ChangeProfileController ..> Services
-Services ..> AccountList
-Services ..> ProfileList
+ChangeProfileUI o-- ChangeProfileController
+ChangeProfileController o-- Services
+Services o-- AccountList
+Services o-- ProfileList
 Services ..> Account
-AccountList "1" --> "*" Account : has
+AccountList "1" *-- "*" Account : has
 
 @enduml
