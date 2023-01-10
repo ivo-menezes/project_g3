@@ -36,14 +36,14 @@ profile : Profile
 isActive : boolean
 }
 
-RegisterAccountUI ..> RegisterAccountController
-RegisterAccountController ..> Services
-Services ..> ProfileList
+RegisterAccountUI o-- RegisterAccountController
+RegisterAccountController o-- Services
+Services o-- ProfileList
 Services ..> Profile
-Services ..> AccountList
+Services o-- AccountList
 Services ..> Account
 Account ..> Profile
-AccountList "1" --> "*" Account : has
-ProfileList "1" --> "*" Profile : has
+AccountList "1" *-- "*" Account : has
+ProfileList "1" *-- "*" Profile : has
 
 @enduml
