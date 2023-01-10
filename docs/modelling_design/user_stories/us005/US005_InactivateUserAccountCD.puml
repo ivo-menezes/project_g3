@@ -29,7 +29,7 @@ getAccount(email)
 AccountStatusUI o-- AccountStatusController
 AccountStatusController o-- Services
 Services ..> Account
-Services ..> "AccountList"
+Services o-- "AccountList"
 AccountList "1" *-- "*" Account : has
 
 @enduml
