@@ -23,14 +23,13 @@ changeAccountStatus(email, active)
 }
 
 class "AccountList" {
-accounts: List<Account>
 getAccount(email)
 }
 
 Services ..> Account
-Services ..> "AccountList"
-AccountList "1" --> "*" Account : has
-AccountStatusController ..> Services
-AccountStatusUI ..> AccountStatusController
+Services o-- "AccountList"
+AccountList "1" *-- "*" Account : has
+AccountStatusController o-- Services
+AccountStatusUI o-- AccountStatusController
 
 @enduml
