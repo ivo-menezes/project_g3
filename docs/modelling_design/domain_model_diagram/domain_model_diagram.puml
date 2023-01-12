@@ -32,6 +32,13 @@ Account "1" -- " *  " Role : performed \n by User <
 'Profile "1"-- "*"Project : created by Manager <
 'Profile"1" -- "*"User : performed by User <
 
+Object Typology {
+Designation
+}
+
+Account "1" -left- "*" Typology : created by Admin <
+Typology "1" -- "*" Project : has <
+
 
 Object Project {
 Code
@@ -43,7 +50,6 @@ Sprint Duration
 Number of Planned Sprints
 Customer
 Business Sector
-Typology
 Project Status
 Budget
 ' Report could be its own conceptual class but we are not modelling with detail yet
