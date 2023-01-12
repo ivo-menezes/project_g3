@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"Administrator"
+
+rectangle "Project Management System"{
+Administrator -- (Create Project Typology)
+}
+
+@enduml
