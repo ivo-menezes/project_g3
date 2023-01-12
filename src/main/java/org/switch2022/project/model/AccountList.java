@@ -3,11 +3,11 @@ package org.switch2022.project.model;
 import java.util.ArrayList;
 import java.util.List;
 
-    public class AccountList {
+public class AccountList {
         private List<Account> accountList;
 
         public AccountList(){
-            accountList = new ArrayList<>();
+            this.accountList = new ArrayList<>();
         }
         public AccountList(List<Account> accountList){
             if (accountList == null) {
@@ -45,4 +45,5 @@ import java.util.List;
 
             return account;
         }
+
 }
