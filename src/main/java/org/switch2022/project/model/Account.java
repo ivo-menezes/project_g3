@@ -11,7 +11,7 @@ public class Account {
     private boolean isActive = true;
 
     public Account(String name, String email, String phone, Profile profile) {
-        if(name == null || email == null || phone == null){
+        if (name == null || email == null || phone == null) {
             throw new IllegalArgumentException("Name/Email/Phone are mandatory details.");
         }
         this.name = name;
@@ -21,7 +21,7 @@ public class Account {
     }
 
     public Account(String name, String email, String phone, String photo, Profile profile) {
-        if(name == null || email == null || phone == null || photo == null){
+        if (name == null || email == null || phone == null || photo == null) {
             throw new IllegalArgumentException("Name/Email/Phone are mandatory details.");
         }
         this.name = name;
@@ -36,13 +36,18 @@ public class Account {
      * @param account
      * @return email
      */
-    public String seeEmail(Account account){
+    public String seeEmail(Account account) {
         return email;
     }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Account)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Account)) {
+            return false;
+        }
         Account account = (Account) o;
         return isActive == account.isActive && name.equals(account.name) && email.equals(account.email) && phone.equals(account.phone) && Objects.equals(photo, account.photo) && profile.equals(account.profile);
     }
@@ -55,4 +60,22 @@ public class Account {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+    public void inactivateAccount() {
+        this.isActive = false;
+    }
+
+    public void activateAccount() {
+        this.isActive = true;
+    }
+
+    public boolean getStatus() {
+        // Should all public get methods return a copy of attributes, instead
+        // of the attributes themselves?
+        boolean cloneIsActive = isActive;
+
+        return cloneIsActive;
+    }
+
+
 }

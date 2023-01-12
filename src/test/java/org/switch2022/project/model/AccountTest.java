@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,5 +51,28 @@ class AccountTest {
         String email = account.seeEmail(account);
 
         assertEquals(expected, email);
+    }
+    @Test
+    @DisplayName("ensure status is inactivated")
+    void ensureStatusIsInactived(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.inactivateAccount();
+        // assert
+        assertFalse(account.getStatus());
+    }
+
+    @Test
+    @DisplayName("ensure status is reactivated")
+    void ensureStatusIsReactivated(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.activateAccount();
+        // assert
+        assertTrue(account.getStatus());
     }
 }
