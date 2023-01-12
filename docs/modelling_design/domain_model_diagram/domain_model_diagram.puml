@@ -36,9 +36,15 @@ Object Typology {
 Designation
 }
 
-Account "1" -left- "*" Typology : created by Admin <
+Account "1" -- "*" Typology : created by Admin <
 Typology "1" -- "*" Project : has <
 
+Object "Business Sector" as BS {
+Designation
+}
+
+Account "1" -left- "*" BS : created by Admin <
+BS "1" -- "                               *" Project : has <
 
 Object Project {
 Code
@@ -49,7 +55,6 @@ End Date
 Sprint Duration
 Number of Planned Sprints
 Customer
-Business Sector
 Project Status
 Budget
 ' Report could be its own conceptual class but we are not modelling with detail yet
