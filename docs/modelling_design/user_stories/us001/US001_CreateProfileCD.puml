@@ -4,26 +4,24 @@ class CreateProfileUI {
 }
 
 class CreateProfileController {
-createProfile(profileName)
-}
-
-class Services {
 profileList : ProfileList
 createProfile(profileName)
 }
 
+
 class ProfileList {
-save(newProfile)
+profileList : List<Profile>
+createProfile(profileName)
+validateProfileName(profileName)
+add(newProfile)
 }
 
 class Profile {
 name : String
 }
 
-CreateProfileUI "        1" o-- "         1" CreateProfileController
-CreateProfileController "        1" o-- "         1" Services
-Services "                    1" o-- "         1" ProfileList
-Services ..> Profile
-ProfileList "        1" *-- "                      *" Profile : has
+CreateProfileUI "1" o-- "1" CreateProfileController
+CreateProfileController "1" o-- "1" ProfileList
+ProfileList "1 " *-- "    *" Profile
 
 @enduml

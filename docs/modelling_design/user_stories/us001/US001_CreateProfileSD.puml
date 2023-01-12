@@ -1,30 +1,29 @@
 @startuml
 !theme plain
 hide footbox
+
 actor Administrator  as Administrator
 participant ": CreateProfileUI" as UI
 participant ": CreateProfileController" as Controller
-participant ": Services" as Services
-participant "newProfile : Profile" as profile
 participant ": ProfileList" as List
+participant "newProfile : Profile" as profile
 
 activate Administrator #FFBBBB
 Administrator ->  UI : Create profile (profile name)
+
 activate UI #FFBBBB
 UI -> Controller : createProfile(profileName)
-activate Controller #FFBBBB
-Controller -> Services : createProfile(profileName)
-activate Services #FFBBBB
-Services --> profile ** : newProfile = create(profileName)
-Services -> List : save(newProfile)
 
+activate Controller #FFBBBB
+Controller -> List : createProfile(profileName)
 
 activate List #FFBBBB
-
-List --> Services : Confirms profile creation
+List -> List : validateProfileName(profileName)
+List --> profile ** : newProfile = create(profileName)
+List -> List : add(newProfile)
+List --> Controller : Confirms profile creation
 deactivate List
-Services --> Controller : Confirms profile creation
-deactivate Services
+
 Controller --> UI : Confirms profile creation
 deactivate Controller
 UI --> Administrator : Confirms profile creation
