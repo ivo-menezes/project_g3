@@ -34,8 +34,8 @@ Percentage of Allocation
 'Account <|-- User
 Account "        1"-right- "    1" Profile : has >
 Account "1"-- "1" Profile : controlled by Admin <
-Account "1   " -- "*" Project : created \n by Manager <
-Account "1" -right- " *  " PR : performed \n by User <
+Account "1   " --- "*" Project : controlled \n by Manager <
+Account "1" -right- " 1  " PR : has <
 PR "1..*" -left- "1" Project : involves <
 'Profile"1" -- "*"Account : controlled by \n administrator <
 'Profile "1"-- "*"Project : created by Manager <
