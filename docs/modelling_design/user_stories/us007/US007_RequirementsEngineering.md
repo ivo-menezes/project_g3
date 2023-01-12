@@ -27,8 +27,8 @@ Each project must have at least the following information:[…] Typology (Fixed 
 
 **Input Data:**
 
-- Select typology between Fixed Cost or Time and materials 
+- Add new project typology.
 
 **Output Data:**
 
-- Information registered successfully
+- New typology added successfully.

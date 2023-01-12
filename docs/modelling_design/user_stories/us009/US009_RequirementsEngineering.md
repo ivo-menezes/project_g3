@@ -26,8 +26,8 @@ Each project must have at least the following information:[…] Customer;
 
 **Input Data:**
 
-- Enter the costumer designation.
+- Add a new costumer designation in project.
 
 **Output Data:**
 
-- Information registered successfully.
+- Costumer designation added successfully.

@@ -26,8 +26,8 @@ Each project must have at least the following information:[…] Business Sector;
 
 **Input Data:**
 
-- Define the business sector of the project
+- Add a new business sector in project.
 
 **Output Data:**
 
-- Information registered successfully
+- New business sector added successfully.
