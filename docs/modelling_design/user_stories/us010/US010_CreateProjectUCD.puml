@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"Manager"
+
+rectangle "Project Management System"{
+"Manager" -- (Register/Create New Project)
+}
+
+@enduml
