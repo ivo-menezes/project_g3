@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"Manager"
+
+rectangle "Project Management System"{
+"Manager" -- (Associate User as Team Member of a Project)
+}
+
+@enduml
