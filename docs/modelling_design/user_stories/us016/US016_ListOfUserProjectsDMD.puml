@@ -1,0 +1,28 @@
+@startuml
+skinparam style strictuml
+left to right direction
+skinparam groupInheritance 3
+
+ class "Account" {
+   Name
+   Phone number
+   Email
+   Photo: [0..1]
+   Account Status: [Active, Inactive]
+ }
+
+ class Project {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Project Status
+Budget
+Report
+ }
+
+"Account" "1..*" -- "*" Project: User's projects listed by himself  <
+@enduml
