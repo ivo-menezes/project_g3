@@ -17,7 +17,7 @@ Object Profile {
 Name
 }
 
-Object "Project Resources" as PR {
+Object "Project Resource" as PR {
 Start Date
 End Date
 Percentage of Allocation
@@ -123,16 +123,16 @@ Percentage of Execution
 }
 
 
-Profile "1" -down- "  2..*" Profile: Created by Admin >
-Project "1" -down- "*" Sprint: Entails >
-Project "1" -left- "1" PB: Includes >
-PB "1" -down- "*" US: Collects >
-Sprint "1" -down- "1" SB: Defines >
-US "*" -right- "                      1" SB: Picked into >
+Profile "1" -down- "  2..*" Profile: created by Admin >
+Project "1" -down- "*" Sprint: entails >
+Project "1" -left- "1" PB: includes >
+PB "1" -down- "*" US: collects >
+Sprint "1" -down- "1" SB: defines >
+US "*" -right- "                      1" SB: picked into >
 
 PR "1" -right- "*" Role : plays >
-SB "1" -right- "   1..*" Task: Contains >
-PR "1" -down- "*" Task: Works on >
+SB "1" -right- "   1..*" Task: contains >
+PR "1" -down- "*" Task: works on >
 'note on link: The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM.
 
 
