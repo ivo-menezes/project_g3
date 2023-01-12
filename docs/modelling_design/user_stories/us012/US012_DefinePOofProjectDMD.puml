@@ -3,22 +3,35 @@ skinparam style strictuml
 left to right direction
 skinparam groupInheritance 3
 
- class "Account" {
-   Name
-   Phone number
-   Email
-   Photo: [0..1]
-   'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
-   Account Status: [Active, Inactive]
- }
+class "Account" {
+Name
+Phone number
+Email
+Photo: [0..1]
+'the [0..1] in Photo indicates an optional value, see Craig 2004, p.121
+Account Status: [Active, Inactive]
+}
 
- class Role {
-Role Name
+class "Project Resource" {
 Start Date
 End Date
-Cost Per Hour
 Percentage of Allocation
 }
 
-"Account" "1" -- "*" Role: Product Owner defined by Manager <
+class "Project" {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Project Status
+Budget
+Report
+}
+
+"Account" "1" -down- "1" "Project Resource": defined as Product Owner by Manager   <
+"Project" "1" -up- "1" "Project Resource": allocated by Manager  <
+
 @enduml
