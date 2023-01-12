@@ -41,4 +41,14 @@ class AccountTest {
         // assert
         assertEquals(testAccount, account);
     }
+    @Test
+    void testIfGetsEmail(){
+        Profile firstProfile = new Profile("User");
+        Account account = new Account("Joana","xxxxx@gmail.com","22255588", firstProfile);
+        String expected = "xxxxx@gmail.com";
+
+        String email = account.seeEmail(account);
+
+        assertEquals(expected, email);
+    }
 }

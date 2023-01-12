@@ -3,11 +3,11 @@ package org.switch2022.project.model;
 import java.util.Objects;
 
 public class Account {
-    private String name;
-    private String email;
-    private String phone;
-    private String photo;
-    private Profile profile;
+    private static String name;
+    private static String email;
+    private static String phone;
+    private static String photo;
+    private static Profile profile;
     private boolean isActive = true;
 
     public Account(String name, String email, String phone, Profile profile) {
@@ -31,6 +31,14 @@ public class Account {
         this.profile = profile;
     }
 
+    /***
+     * This should return an email from a specific account given.
+     * @param account
+     * @return email
+     */
+    public String seeEmail(Account account){
+        return email;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

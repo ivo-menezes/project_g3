@@ -12,6 +12,17 @@ class ProfileListTest {
 
     @Test
     void getProfile() {
+        ProfileList profileList = new ProfileList();
+        Profile profile = new Profile("Administrator");
+        Profile profileMan = new Profile("Manager");
+        String prof = "Administrator";
+
+        profileList.add(profile);
+        profileList.add(profileMan);
+
+        Profile result = profileList.getProfile(prof);
+
+        assertEquals(profile, result);
     }
 
     @Test
