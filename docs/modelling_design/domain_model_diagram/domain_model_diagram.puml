@@ -104,9 +104,9 @@ Project "1" -down- "*" Sprint: Entails >
 Project "1" -left- "1" PB: Includes >
 PB "1" -down- "*" US: Collects >
 Sprint "1" -down- "1" SB: Defines >
-US "*" -right- "1" SB: Picked into >
+US "*" -right- "                      1" SB: Picked into >
 
-Sprint "1" -right- "   1..*" Task: Implements >
+SB "1" -right- "   1..*" Task: Contains >
 Role "1" -down- "*" Task: Works on >
 'note on link: The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM.
 
