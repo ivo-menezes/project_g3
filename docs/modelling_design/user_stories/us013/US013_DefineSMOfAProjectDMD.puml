@@ -12,13 +12,28 @@ Photo: [0..1]
 Account Status: [Active, Inactive]
 }
 
-class Role {
-Role Name
+class "Project Resource" {
 Start Date
 End Date
-Cost Per Hour
 Percentage of Allocation
 }
 
-"Account" "1" -- "*" Role : Scrum Master defined by manager <
+class "Project" {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Project Status
+Budget
+Report
+}
+
+
+
+"Account" "1" -down- "1" "Project Resource": defined as Scrum Master by Manager   <
+"Project" "1" -up-"1" "Project Resource": allocated by Manager  <
+
 @enduml
