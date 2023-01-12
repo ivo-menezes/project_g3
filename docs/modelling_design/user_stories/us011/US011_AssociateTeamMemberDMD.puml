@@ -12,13 +12,32 @@ Photo: [0..1]
 Account Status: [Active, Inactive]
 }
 
-class Role {
-Role Name
+class "Project Resources" {
 Start Date
 End Date
-Cost Per Hour
 Percentage of Allocation
 }
 
-"Account" "1" -- "*" Role: Team Member associated by Manager <
+class "Project" {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Project Status
+Budget
+Report
+}
+
+class Role {
+Role Name
+Cost Per Hour
+}
+
+
+"Account" "1" -- "1" "Project Resources": associated as Team Member by Manager   <
+"Project" "1" -right-"1" "Project Resources": allocated by Manager  <
+"Project Resources" "1" -- "*" "Role": plays  >
 @enduml
