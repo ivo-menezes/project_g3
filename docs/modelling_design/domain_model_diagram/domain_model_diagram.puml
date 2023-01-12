@@ -1,5 +1,6 @@
 @startuml
 !theme plain
+'skinparam linetype polyline
 
 '--- part relevant to sprint 1
 
@@ -36,15 +37,22 @@ Object Typology {
 Designation
 }
 
-Account "1" -- "*" Typology : created by Admin <
+Account "1" -down-"*" Typology : created by Admin <
 Typology "1" -- "*" Project : has <
 
 Object "Business Sector" as BS {
 Designation
 }
 
-Account "1" -left- "*" BS : created by Admin <
+Account "1" -down- "*" BS : created by Admin <
 BS "1" -- "                               *" Project : has <
+
+Object Customer {
+Designation
+}
+
+Account "1" -down- "*" Customer : created by Admin <
+Customer "1" -- "                               *" Project : has <
 
 Object Project {
 Code
@@ -54,7 +62,6 @@ Start Date
 End Date
 Sprint Duration
 Number of Planned Sprints
-Customer
 Project Status
 Budget
 ' Report could be its own conceptual class but we are not modelling with detail yet
