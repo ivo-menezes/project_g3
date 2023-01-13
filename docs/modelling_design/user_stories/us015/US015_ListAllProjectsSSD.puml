@@ -1,0 +1,6 @@
+@startuml
+
+Manager -> System: Get projects ()
+Manager <-- System: projects
+
+@enduml
