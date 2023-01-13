@@ -1,0 +1,10 @@
+@startuml
+
+Manager -> System: Get Account  (email)
+Manager <-- System: Account
+Manager -> System: Get Project (projectCode)
+Manager <-- System: Project
+Manager -> System: Save human resource (email, projectCode, startDate, role)
+Manager <-- System: Resource successfully saved.
+
+@enduml
