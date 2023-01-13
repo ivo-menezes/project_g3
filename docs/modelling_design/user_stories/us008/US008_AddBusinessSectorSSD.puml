@@ -1,0 +1,7 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Administrator -> System: Requests to add new business sector
+Administrator <-- System: New business sector added successfully
+
+@enduml
