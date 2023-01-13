@@ -1,0 +1,7 @@
+
+@startuml
+
+User -> System: Requests list of users allocated projects
+User <-- System: Displays list of users allocated projects
+
+@enduml
