@@ -1,38 +1,45 @@
 @startuml
 !theme plain
 hide footbox
+
 actor Administrator  as Administrator
 participant ": RegisterAccountUI" as UI
 participant ": RegisterAccountController" as Controller
-participant ": Services" as Services
 participant ": ProfileList" as ProfileList
 participant " defaultProfile : Profile"
+participant ": AccountList" as AccountList
+participant "registerAccountDTO : RegisterAccountDTO" as DTO
 participant " newAccount : Account" as newAccount
-participant ": AccountList" as List
+
 
 activate Administrator #FFBBBB
 Administrator ->  UI : Register user (name, email, phone, photo)
+
 activate UI #FFBBBB
-UI -> Controller : registerAccount(name, email, phone, photo)
+UI -> Controller : registerAccount(registerAccountDTO)
+
 activate Controller #FFBBBB
-Controller -> Services : registerAccount(name, email, phone, photo)
-activate Services #FFBBBB
-Services -> ProfileList : defaultProfile = getProfile("User")
+Controller -> ProfileList : defaultProfile = getProfileByName("User")
+
 activate ProfileList #FFBBBB
 deactivate ProfileList
-Services --> newAccount ** : newAccount = create(name, email, phone, photo, defaultProfile)
-Services -> List : save(newAccount)
 
-activate List #FFBBBB
-List --> Services : Confirms new account registration
-deactivate List
+Controller -> AccountList : registerAccount(registerAccountDTO, defaultProfile)
 
-'List -> List : emailExists(email)
+activate AccountList #FFBBBB
+AccountList -> DTO : email = getEmail()
 
-'List -> List : add(newAccount)
-'List --> Services : Confirms new account registration
-Services --> Controller : Confirms new account registration
-deactivate Services
+activate DTO #FFBBBB
+deactivate DTO
+
+AccountList -> AccountList : isEmailInUse(email)
+
+AccountList --> newAccount ** : newAccount = create(registerAccountDTO, defaultProfile)
+AccountList -> AccountList : save(newAccount)
+
+AccountList --> Controller : Confirms new account registration
+deactivate AccountList
+
 Controller --> UI : Confirms new account registration
 deactivate Controller
 UI --> Administrator : Confirms new account registration
