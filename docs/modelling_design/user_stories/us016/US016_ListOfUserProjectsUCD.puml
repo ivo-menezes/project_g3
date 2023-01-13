@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"User"
+
+rectangle "Project Management System"{
+"User" -- (List projects I'm allocated to)
+}
+
+@enduml
