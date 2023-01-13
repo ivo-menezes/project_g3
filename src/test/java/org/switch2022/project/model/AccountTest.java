@@ -2,7 +2,6 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.controller.ChangeProfileController;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,7 +57,7 @@ class AccountTest {
         Account account = new Account("Joana","xxxxx@gmail.com","22255588", firstProfile);
         String expected = "xxxxx@gmail.com";
 
-        String email = account.getEmail(account);
+        String email = account.getEmail();
 
         assertEquals(expected, email);
     }

@@ -21,7 +21,7 @@ public class Account {
     }
 
     public Account(String name, String email, String phone, String photo, Profile profile) {
-        if (name == null || email == null || phone == null || photo == null) {
+        if (name == null || email == null || phone == null) {
             throw new IllegalArgumentException("Name/Email/Phone are mandatory details.");
         }
         this.name = name;
@@ -31,12 +31,23 @@ public class Account {
         this.profile = profile;
     }
 
+    public Account(RegisterAccountDTO dto, Profile profile) {
+        if (dto == null || profile == null) {
+            throw new IllegalArgumentException("Account information must not be null");
+        }
+
+        this.name = dto.name;
+        this.email = dto.email;
+        this.phone = dto.phone;
+        this.photo = dto.photo;
+        this.profile = profile;
+    }
+
     /***
      * This should return an email from a specific account given.
-     * @param account
      * @return email
      */
-    public String getEmail(Account account) {
+    public String getEmail() {
         return this.email;
     }
 
