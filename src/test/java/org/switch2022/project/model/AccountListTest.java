@@ -3,6 +3,8 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -11,7 +13,7 @@ class AccountListTest {
     @Test
     void addAccount() {
         Profile profile = new Profile("User");
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
         AccountList accountList = new AccountList();
 
         assertTrue(accountList.addAccount(account));
@@ -27,8 +29,8 @@ class AccountListTest {
     void getAccount() {
         // arrange
         Profile profile = new Profile("User");
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
-        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profile);
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
         AccountList accountList = new AccountList();
         accountList.addAccount(account);
         accountList.addAccount(accountTwo);
@@ -46,13 +48,13 @@ class AccountListTest {
      */
     @Test
     @DisplayName("Check if the method getAccountAtIndex works as intended")
-    void testingGetAccountAtIndex(){
+    void testingGetAccountAtIndex() {
         Profile profile = new Profile("User");
         Profile profileTest = new Profile("Manager");
 
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
-        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profileTest);
-        Account accountThree = new Account("Pedro","zzzzz@gmail.com","44853224", profile);
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profileTest);
+        Account accountThree = new Account("Pedro", "zzzzz@gmail.com", "44853224", profile);
 
         AccountList accountList = new AccountList();
         accountList.addAccount(account);
@@ -70,10 +72,10 @@ class AccountListTest {
      */
     @Test
     @DisplayName("Creates account DTO")
-    void testIfAccountDTOIsCreatedSuccessfully(){
+    void testIfAccountDTOIsCreatedSuccessfully() {
         Profile profile = new Profile("User");
 
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
         //AccountDTO accountDTOTest = new AccountDTO("xxxxx@gmail.com", true);
 
         AccountList accountList = new AccountList();
@@ -85,5 +87,166 @@ class AccountListTest {
         assertNotNull(accountDTO);
         assertSame(accountDTO, accountDTOTestTwo);
         //assertEquals(accountDTOTest,accountDTO);
+    }
+
+    @Test
+    @DisplayName("ensure isEmailInUse returns true when email is already in use")
+    void isEmailInUseTrue() {
+        // arrange
+        // create a new account (dto+profile)
+        RegisterAccountDTO dto = new RegisterAccountDTO();
+        dto.name = "John Doe";
+        dto.email = "johndoe@example.com";
+        dto.phone = "1234565";
+        Profile profile = new Profile("User");
+        Account account = new Account(dto, profile);
+        // add account to an empty ArrayList
+        ArrayList<Account> testArray = new ArrayList<>();
+        testArray.add(account);
+        // use the ArrayList to initialize an AccountList
+        AccountList accountList = new AccountList(testArray);
+
+        String testEmail = "johndoe@example.com";
+
+        // act
+        boolean result = accountList.isEmailInUse(testEmail);
+        // assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("ensure isEmailInUse returns false when email is not in use")
+    void isEmailInUseFalse() {
+        // arrange
+        // create a new account (dto+profile)
+        RegisterAccountDTO dto = new RegisterAccountDTO();
+        dto.name = "John Doe";
+        dto.email = "johndoe@example.com";
+        dto.phone = "1234565";
+        Profile profile = new Profile("User");
+        Account account = new Account(dto, profile);
+        // add account to an empty ArrayList
+        ArrayList<Account> testArray = new ArrayList<>();
+        testArray.add(account);
+        // use the ArrayList to initialize an AccountList
+        AccountList accountList = new AccountList(testArray);
+
+        String testEmail = "janedoe@example.com";
+
+        // act
+        boolean result = accountList.isEmailInUse(testEmail);
+        // assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("ensure isEmailInUse throws exception with null email")
+    void isEmailInUseException() {
+        // arrange
+        AccountList accountList = new AccountList();
+        String testEmail = null;
+        String expectedMessage = "Email must not be null";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class,
+                () -> accountList.isEmailInUse(testEmail));
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("ensure registering an account is successful")
+    void registerAccountSuccess() {
+        // arrange
+        // create an account
+        RegisterAccountDTO dto = new RegisterAccountDTO();
+        dto.name = "John Doe";
+        dto.email = "johndoe@example.com";
+        dto.phone = "1234565";
+        Profile profile = new Profile("User");
+        Account testAccount = new Account(dto, profile);
+        // add account to an empty ArrayList
+        ArrayList<Account> testArray = new ArrayList<>();
+        testArray.add(testAccount);
+        // use the ArrayList to initialize an AccountList
+        AccountList testAccountList = new AccountList(testArray);
+        // initialize another (empty) AccountList
+        AccountList accountList = new AccountList();
+
+        // act
+        // register account with the empty AccountList
+        boolean result = accountList.registerAccount(dto, profile);
+        // assert
+        assertTrue(result);
+        // both AccountLists must be equal
+        assertEquals(testAccountList, accountList);
+    }
+
+    @Test
+    @DisplayName("ensure registering an account with same email data is unsuccessful")
+    void registerAccountSameEmailFailure() {
+        // arrange
+        AccountList accountList = new AccountList();
+        Profile profile = new Profile("User");
+
+        RegisterAccountDTO dto1 = new RegisterAccountDTO();
+        dto1.name = "John Doe";
+        dto1.email = "jdoe@example.com";
+        dto1.phone = "1234565";
+
+        RegisterAccountDTO dto2 = new RegisterAccountDTO();
+        dto2.name = "Jimmy Doe";
+        dto2.email = "jdoe@example.com";
+        dto2.phone = "760100200";
+
+        Account testAccount1 = new Account(dto1, profile);
+        ArrayList<Account> testArray = new ArrayList<>();
+        testArray.add(testAccount1);
+        AccountList testAccountList = new AccountList(testArray);
+
+        // act
+        boolean result1 = accountList.registerAccount(dto1, profile);
+        boolean result2 = accountList.registerAccount(dto2, profile);
+
+        // assert
+        assertTrue(result1);
+        assertFalse(result2);
+        assertEquals(testAccountList, accountList);
+    }
+
+    @Test
+    @DisplayName("ensure registering an account with null DTO throws exception")
+    void registerAccountNullDTOThrowsException() {
+        AccountList accountList = new AccountList();
+        Profile profile = new Profile("User");
+        RegisterAccountDTO dto1 = null;
+        String expectedMessage = "Account information and profile needed.";
+
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class,
+                () -> accountList.registerAccount(dto1, profile));
+        String resultMessage = result.getMessage();
+
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("ensure registering an account with null profile throws exception")
+    void registerAccountNullProfileThrowsException() {
+        AccountList accountList = new AccountList();
+        Profile profile = null;
+        RegisterAccountDTO dto1 = new RegisterAccountDTO();
+        dto1.name = "John Doe";
+        dto1.email = "jdoe@example.com";
+        dto1.phone = "1234565";
+
+        String expectedMessage = "Account information and profile needed.";
+
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class,
+                () -> accountList.registerAccount(dto1, profile));
+        String resultMessage = result.getMessage();
+
+        assertEquals(expectedMessage, resultMessage);
     }
 }
