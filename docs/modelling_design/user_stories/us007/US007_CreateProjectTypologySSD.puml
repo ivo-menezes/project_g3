@@ -1,0 +1,7 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Administrator -> System: Requests to create a new project typology
+Administrator <-- System: New project typology successfully created
+
+@enduml
