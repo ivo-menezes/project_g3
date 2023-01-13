@@ -1,0 +1,6 @@
+@startuml
+
+Manager -> System: Get human resource (ProjectCode)
+Manager <-- System: human resource
+
+@enduml
