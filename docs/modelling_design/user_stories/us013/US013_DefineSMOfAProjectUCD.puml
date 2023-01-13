@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+
+:Profile: as Profile
+Profile <|-- :Manager:
+
+rectangle "Project Management System"{
+
+:Manager: as Manager
+Manager -- (Define the Scrum Master)
+
+}
+
+@enduml
