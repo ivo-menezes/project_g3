@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AccountList {
         private List<Account> accountList;
@@ -41,9 +42,34 @@ public class AccountList {
             return account;
         }
 
-        public Account getAccountAtIndex(int index){
+    /***
+     * For the US004, needed to access the accountList size, but the .size didn't work.
+     * Created the method listSize in order to give the Controller the int value
+     * of the list size.
+     * @return
+     */
+        public int listSize(){
+            return this.accountList.size();
+        }
+
+    /***
+     * For US004, this will access the account in the index given.
+     * @param index
+     * @return
+     */
+    public Account getAccountAtIndex(int index){
             Account account = this.accountList.get(index);
             return account;
         }
 
+    /***
+     * The method will be called to create an account DTO, using the data from the true account.
+     * @param account
+     * @return
+     */
+    public AccountDTO createAccountDTO(Account account){
+        AccountDTO accountDTO =  new AccountDTO(account.getEmail(account), account.getStatus());
+
+        return accountDTO;
+    }
 }

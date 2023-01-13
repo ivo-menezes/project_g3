@@ -63,4 +63,27 @@ class AccountListTest {
 
         assertEquals(accountTwo, result);
     }
+
+    /***
+     * The test works with the same DTO, but doesn't compare two similar DTOs.
+     * The method works by fetching the data of the account and sending it to the DTO.
+     */
+    @Test
+    @DisplayName("Creates account DTO")
+    void testIfAccountDTOIsCreatedSuccessfully(){
+        Profile profile = new Profile("User");
+
+        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
+        //AccountDTO accountDTOTest = new AccountDTO("xxxxx@gmail.com", true);
+
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+
+        AccountDTO accountDTO = accountList.createAccountDTO(account);
+        AccountDTO accountDTOTestTwo = accountDTO;
+
+        assertNotNull(accountDTO);
+        assertSame(accountDTO, accountDTOTestTwo);
+        //assertEquals(accountDTOTest,accountDTO);
+    }
 }

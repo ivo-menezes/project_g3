@@ -26,7 +26,7 @@ public class ChangeProfileController {
             throw new IllegalArgumentException("Input values cannot be null.");
         Account account = accountList.getAccount(email);
 
-        Profile profile = profileList.getProfile(newProfileName);
+        Profile profile = profileList.getProfileByName(newProfileName);
 
         account.setProfile(profile);
         return true;
