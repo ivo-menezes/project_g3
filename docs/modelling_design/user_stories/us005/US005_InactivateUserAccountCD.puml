@@ -14,21 +14,19 @@ inactivateAccount()
 }
 
 class AccountStatusController {
-changeAccountStatus(email, inactive)
-}
-
-class Services {
+accountList : AccountList
 changeAccountStatus(email, inactive)
 }
 
 class "AccountList" {
+accountList : AccountList
 getAccount(email)
 }
 
 AccountStatusUI "1" o-- "1" AccountStatusController
-AccountStatusController "1" o-- "1" Services
-Services ..> Account
-Services "1" o-- "1  " "AccountList"
+AccountStatusController "1" ..> "1" Account
+'Services ..> Account
+AccountStatusController "1" o-- "1  " "AccountList"
 AccountList "1  " *-- "*" Account : has
 
 @enduml

@@ -5,28 +5,28 @@ hide footbox
 actor Administrator  as Administrator #white
 participant ": AccountStatusUI" as UI #white
 participant ": AccountStatusController" as Controller #white
-participant ": Services" as Services #white
+'participant ": Services" as Services #white
 participant ": AccountList" as AccountList #white
 participant "account : Account" as Account #white
 
-'Administrator ->  Controller : 1.Choose account and request inactivation
 Administrator ->  UI : Choose account and request inactivation (email)
 activate UI #FFBBBB
 'activate Controller #FFBBBB
 activate Administrator #FFBBBB
 UI -> Controller: changeAccountStatus(email, inactive)
 activate Controller #FFBBBB
-Controller -> Services: changeAccountStatus(email, inactive)
-activate Services #FFBBBB
-Services -> AccountList: account = getAccount(email)
-activate AccountList #FFBBBB
+Controller -> AccountList: account = getAccount(email)
+'activate Services #FFBBBB
+'activate AccountList #FFBBBB
+'AccountList -> AccountList: account = getAccount(email)
+
 deactivate AccountList
-Services -> Account: inactivateAccount()
+Controller -> Account: inactivateAccount()
 activate Account #FFBBBB
-Account --> Services : Successfully inactivated
+Account --> Controller : Successfully inactivated
 deactivate Account
-Services --> Controller : Successfully inactivated
-deactivate Services
+'AccountList --> Controller : Successfully inactivated
+'deactivate Services
 Controller --> UI : Successfully inactivated
 deactivate Controller
 UI --> Administrator: Successfully inactivated
