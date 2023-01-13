@@ -30,19 +30,19 @@ public class AccountList {
          */
         public Account getAccount(String email){
             Account account = null;
-            for (int i = 0; i < this.accountList.size() && account == null; i++) {
-                Account a = this.accountList.get(i);
-                String eMail = a.seeEmail(a);
-                if (eMail.equals(email)) {
-                    account = a;
-                }
+
+        for(int index = 0; index < this.accountList.size() && account == null; index++){
+            Account a = this.accountList.get(index);
+            String aEmail = a.getEmail(a);
+            if(aEmail == email){
+                account = a;
             }
+        }
             return account;
         }
 
-        public Account getAccountAtIndex(){
-            Account account = null;
-
+        public Account getAccountAtIndex(int index){
+            Account account = this.accountList.get(index);
             return account;
         }
 

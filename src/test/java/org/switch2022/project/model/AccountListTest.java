@@ -18,27 +18,49 @@ class AccountListTest {
     }
 
     /***
-     * The test works if accountTwo is not created and added to accountList, but
-     * why doesn't it work if accountList has 2 accounts (account and
-     * accountTwo)?
+     * Added two accounts to list, used this to check if the methods successfully access the list and chooses the
+     * correct account.
+     *
      */
     @Test
     @DisplayName("ensure that the correct account is obtained")
     void getAccount() {
         // arrange
-        AccountList accountList = new AccountList();
         Profile profile = new Profile("User");
         Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
-        //Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profile);
-        String email = "xxxxx@gmail.com";
-
+        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profile);
+        AccountList accountList = new AccountList();
         accountList.addAccount(account);
-        //accountList.addAccount(accountTwo);
+        accountList.addAccount(accountTwo);
+        String email = "xxxxx@gmail.com";
 
         // act
         Account result = accountList.getAccount(email);
 
         //assertNotSame(accountTwo, result);
         assertEquals(account, result);
+    }
+
+    /***
+     * The method reaches into the list and gets the account assigned to the index.
+     */
+    @Test
+    @DisplayName("Check if the method getAccountAtIndex works as intended")
+    void testingGetAccountAtIndex(){
+        Profile profile = new Profile("User");
+        Profile profileTest = new Profile("Manager");
+
+        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
+        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profileTest);
+        Account accountThree = new Account("Pedro","zzzzz@gmail.com","44853224", profile);
+
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+        accountList.addAccount(accountThree);
+
+        Account result = accountList.getAccountAtIndex(1);
+
+        assertEquals(accountTwo, result);
     }
 }

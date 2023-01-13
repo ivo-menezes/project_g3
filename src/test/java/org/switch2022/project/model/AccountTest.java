@@ -2,11 +2,14 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.controller.ChangeProfileController;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
-
+    /***
+     * Testing both o.equal method and hashcode methods of the Account Class.
+     */
     @Test
     void testEqualsAndSame() {
         Profile profile = new Profile("User");
@@ -30,6 +33,9 @@ class AccountTest {
 
     }
 
+    /***
+     * Here we test whether the method of changing profile of an account works.
+     */
     @Test
     void checkIfProfileIsSet() {
         // arrange
@@ -42,13 +48,17 @@ class AccountTest {
         // assert
         assertEquals(testAccount, account);
     }
+
+    /***
+     * The method getEmail is used simply to give an account and see what is its email.
+     */
     @Test
     void testIfGetsEmail(){
         Profile firstProfile = new Profile("User");
         Account account = new Account("Joana","xxxxx@gmail.com","22255588", firstProfile);
         String expected = "xxxxx@gmail.com";
 
-        String email = account.seeEmail(account);
+        String email = account.getEmail(account);
 
         assertEquals(expected, email);
     }

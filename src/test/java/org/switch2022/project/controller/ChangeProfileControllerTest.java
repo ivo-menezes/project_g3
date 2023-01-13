@@ -10,27 +10,38 @@ import org.switch2022.project.model.ProfileList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChangeProfileControllerTest {
+    /***
+     *The Controller will access the profilelist and accountlist, in order to find the correct Profile and the
+     * Account we wish to change, based on the email.
+     * @throws Exception
+     */
 
     @Test
     @DisplayName("ensure that Profile is changed in Account")
-    void changeProfile() throws Exception {
+    void changeProfile() throws Exception{
         //assert
         Profile profile = new Profile("User");
         Profile profileTest = new Profile("Manager");
         ProfileList list = new ProfileList();
         list.add(profile);
         list.add(profileTest);
+
         Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
-        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profile);
+        Account accountTwo = new Account("Joao","yyyyyy@gmail.com","44851114", profileTest);
+        Account accountExpected = new Account("Joana","xxxxx@gmail.com","22255588", profileTest);
+
         AccountList accountList = new AccountList();
         accountList.addAccount(account);
         accountList.addAccount(accountTwo);
+
         ChangeProfileController controller = new ChangeProfileController(accountList, list);
 
+        // arrange
+        assertTrue(controller.changeProfile("xxxxx@gmail.com", "Manager"));
+        Account result = accountList.getAccountAtIndex(0);
 
-        /* arrange */
-        controller.changeProfile("yyyyyy@gmail.com", "Manager");
         /* act */
-        assertEquals(account, accountTwo);
+        assertEquals(accountExpected, result);
+        assertNotNull(result);
     }
 }
