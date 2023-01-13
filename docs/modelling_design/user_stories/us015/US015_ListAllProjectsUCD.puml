@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+
+:Profile: as Profile
+Profile <|-- :Manager:
+
+rectangle "Project Management System"{
+
+:Manager: as Manager
+Manager -- (List of all projects)
+
+}
+@enduml
