@@ -61,20 +61,26 @@ public class Account {
         this.profile = profile;
     }
 
-    public void inactivateAccount() {
-        this.isActive = false;
+    public boolean inactivateAccount() {
+        boolean statusChanged = false;
+        if (this.isActive == true) {
+            this.isActive = false;
+            statusChanged = true;
+        }
+        return statusChanged;
     }
 
-    public void activateAccount() {
-        this.isActive = true;
+    public boolean activateAccount() {
+        boolean statusChanged = false;
+        if (this.isActive == false) {
+            this.isActive = true;
+            statusChanged = true;
+        }
+        return statusChanged;
     }
 
     public boolean getStatus() {
-        // Should all public get methods return a copy of attributes, instead
-        // of the attributes themselves?
-        boolean cloneIsActive = isActive;
-
-        return cloneIsActive;
+        return this.isActive;
     }
 
 
