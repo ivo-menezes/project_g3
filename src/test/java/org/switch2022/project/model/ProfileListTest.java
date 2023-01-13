@@ -5,13 +5,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfileListTest {
 
     @Test
-    void getProfile() {
+    @DisplayName("ensure retrieving an existing profile by name succeeds")
+    void getProfileByNameSuccess() {
         ProfileList profileList = new ProfileList();
         Profile profile = new Profile("Administrator");
         Profile profileMan = new Profile("Manager");
@@ -20,9 +22,24 @@ class ProfileListTest {
         profileList.add(profile);
         profileList.add(profileMan);
 
-        Profile result = profileList.getProfile(prof);
+        Profile result = profileList.getProfileByName(prof);
 
         assertEquals(profile, result);
+    }
+
+    @Test
+    @DisplayName("ensure retrieving a non-existing profile by name throws exception")
+    void getProfileByNameFailure() {
+        ProfileList profileList = new ProfileList();
+        Profile profile = new Profile("Manager");
+        profileList.add(profile);
+        String nonExistingName = "Administrator";
+        String expectedMessage = "A profile with this name does not exist.";
+
+        NoSuchElementException result = assertThrows(NoSuchElementException.class,
+                () -> profileList.getProfileByName(nonExistingName));
+        String resultMessage = result.getMessage();
+        assertEquals(expectedMessage, resultMessage);
     }
 
     @Test
@@ -95,10 +112,6 @@ class ProfileListTest {
     void addNullProfile() {
         ProfileList profileList = new ProfileList();
         Profile profile = null;
-
-        ArrayList<Profile> arrayList = new ArrayList<>();
-        arrayList.add(profile);
-        ProfileList testProfileList = new ProfileList(arrayList);
         // act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
             profileList.add(profile);
