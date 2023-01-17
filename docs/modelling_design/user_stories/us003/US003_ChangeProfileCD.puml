@@ -3,15 +3,9 @@
 class ChangeProfileUI {}
 
 class ChangeProfileController {
-'services : Services
 changeProfile(email, newProfileName)
 }
 
-class Services {
-'accountList : AccountList
-'profileList : ProfileList
-changeProfile(email, newProfileName)
-}
 
 class AccountList {
 'accounts : List<Account>
@@ -32,10 +26,9 @@ isActive : boolean
 }
 
 ChangeProfileUI "1" o-- "1" ChangeProfileController
-ChangeProfileController "1" o-- "1" Services
-Services "1" o-- "1" AccountList
-Services "1" o-- "1"  ProfileList
-Services ..> Account
+ChangeProfileController "1" o-- "1" AccountList
+ChangeProfileController  "1" o-- "1"  ProfileList
+ChangeProfileController ..> Account
 AccountList "1" *-- "*" Account : has
 
 @enduml
