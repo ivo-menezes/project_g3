@@ -17,7 +17,7 @@ public class ListAccountsController {
     }
 
     /***
-     * The methods receives an accountList and will create a list of acocuntDTOs to send.
+     * The methods receives an accountList and will create a list of accountDTOs to send.
      * containing only email and status of each account in the list.
      * @param accountList
      * @return

@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,7 @@ class AccountTest {
 
         assertTrue(account.equals(accountTest));
         assertSame(accountTest, account);
+        assertNotEquals(false, account.equals(accountTest));
     }
 
     @Test
@@ -26,10 +28,42 @@ class AccountTest {
         Account accountTest = account;
 
         assertEquals(accountTest.hashCode(), account.hashCode());
+        assertNotEquals(0, account.hashCode());
     }
     @Test
     void checkIfNameIsNull(){
+        Profile profile = new Profile("User");
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 
+            Account account = new Account(null,"xxxxx@gmail.com","22255588", profile);
+        });
+        Assertions.assertEquals("Name/Email/Phone are mandatory details.", exception.getMessage());
+    }
+    @Test
+    void checkIfEmailIsNull(){
+        Profile profile = new Profile("User");
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+
+            Account account = new Account("Joana",null,"22255588", profile);
+        });
+        Assertions.assertEquals("Name/Email/Phone are mandatory details.", exception.getMessage());
+    }
+    @Test
+    void checkIfPhoneIsNull(){
+        Profile profile = new Profile("User");
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+
+            Account account = new Account("Joana","xxxx@gmail.com",null, profile);
+        });
+        Assertions.assertEquals("Name/Email/Phone are mandatory details.", exception.getMessage());
+    }
+    @Test
+    void checkIfProfileIsNull(){
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Profile profile = new Profile(null);
+            Account account = new Account("Joana","xxxx@gmail.com","22255588", profile);
+        });
+        Assertions.assertEquals("Profile Name is not valid", exception.getMessage());
     }
 
     /***
@@ -71,6 +105,28 @@ class AccountTest {
         account.inactivateAccount();
         // assert
         assertFalse(account.getStatus());
+    }
+    @Test
+    @DisplayName("ensure status is activated and catches issues in mutations")
+    void ensureStatusIsActiveForMutation(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.activateAccount();
+        // assert
+        assertNotEquals(false, account.getStatus());
+    }
+    @Test
+    @DisplayName("ensure status is inactivated and catches issues in mutations")
+    void ensureStatusIsInactiveForMutation(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.inactivateAccount();
+        // assert
+        assertNotEquals(true, account.getStatus());
     }
 
     @Test
