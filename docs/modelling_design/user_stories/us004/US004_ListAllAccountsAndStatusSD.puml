@@ -5,7 +5,6 @@ hide footbox
 actor Administrator as Administrator
 participant ": ListAccountsUI" as UI
 participant ": ListAccountsController" as Controller
-participant ": Services" as Services
 participant "lsAccounts : List<AccountDTO>" as DTOList
 participant "accountDTO : AccountDTO" as DTO
 participant "account : Account" as account
@@ -13,42 +12,36 @@ participant "account : Account" as account
 participant ": AccountList" as AccountList
 
 activate Administrator #FFBBBB
-Administrator ->  UI: Requests list of user\naccounts and their status
+Administrator ->  UI: Requests list of user\accounts and their status
 
 activate UI #FFBBBB
 UI -> Controller: listAccounts()
 
 activate Controller #FFBBBB
-Controller -> Services: listAccounts()
-
-activate Services #FFBBBB
-Services -> DTOList ** : create
+Controller -> DTOList ** : create
 
 loop for each account
-Services -> AccountList : account = getAccountAtIndex(i)
+Controller -> AccountList : account = getAccountAtIndex(i)
 activate AccountList #FFBBBB
-deactivate AccountList
-Services -> account : email = getEmail()
+AccountList -> account : email = getEmail()
 activate account #FFBBBB
 deactivate account
-Services -> account : status = getStatus()
+AccountList -> account : status = getStatus()
 activate account #FFBBBB
 deactivate account
 
-Services -> DTO ** : create(email, status)
+AccountList -> DTO ** : create(email, status)
 
-Services -> DTOList : add(accountDTO)
+AccountList -> DTOList : add(accountDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
+deactivate AccountList
 end
-
-Services --> Controller : lsAccounts
-deactivate Services
 
 Controller --> UI : lsAccounts
 deactivate Controller
 deactivate UI
 
-UI --> Administrator: Displays list of user\naccounts and their status
+UI --> Administrator: Displays list of user\accounts and their status
 deactivate Administrator #FFBBBB
 @enduml

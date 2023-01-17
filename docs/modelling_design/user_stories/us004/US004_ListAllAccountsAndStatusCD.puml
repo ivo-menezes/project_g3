@@ -3,14 +3,10 @@
 class ListAccountsUI {}
 
 class ListAccountsController{
-'services : Services
-listAccounts()
+'accounts: List<Account>
+listAccounts(accountList)
 }
 
-class Services {
-'accountList : AccountList
-listAccounts()
-}
 
 class Account {
 profile : Profile
@@ -32,11 +28,9 @@ isActive : boolean
 }
 
 AccountList "1" *-- "*" Account : has
-Services ..> Account
-Services "1" o-- "1" AccountList
-ListAccountsController "1" o-- "1" Services
+ListAccountsController "1" o-- "1" AccountList
 ListAccountsUI "1" o-- "1" ListAccountsController
-Services ..> AccountDTO
+AccountList ..> AccountDTO
 AccountDTO ..> Account
 
 @enduml
