@@ -6,21 +6,22 @@
 '--- part relevant to sprint 1
 
 Object Account {
-Name
-Phone Number
-Email
-Photo: [0..1]
-Account Status: [Active, Inactive]
+name
+phone number
+email
+photo: [0..1]
+account status: [Active, Inactive]
 }
 
 Object Profile {
-Name
+name
 }
 
-Object "Project Resource" as PR {
-Start Date
-End Date
-Percentage of Allocation
+Object "ProjectResource" as PR {
+start date
+end date
+percentage of allocation
+cost per hour
 }
 
 'together {
@@ -42,45 +43,44 @@ PR "1..*" -left- "1" Project : involves <
 'Profile"1" -- "*"User : performed by User <
 
 Object Typology {
-Designation
+designation
 }
 
 Account "1" -down-"*" Typology : created by Admin <
 Typology "1" -- "                                   *" Project : has <
 
-Object "Business Sector" as BS {
-Designation
+Object "BusinessSector" as BS {
+designation
 }
 
 Account "1" -down- "*" BS : created by Admin <
 BS "1" -- "*" Project : has <
 
 Object Customer {
-Designation
+designation
 }
 
 Account "1" -down- "*" Customer : created by Admin <
 Customer "1" -- "*" Project : has <
 
 Object Project {
-Code
-Name
-Description
-Start Date
-End Date
-Sprint Duration
-Number of Planned Sprints
-Project Status
-Budget
+code
+name
+description
+start date
+end date
+sprint duration
+number of planned sprints
+project status
+budget
 ' Report could be its own conceptual class but we are not modelling with detail yet
-Report
+'Report
 }
 
 ' following the Association Class Role pattern (Fig.11) from "Modeling Roles"
 ' Role attributes does not include Project Code because Larman says to avoid attributes that are like "foreign keys" (p.126)
 Object Role {
-Role Name
-Cost Per Hour
+role name
 }
 
 
@@ -94,32 +94,32 @@ Cost Per Hour
 
 '--- additional stuff, not much detail for sprint 1
 ' put enduml tag before this comment to shorten diagram
-Object "Product Backlog" as PB
+Object "ProductBacklog" as PB
 
-Object "User Story" as US {
-US Number
-Actor
-Description
-Acceptance Criteria
+Object "UserStory" as US {
+us number
+actor
+description
+acceptance criteria
 }
 
 Object Sprint {
-Sprint Number
-Start Date
-End Date
+sprint number
+start date
+end date
 }
 
-Object "Sprint Backlog" as SB
+Object "SprintBacklog" as SB
 
 Object Task {
-Name
-Description
-Start Date
-End Date
-Effort Estimate
-Task Type
-Hours Spent
-Percentage of Execution
+name
+description
+start date
+end date
+effort estimate
+task type
+hours spent
+percentage of execution
 }
 
 
