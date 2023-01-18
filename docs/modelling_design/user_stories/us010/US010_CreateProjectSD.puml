@@ -24,7 +24,7 @@ Controller -> ProjectList : createProject(code, name, description)
 activate ProjectList #FFBBBB
 
 ProjectList --> newProject ** : newProject = create(code, name, description)
-ProjectList -> ProjectList : save(newProject)
+ProjectList -> ProjectList : add(newProject)
 
 ProjectList --> Controller : Confirms new project creation
 deactivate ProjectList
