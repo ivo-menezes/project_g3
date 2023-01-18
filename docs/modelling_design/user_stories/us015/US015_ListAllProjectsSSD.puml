@@ -1,6 +1,6 @@
 @startuml
 
-Manager -> System: Get projects ()
-Manager <-- System: projects
+Manager -> System: Request list of all projects
+Manager <-- System: Display all projects
 
 @enduml
