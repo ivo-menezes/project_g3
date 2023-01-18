@@ -20,6 +20,8 @@ From the client clarifications:
 
 ### **1.4 – Found out dependencies**
 
+There is a dependency to US010. In order to list a project it has to be already created/registered.
+
 ### **1.5 – Input and output data**
 
 *Input Data:*
