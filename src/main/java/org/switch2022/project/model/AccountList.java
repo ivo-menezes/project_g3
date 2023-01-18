@@ -66,7 +66,7 @@ public class AccountList {
     /***
      * The method will be called to create an account DTO, using the data from the true account.
      * @param account
-     * @return
+     * @return accountDTO
      */
     public AccountDTO createAccountDTO(Account account) {
         AccountDTO accountDTO = new AccountDTO(account.getEmail(), account.getStatus());
