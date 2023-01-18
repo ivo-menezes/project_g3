@@ -1,0 +1,31 @@
+@startuml
+!theme plain
+hide footbox
+
+actor Administrator as Administrator
+participant ": CreateBusinessSectorUI" as UI
+participant ": CreateBusinessSectorController" as Controller
+participant ": BusinessSectorList" as List
+participant "newBusinessSector : Business Sector" as Business
+
+Administrator -> UI : Create business sector (designation)
+activate Administrator #FFBBBB
+activate UI #FFBBBB
+
+UI -> Controller : createBusinessSector(designation)
+activate Controller #FFBBBB
+
+Controller -> List : createBusinessSector(designation)
+activate List #FFBBBB
+
+List -> List : validateDesignation(designation)
+List --> Business ** : newBusinessSector = create(designation)
+List -> List : add(newBusinessSector)
+
+List --> Controller : Confirm new Business Sector
+deactivate List
+Controller --> UI : Confirm new Business Sector
+deactivate Controller
+UI --> Administrator : Confirm new Business Sector
+deactivate Administrator
+@enduml

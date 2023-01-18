@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class CreateBusinessSectorUI{}
+
+
+class CreateBusinessSectorController{
+businessSectorList : BusinessSectorList
+createBusinessSector(designation)
+}
+
+
+class BusinessSectorList{
+businessSectorList : List<BusinessSector>
+validateBusinessSector(designation)
+createBusinessSector(designation)
+add(newBusinessSector)
+}
+
+
+class BusinessSector{
+designation : String
+}
+
+BusinessSectorList "1" *-- "*" BusinessSector : has
+CreateBusinessSectorController "1" o-- "1" BusinessSectorList
+CreateBusinessSectorUI "1" o-- "1" CreateBusinessSectorController
+CreateBusinessSectorController ..> BusinessSector
+@enduml
