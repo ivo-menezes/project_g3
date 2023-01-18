@@ -1,0 +1,34 @@
+@startuml
+
+class CreateProjectUI {
+}
+
+class CreateProjectController {
+projectList : ProjectList
+createProject(accountEmail, code, name, description)
+}
+
+
+class ProjectList {
+projectList : List<Project>
+createProject(code, name, description)
+add(newProject)
+}
+
+class AccountList {
+AccountList : List<Account>
+checkPermissionsToCreateAProject(accountEmail)
+}
+
+class Project {
+code : integer
+name : String
+description : String
+}
+
+CreateProjectUI "1" o-- "1" CreateProjectController
+CreateProjectController "1" o-- "1" AccountList
+CreateProjectController "1" o-- "1" ProjectList
+ProjectList "1 " *-- "    *" Project
+
+@enduml
