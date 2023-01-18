@@ -4,12 +4,23 @@ import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountList;
 
 public class AccountStatusController {
-    private AccountList accountList;
+    private final AccountList accountList;
 
+    /**
+     * constructor that accepts existing AccountList
+     *
+     * @param accountList AccountList to be added to controller
+     */
     public AccountStatusController(AccountList accountList) {
         this.accountList = accountList;
     }
 
+    /**
+     * instructs a given account to change its status to active/inactive
+     * @param email identifies account
+     * @param status identifies desired status
+     * @return true if status was successfully changed to desired status
+     */
     public boolean changeAccountStatus(String email, String status) {
         boolean statusChanged = false;
 
