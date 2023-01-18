@@ -26,9 +26,9 @@ name : String
 description : String
 }
 
-CreateProjectUI "1" o-- "1" CreateProjectController
-CreateProjectController "1" o-- "1" AccountList
+CreateProjectUI "1" o--   "1" CreateProjectController
+CreateProjectController "1" o--   "1" AccountList
 CreateProjectController "1" o-- "1" ProjectList
-ProjectList "1 " *-- "    *" Project
+ProjectList "1 " *-- "*" Project
 
 @enduml
