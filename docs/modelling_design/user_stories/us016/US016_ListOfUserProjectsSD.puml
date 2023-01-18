@@ -1,0 +1,61 @@
+@startuml
+!theme plain
+hide footbox
+
+actor User as User
+participant ": UserProjectsUI" as UI
+participant ": UserProjectsController" as Controller
+participant "lsUserProjects: List<UserProjectsDTO>" as DTOList
+participant "userProjectsDTO : UserProjectsDTO" as DTO
+participant "project : Project" as Project
+participant ": ProjectList" as ProjectList
+participant ": ResourceList" as ResourceList
+
+activate User #FFBBBB
+User ->  UI: Requests list of projects that User is allocated to
+
+activate UI #FFBBBB
+UI -> Controller: listUserProjects(currentUserEmail)
+
+activate Controller #FFBBBB
+Controller -> DTOList ** : create
+
+group loop [for each project]
+activate ProjectList #FFBBBB
+Controller -> ProjectList : project = getProjectAtIndex(i)
+ProjectList -> ResourceList : resource = getResourceAtIndex(j)
+activate ResourceList #FFBBBB
+deactivate ResourceList
+
+loop for each resource
+ResourceList -> ResourceList : compareEmails()
+
+end
+
+ResourceList -> ProjectList : compareEmails() = true
+activate ResourceList #FFBBBB
+deactivate ResourceList
+
+ProjectList -> Project : projectCode = getProjectCode()
+activate Project #FFBBBB
+deactivate Project
+
+ProjectList -> Project : projectName = getProjectName()
+activate Project #FFBBBB
+deactivate Project
+
+ProjectList -> DTO ** : create(projectCode, projectName)
+
+ProjectList -> DTOList : add(userProjectsDTO)
+activate DTOList #FFBBBB
+deactivate DTOList
+deactivate ProjectList
+end
+
+Controller --> UI : lsUserProjects
+deactivate Controller
+deactivate UI
+
+UI --> User: Displays list of project that User is allocated to
+deactivate User #FFBBBB
+@enduml
