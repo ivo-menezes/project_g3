@@ -25,7 +25,6 @@ getAccount(email)
 
 AccountStatusUI "1" o-- "1" AccountStatusController
 AccountStatusController "1" ..> "1" Account
-'Services ..> Account
 AccountStatusController "1" o-- "1  " "AccountList"
 AccountList "1  " *-- "*" Account : has
 

@@ -14,21 +14,18 @@ activateAccount()
 }
 
 class AccountStatusController {
-changeAccountStatus(email, active)
-}
-
-class Services {
+accountList : AccountList
 changeAccountStatus(email, active)
 }
 
 class "AccountList" {
+accountList : AccountList
 getAccount(email)
 }
 
-Services ..> Account
-Services "1" o-- "1  " "AccountList"
+AccountStatusController "1"..> "1" Account
+AccountStatusController "1" o-- "1  " "AccountList"
 AccountList "1  " *-- "*" Account : has
-AccountStatusController "1" o-- "1" Services
 AccountStatusUI "1" o-- "1" AccountStatusController
 
 @enduml

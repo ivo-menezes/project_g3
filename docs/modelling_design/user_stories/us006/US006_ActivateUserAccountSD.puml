@@ -4,28 +4,23 @@ hide footbox
 actor Administrator  as Administrator #white
 participant ": AccountStatusUI" as UI #white
 participant ": AccountStatusController" as Controller #white
-participant ": Services" as Services #white
 participant ": AccountList" as AccountList #white
 participant "account : Account" as Account #white
 
-'Administrator ->  Controller : 1.Choose account and request activation
 Administrator ->  UI : Choose account and request activation (email)
 activate UI #FFBBBB
 activate Administrator #FFBBBB
 UI -> Controller: changeAccountStatus(email, active)
 activate Controller #FFBBBB
-Controller -> Services : changeAccountStatus(email, active)
-activate Services #FFBBBB
-Services -> AccountList: account = getAccount(email)
+activate Controller #FFBBBB
+Controller -> AccountList: account = getAccount(email)
 activate AccountList #FFBBBB
 deactivate AccountList
-Services -> Account: activateAccount()
+Controller -> Account: activateAccount()
 activate Account #FFBBBB
-Account --> Services : Successfully activated
+Account --> Controller : Successfully activated
 deactivate Account
-Services --> Controller : Successfully activated
-deactivate Services
 Controller --> UI : Successfully activated
 deactivate Controller
 UI --> Administrator: Successfully activated
-@enduml
+@endumml
