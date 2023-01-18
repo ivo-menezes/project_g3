@@ -12,13 +12,14 @@ createProject(accountEmail, code, name, description)
 class ProjectList {
 projectList : List<Project>
 createProject(code, name, description)
+validateCode(code)
 add(newProject)
 }
 
-class AccountList {
-AccountList : List<Account>
-checkPermissionsToCreateAProject(accountEmail)
-}
+'class AccountList {
+'AccountList : List<Account>
+'checkPermissionsToCreateAProject(accountEmail)
+'}
 
 class Project {
 code : integer
@@ -27,7 +28,7 @@ description : String
 }
 
 CreateProjectUI "1" o--   "1" CreateProjectController
-CreateProjectController "1" o--   "1" AccountList
+'CreateProjectController "1" o--   "1" AccountList
 CreateProjectController "1" o-- "1" ProjectList
 ProjectList "1 " *-- "*" Project
 
