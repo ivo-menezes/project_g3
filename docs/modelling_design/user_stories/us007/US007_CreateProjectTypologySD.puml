@@ -1,0 +1,33 @@
+@startuml
+!theme plain
+hide footbox
+
+actor Administrator
+participant ": CreateTypologyUI" as UI
+participant ": CreateTypologyController" as Controller
+participant ": TypologyList" as List
+participant "newTypology : Typology" as typology
+
+activate Administrator #FFBBBB
+Administrator -> UI : Create typology (typology designation)
+
+activate UI #FFBBBB
+UI -> Controller : createTypology(typologyDesignation)
+
+activate Controller #FFBBBB
+Controller -> List : createTypology(typologyDesignation)
+
+activate List #FFBBBB
+List -> List : validateTypologyDesignation(typologyDesignation)
+List --> typology  ** : newTypology = create(typologyDesignation)
+List -> List : add(newTypology)
+List --> Controller : Confirms typology creation
+deactivate List
+
+Controller --> UI : Confirms typology creation
+deactivate Controller
+
+UI --> Administrator : Confirms typology creation
+deactivate UI
+
+@enduml
