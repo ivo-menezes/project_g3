@@ -1,0 +1,33 @@
+@startuml
+
+class ListProjectUI {}
+
+class ListProjectController{
+ListProject()
+}
+
+
+class Project {
+code : Integer
+name : String
+customer : String
+startDate : Date
+endDate : Date
+status : String
+}
+
+class ProjectList {
+getProjectList(i)
+}
+
+class ProjectDTO {
+create (code, name, customer, start date, end date, status project)
+}
+
+ProjectList "1" *-- "*" Project : has
+ListProjectController "1" o-- "1" ProjectList
+ListProjectUI "1" o-- "1" ListProjectController
+ProjectList ..> ProjectDTO
+ProjectDTO ..> Project
+
+@enduml
