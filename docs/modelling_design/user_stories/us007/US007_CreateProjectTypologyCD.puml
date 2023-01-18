@@ -1,0 +1,27 @@
+@startuml
+
+class CreateTypologyUI {
+}
+
+class CreateTypologyController {
+typologyList : TypologyList
+createTypology(typologyDesignation)
+}
+
+
+class TypologyList {
+typologyList : List<Typology>
+createTypology(typologyDesignation)
+validateTypologyDesignation(typologyDesignation)
+add(newTypology)
+}
+
+class Typology {
+designation : String
+}
+
+CreateTypologyUI "1" o-- "1" CreateTypologyController
+CreateTypologyController "1" o-- "1" TypologyList
+TypologyList "1 " *-- "    *" Typology
+
+@enduml
