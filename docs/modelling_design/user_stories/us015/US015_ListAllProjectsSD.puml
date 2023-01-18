@@ -1,0 +1,59 @@
+@startuml
+!theme plain
+hide footbox
+
+actor Manager as Manager
+participant ": ListProjectUI" as UI
+participant ": ListProjectController" as Controller
+participant "lsProject : List<ProjectDTO>" as DTOList
+participant "ProjectDTO : ProjectDTO" as DTO
+participant "project : Project" as project
+
+participant ": ProjectList" as ProjectList
+
+activate Manager #FFBBBB
+Manager ->  UI: Requests list of all projects
+
+activate UI #FFBBBB
+UI -> Controller: listProjects()
+
+activate Controller #FFBBBB
+Controller -> DTOList ** : create
+
+loop for each profile
+Controller -> ProjectList : project = getProjectList(i)
+activate ProjectList #FFBBBB
+ProjectList -> project : code = getCode()
+activate project #FFBBBB
+deactivate project
+ProjectList -> project : name = getName()
+activate project #FFBBBB
+deactivate project
+ProjectList -> project : customer = getCostumer()
+activate project #FFBBBB
+deactivate project
+ProjectList -> project : startDate = getStartDate()
+activate project #FFBBBB
+deactivate project
+ProjectList -> project : endDate = getEndDate()
+activate project #FFBBBB
+deactivate project
+ProjectList -> project : statusProject = getStatusProject()
+activate project #FFBBBB
+deactivate project
+
+ProjectList -> DTO ** : create(code, name, customer, start date, end date, status project)
+
+ProjectList -> DTOList : add(projectDTO)
+activate DTOList #FFBBBB
+deactivate DTOList
+deactivate ProjectList
+end
+
+Controller --> UI : lsProject
+deactivate Controller
+deactivate UI
+
+UI --> Manager: Displays all projects
+deactivate Manager #FFBBBB
+@enduml
