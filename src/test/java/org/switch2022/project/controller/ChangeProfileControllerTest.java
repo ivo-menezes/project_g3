@@ -13,12 +13,11 @@ class ChangeProfileControllerTest {
     /***
      *The Controller will access the profilelist and accountlist, in order to find the correct Profile and the
      * Account we wish to change, based on the email.
-     * @throws Exception
      */
 
     @Test
     @DisplayName("ensure that Profile is changed in Account")
-    void changeProfile() throws Exception{
+    void changeProfile(){
         //assert
         Profile profile = new Profile("User");
         Profile profileTest = new Profile("Manager");
