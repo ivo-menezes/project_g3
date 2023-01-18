@@ -4,7 +4,7 @@ left to right direction
 "Administrator"
 
 rectangle "Project Management System"{
-Administrator -- (Add A Costumer)
+Administrator -- (Add A Customer)
 }
 
 @enduml

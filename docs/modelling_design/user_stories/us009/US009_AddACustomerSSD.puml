@@ -1,7 +1,7 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Requests to add a costumer to system
+Administrator -> System: Requests to add a customer to system
 Administrator <-- System: Costumer successfully added
 
 @enduml
