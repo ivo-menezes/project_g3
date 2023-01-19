@@ -3,9 +3,9 @@ package org.switch2022.project.model;
 import java.util.Objects;
 
 public class Account {
-    private String name;
-    private String email;
-    private String phone;
+    private final String name;
+    private final String email;
+    private final String phone;
     private String photo;
     private Profile profile;
     private boolean isActive = true;
@@ -21,14 +21,8 @@ public class Account {
     }
 
     public Account(String name, String email, String phone, String photo, Profile profile) {
-        if (name == null || email == null || phone == null) {
-            throw new IllegalArgumentException("Name/Email/Phone are mandatory details.");
-        }
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+        this(name, email, phone, profile);
         this.photo = photo;
-        this.profile = profile;
     }
 
     public Account(RegisterAccountDTO dto, Profile profile) {
@@ -60,12 +54,12 @@ public class Account {
             return false;
         }
         Account account = (Account) o;
-        return isActive == account.isActive && name.equals(account.name) && email.equals(account.email) && phone.equals(account.phone) && Objects.equals(photo, account.photo) && profile.equals(account.profile);
+        return name.equals(account.name) && email.equals(account.email) && phone.equals(account.phone) && profile.equals(account.profile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, phone, photo, profile, isActive);
+        return Objects.hash(name, email, phone, profile);
     }
 
     public void setProfile(Profile profile) {
@@ -74,7 +68,7 @@ public class Account {
 
     public boolean inactivateAccount() {
         boolean statusChanged = false;
-        if (this.isActive == true) {
+        if (this.isActive) {
             this.isActive = false;
             statusChanged = true;
         }
@@ -83,7 +77,7 @@ public class Account {
 
     public boolean activateAccount() {
         boolean statusChanged = false;
-        if (this.isActive == false) {
+        if (!this.isActive) {
             this.isActive = true;
             statusChanged = true;
         }
