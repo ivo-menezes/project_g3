@@ -1,0 +1,45 @@
+@startuml
+
+class UserProjectsUI {
+}
+
+class UserProjectsController {
+'accounts: List<Account>
+listProject()
+listResource()
+add(userProjectsDTO)
+}
+
+class Project {
+code : Integer
+name : String
+customer : String
+startDate : Date
+endDate : Date
+status : String
+getResouceAtIndex(j)
+}
+
+class ProjectList {
+getProjectAtIndex(i)
+create(userProjectsDTO)
+}
+
+class UserProjectsDTO{
+projectCode
+projectName
+}
+
+class ResourceList {
+compareEmails()
+}
+
+ProjectList "                                          1" *-- "*" Project : has
+UserProjectsUI "       1" o-- "           1" UserProjectsController
+UserProjectsController "1" o-- "                                                 1" ProjectList
+ProjectList ..> UserProjectsDTO
+Project ..> UserProjectsDTO
+UserProjectsController "           1" o-- "               *" Project
+Project "                     1" *-- "     *" ResourceList : has
+
+@enduml
