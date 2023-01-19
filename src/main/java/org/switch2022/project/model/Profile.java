@@ -10,6 +10,12 @@ public class Profile {
         this.profileName = profileName;
     }
 
+    /**
+     * validates if the profile name can be used
+     *
+     * @param profileName
+     * @return true if profile name is valid, false otherwise
+     */
     public boolean isProfileNameValid (String profileName) {
         boolean isValid = false;
 
