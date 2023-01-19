@@ -1,0 +1,82 @@
+@startuml
+!theme plain
+hide footbox
+
+Actor Manager
+participant ": AssociateResourceUI" as UI
+participant ": AssociateResourceController" as Controller
+participant ":AccountList" as AccountList
+participant "account : Account" as account
+participant ":RoleList" as RoleList
+participant ": ProjectList" as ProjectList
+participant "project : Project" as project
+participant ": ResourceList" as ResourceList
+participant ":Resource" as ResourceClass
+participant ":Account" as AccountClass
+participant "resource : Resource" as resource
+
+activate Manager #FFBBBB
+Manager -> UI : Defines user as PO of project\n (email, role, projectCode, startDate, percentAllocation, costPerHour)
+
+activate UI #FFBBBB
+UI -> Controller : addResource(resourceDTO)
+
+activate Controller #FFBBBB
+Controller -> AccountList : account = getAccount(resourceDTO.email)
+activate AccountList #FFBBBB
+deactivate AccountList
+
+Controller -> account : isUser()
+activate account #FFBBBB
+account --> Controller : true
+deactivate account
+
+Controller -> RoleList : role = getRole(resourceDTO.roleName)
+activate RoleList #FFBBBB
+deactivate RoleList
+
+Controller -> ProjectList : addResourceToProject(account, role, resourceDTO)
+
+activate ProjectList #FFBBBB
+ProjectList -> ProjectList : project = getProject(resourceDTO.projectCode)
+ProjectList -> project : addResource(account, role, resourceDTO)
+
+activate project #FFBBBB
+project -> ResourceList : addResource(account, role, resourceDTO)
+
+activate ResourceList #FFBBBB
+
+loop for each resource
+ResourceList -> ResourceClass : isAccountOfResource(account)
+activate ResourceClass #FFBBBB
+ResourceClass -> AccountClass : equals(account)
+activate AccountClass #FFBBBB
+AccountClass --> ResourceClass : false
+deactivate AccountClass
+ResourceClass --> ResourceList: false
+end
+
+ResourceList -> ResourceList: doesProjectHavePO()
+
+deactivate ResourceClass
+
+ResourceList --> resource ** : create(account, role, resourceDTO)
+ResourceList -> ResourceList : add(resource)
+ResourceList --> project: true
+deactivate ResourceList
+
+project --> ProjectList: true
+deactivate project
+
+ProjectList --> Controller : true
+deactivate ProjectList
+
+Controller --> UI : true
+deactivate Controller
+
+UI -> Manager : confirm
+deactivate UI
+
+deactivate Manager
+
+@enduml

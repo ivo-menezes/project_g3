@@ -1,0 +1,6 @@
+@startuml
+
+Manager -> System: Defines user as PO of project\n (email, role, projectCode, startDate, percentAllocation, costPerHour)
+System --> Manager: Confirms user as PO
+
+@enduml
