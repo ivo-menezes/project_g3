@@ -4,7 +4,7 @@ left to right direction
 "Manager"
 
 rectangle "Project Management System"{
-"Manager" -- (Associate User as Team Member of a Project)
+"Manager" -- (Associate user as Team Member of project)
 }
 
 @enduml
