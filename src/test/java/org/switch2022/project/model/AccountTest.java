@@ -13,7 +13,7 @@ class AccountTest {
     @Test
     void testEqualsAndSame() {
         Profile profile = new Profile("User");
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
+        Account account = new Account("Joana","xxxxx@gmail.com","22255588", "photo", profile);
         Account accountTest = account;
 
         assertTrue(account.equals(accountTest));
@@ -22,8 +22,8 @@ class AccountTest {
     }
 
     @Test
-    @DisplayName("ensure two accounts with same info are equal")
-    void testEqualsAndNotSame(){
+    @DisplayName("ensure two accounts with different info are not equal")
+    void testNotEqualsAndNotSame(){
         Profile profile = new Profile("User");
         Account account = new Account("Joana","xxxxx@gmail.com","22255588", profile);
         Account anotherAccount = new Account("Pedro","yyyy@gmail.com","22255578", profile);
@@ -82,6 +82,17 @@ class AccountTest {
             Account account = new Account("Joana","xxxx@gmail.com","22255588", profile);
         });
         Assertions.assertEquals("Profile Name is not valid", exception.getMessage());
+    }
+    @Test
+    void checkIfItDoesNotReturnEqualToAnotherObject(){
+            Profile profile = new Profile("User");
+            Account account = new Account("Joana","xxxx@gmail.com","22255588", profile);
+            BusinessSector anotherBusiness = new BusinessSector("Financial");
+            boolean expected = false;
+
+            boolean result = account.equals(anotherBusiness);
+
+            assertEquals(expected, result);
     }
 
     @Test
@@ -167,5 +178,41 @@ class AccountTest {
         account.activateAccount();
         // assert
         assertTrue(account.getStatus());
+    }
+    @Test
+    @DisplayName("ensure status is not activated twice")
+    void checkTheStatusIsNotChangedTwice(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.activateAccount();
+        boolean result = account.activateAccount();
+        // assert
+        assertFalse(result);
+        assertNotEquals(true, result);
+    }
+    @Test
+    @DisplayName("ensure status is not inactivated twice")
+    void checkTheStatusIsNotChangedTwiceToInactive(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.inactivateAccount();
+        // assert
+        assertFalse(account.inactivateAccount());
+    }
+    @Test
+    void checkIfItCatchesAMutationTurningTheReturnFalse(){
+        // arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Joana", "xxxxx@gmail.com", "22255588", profile);
+        // act
+        account.inactivateAccount();
+        boolean result = account.activateAccount();
+        // assert
+        assertTrue(result);
+        assertNotEquals(false,result);
     }
 }
