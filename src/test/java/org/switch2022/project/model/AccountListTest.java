@@ -22,7 +22,6 @@ class AccountListTest {
     /***
      * Added two accounts to list, used this to check if the methods successfully access the list and chooses the
      * correct account.
-     *
      */
     @Test
     @DisplayName("ensure that the correct account is obtained")
@@ -86,7 +85,6 @@ class AccountListTest {
 
         assertNotNull(accountDTO);
         assertSame(accountDTO, accountDTOTestTwo);
-        //assertEquals(accountDTOTest,accountDTO);
     }
 
     @Test
@@ -248,5 +246,96 @@ class AccountListTest {
         String resultMessage = result.getMessage();
 
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    /***
+     * The tests below serve to ensure the mutations are caught. At least, most of them.
+     */
+    @Test
+    @DisplayName("ensure the adding account method catches the null account")
+    void checkIfItCatchesAnIllegalArgumentInTheAddAccountMethod(){
+        AccountList accountList = new AccountList();
+        Account account = null;
+
+        String expectedMessage = "Account must not be null";
+
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class,
+                () -> accountList.addAccount(account));
+        String resultMessage = result.getMessage();
+
+        assertEquals(expectedMessage, resultMessage);
+    }
+    @Test
+    @DisplayName("ensure the adding account method catches the null account")
+    void checkIfItTheListSizeDoesNotGiveZero(){
+        Profile profile = new Profile("User");
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+        int expected = 2;
+
+        int result = accountList.listSize();
+        assertEquals(expected, result);
+        assertNotEquals(0, result);
+    }
+    @Test
+    @DisplayName("ensure the equals method is tested")
+    void checkIfTheListEqualsItself(){
+        Profile profile = new Profile("User");
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+        AccountList accountListTwo = accountList;
+
+        assertSame(accountListTwo, accountList);
+        assertTrue(accountList.equals(accountListTwo));
+    }
+    @Test
+    @DisplayName("checks if the object doesn't equal another object")
+    void checkIfItDoesNotEqualsAnotherObject(){
+        Profile profile = new Profile("User");
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+
+        assertFalse(accountList.equals(account));
+        assertNotEquals(true, accountList.equals(account));
+    }
+    @Test
+    @DisplayName("testing the hashcodes")
+    void checkTheHashCodes(){
+        Profile profile = new Profile("User");
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+        AccountList accountListTwo = accountList;
+
+        assertEquals(accountListTwo.hashCode(),accountList.hashCode());
+        assertNotEquals(0, accountList.hashCode());
+    }
+    @Test
+    @DisplayName("ensure the list isn't equal to another list")
+    void checkIfTheListIsNotEqualsAnotherList(){
+        Profile profile = new Profile("User");
+        Account account = new Account("Joana", "xxxxx@gmail.com", "22255588", profile);
+        Account accountTwo = new Account("Joao", "yyyyyy@gmail.com", "44851114", profile);
+        Account accountThree = new Account("Mario", "ttttt@gmail.com", "45635435435", profile);
+        Account accountFour = new Account("Rui", "hhhhhh@gmail.com", "24324424", profile);
+        AccountList accountList = new AccountList();
+        accountList.addAccount(account);
+        accountList.addAccount(accountTwo);
+        AccountList accountListTwo = new AccountList();
+        accountListTwo.addAccount(accountThree);
+        accountListTwo.addAccount(accountFour);
+
+        assertFalse(accountList.equals(accountListTwo));
     }
 }
