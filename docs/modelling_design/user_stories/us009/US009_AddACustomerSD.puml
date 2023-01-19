@@ -34,7 +34,7 @@ deactivate DTO
 
 List -> List : isNameInUse(name)
 
-List --> newCustomer ** : newCustomer = create(addCustomerDTO)
+List --> newCustomer ** : newCustomer = create(customerDTO)
 List -> List : save(newCustomer)
 
 List --> Controller : Confirms new customer registration
