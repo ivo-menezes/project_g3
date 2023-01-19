@@ -1,0 +1,62 @@
+@startuml
+!theme plain
+hide footbox
+
+actor Manager as Manager
+participant ": ListResourcesUI" as UI
+participant ": ListResourcesController" as Controller
+participant ": ProjectList" as ProjectList
+participant ": Project" as project
+participant ": ResourceList" as ResourceList
+participant "lsResources : List<ResourcesDTO>" as DTOList
+participant "resourceDTO : ResourceDTO" as DTO
+participant "resource : Resource" as Resource
+participant " account : Account" as account
+
+activate Manager #FFBBBB
+Manager ->  UI: Requests list of all human resources in a project (projectCode)
+
+activate UI #FFBBBB
+UI -> Controller: listResources(projectCode)
+
+activate Controller #FFBBBB
+Controller -> ProjectList: listResources(projectCode)
+
+activate ProjectList #FFBBBB
+ProjectList -> ProjectList : project = getProject(resourceDTO.projectCode)
+ProjectList -> project : listResources()
+activate project #FFBBBB
+project -> ResourceList : listResources()
+activate ResourceList #FFBBBB
+ResourceList -> DTOList ** : create
+
+loop for each resource
+ResourceList -> Resource : account = getAccountOfResource(i)
+activate Resource #FFBBBB
+Resource -> account : email = getEmail()
+activate account #FFBBBB
+deactivate account
+Resource -> Resource : getRole(account)
+Resource -> DTO ** : create(email, role)
+deactivate Resource
+
+DTO -> DTOList : add(resourceDTO)
+activate DTOList #FFBBBB
+
+end
+
+DTOList --> ResourceList: lsResources
+deactivate DTOList
+ResourceList --> project : lsResources
+deactivate ResourceList
+project --> ProjectList : lsResources
+deactivate project
+ProjectList --> Controller : lsResources
+deactivate ProjectList
+Controller --> UI : lsResources
+deactivate Controller
+
+UI --> Manager: Displays list of human resources in a project (projectCode)
+deactivate UI
+deactivate Manager #FFBBBB
+@enduml
