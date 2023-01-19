@@ -1,0 +1,40 @@
+@startuml
+
+class AddCustomerUI {}
+
+class AddCustomerController {
+customerList : CustomerList
+addCustomer(addCustomerDTO)
+}
+
+'class Services {
+'customerList : CustomerList
+'customerList : CustomerList
+'addACustomer(name)
+'}
+
+class CustomerList {
+customerList : List<Customer>
+isNameInUse(name)
+save(newCustomer)
+create(CustomerDTO)
+
+
+
+}
+
+class CustomerDTO {
+name : String
+}
+
+class Customer {
+name : String
+}
+
+AddCustomerUI "     1" o-- "        1" AddCustomerController
+AddCustomerController "     1" o-- "        1" CustomerList
+CustomerList "  1" *-- "   *" Customer : has
+CustomerList ..> CustomerDTO
+CustomerDTO..>Customer
+
+@enduml
