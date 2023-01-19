@@ -1,6 +1,6 @@
 @startuml
 
-Manager -> System: Get human resource (ProjectCode)
-Manager <-- System: human resource
+Manager -> System: Get list of human resources (ProjectCode)
+Manager <-- System: Display list of human resources
 
 @enduml

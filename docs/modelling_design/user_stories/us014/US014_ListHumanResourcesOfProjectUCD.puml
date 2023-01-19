@@ -1,12 +1,9 @@
 @startuml
 left to right direction
 
-:Profile: as Profile
-Profile <|-- :Manager:
-
+"Manager"
 rectangle "Project Management System"{
 
-:Manager: as Manager
 Manager -- (List of all human resources in a project )
 
 }
