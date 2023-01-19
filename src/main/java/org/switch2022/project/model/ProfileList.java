@@ -3,36 +3,21 @@ package org.switch2022.project.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 public class ProfileList {
-    private List<Profile> profileList;
+    private final List<Profile> profileList;
 
     /**
      * constructor that initializes a ProfileList as an empty ArrayList
      */
     public ProfileList() {
-        this.profileList = new ArrayList<Profile>();
+        this.profileList = new ArrayList<>();
     }
 
     /**
-     * constructor that initializes a ProfileList to an existing List<Profile>
-     * used for testing
+     * retrieves a profile by its name
      *
-     * @param profileList existing List<Profile> to be converted to ProfileList
-     */
-    public ProfileList(List<Profile> profileList) {
-        if (profileList == null) {
-            throw new IllegalArgumentException("Profile List must not be null.");
-        }
-
-        this.profileList = profileList;
-    }
-
-    /**
-     * retrieves a profile by its ProfileName
-     *
-     * @param profileName name (String) of profile to be retrieved
+     * @param profileName name of profile to be retrieved
      * @return profile with searched name
      */
     public Profile getProfileByName(String profileName) {
@@ -105,20 +90,4 @@ public class ProfileList {
         return this.profileList.add(profile);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ProfileList that = (ProfileList) o;
-        return profileList.equals(that.profileList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(profileList);
-    }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,9 +55,8 @@ class ProfileListTest {
     void createProfileNullFails() {
         // arrange
         ProfileList profileList = new ProfileList();
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            profileList.createProfile(null);
-        });
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> profileList.createProfile(null));
         assertEquals("Profile name is invalid.", exception.getMessage());
 
     }
@@ -97,14 +95,17 @@ class ProfileListTest {
         // arrange
         ProfileList profileList = new ProfileList();
         Profile profile = new Profile("Administrator");
+        String expectedFailureMessage = "A profile with this name does not exist.";
 
-        ArrayList<Profile> arrayList = new ArrayList<>();
-        arrayList.add(profile);
-        ProfileList testProfileList = new ProfileList(arrayList);
         // act
+        NoSuchElementException resultFailure = assertThrows(NoSuchElementException.class,
+                () -> profileList.getProfileByName("Administrator"));
+        String resultFailureMessage = resultFailure.getMessage();
         profileList.add(profile);
+        Profile retrievedProfile = profileList.getProfileByName("Administrator");
         // assert
-        assertEquals(profileList, testProfileList);
+        assertEquals(expectedFailureMessage, resultFailureMessage);
+        assertEquals(profile, retrievedProfile);
     }
 
     @Test
@@ -113,9 +114,8 @@ class ProfileListTest {
         ProfileList profileList = new ProfileList();
         Profile profile = null;
         // act
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            profileList.add(profile);
-        });
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> profileList.add(profile));
         // assert
         assertEquals("Profile must not be null", exception.getMessage());
     }
