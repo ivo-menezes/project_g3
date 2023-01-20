@@ -23,7 +23,7 @@ activate Controller #FFBBBB
 Controller -> ProjectList: listResources(projectCode)
 
 activate ProjectList #FFBBBB
-ProjectList -> ProjectList : project = getProject(resourceDTO.projectCode)
+ProjectList -> ProjectList : project = getProject(projectCode)
 ProjectList -> project : listResources()
 activate project #FFBBBB
 project -> ResourceList : listResources()
@@ -36,7 +36,7 @@ activate Resource #FFBBBB
 Resource -> account : email = getEmail()
 activate account #FFBBBB
 deactivate account
-Resource -> Resource : getRole(account)
+Resource -> Resource : role = getRole()
 Resource -> DTO ** : create(email, role)
 deactivate Resource
 
