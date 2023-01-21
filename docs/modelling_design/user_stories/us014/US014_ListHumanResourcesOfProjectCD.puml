@@ -33,6 +33,11 @@ createResourcesDTO()
 getEmailOfResource()
 }
 
+class ResourceDTO {
+email : String
+role : Role
+}
+
 class Resource {
 account : Account
 role : Role
@@ -60,6 +65,8 @@ ListResourcesUI "1 " o-- "1 " ListResourcesController
 ListResourcesController "1 " o-- "1 " ProjectList
 ProjectList "1 " *-- " * " Project : has
 Project "1 " o-- "1 " ResourceList
+ResourceList "1  " ..> ResourceDTO
+ResourceDTO "1" .right.> Resource
 ResourceList "1 " *-- " * " Resource : has
 Resource "1 " o-- "1 " Account : has
 
