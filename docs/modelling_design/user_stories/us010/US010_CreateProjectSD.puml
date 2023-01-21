@@ -10,10 +10,10 @@ participant ": ProjectList" as ProjectList
 participant "newProject : Project" as Project
 
 activate Manager #FFBBBB
-Manager ->  UI : Request to create a project (accountEmail, code, name, description)
+Manager ->  UI : Request to create a project (code, name, description)
 
 activate UI #FFBBBB
-UI -> Controller : createProject(accountEmail, code, name, description)
+UI -> Controller : createProject(code, name, description)
 
 activate Controller #FFBBBB
 'Controller -> AccountList : checkPermissionsToCreateAProject(accountEmail)
