@@ -215,4 +215,31 @@ class AccountTest {
         assertTrue(result);
         assertNotEquals(false,result);
     }
+
+    @Test
+    @DisplayName("ensure to account is user")
+    void ensureIsUserTrue () {
+        //arrange
+        Profile profile = new Profile("User");
+        Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
+
+        //act
+        boolean result = account.isUser();
+
+        // assert
+        assertTrue(result);
+    }
+    @Test
+    @DisplayName("ensure to account is not user")
+    void ensureIsUserFalse () {
+        //arrange
+        Profile profile = new Profile("Manager");
+        Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
+
+        //act
+        boolean result = account.isUser();
+
+        // assert
+        assertFalse(result);
+    }
 }

@@ -11,6 +11,7 @@ public class CreateProfileController {
      * @param profileList ProfileList to be added to controller
      */
     public CreateProfileController(ProfileList profileList) {
+
         this.profileList = profileList;
     }
 

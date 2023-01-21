@@ -15,6 +15,7 @@ public class Project {
     private int numberOfPlannedSprints;
     private String projectStatus = "Planned";
     private double budget;
+    private static ResourceList list = new ResourceList();
 
     //Constructors
 
@@ -54,5 +55,13 @@ public class Project {
     @Override
     public int hashCode() {
         return Objects.hash(code, name, description, startDate, endDate, sprintDuration, numberOfPlannedSprints, projectStatus, budget);
+    }
+
+    public boolean addResource(Account account, Role role, ResourceDTO resourceDTO) {
+        return list.addResource(account,role,this,resourceDTO);
+    }
+
+    public int getCode() {
+        return this.code;
     }
 }

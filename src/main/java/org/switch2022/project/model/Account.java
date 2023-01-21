@@ -88,5 +88,18 @@ public class Account {
         return this.isActive;
     }
 
+    /**
+     * Method to check if an account has user profile.
+     * @return true if the account has user profile, false otherwise.
+     */
+    public boolean isUser(){
+        boolean isUser= false;
+
+        if (this.profile.getProfileName() == "User") {
+            isUser = true;
+        }
+        return isUser;
+    }
+
 
 }

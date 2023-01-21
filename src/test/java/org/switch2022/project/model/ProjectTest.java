@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -258,6 +259,38 @@ class ProjectTest {
             Project project = new Project(26, "Test", null);
         });
         Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("ensure the resource has been added.")
+    void ensureAddResourceTrue() {
+        //arrange
+        Project project = new Project(1, "test", "test");
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
+        Role role = new Role(1, "Team Member");
+
+        //act
+        boolean result = project.addResource(account,role,resourceDTO);
+
+        //assert
+        assertTrue(result);
+    }
+    @Test
+    @DisplayName("ensure the resource has not been added.")
+    void ensureAddResourceFalse() {
+        //arrange
+        Project project = new Project(1, "test", "test");
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
+        Role role = new Role(1, "Team Member");
+
+        //act
+        boolean added = project.addResource(account,role,resourceDTO);
+        boolean result = project.addResource(account,role,resourceDTO);
+
+        //assert
+        assertFalse(result);
     }
 
 }
