@@ -24,14 +24,14 @@ Controller -> ProjectList: listResources(projectCode)
 
 activate ProjectList #FFBBBB
 ProjectList -> ProjectList : project = getProject(projectCode)
-ProjectList -> project : listResources()
+ProjectList -> project : listResources(project)
 activate project #FFBBBB
 project -> ResourceList : listResources()
 activate ResourceList #FFBBBB
 ResourceList -> DTOList ** : create
 
 loop for each resource
-ResourceList -> Resource : account = getAccountOfResource(i)
+ResourceList -> Resource : email = getEmailOfResource(i)
 activate Resource #FFBBBB
 Resource -> account : email = getEmail()
 activate account #FFBBBB
