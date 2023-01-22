@@ -15,11 +15,11 @@ public class CreateBusinessSectorController {
 
     public boolean createBusinessSector(String designation) {
         boolean result = true;
-        BusinessSectorList newList = new BusinessSectorList();
-        if (!newList.validateBusinessSector(designation)) {
+        newBusinessList = new BusinessSectorList();
+        if (!newBusinessList.validateBusinessSector(designation)) {
             result = false;
         } else {
-            newList.createBusinessSector(designation);
+            newBusinessList.createBusinessSector(designation);
         }
         return result;
     }
