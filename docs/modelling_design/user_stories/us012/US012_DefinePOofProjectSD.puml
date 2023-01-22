@@ -56,7 +56,7 @@ deactivate AccountClass
 ResourceClass --> ResourceList: false
 end
 
-ResourceList -> ResourceList: doesProjectHavePO()
+ResourceList -> ResourceList: isRoleOccupied(role)
 
 deactivate ResourceClass
 
