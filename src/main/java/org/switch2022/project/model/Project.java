@@ -11,6 +11,7 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
+    private String customer;
     private int sprintDuration;
     private int numberOfPlannedSprints;
     private String projectStatus = "Planned";
@@ -42,6 +43,16 @@ public class Project {
         this.name = name;
         this.description = description;
     }
+
+    /***
+     * @return code,name,customer,start&end date e project status
+     */
+    public String getName() {return this.name;}
+    public String getCustomer() { return this.customer; }
+    public Date getStartDate() {return this.startDate;}
+    public Date getEndDate() {return this.endDate;}
+    public String getProjectStatus() {return this.projectStatus;}
+
 
     //Methods
     @Override
