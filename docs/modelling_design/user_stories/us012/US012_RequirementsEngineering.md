@@ -10,6 +10,8 @@ As Manager, I want to define the PO of a project.
 
 The Project Manager, Product Owner, Scrum Master and Team Member are roles the users have in a particular project over a certain period.
 
+There can only be one PO at a time. The role of PO in a project may change over time.
+
 - **From the client clarifications:**
 
 *Question:
@@ -23,14 +25,18 @@ The Project Manager, Product Owner, Scrum Master and Team Member are roles the u
 
 ### **1.4 – Found out dependencies**
 
-There is a dependency to US011. The user must be associated as a Team Member of the project.
+There is a dependency to US011.
 
 
 ### **1.5 – Input and output data**
 
 **Input Data:**
-- User email
-- Role
+- User (resource) email
+- Role (Product Owner)
+- Project code
+- Start date
+- percentage of allocation
+- cost per hour
 
 **Output Data:**
 
