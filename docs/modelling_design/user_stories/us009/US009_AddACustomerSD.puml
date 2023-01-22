@@ -6,17 +6,15 @@ actor Administrator  as Administrator
 participant ": AddCustomerUI" as UI
 participant ": AddCustomerController" as Controller
 participant ": CustomerList" as List
-'participant " defaultProfile : Profile"
-'participant ": AccountList" as AccountList
-participant "customerDTO : CustomerDTO" as DTO
+'participant "customerDTO : CustomerDTO" as DTO
 participant " newCustomer : Customer" as newCustomer
 
 
 activate Administrator #FFBBBB
-Administrator ->  UI : Add Customer (name)
+Administrator ->  UI : Add Customer (designation)
 
 activate UI #FFBBBB
-UI -> Controller : addCustomer(addCustomerDTO)
+UI -> Controller : addCustomer(designation)
 
 activate Controller #FFBBBB
 'Controller -> List : defaultCustomer = getCustomerByName("name")
@@ -24,17 +22,17 @@ activate Controller #FFBBBB
 'activate ProfileList #FFBBBB
 'deactivate ProfileList
 
-Controller -> List : addCustomer(addCustomerDTO)
+Controller -> List : addCustomer(designation)
 
 activate List #FFBBBB
-List -> DTO : name = getName()
+'List -> DTO : name = getName()
 
-activate DTO #FFBBBB
-deactivate DTO
+'activate DTO #FFBBBB
+'deactivate DTO
 
-List -> List : isNameInUse(name)
+List -> List : validateDesignation(designation)
 
-List --> newCustomer ** : newCustomer = create(customerDTO)
+List --> newCustomer ** : newCustomer = create(newCustomer)
 List -> List : save(newCustomer)
 
 List --> Controller : Confirms new customer registration
