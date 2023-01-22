@@ -21,7 +21,7 @@ activate Controller #FFBBBB
 Controller -> DTOList ** : create
 
 loop for each profile
-Controller -> ProjectList : project = getProjectList(i)
+Controller -> ProjectList : project = getProject(i)
 activate ProjectList #FFBBBB
 ProjectList -> project : code = getCode()
 activate project #FFBBBB
