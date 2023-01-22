@@ -4,7 +4,7 @@ class AddCustomerUI {}
 
 class AddCustomerController {
 customerList : CustomerList
-addCustomer(addCustomerDTO)
+addCustomer(designation)
 }
 
 'class Services {
@@ -15,17 +15,18 @@ addCustomer(addCustomerDTO)
 
 class CustomerList {
 customerList : List<Customer>
-isNameInUse(name)
+validateDesignation(designation)
+create(newCustomer)
 save(newCustomer)
-create(CustomerDTO)
+
 
 
 
 }
 
-class CustomerDTO {
-name : String
-}
+'class CustomerDTO {
+'name : String
+'}
 
 class Customer {
 name : String
@@ -33,8 +34,8 @@ name : String
 
 AddCustomerUI "     1" o-- "        1" AddCustomerController
 AddCustomerController "     1" o-- "        1" CustomerList
-CustomerList "  1" *-- "   *" Customer : has
-CustomerList ..> CustomerDTO
-CustomerDTO..>Customer
+CustomerList "  1" *-- "   *" Customer
+'CustomerList ..> CustomerDTO
+'CustomerDTO..>Customer
 
 @enduml
