@@ -9,6 +9,7 @@ participant ": AssociateResourceController" as Controller
 participant ":AccountList" as AccountList
 participant "account : Account" as account
 participant ":RoleList" as RoleList
+participant "role:Role" as Role
 participant ": ProjectList" as ProjectList
 participant "project : Project" as project
 participant ": ResourceList" as ResourceList
@@ -20,7 +21,7 @@ activate Manager #FFBBBB
 Manager -> UI : Defines user as Team Member of project\n (email, role, projectCode, startDate, percentAllocation, costPerHour)
 
 activate UI #FFBBBB
-UI -> dto** : create
+UI -> dto** : create(email, role, projectCode, startDate, percentAllocation, costPerHour)
 UI -> Controller : addResource(resourceDTO)
 
 activate Controller #FFBBBB
@@ -44,7 +45,7 @@ ProjectList -> ProjectList : project = getProject(resourceDTO.projectCode)
 ProjectList -> project : addResource(account, role, resourceDTO)
 
 activate project #FFBBBB
-project -> ResourceList : addResource(account, role, resourceDTO)
+project -> ResourceList : addResource(account, role, project, resourceDTO)
 
 activate ResourceList #FFBBBB
 
