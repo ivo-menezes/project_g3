@@ -12,15 +12,40 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectTest {
 
     @Test
+    @DisplayName("Equal is true when comparing the same project")
     void EqualsIsTrueWhenComparingSameProject() {
         Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
-        Project projectTest = project;
 
-        boolean result = project.equals(projectTest);
-
-        Assertions.assertTrue(result);
+        assertTrue(project.equals(project));
     }
 
+    @Test
+    @DisplayName("Equal is true when comparing different projects")
+    void EqualsIsTrueWhenComparingDifferentProjects() {
+        Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        Project project2 = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        assertTrue(project.equals(project2) == project2.equals(project));
+    }
+
+    @Test
+    @DisplayName("Equal is true when comparing more than three projects")
+    void EqualsIsTrueWhenComparingMoreThanThreeProjects() {
+        Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        Project project2 = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        Project project3 = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        assertTrue(project.equals(project2) && project2.equals(project) == project.equals(project3));
+    }
+
+    @Test
+    @DisplayName("When project are called")
+    void HashCodeWhenProjectAreCalledSomeTimes() {
+        Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
+        int hash1 = project.hashCode();
+        int hash2 = project.hashCode();
+        int hash3 = project.hashCode();
+        assertEquals(hash1,hash2);
+        assertEquals(hash2,hash3);
+    }
     @Test
     void EqualsIsFalseWhenComparingDifferentProjects() {
         Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
@@ -178,13 +203,39 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Equal is true when comparing the same project on Constructor")
     void EqualsIsTrueWhenComparingSameProjectSecondConstructor() {
         Project project = new Project(26,"Test","For testing purposes");
-        Project projectTest = project;
 
-        boolean result = project.equals(projectTest);
+        assertTrue(project.equals(project));
+    }
 
-        Assertions.assertTrue(result);
+    @Test
+    @DisplayName("Equal is true when comparing different projects on second constructor")
+    void EqualsIsTrueWhenComparingDifferentProjectsSecondConstructor() {
+        Project project = new Project(26,"Test","For testing purposes");
+        Project project2 = new Project(26,"Test","For testing purposes");
+        assertTrue(project.equals(project2) == project2.equals(project));
+    }
+
+    @Test
+    @DisplayName("Equal is true when comparing more than three projects on second contructor")
+    void EqualsIsTrueWhenComparingMoreThanThreeProjectsSecondConstructor() {
+        Project project = new Project(26,"Test","For testing purposes");
+        Project project2 = new Project(26,"Test","For testing purposes");
+        Project project3 = new Project(26,"Test","For testing purposes");
+        assertTrue(project.equals(project2) && project2.equals(project) == project.equals(project3));
+    }
+
+    @Test
+    @DisplayName("When project are called on second constructor")
+    void HashCodeWhenProjectAreCalledSomeTimesSecondConstructor() {
+        Project project = new Project(26,"Test","For testing purposes");
+        int hash1 = project.hashCode();
+        int hash2 = project.hashCode();
+        int hash3 = project.hashCode();
+        assertEquals(hash1,hash2);
+        assertEquals(hash2,hash3);
     }
 
     @Test
