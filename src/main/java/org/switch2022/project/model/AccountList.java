@@ -19,10 +19,12 @@ public class AccountList {
     }
 
     public boolean addAccount(Account account) {
+        boolean isAdded = true;
         if (account == null) {
-            throw new IllegalArgumentException("Account must not be null");
+            isAdded = false;
         }
-        return this.accountList.add(account);
+        this.accountList.add(account);
+        return isAdded;
     }
 
     /***

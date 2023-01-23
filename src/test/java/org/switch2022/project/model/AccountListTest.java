@@ -257,14 +257,9 @@ class AccountListTest {
         AccountList accountList = new AccountList();
         Account account = null;
 
-        String expectedMessage = "Account must not be null";
-
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class,
-                () -> accountList.addAccount(account));
-        String resultMessage = result.getMessage();
-
-        assertEquals(expectedMessage, resultMessage);
+        assertFalse(accountList.addAccount(account));
     }
+
     @Test
     @DisplayName("ensure the adding account method catches the null account")
     void checkIfItTheListSizeDoesNotGiveZero(){
