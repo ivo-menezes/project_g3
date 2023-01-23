@@ -17,11 +17,11 @@ class AssociateResourceControllerTest {
         AccountList accountList = new AccountList();
         RoleList roleList = new RoleList();
         ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com",1, 1,new Date(),25,100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com","Team Member", 1,new Date(),25,100);
         AssociateResourceController associateResourceController = new AssociateResourceController(accountList,roleList,projectList);
 
         accountList.addAccount(new Account("Deborah", "deborah@hotmail.com", "938966782",new Profile("User")));
-        roleList.addRole(new Role(1,"Team Member"));
+        roleList.addRole(new Role("Team Member"));
         projectList.addProject(new Project(1,"test","test"));
 
         //act
@@ -39,11 +39,11 @@ class AssociateResourceControllerTest {
         AccountList accountList = new AccountList();
         RoleList roleList = new RoleList();
         ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com",1, 1,new Date(),25,100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com","Team Member", 1,new Date(),25,100);
         AssociateResourceController associateResourceController = new AssociateResourceController(accountList,roleList,projectList);
 
         accountList.addAccount(new Account("Deborah", "deborah@hotmail.com", "938966782",new Profile("User")));
-        roleList.addRole(new Role(1,"Team Member"));
+        roleList.addRole(new Role("Team Member"));
         projectList.addProject(new Project(1,"test","test"));
 
         //act
@@ -61,11 +61,11 @@ class AssociateResourceControllerTest {
         AccountList accountList = new AccountList();
         RoleList roleList = new RoleList();
         ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com",1, 1,new Date(),25,100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com","Team Member", 1,new Date(),25,100);
         AssociateResourceController associateResourceController = new AssociateResourceController(accountList,roleList,projectList);
 
         accountList.addAccount(new Account("Deborah", "deborah@hotmail.com", "938966782",new Profile("Manager")));
-        roleList.addRole(new Role(1,"Team Member"));
+        roleList.addRole(new Role("Team Member"));
         projectList.addProject(new Project(1,"test","test"));
 
         //act

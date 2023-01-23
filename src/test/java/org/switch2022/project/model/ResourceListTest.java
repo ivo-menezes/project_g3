@@ -15,9 +15,9 @@ class ResourceListTest {
     void ensureAddResourceTrue() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
         ResourceList resourceList = new ResourceList();
 
         //act
@@ -32,9 +32,9 @@ class ResourceListTest {
     void ensureAddResourceFalse() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
         ResourceList resourceList = new ResourceList();
 
         //act
@@ -51,11 +51,11 @@ class ResourceListTest {
     void addTwoTeamMembersIsSuccessful() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
-        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com", 1, 1, new Date(),50,95);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com", "Team Member", 1, new Date(),50,95);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
         Account account1 = new Account("Pedro", "pedro@example.com", "9666666", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
         ResourceList resourceList = new ResourceList();
         //act
         boolean result = resourceList.addResource(account, role, project, resourceDTO);
@@ -70,9 +70,9 @@ class ResourceListTest {
     void addPOSuccess() {
         // arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Product Owner");
+        Role role = new Role("Product Owner");
         ResourceList resourceList = new ResourceList();
         // act
         boolean result = resourceList.addResource(account, role, project, resourceDTO);
@@ -85,11 +85,11 @@ class ResourceListTest {
     void addSecondPOFails() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
-        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com",1,1,new Date(),50,95);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com","Team Member",1,new Date(),50,95);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
         Account account1 = new Account("Pedro", "pedro@example.com", "966666", new Profile("User"));
-        Role role = new Role(1, "Product Owner");
+        Role role = new Role("Product Owner");
         ResourceList resourceList = new ResourceList();
         // act
         boolean result = resourceList.addResource(account, role, project, resourceDTO);
@@ -104,11 +104,11 @@ class ResourceListTest {
     void addSecondSMFails() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
-        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com",1,1,new Date(),50,95);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO1 = new ResourceDTO("pedro@example.com","Team Member",1,new Date(),50,95);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
         Account account1 = new Account("Pedro", "pedro@example.com", "966666", new Profile("User"));
-        Role role = new Role(1, "Scrum Master");
+        Role role = new Role("Scrum Master");
         ResourceList resourceList = new ResourceList();
         // act
         boolean result = resourceList.addResource(account, role, project, resourceDTO);

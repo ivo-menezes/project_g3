@@ -15,7 +15,7 @@ class ResourceTest {
         Profile profile = new Profile("Manager");
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
 
         //act
@@ -31,7 +31,7 @@ class ResourceTest {
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
         Account accountTwo = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Team Member");
+        Role role = new Role( "Team Member");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
 
         //act
@@ -48,7 +48,7 @@ class ResourceTest {
         Profile profile = new Profile("User");
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Product Owner");
+        Role role = new Role("Product Owner");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
         // act
         boolean result = resource.hasRole(role);
@@ -63,8 +63,8 @@ class ResourceTest {
         Profile profile = new Profile("User");
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Product Owner");
-        Role anotherRole = new Role(2, "Scrum Master");
+        Role role = new Role("Product Owner");
+        Role anotherRole = new Role( "Scrum Master");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
         // act
         boolean result = resource.hasRole(anotherRole);
@@ -79,7 +79,7 @@ class ResourceTest {
         Profile profile = new Profile("User");
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Product Owner");
+        Role role = new Role("Product Owner");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
         // act
         boolean result = resource.isActive();
@@ -94,7 +94,7 @@ class ResourceTest {
         Profile profile = new Profile("User");
         Project project = new Project(1, "test", "test");
         Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role(1, "Product Owner");
+        Role role = new Role("Product Owner");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
         Date endDate = new Date();
         // act

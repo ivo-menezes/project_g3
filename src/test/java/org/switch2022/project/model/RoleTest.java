@@ -9,15 +9,16 @@ class RoleTest {
 
     @Test
     @DisplayName("ensure return code Role")
-    void ensureGetCode() {
+    void ensureGetDescription() {
+
         //arrange
-        int roleCode = 1;
-        Role role = new Role(roleCode, "Team Member");
+        String description = "Team Member";
+        Role role = new Role(description);
 
         //act
-        int result = role.getCode();
+        String result = role.getDescription();
 
         //assert
-        assertEquals(roleCode, result);
+        assertEquals(description, result);
     }
 }

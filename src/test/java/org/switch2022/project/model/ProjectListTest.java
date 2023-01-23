@@ -42,9 +42,9 @@ class ProjectListTest {
     void ensureAddResourceToProjectTrue() {
         //arrange
         ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
 
         projectList.addProject(new Project(1, "test", "test"));
 
@@ -60,9 +60,9 @@ class ProjectListTest {
     void ensureAddResourceToProjectFalse() {
         //arrange
         ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
 
         projectList.addProject(new Project(1, "test", "test"));
 

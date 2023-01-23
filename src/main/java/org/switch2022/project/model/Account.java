@@ -95,7 +95,7 @@ public class Account {
     public boolean isUser(){
         boolean isUser= false;
 
-        if (this.profile.getProfileName() == "User") {
+        if (this.profile.getProfileName().equals("User")) {
             isUser = true;
         }
         return isUser;

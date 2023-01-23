@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ResourceDTO {
     public String email;
-    public int roleCode;
+    public String description;
     public int projectCode;
     public Date startDate;
     public Date endDate;
@@ -12,7 +12,7 @@ public class ResourceDTO {
     public double costPerHour;
 
     public ResourceDTO (String email,
-                        int roleCode,
+                        String description,
                         int projectCode,
                         Date startDate,
                         Date endDate,
@@ -20,7 +20,7 @@ public class ResourceDTO {
                         double costPerHour){
 
         this.email = email;
-        this.roleCode = roleCode;
+        this.description = description;
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -29,14 +29,14 @@ public class ResourceDTO {
     }
 
     public ResourceDTO (String email,
-                        int roleCode,
+                        String description,
                         int projectCode,
                         Date startDate,
                         double percentAllocation,
                         double costPerHour){
 
         this.email = email;
-        this.roleCode = roleCode;
+        this.description = description;
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.percentAllocation = percentAllocation;

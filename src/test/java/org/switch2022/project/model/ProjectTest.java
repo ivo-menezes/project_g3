@@ -266,9 +266,9 @@ class ProjectTest {
     void ensureAddResourceTrue() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
 
         //act
         boolean result = project.addResource(account,role,resourceDTO);
@@ -281,9 +281,9 @@ class ProjectTest {
     void ensureAddResourceFalse() {
         //arrange
         Project project = new Project(1, "test", "test");
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", 1, 1, new Date(), 25, 100);
+        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
         Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role(1, "Team Member");
+        Role role = new Role("Team Member");
 
         //act
         boolean added = project.addResource(account,role,resourceDTO);

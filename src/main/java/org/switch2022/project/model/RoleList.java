@@ -16,14 +16,14 @@ public class RoleList {
 
     /**
      * Retrieves a role from the roleList given a roleCode
-     * @param roleCode
+     * @param description
      * @return role
      */
-    public Role getRole(int roleCode) {
+    public Role getRole(String description) {
         Role foundRole = null;
 
         for (Role role : roleList) {
-            if (role.getCode() == roleCode) {
+            if (role.getDescription().equals(description) ) {
                 foundRole = role;
             }
         }
