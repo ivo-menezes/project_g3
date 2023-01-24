@@ -1,11 +1,14 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.controller.ListProjectController;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -138,4 +141,79 @@ class ProjectListTest {
         assertEquals(expected, result);
         assertNotEquals(0, result);
     }
+
+    @Test
+    @DisplayName("Create project success in a empty list")
+    void testCreateProjectSuccessInAEmptyList(){
+        ProjectList projectList = new ProjectList();
+        int code = 2;
+        String name = "Project Test";
+        String description = "For Test";
+
+        boolean result = projectList.createProject(code, name, description);
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Create project fail")
+    void testCreateProjectFail(){
+        ProjectList projectList = new ProjectList();
+        int code = 0;
+        String name = "Project Test";
+        String description = "For Test";
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> projectList.createProject(code, name, description));
+    }
+
+    @Test
+    @DisplayName("Create project success in a filled list")
+    void testCreateProjectSuccessInAFilledList(){
+        //Arrange
+        ProjectList projectList = new ProjectList();
+        Project projectTest = new Project(1, "Project Test", "For Test");
+        projectList.addProject(projectTest);
+        //Act
+        int code = 2;
+        String name = "Project Number Two";
+        String description = "For Test";
+        boolean result = projectList.createProject(code, name, description);
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Create duplicated project in a filled list")
+    void testCreateDuplicatedProjectInAFilledList(){
+        //Arrange
+        ProjectList projectList = new ProjectList();
+        Project projectTest = new Project(1, "Project Test", "For Test");
+        projectList.addProject(projectTest);
+        //Act
+        int code = 1;
+        String name = "Project Test";
+        String description = "For Test";
+        //Assert
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> projectList.createProject(code, name, description));
+    }
+
+    @Test
+    @DisplayName("validate the code of project with success")
+    void validateProjectCodeSuccess_ReturnTrue(){
+        ProjectList projectList = new ProjectList();
+        int code = 1;
+        boolean result = projectList.validateProjectCode(code);
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("validate if the code of project fail")
+    void validateTheCodeOfProject_ReturnFalse(){
+        ProjectList projectList = new ProjectList();
+        int code = 0;
+        boolean result = projectList.validateProjectCode(code);
+        assertFalse(result);
+    }
+
 }
