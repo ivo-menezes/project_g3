@@ -344,4 +344,75 @@ class ProjectTest {
         assertFalse(result);
     }
 
+    @Test
+    void checkIfCodeIsNullWhenIsZeroInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(0, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), "client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfCodeIsNullWhenIsNegativeInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(-2, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), "client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfNameIsNullInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, null, new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), "client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfStartDateIsAfterEndDateInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, "Test", new Date(2023, Calendar.MARCH, 1), new Date(2023, Calendar.FEBRUARY, 2), "client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfStartDateIsNullInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, "Test", null, new Date(2023, Calendar.FEBRUARY, 2),"client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfEndDateIsNullInListProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), null, "client1", "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
+    @Test
+    void checkIfCostumerIsNullInLIstProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), null, "Planned");
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+    @Test
+    void checkIfProjectStatusIsNullInLIstProj() {
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
+
+            Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", null);
+        });
+        Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
+    }
+
 }
