@@ -90,7 +90,7 @@ class ProjectListTest {
     }
 
     @Test
-    @DisplayName("Check if the method getAccountAtIndex works as intended")
+    @DisplayName("Check if the method getProjectIndex works as intended")
     void testingGetProjectIndex() {
 
         Project project = new Project(200,"proj1","project1",new Date(2023, Calendar.JANUARY,10),new Date(2024,Calendar.JANUARY,22),3,10,"Planned",2000);
@@ -105,5 +105,37 @@ class ProjectListTest {
         Project result = projectList.getProjectIndex(1);
 
         assertEquals(projectTwo, result);
+    }
+
+    @Test
+    @DisplayName("Creates project DTO")
+    void testIfProjectDTOIsCreatedSuccessfully() {
+
+        Project project = new Project(200,"proj1","project1",new Date(2023, Calendar.JANUARY,10),new Date(2024,Calendar.JANUARY,22),3,10,"Planned",2000);
+
+        ProjectList projectList = new ProjectList();
+        projectList.addProject(project);
+
+        ProjectDTO projectDTO = projectList.createProjectDTO(project);
+        ProjectDTO projectDTOTestTwo = projectDTO;
+
+        assertNotNull(projectDTO);
+        assertSame(projectDTO, projectDTOTestTwo);
+    }
+    @Test
+    @DisplayName("ensure the adding project method catches the null project")
+    void checkIfTheListSizeIsNotZero(){
+
+        Project project = new Project(200,"proj1","project1",new Date(2023, Calendar.JANUARY,10),new Date(2024,Calendar.JANUARY,22),3,10,"Planned",2000);
+        Project projectTwo = new Project(201,"proj2","project2",new Date(2003,Calendar.JANUARY,10), new Date(2004,Calendar.JANUARY,20),2,5,"Closed",10000);
+
+        ProjectList projectList = new ProjectList();
+        projectList.addProject(project);
+        projectList.addProject(projectTwo);
+        int expected = 2;
+
+        int result = projectList.listSize();
+        assertEquals(expected, result);
+        assertNotEquals(0, result);
     }
 }
