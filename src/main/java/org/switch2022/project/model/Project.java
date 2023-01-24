@@ -16,7 +16,7 @@ public class Project {
     private int numberOfPlannedSprints;
     private String projectStatus = "Planned";
     private double budget;
-    private static ResourceList list = new ResourceList();
+    private ResourceList list;
 
     //Constructors
 
@@ -33,6 +33,7 @@ public class Project {
         this.numberOfPlannedSprints = numberOfPlannedSprints;
         this.projectStatus = projectStatus;
         this.budget = budget;
+        this.list=new ResourceList();
     }
 
     public Project(int code, String name, String description) {
@@ -42,6 +43,7 @@ public class Project {
         this.code = code;
         this.name = name;
         this.description = description;
+        this.list=new ResourceList();
     }
 
     public Project(int code, String name, Date startDate, Date endDate, String costumer, String projectStatus) {
@@ -54,6 +56,7 @@ public class Project {
         this.endDate = endDate;
         this.customer = costumer;
         this.projectStatus = projectStatus;
+        this.list=new ResourceList();
     }
 
     /***
