@@ -5,15 +5,15 @@ class CreateProjectUI {
 
 class CreateProjectController {
 projectList : ProjectList
-createProject(accountEmail, code, name, description)
+createProject(code, name, description)
 }
 
 
 class ProjectList {
 projectList : List<Project>
 createProject(code, name, description)
-validateCode(code)
-add(newProject)
+validateProjectCode(code)
+addProject(newProject)
 }
 
 'class AccountList {
