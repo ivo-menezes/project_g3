@@ -1,6 +1,5 @@
 package org.switch2022.project.model;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,29 @@ public class ProjectList {
             }
         }
         return foundProject;
+    }
+
+    public boolean createProject(int code, String name, String description) {
+        if (!validateProjectCode(code)) {
+            throw new IllegalArgumentException("A project with this code already exists.");
+        }
+        Project newProject = new Project(code, name, description);
+        return addProject(newProject);
+    }
+
+    public boolean validateProjectCode(int code) {
+        boolean uniqueCode = true;
+        if (code <= 0) {
+            uniqueCode = false;
+        }
+        for (int i = 0; i < this.projectList.size() && uniqueCode; i++) {
+            Project c = this.projectList.get(i);
+            int cCode = c.getCode();
+            if (cCode == (code)) {
+                uniqueCode = false;
+            }
+        }
+        return uniqueCode;
     }
 
     /**
