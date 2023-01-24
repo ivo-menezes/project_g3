@@ -47,6 +47,7 @@ class ProjectTest {
         assertEquals(hash2,hash3);
     }
     @Test
+    @DisplayName("Equals is false when comparing different objects")
     void EqualsIsFalseWhenComparingDifferentProjects() {
         Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
         Project projectTest = new Project(25, "Testing", "For Nothing", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
@@ -57,6 +58,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Equals is false when comparing with null project")
     void EqualsIsFalseWhenComparingWithNullProject() {
         Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
         Project projectTest = null;
@@ -67,6 +69,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Equals equals and same")
     void testEqualsAndSame() {
         Project project = new Project(26,"Test","For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned",1000);
         Project projectTest = project;
@@ -77,6 +80,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("test hash code")
     void testHashCode() {
         Project project = new Project(26, "Test", "For testing purposes", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2), 2, 5, "Planned", 1000);
         Project projectTest = project;
@@ -86,6 +90,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if the code is null when is zero")
     void checkIfCodeIsNullWhenIsZero() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -95,6 +100,7 @@ class ProjectTest {
         }
 
     @Test
+    @DisplayName("Check if the code is null when is negative")
     void checkIfCodeIsNullWhenIsNegative() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -104,6 +110,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if the name is null")
     void checkIfNameIsNull() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -113,6 +120,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if the description is null")
     void checkIfDescriptionIsNull() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -122,6 +130,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check exception when start date is after the end date")
     void checkIfStartDateIsAfterEndDate() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -131,6 +140,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if the start date is null")
     void checkIfStartDateIsNull() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -140,6 +150,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if the end date is null")
     void checkIfEndDateIsNull() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -149,6 +160,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if sprint duration is null when is zero")
     void checkIfSprintDurationIsNullWhenIsZero() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -158,6 +170,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if sprint duration is null when is negative")
     void checkIfSprintDurationIsNullWhenIsNegative() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -167,6 +180,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if number of planned sprints are null when is zero")
     void checkIfNumberOfPlannedSprintsAreNullWhenIsZero() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -176,6 +190,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if number of planned sprints are null when is negative")
     void checkIfNumberOfPlannedSprintsAreNullWhenIsNegative() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -185,6 +200,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if project status is null")
     void checkIfProjectStatusIsNull() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -194,6 +210,7 @@ class ProjectTest {
     }
 
     @Test
+    @DisplayName("Check if budget is null when is negative")
     void checkIfBudgetNullWhenIsNegative() {
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, ()  -> {
 
@@ -203,7 +220,7 @@ class ProjectTest {
     }
 
     @Test
-    @DisplayName("Equal is true when comparing the same project on Constructor")
+    @DisplayName("Equal is true when comparing the same project on second constructor")
     void EqualsIsTrueWhenComparingSameProjectSecondConstructor() {
         Project project = new Project(26,"Test","For testing purposes");
 
@@ -219,7 +236,7 @@ class ProjectTest {
     }
 
     @Test
-    @DisplayName("Equal is true when comparing more than three projects on second contructor")
+    @DisplayName("Equal is true when comparing more than three projects on second constructor")
     void EqualsIsTrueWhenComparingMoreThanThreeProjectsSecondConstructor() {
         Project project = new Project(26,"Test","For testing purposes");
         Project project2 = new Project(26,"Test","For testing purposes");
