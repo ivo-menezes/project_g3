@@ -414,5 +414,46 @@ class ProjectTest {
         });
         Assertions.assertEquals("Missing mandatory details.", exception.getMessage());
     }
-
+    @Test
+    void testIfGetsCode(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        int expected = 26;
+        int code = project.getCode();
+        assertEquals(expected, code);
+    }
+    @Test
+    void testIfGetsName(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        String expected = "Test";
+        String name = project.getName();
+        assertEquals(expected, name);
+    }
+    @Test
+    void testIfGetsStartDate(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        Date expected = new Date(2023, Calendar.JANUARY, 1);
+        Date startDate = project.getStartDate();
+        assertEquals(expected, startDate);
+    }
+    @Test
+    void testIfGetsEndDate(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        Date expected = new Date(2023,Calendar.FEBRUARY,2);
+        Date endDate = project.getEndDate();
+        assertEquals(expected, endDate);
+    }
+    @Test
+    void testIfGetsCustomer(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        String expected = "client1";
+        String customer = project.getCustomer();
+        assertEquals(expected, customer);
+    }
+    @Test
+    void testIfGetProjectStatus(){
+        Project project = new Project(26, "Test", new Date(2023, Calendar.JANUARY, 1), new Date(2023,Calendar.FEBRUARY,2),"client1", "Planned");
+        String expected = "Planned";
+        String projectStatus = project.getProjectStatus();
+        assertEquals(expected, projectStatus);
+    }
 }
