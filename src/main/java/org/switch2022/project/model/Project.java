@@ -44,6 +44,18 @@ public class Project {
         this.description = description;
     }
 
+    public Project(int code, String name, Date startDate, Date endDate, String costumer, String projectStatus) {
+        if (code <= 0 || name == null || startDate == null || endDate == null || startDate.after(endDate) || costumer == null|| projectStatus == null ) {
+            throw new IllegalArgumentException("Missing mandatory details.");
+        }
+        this.code = code;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.customer = costumer;
+        this.projectStatus = projectStatus;
+    }
+
     /***
      * @return code,name,customer,start&end date e project status
      */
