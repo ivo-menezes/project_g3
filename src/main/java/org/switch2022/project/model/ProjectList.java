@@ -30,6 +30,14 @@ public class ProjectList {
         return foundProject;
     }
 
+    /**
+     * creates a new project and adds it to the projectList
+     *
+     * @param code
+     * @param name
+     * @param description
+     * @return true if project successfully created and save, throw exception otherwise
+     */
     public boolean createProject(int code, String name, String description) {
         if (!validateProjectCode(code)) {
             throw new IllegalArgumentException("A project with this code already exists.");
@@ -38,6 +46,12 @@ public class ProjectList {
         return addProject(newProject);
     }
 
+    /**
+     * validates if a Project with the same name already exists
+     *
+     * @param code
+     * @return true if name is valid, false otherwise
+     */
     public boolean validateProjectCode(int code) {
         boolean uniqueCode = true;
         if (code <= 0) {
@@ -80,6 +94,8 @@ public class ProjectList {
     public boolean addProject(Project project) {
         projectList.add(project);
         return true;
+        //Se ele conseguir já retorna true, a linha é necessária? Ficar return = projectList.add(project).
+        //Se ele falhar a adicionar o projecto, não deveria retornar "false"!?
     }
 
     /***
