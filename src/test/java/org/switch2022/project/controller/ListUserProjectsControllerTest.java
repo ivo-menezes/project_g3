@@ -161,7 +161,7 @@ class ListUserProjectsControllerTest {
     }
 
     @Test
-    public void returnListOfProjectsCodes() {
+    public void confirmListOfProjectsCodesWorks() {
         Project project1 = new Project(1,"Test1","For testing purposes");
         Project project2 = new Project(2,"Test2","For testing purposes");
 
@@ -190,5 +190,42 @@ class ListUserProjectsControllerTest {
         List<Integer> notExpected = Arrays.asList(1, 2, 1);
 
         assertNotEquals(expected,notExpected);
+    }
+
+    @Test
+    public void listUserProjectsEmpty() {
+        Project project1 = new Project(1,"Test1","For testing purposes");
+        Project project2 = new Project(2,"Test2","For testing purposes");
+
+        Profile profile = new Profile("User");
+
+        Role role1 = new Role( "Team Member");
+        Role role2 = new Role( "Scrum Master");
+        Role role3 = new Role( "Project Owner");
+
+        Account account1 = new Account ("Ricardo", "11111x@gmail.com", "33399988", profile);
+        Account account2 = new Account ("Filipe", "22222x@gmail.com", "33399987", profile);
+        Account account3 = new Account ("Tavares", "33333x@gmail.com", "33399986", profile);
+
+        ResourceDTO resourceDTO3 = new ResourceDTO ("22222x@gmail.com", "xssc", 1, new Date(2023, Calendar.JANUARY, 3), 40, 80);
+        ResourceDTO resourceDTO4 = new ResourceDTO ("33333x@gmail.com", "dfgfd", 1, new Date(2023, Calendar.JANUARY,4), 40, 60);
+        ResourceDTO resourceDTO5 = new ResourceDTO ("22222x@gmail.com", "devjv", 2, new Date(2023, Calendar.JANUARY, 5), 40, 80);
+        ResourceDTO resourceDTO6 = new ResourceDTO ("33333x@gmail.com", "dkjr", 2, new Date(2023, Calendar.JANUARY, 5), 40, 80);
+
+        ProjectList projectList = new ProjectList();
+        projectList.addProject(project1);
+        projectList.addProject(project2);
+
+        project1.addResource(account2,role2,resourceDTO3);
+        project1.addResource(account3,role3,resourceDTO4);
+        project2.addResource(account2,role3,resourceDTO5);
+        project2.addResource(account3,role2,resourceDTO6);
+
+        ListUserProjectsController controller = new ListUserProjectsController(projectList);
+        List result = controller.listUserProjectsDTO(account1);
+        List<Integer> notExpected = Arrays.asList(1);
+
+        assertNotSame(notExpected,result);
+        assertTrue(result.isEmpty());
     }
 }

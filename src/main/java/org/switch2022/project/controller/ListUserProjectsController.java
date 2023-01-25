@@ -24,9 +24,10 @@ public class ListUserProjectsController {
      * @return UserProjectsDTOList
      */
     public List listUserProjectsDTO (Account currentAccount) {
-        List<UserProjectsDTO> UserProjectsDTOList = new ArrayList<>();
+        List<UserProjectsDTO> userProjectsDTOList = new ArrayList<>();
         List<Integer> projectCodes = new ArrayList<>();
         int listProjectSize = this.projectList.listSize();
+        String emailCurrentAccount = currentAccount.getEmail();
 
         for (int i = 0; i < listProjectSize; i++) {
             Project project = projectList.getProjectIndex(i);
@@ -34,14 +35,14 @@ public class ListUserProjectsController {
 
             for (int j = 0; j < listResourceSize; j++ ) {
                 Resource resource = project.getList().getResourceIndex(j);
-                boolean emailsMatched = currentAccount.getEmail().equals(resource.getAccount().getEmail());
+                boolean emailsMatched = emailCurrentAccount.equals(resource.getAccount().getEmail());
                 Date endDate = resource.getEndDate();
 
                 if (emailsMatched && endDate == null && !projectCodes.contains(project.getCode())){
-                    UserProjectsDTOList.add(projectList.createUserProjectsDTO(project));
+                    userProjectsDTOList.add(projectList.createUserProjectsDTO(project));
                     projectCodes.add(project.getCode());
                 }
             }
-        } return UserProjectsDTOList;
+        } return userProjectsDTOList;
     }
 }
