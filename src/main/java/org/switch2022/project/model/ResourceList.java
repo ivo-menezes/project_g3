@@ -86,4 +86,14 @@ public class ResourceList {
 
         return roleOccupied;
     }
+
+    public int listResourceSize() {
+
+        return this.resourceList.size();
+    }
+
+    public Resource getResourceIndex(int index) {
+
+        return this.resourceList.get(index);
+    }
 }

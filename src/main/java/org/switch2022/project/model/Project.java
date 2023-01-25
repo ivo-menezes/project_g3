@@ -90,4 +90,8 @@ public class Project {
     public int getCode() {
         return this.code;
     }
+
+    public ResourceList getList() {
+        return list;
+    }
 }

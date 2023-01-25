@@ -111,4 +111,14 @@ public class ProjectList {
 
         return projectDTO;
     }
+
+    /***
+     * The methods will create an UserProjectDto, containing only code and name of the project.
+     * @param project
+     * @return UserProjectsDTO
+     */
+    public UserProjectsDTO createUserProjectsDTO(Project project) {
+        UserProjectsDTO userProjectsDTO = new UserProjectsDTO(project.getCode(), project.getName());
+        return userProjectsDTO;
+    }
 }
