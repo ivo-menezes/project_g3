@@ -84,13 +84,8 @@ public class Resource {
         return resourceDTO;
     }
 
-
     public Account getAccount() {
         return account;
-    }
-
-    public Date getEndDate() {
-        return endDate;
     }
 
 }

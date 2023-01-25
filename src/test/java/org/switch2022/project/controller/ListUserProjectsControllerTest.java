@@ -169,7 +169,6 @@ class ListUserProjectsControllerTest {
 
         Role role1 = new Role( "Team Member");
         Role role2 = new Role( "Scrum Master");
-        Role role3 = new Role( "Project Owner");
 
         Account account1 = new Account ("Ricardo", "11111x@gmail.com", "33399988", profile);
 
@@ -199,7 +198,6 @@ class ListUserProjectsControllerTest {
 
         Profile profile = new Profile("User");
 
-        Role role1 = new Role( "Team Member");
         Role role2 = new Role( "Scrum Master");
         Role role3 = new Role( "Project Owner");
 

@@ -36,9 +36,9 @@ public class ListUserProjectsController {
             for (int j = 0; j < listResourceSize; j++ ) {
                 Resource resource = project.getList().getResourceIndex(j);
                 boolean emailsMatched = emailCurrentAccount.equals(resource.getAccount().getEmail());
-                Date endDate = resource.getEndDate();
+                boolean endDateNull = resource.isActive();
 
-                if (emailsMatched && endDate == null && !projectCodes.contains(project.getCode())){
+                if (emailsMatched && endDateNull && !projectCodes.contains(project.getCode())){
                     userProjectsDTOList.add(projectList.createUserProjectsDTO(project));
                     projectCodes.add(project.getCode());
                 }
