@@ -12,7 +12,7 @@ public class TypologyList {
      */
 
     public TypologyList(){
-        this.typologyList = new ArrayList<Typology>();
+        this.typologyList = new ArrayList<>();
     }
 
 
@@ -24,55 +24,37 @@ public class TypologyList {
 
     public boolean createTypology(String typologyDesignation){
 
-        boolean typologyCreated = false;
-
-        if(validateTypologyDesignation(typologyDesignation)) {
-            typologyCreated = true;
-        }
             Typology newTypology = new Typology(typologyDesignation);
-            add(newTypology);
 
-            return typologyCreated;
+        return add(newTypology);
     }
 
 
     /**
-     * validates typology designation according to business rules
-     * @param typologyDesignation designation of the intended typology
-     * @return true if typology name is valid, false otherwise
-     */
-
-    public boolean validateTypologyDesignation(String typologyDesignation) {
-
-        boolean typologyValid = false;
-
-        if(typologyDesignation.equals("Fixed cost") || typologyDesignation.equals("Time and materials")) {
-            typologyValid = true;
-        }
-
-        for (int i = 0; i < this.typologyList.size() && typologyValid; i++) {
-            Typology t = this.typologyList.get(i);
-            String tDesignation = t.getTypologyDesignation();
-            if (tDesignation.equals(typologyDesignation)) {
-                typologyValid = false;
-            }
-        }
-        return typologyValid;
-    }
-
-
-    /**
-     * checks if typology is successfully added to typology list
+     * adds typology to typology list.
      * @param typology to be added to typology list
-     * @return true if typology is successfully added to the list, false otherwise
+     * @return true if typology is successfully added to the list, false it's already listed.
      */
 
     public boolean add(Typology typology) {
         boolean typologyAddedSuccess= true;
-        if (typology == null) {
+
+        if(listDoesNotContain(typology)){
+            this.typologyList.add(typology);
+        }else {
             typologyAddedSuccess = false;
         }
-        this.typologyList.add(typology);
         return typologyAddedSuccess;
+    }
+
+    /**
+     * checks if typologyList already contains a typology
+     * @param typology object to be added to the list
+     * @return true if the object is new to the list, false otherwise.
+     */
+
+    private boolean listDoesNotContain(Typology typology){
+
+        return !typologyList.contains(typology);
     }
 }

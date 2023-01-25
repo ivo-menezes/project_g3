@@ -9,12 +9,18 @@ public class Typology {
 
     /**
      * constructor that accepts typology designation
-     *
+     * object is created if it complies with business rules. Otherwise, an exception is thrown.
      * @param typologyDesignation to be added to Typology
      */
     public Typology(String typologyDesignation) {
-
+        if(designationIsInvalid(typologyDesignation)){
+            throw new IllegalArgumentException("Typology designation is invalid");
+        }
         this.typologyDesignation = typologyDesignation;
+    }
+
+    private static boolean designationIsInvalid(String typologyDesignation) {
+        return !typologyDesignation.equals("Fixed cost") && !typologyDesignation.equals("Time and materials");
     }
 
 
@@ -27,6 +33,7 @@ public class Typology {
         return typologyDesignation;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,6 +41,7 @@ public class Typology {
         Typology typology = (Typology) o;
         return typologyDesignation.equals(typology.typologyDesignation);
     }
+
 
     @Override
     public int hashCode() {

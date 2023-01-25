@@ -1,11 +1,24 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TypologyTest {
+
+    @Test
+    @DisplayName ("ensure invalid typology is not created")
+    void getTypologyDesignationFail() {
+        //arrange
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        Typology typology = new Typology("ThisIsATest");
+        });
+        String expected = "Typology designation is invalid";
+
+        Assertions.assertEquals(expected, exception.getMessage());
+    }
 
     @Test
     @DisplayName ("ensure typology Time and materials is successfully retrieved by designation")
@@ -32,8 +45,10 @@ class TypologyTest {
         Typology typology = new Typology("Fixed cost");
         Typology anotherTypology = null;
         boolean expected = false;
+
         //act
         boolean result = typology.equals(anotherTypology);
+
         //assert
         assertEquals(expected, result);
     }
@@ -45,8 +60,10 @@ class TypologyTest {
         Typology typology = new Typology("Fixed cost");
         Typology anotherTypology = typology;
         boolean expected = true;
+
         //act
         boolean result = typology.equals(anotherTypology);
+
         //assert
         assertEquals(expected, result);
     }
@@ -58,8 +75,10 @@ class TypologyTest {
         Typology typology = new Typology("Fixed cost");
         Typology anotherTypology = new Typology ("Fixed cost");
         boolean expected = true;
+
         //act
         boolean result = typology.equals(anotherTypology);
+
         //assert
         assertEquals(expected, result);
     }
@@ -71,8 +90,10 @@ class TypologyTest {
         Typology typology = new Typology("Fixed cost");
         Typology anotherTypology = new Typology("Time and materials");
         boolean expected = false;
+
         //act
         boolean result = typology.equals(anotherTypology);
+
         //assert
         assertEquals(expected, result);
     }

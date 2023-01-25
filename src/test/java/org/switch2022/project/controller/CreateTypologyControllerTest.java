@@ -12,27 +12,28 @@ class CreateTypologyControllerTest {
     @DisplayName("ensure valid typology is successfully created")
     void typologyCreatedSuccess(){
         //arrange
-        String typologyDesignation = "Fixed cost";
         TypologyList typologyList = new TypologyList();
         CreateTypologyController controller = new CreateTypologyController(typologyList);
+
         //act
-        boolean result = controller.createTypology(typologyDesignation);
+        boolean result = controller.createTypology("Fixed cost");
+
         //assert
         assertTrue(result);
     }
 
-
     @Test
-    @DisplayName("ensure invalid typology is not created")
+    @DisplayName("ensure invalid/repeated typology is not created")
     void typologyCreatedFail(){
         //arrange
-        String typologyDesignation = "ThisIsATest";
         TypologyList typologyList = new TypologyList();
         CreateTypologyController controller = new CreateTypologyController(typologyList);
+        controller.createTypology("Fixed cost");
+
         //act
-        boolean result = controller.createTypology(typologyDesignation);
+        boolean result = controller.createTypology("Fixed cost");
+
         //assert
         assertFalse(result);
     }
-
 }
