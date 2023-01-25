@@ -3,7 +3,6 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ListUserProjectsController {

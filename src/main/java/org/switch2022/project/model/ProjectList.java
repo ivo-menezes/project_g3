@@ -132,7 +132,6 @@ public class ProjectList {
      * @return UserProjectsDTO
      */
     public UserProjectsDTO createUserProjectsDTO(Project project) {
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO(project.getCode(), project.getName());
-        return userProjectsDTO;
+        return new UserProjectsDTO(project.getCode(), project.getName());
     }
 }
