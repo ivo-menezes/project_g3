@@ -12,7 +12,8 @@ addResource(resourceDTO)
 }
 
 class AccountList {
-getAccount(account)
+accountList: List<Account>
+getAccount(accountEmail)
 }
 
 class Account {
@@ -21,6 +22,7 @@ isUser()
 }
 
 class RoleList {
+roleList: List<Role>
 getRole(roleName)
 }
 
@@ -34,15 +36,15 @@ addResourceToProject(account, role, resourceDTO)
 }
 
 class Project {
-code: int ???
+code: int
 name: String
 description: String
 startDate: Date
 endDate: Date
-customer: String ???
+customer: String
 sprintDuration: int
 numberOfPlannedSprints: int
-projectStatus: String ???
+projectStatus: String
 budget: double
 resourceList: ResourceList
 getProject(projectCode)
@@ -51,9 +53,9 @@ addResource(account, role, resourceDTO)
 
 class ResourceList {
 resourceList: List<Resource>
-+addResource(account, role, resourceDTO)
--existsActiveResourceWithAccount(account)
--isRoleOccupied(role)
+addResource(account, role, resourceDTO)
+existsActiveResourceWithAccount(account)
+isRoleOccupied(role)
 }
 
 class Resource {
@@ -63,16 +65,16 @@ startDate: Date
 endDate: Date
 percentAllocation: double
 costPerHour: double
-+isAccountOfResource(account)
-+hasRole(role)
-+isActive()
+isAccountOfResource(account)
+hasRole(role)
+isActive()
 }
 
 AssociateResourceUI o-- AssociateResourceController
 AssociateResourceController o-- ProjectList
 ProjectList *-- Project
-Project *-- ResourceList
-ResourceList o-- Resource
+Project o-- ResourceList
+ResourceList *-- Resource
 AccountList *-- Account
 RoleList *-- Role
 AssociateResourceController o-- AccountList
