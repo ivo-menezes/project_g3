@@ -21,7 +21,7 @@ public class ListAccountsController {
      * containing only email and status of each account in the list.
      * @return AccountListDTO
      */
-    public List listAccounts(AccountList accountList) throws IllegalArgumentException {
+    public List listAccounts(AccountList accountList) {
         List<AccountDTO> listAccountDTO = new ArrayList<>();
         Account account;
         this.accountList = accountList;
