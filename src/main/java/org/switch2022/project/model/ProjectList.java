@@ -94,8 +94,6 @@ public class ProjectList {
     public boolean addProject(Project project) {
         projectList.add(project);
         return true;
-        //Se ele conseguir já retorna true, a linha é necessária? Ficar return = projectList.add(project).
-        //Se ele falhar a adicionar o projecto, não deveria retornar "false"!?
     }
 
     /***

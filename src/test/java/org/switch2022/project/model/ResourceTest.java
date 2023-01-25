@@ -103,4 +103,51 @@ class ResourceTest {
         // assert
         assertFalse(result);
     }
+    @Test
+    @DisplayName("retrieve email from resource account")
+    void retrieveEmailFromResource(){
+        // arrange
+        Profile profile = new Profile("User");
+        Project project = new Project(1, "test", "test");
+        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
+        Role role = new Role("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+        String emailExpected = "xxxxx@gmail.com";
+        // act
+        String emailResult = resource.getEmailOfResource();
+        // assert
+        assertEquals(emailExpected, emailResult);
+    }
+    @Test
+    @DisplayName("get role from resorce")
+    void getRoleFromResource() {
+        // arrange
+        Profile profile = new Profile("User");
+        Project project = new Project(1, "test", "test");
+        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
+        Role role = new Role("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+        String roleExpected = "Product Owner";
+        // act
+        String roleResult = resource.getRole();
+        // assert
+        assertEquals(roleExpected, roleResult);
+    }
+    @Test
+    @DisplayName("create resourceDTO")
+    void createResourceDTO() {
+        // arrange
+        Profile profile = new Profile("User");
+        Project project = new Project(1, "test", "test");
+        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
+        Role role = new Role("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+        ResourceDTO expected = new ResourceDTO("xxxxx@gmail.com", "Product Owner");
+        // act
+        ResourceDTO result = resource.createResourceDTO();
+        // assert
+        assertEquals(expected, result);
+    }
+
+
 }

@@ -96,4 +96,24 @@ public class ResourceList {
 
         return this.resourceList.get(index);
     }
+
+    /**
+     * Returns a list of DTOs containing the email and the role of each resource
+     * in the project.
+     *
+     * @return lsResources as the list of DTOs.
+     */
+    public List<ResourceDTO> listResources() {
+        // Initialize an empty list of DTOs
+        List<ResourceDTO> lsResources = new ArrayList<>();
+
+        // Get a resourceDTO from each resource in resourceList and add it to the
+        // list of ResourceDTOs:
+        for (Resource resource : resourceList) {
+            ResourceDTO resourceDTO = resource.createResourceDTO();
+            lsResources.add(resourceDTO);
+        }
+        return lsResources;
+    }
+
 }

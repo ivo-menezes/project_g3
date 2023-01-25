@@ -7,9 +7,9 @@ public class Resource {
     private final Account account;
     private final Project project;
     private final Date startDate;
-    private Date endDate;
     private final double percentAllocation;
     private final double costPerHour;
+    private Date endDate;
 
     /**
      * Constructor to create a resource object.
@@ -22,17 +22,18 @@ public class Resource {
      * @param costPerHour
      */
 
-    public Resource (Role role, Account account, Project project, Date startDate, double percentAllocation, double costPerHour) {
-        this.role= role;
-        this.account= account;
-        this.project= project;
-        this.startDate= startDate;
-        this.percentAllocation= percentAllocation;
-        this.costPerHour= costPerHour;
+    public Resource(Role role, Account account, Project project, Date startDate, double percentAllocation, double costPerHour) {
+        this.role = role;
+        this.account = account;
+        this.project = project;
+        this.startDate = startDate;
+        this.percentAllocation = percentAllocation;
+        this.costPerHour = costPerHour;
     }
 
     /**
      * Method to verify that the account is the same as the account associated with the resource.
+     *
      * @param account
      * @return false if account is different, true otherwise.
      */
@@ -51,6 +52,38 @@ public class Resource {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    /**
+     * Retrieves the email of the account associated to the resource.
+     *
+     * @return a string with the email address of the account.
+     */
+    public String getEmailOfResource() {
+        return account.getEmail();
+    }
+
+    /**
+     * Retrieves a string identifying the role of the resource.
+     *
+     * @return a string with the role name.
+     */
+    public String getRole() {
+        return this.role.getDescription();
+    }
+
+    /**
+     * Creates a Resource DTO containing the email and the role of the resource.
+     *
+     * @return resourceDTO.
+     */
+    public ResourceDTO createResourceDTO() {
+        String email = getEmailOfResource();
+        String role = getRole();
+        ResourceDTO resourceDTO = new ResourceDTO(email, role);
+
+        return resourceDTO;
+    }
+
 
     public Account getAccount() {
         return account;

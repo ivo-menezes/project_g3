@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class ResourceDTO {
     public String email;
@@ -10,6 +11,7 @@ public class ResourceDTO {
     public Date endDate;
     public double percentAllocation;
     public double costPerHour;
+    public String role;
 
     public ResourceDTO (String email,
                         String description,
@@ -41,6 +43,28 @@ public class ResourceDTO {
         this.startDate = startDate;
         this.percentAllocation = percentAllocation;
         this.costPerHour = costPerHour;
+    }
+
+    public ResourceDTO (String email, String role) {
+        this.email = email;
+        this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ResourceDTO)) {
+            return false;
+        }
+        ResourceDTO that = (ResourceDTO) o;
+        return Objects.equals(email, that.email) && Objects.equals(role, that.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, role);
     }
 }
 
