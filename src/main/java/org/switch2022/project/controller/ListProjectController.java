@@ -11,6 +11,9 @@ public class ListProjectController {
 
     private ProjectList projectList;
     public ListProjectController(ProjectList projectList){
+        if(projectList.listSize()<=0){
+            throw new IllegalArgumentException("List is empty");
+        }
         this.projectList = projectList;
     }
 
