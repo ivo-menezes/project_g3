@@ -5,8 +5,9 @@ hide footbox
 actor User as User
 participant ": UserProjectsUI" as UI
 participant ": UserProjectsController" as Controller
-participant "lsUserProjects: List<UserProjectsDTO>" as DTOList
+participant "userProjectsDTOList: List<UserProjectsDTO>" as DTOList
 participant "userProjectsDTO : UserProjectsDTO" as DTO
+participant "account : Account" as account
 participant "project : Project" as Project
 participant ": ProjectList" as ProjectList
 participant ": ResourceList" as ResourceList
@@ -15,27 +16,32 @@ activate User #FFBBBB
 User ->  UI: Requests list of projects that User is allocated to
 
 activate UI #FFBBBB
-UI -> Controller: listUserProjects(currentUserEmail)
+UI -> Controller: listUserProjects(currentAccount)
 
 activate Controller #FFBBBB
 Controller -> DTOList ** : create
+
+activate account #FFBBBB
+Controller -> account: getEmail()
+account --> Controller: currentAccountEmail
+deactivate account
 
 group loop [for each project]
 activate ProjectList #FFBBBB
 Controller -> ProjectList : project = getProjectAtIndex(i)
 
 loop for each resource
-Controller -> Project : Project has User
+Controller -> Project : resource = getResourceAtIndex(j)
 Project -> ResourceList : resource = getResourceAtIndex(j)
 activate ResourceList #FFBBBB
 deactivate ResourceList
 
 
-ResourceList -> ResourceList : compareEmails()
+ResourceList -> ResourceList : emailsMatch && endDateNull\n&& projectCodeNotRepeated
 
 end
 
-ResourceList -> ProjectList : compareEmails() = true
+ResourceList -> ProjectList : emailsMatch && endDateNull &&\n projectCodeNotRepeated  = true
 activate ResourceList #FFBBBB
 deactivate ResourceList
 
@@ -55,7 +61,7 @@ deactivate DTOList
 deactivate ProjectList
 end
 
-Controller --> UI : lsUserProjects
+Controller --> UI : userProjectsDTOList
 deactivate Controller
 deactivate UI
 
