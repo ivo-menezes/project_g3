@@ -4,9 +4,7 @@ class UserProjectsUI {
 }
 
 class UserProjectsController {
-'accounts: List<Account>
-listProject()
-listResource()
+projectList : ProjectList
 listUserProjectsDTO (Account currentUser)
 }
 
@@ -17,10 +15,14 @@ customer : String
 startDate : Date
 endDate : Date
 status : String
+getCode()
+getName()
+getList()
 }
 
 class ProjectList {
-getProjectAtIndex(i)
+listSize()
+getProjectIndex(i)
 create(userProjectsDTO)
 }
 
@@ -30,7 +32,18 @@ projectName
 }
 
 class ResourceList {
-getResourceAtIndex(j)
+listResourceSize()
+getResourceIndex(j)
+}
+
+class Resource {
+role : Role
+account : Account
+project : Project
+startDate : Date
+endDate : Date
+getAccount()
+getEndDate()
 }
 
 ProjectList "                                          1" *-- "*" Project : has
@@ -40,5 +53,7 @@ ProjectList ..> UserProjectsDTO
 Project ..> UserProjectsDTO
 UserProjectsController "           1" o-- "               *" Project
 Project "                     1" *-- "     *" ResourceList : has
+ResourceList "                     1" *-- "     *" Resource : has
+
 
 @enduml
