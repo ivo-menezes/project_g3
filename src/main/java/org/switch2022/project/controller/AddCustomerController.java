@@ -17,14 +17,9 @@ public class AddCustomerController {
     }
 
     public boolean createCustomer(String designation) {
-        boolean result = true;
-        newCustomerList = new CustomerList();
-        if (!newCustomerList.validateCustomer(designation)) {
-            result = false;
-        } else {
-            newCustomerList.createCustomer(designation);
-        }
-        return result;
+
+        return this.newCustomerList.createCustomer(designation);
+
     }
 
 }
