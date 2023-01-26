@@ -47,10 +47,10 @@ public class ProjectList {
     }
 
     /**
-     * validates if a Project with the same name already exists
+     * validates if a Project with the same code already exists
      *
      * @param code
-     * @return true if name is valid, false otherwise
+     * @return true if code is valid, false otherwise
      */
     public boolean validateProjectCode(int code) {
         boolean uniqueCode = true;
