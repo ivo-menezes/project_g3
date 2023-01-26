@@ -12,8 +12,8 @@ createBusinessSector(designation)
 
 class BusinessSectorList{
 businessSectorList : List<BusinessSector>
-validateBusinessSector(designation)
 createBusinessSector(designation)
+listDoesNotContainSector(newBusinessSector)
 add(newBusinessSector)
 }
 
