@@ -6,11 +6,11 @@ actor Manager as Manager
 participant ": ListResourcesUI" as UI
 participant ": ListResourcesController" as Controller
 participant ": ProjectList" as ProjectList
-participant ": Project" as project
+participant "project : Project" as project
 participant ": ResourceList" as ResourceList
-participant "lsResources : List<ResourcesDTO>" as DTOList
-participant "resourceDTO : ResourceDTO" as DTO
+participant "lsResources :\n List<ResourceDTO>" as DTOList
 participant "resource : Resource" as Resource
+participant "resourceDTO : ResourceDTO" as DTO
 participant " account : Account" as account
 
 activate Manager #FFBBBB
@@ -20,39 +20,39 @@ activate UI #FFBBBB
 UI -> Controller: listResources(projectCode)
 
 activate Controller #FFBBBB
-Controller -> ProjectList: listResources(projectCode)
-
+Controller -> ProjectList: getProject()
 activate ProjectList #FFBBBB
-ProjectList -> ProjectList : project = getProject(projectCode)
-ProjectList -> project : listResources(project)
+ProjectList -> Controller : project
+deactivate ProjectList
+
+Controller -> project : listResources(project)
 activate project #FFBBBB
 project -> ResourceList : listResources()
 activate ResourceList #FFBBBB
 ResourceList -> DTOList ** : create
 
 loop for each resource
-ResourceList -> Resource : email = getEmailOfResource(i)
+ResourceList -> Resource : createResourceDTO(resource)
 activate Resource #FFBBBB
-Resource -> account : email = getEmail()
+Resource -> account : getEmail()
 activate account #FFBBBB
 deactivate account
-Resource -> Resource : role = getRole()
+Resource -> Resource : getRole()
 Resource -> DTO ** : create(email, role)
+Resource -> ResourceList : resourceDTO
 deactivate Resource
 
-DTO -> DTOList : add(resourceDTO)
+ResourceList -> DTOList : add(resourceDTO)
 activate DTOList #FFBBBB
 
 end
 
-DTOList --> ResourceList: lsResources
 deactivate DTOList
 ResourceList --> project : lsResources
 deactivate ResourceList
-project --> ProjectList : lsResources
+project --> Controller : lsResources
 deactivate project
-ProjectList --> Controller : lsResources
-deactivate ProjectList
+
 Controller --> UI : lsResources
 deactivate Controller
 

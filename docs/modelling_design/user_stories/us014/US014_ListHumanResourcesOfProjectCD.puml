@@ -5,37 +5,38 @@ class ListResourcesUI {
 
 class ListResourcesController{
 projectList : ProjectList
-lsResouces : ResourcesDTO
+'lsResouces : ResourcesDTO
 listResources(projectCode)
 }
 
 class ProjectList{
 projectList : ProjectList
-project : Project
-lsResources : ResourcesDTO
+'project : Project
+'lsResources : ResourcesDTO
 getProject(projectCode)
 listResources(project)
 }
 'In class Project, all attributes not relevant for US014
 'are omitted
 class Project {
-projectCode : String
+projectCode : int
 resourceList : ResourceList
-lsResources : ResourcesDTO
+'lsResources : ResourcesDTO
 listResources()
 }
 
 class ResourceList{
 resourceList : ResourceList
-resource : Resource
-lsResources : ResourcesDTO
-createResourcesDTO()
-getEmailOfResource()
+'lsResources : ResourcesDTO
+listResources()
+'getEmailOfResource()
+'createResourcesDTO()
+add(resourceDTO)
 }
 
 class ResourceDTO {
 email : String
-role : Role
+role : String
 }
 
 class Resource {
@@ -48,7 +49,6 @@ costPerHour : float
 getEmailOfResource()
 getRole()
 createResourceDTO()
-addResourceDTO(lsResources)
 }
 
 class Account {
