@@ -1,0 +1,6 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Manager -> System: Create Project (code, name, description)
+Manager <-- System: Confirms Project creation
+@enduml
