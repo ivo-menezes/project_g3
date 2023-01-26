@@ -68,24 +68,6 @@ public class ProjectList {
     }
 
     /**
-     * Method to add a resource to the project.
-     *
-     * @param account
-     * @param role
-     * @param resourceDTO
-     * @return true if the resource is added to the project, false otherwise.
-     */
-    public boolean addResourceToProject(Account account, Role role, ResourceDTO resourceDTO) {
-        boolean addedResource = false;
-
-        Project project = this.getProject(resourceDTO.projectCode);
-        addedResource = project.addResource(account, role, resourceDTO);
-
-        return addedResource;
-
-    }
-
-    /**
      * Method to add project.
      *
      * @param project

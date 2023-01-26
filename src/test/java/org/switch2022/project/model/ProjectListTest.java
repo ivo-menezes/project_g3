@@ -42,43 +42,6 @@ class ProjectListTest {
     }
 
     @Test
-    @DisplayName("ensure the resource has been added in the Project.")
-    void ensureAddResourceToProjectTrue() {
-        //arrange
-        ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
-        Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role("Team Member");
-
-        projectList.addProject(new Project(1, "test", "test"));
-
-        //act
-        boolean result = projectList.addResourceToProject(account,role,resourceDTO);
-
-        //assert
-        assertTrue(result);
-    }
-
-    @Test
-    @DisplayName("ensure the resource has not been added in the Project.")
-    void ensureAddResourceToProjectFalse() {
-        //arrange
-        ProjectList projectList = new ProjectList();
-        ResourceDTO resourceDTO = new ResourceDTO("deborah@hotmail.com", "Team Member", 1, new Date(), 25, 100);
-        Account account = new Account("Deborah", "deborah@hotmail.com", "938966782", new Profile("User"));
-        Role role = new Role("Team Member");
-
-        projectList.addProject(new Project(1, "test", "test"));
-
-        //act
-        boolean added = projectList.addResourceToProject(account,role,resourceDTO);
-        boolean result = projectList.addResourceToProject(account,role,resourceDTO);
-
-        //assert
-        assertFalse(result);
-    }
-
-    @Test
     @DisplayName("ensure the project has been added.")
     void ensureAddProjectTrue() {
         //arrange

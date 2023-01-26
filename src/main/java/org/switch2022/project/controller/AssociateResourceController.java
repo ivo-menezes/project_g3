@@ -30,11 +30,14 @@ public class AssociateResourceController {
         boolean resourceAdded = false;
 
         Account account = accountList.getAccount(resourceDTO.email);
-        Role role = roleList.getRole(resourceDTO.description);
 
         if (account.isUser()) {
-            resourceAdded= projectList.addResourceToProject(account,role,resourceDTO);
+            //resourceAdded= projectList.addResourceToProject(account,role,resourceDTO);
+            Role role = roleList.getRole(resourceDTO.description);
+            Project project = projectList.getProject(resourceDTO.projectCode);
+            resourceAdded = project.addResource(account, role, resourceDTO);
         }
+
         return resourceAdded;
     }
 }
