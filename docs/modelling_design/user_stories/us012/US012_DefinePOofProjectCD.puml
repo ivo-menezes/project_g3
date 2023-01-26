@@ -1,15 +1,14 @@
 @startuml
-!theme plain
+
+skinparam linetype ortho
 
 class AssociateResourceUI {
 }
 
 class ResourceDTO {
 email: String
-description: String
 projectCode: int
 startDate: Date
-endDate: Date
 percentAllocation: double
 costPerHour: double
 roleName: String
