@@ -495,10 +495,6 @@ class ProjectTest {
         listExpected.add(resourceDTO1_Output);
         // act
         List<ResourceDTO> listResult =  project.listResources();
-        // -- check the list object
-        // System.out.println("list object: " + listResult);
-        // assertNotNull(listResult);
-        // System.out.println("list size: " + listResult.size());
 
         // assert
         assertTrue(listExpected.containsAll(listResult) && listResult.containsAll(listExpected));

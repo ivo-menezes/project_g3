@@ -104,11 +104,8 @@ public class ResourceList {
      * @return lsResources as the list of DTOs.
      */
     public List<ResourceDTO> listResources() {
-        // Initialize an empty list of DTOs
         List<ResourceDTO> lsResources = new ArrayList<>();
 
-        // Get a resourceDTO from each resource in resourceList and add it to the
-        // list of ResourceDTOs:
         for (Resource resource : resourceList) {
             ResourceDTO resourceDTO = resource.createResourceDTO();
             lsResources.add(resourceDTO);

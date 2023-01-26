@@ -5,32 +5,23 @@ class ListResourcesUI {
 
 class ListResourcesController{
 projectList : ProjectList
-'lsResouces : ResourcesDTO
 listResources(projectCode)
 }
 
 class ProjectList{
 projectList : ProjectList
-'project : Project
-'lsResources : ResourcesDTO
 getProject(projectCode)
-listResources(project)
 }
-'In class Project, all attributes not relevant for US014
-'are omitted
+
 class Project {
 projectCode : int
 resourceList : ResourceList
-'lsResources : ResourcesDTO
 listResources()
 }
 
 class ResourceList{
 resourceList : ResourceList
-'lsResources : ResourcesDTO
 listResources()
-'getEmailOfResource()
-'createResourcesDTO()
 add(resourceDTO)
 }
 
@@ -63,6 +54,7 @@ getEmail()
 
 ListResourcesUI "1 " o-- "1 " ListResourcesController
 ListResourcesController "1 " o-- "1 " ProjectList
+ListResourcesController ..> Project
 ProjectList "1 " *-- " * " Project : has
 Project "1 " o-- "1 " ResourceList
 ResourceList "1  " ..> ResourceDTO
