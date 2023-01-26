@@ -1,6 +1,7 @@
 @startuml
 !theme plain
 hide footbox
+title "US008 - As Administrator, I want to add a business sector"
 
 actor Administrator as Administrator
 participant ": CreateBusinessSectorUI" as UI
@@ -18,14 +19,14 @@ activate Controller #FFBBBB
 Controller -> List : createBusinessSector(designation)
 activate List #FFBBBB
 
-List -> List : validateDesignation(designation)
-List --> Business ** : newBusinessSector = create(designation)
+List --> Business ** : create(designation)
+List -> List : listDoesNotContainSector(newBusinessSector)
 List -> List : add(newBusinessSector)
 
-List --> Controller : Confirm new Business Sector
+List --> Controller : Confirms new Business Sector
 deactivate List
-Controller --> UI : Confirm new Business Sector
+Controller --> UI : Confirms new Business Sector
 deactivate Controller
-UI --> Administrator : Confirm new Business Sector
+UI --> Administrator : Confirms new Business Sector
 deactivate Administrator
 @enduml

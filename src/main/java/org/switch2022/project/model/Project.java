@@ -17,6 +17,8 @@ public class Project {
     private int numberOfPlannedSprints;
     private String projectStatus = "Planned";
     private double budget;
+    private Typology typology;
+    private BusinessSector businessSector;
     private ResourceList list;
 
     //Constructors
@@ -122,5 +124,14 @@ public class Project {
      */
     public List<ResourceDTO> listResources() {
         return list.listResources();
+    }
+
+    /***
+     * The methods will create an UserProjectDto, containing only code and name of the project.
+     * @param project
+     * @return UserProjectsDTO
+     */
+    public UserProjectsDTO createUserProjectsDTO(Project project) {
+        return new UserProjectsDTO(project.getCode(), project.getName());
     }
 }

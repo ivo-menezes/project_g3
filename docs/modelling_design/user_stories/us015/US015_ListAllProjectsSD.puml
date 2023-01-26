@@ -7,9 +7,9 @@ participant ": ListProjectUI" as UI
 participant ": ListProjectController" as Controller
 participant "lsProject : List<ProjectDTO>" as DTOList
 participant "ProjectDTO : ProjectDTO" as DTO
+participant ": ProjectList" as ProjectList
 participant "project : Project" as project
 
-participant ": ProjectList" as ProjectList
 
 activate Manager #FFBBBB
 Manager ->  UI: Requests list of all projects
@@ -20,31 +20,31 @@ UI -> Controller: listProjects()
 activate Controller #FFBBBB
 Controller -> DTOList ** : create
 
-loop for each profile
-Controller -> ProjectList : project = getProject(i)
+loop for each project
+Controller -> ProjectList : getProject(i)
 activate ProjectList #FFBBBB
-ProjectList -> project : code = getCode()
+ProjectList -> project : getCode()
 activate project #FFBBBB
 deactivate project
-ProjectList -> project : name = getName()
+ProjectList -> project : getName()
 activate project #FFBBBB
 deactivate project
-ProjectList -> project : customer = getCostumer()
+ProjectList -> project : getCustomer()
 activate project #FFBBBB
 deactivate project
-ProjectList -> project : startDate = getStartDate()
+ProjectList -> project : getStartDate()
 activate project #FFBBBB
 deactivate project
-ProjectList -> project : endDate = getEndDate()
+ProjectList -> project : getEndDate()
 activate project #FFBBBB
 deactivate project
-ProjectList -> project : statusProject = getStatusProject()
+ProjectList -> project : getStatusProject()
 activate project #FFBBBB
 deactivate project
 
 ProjectList -> DTO ** : create(code, name, customer, start date, end date, status project)
 
-ProjectList -> DTOList : add(projectDTO)
+Controller -> DTOList : add(projectDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
 deactivate ProjectList

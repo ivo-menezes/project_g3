@@ -1,6 +1,7 @@
 @startuml
 !theme plain
 hide footbox
+title "US007 - As Administrator, I want to create a new project typology"
 
 actor Administrator
 participant ": CreateTypologyUI" as UI
@@ -18,8 +19,8 @@ activate Controller #FFBBBB
 Controller -> List : createTypology(typologyDesignation)
 
 activate List #FFBBBB
-List -> List : validateTypologyDesignation(typologyDesignation)
-List --> typology  ** : newTypology = create(typologyDesignation)
+List --> typology  ** : create(typologyDesignation)
+List -> List : listDoesNotContain(newTypology)
 List -> List : add(newTypology)
 List --> Controller : Confirms typology creation
 deactivate List

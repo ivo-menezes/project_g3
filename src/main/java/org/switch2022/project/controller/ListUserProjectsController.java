@@ -38,7 +38,7 @@ public class ListUserProjectsController {
                 boolean endDateNull = resource.isActive();
 
                 if (emailsMatch && endDateNull && !projectCodes.contains(project.getCode())){
-                    userProjectsDTOList.add(projectList.createUserProjectsDTO(project));
+                    userProjectsDTOList.add(project.createUserProjectsDTO(project));
                     projectCodes.add(project.getCode());
                 }
             }

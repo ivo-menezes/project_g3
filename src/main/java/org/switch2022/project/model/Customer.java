@@ -7,8 +7,15 @@ public class Customer {
     private String designation;
 
     public Customer(String designation) {
+        if(designationIsNull(designation)) {
+            throw new IllegalArgumentException("Designation can not be null!");
+        }       
 
         this.designation = designation;
+    }
+
+    private boolean designationIsNull(String designation) {
+        return designation == null;
     }
 
     public String getDesignation() {
