@@ -12,7 +12,7 @@ createTypology(typologyDesignation)
 class TypologyList {
 typologyList : List<Typology>
 createTypology(typologyDesignation)
-validateTypologyDesignation(typologyDesignation)
+listDoesNotContain(newTypology)
 add(newTypology)
 }
 
