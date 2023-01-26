@@ -1,7 +1,17 @@
 @startuml
-!theme plain
+
+skinparam linetype ortho
 
 class AssociateResourceUI {
+}
+
+class ResourceDTO {
+email: String
+projectCode: int
+startDate: Date
+percentAllocation: double
+costPerHour: double
+roleName: String
 }
 
 class AssociateResourceController {
@@ -9,12 +19,11 @@ accountList: AccountList
 roleList: RoleList
 projectList: ProjectList
 addResource(resourceDTO)
-
-
 }
 
 class AccountList {
-getAccount(account)
+accountList: List<Account>
+getAccount(accountEmail)
 }
 
 class Account {
@@ -33,7 +42,6 @@ description: String
 
 class ProjectList {
 projectList: List<Project>
-addResourceToProject(account, role, resourceDTO)
 getProject(projectCode)
 }
 
@@ -43,10 +51,10 @@ name: String
 description: String
 startDate: Date
 endDate: Date
-IDCustomer: Int
+customer: String
 sprintDuration: int
 numberOfPlannedSprints: int
-projectStatus: String ???
+projectStatus: String
 budget: double
 resourceList: ResourceList
 addResource(account, role, resourceDTO)
@@ -54,8 +62,8 @@ addResource(account, role, resourceDTO)
 
 class ResourceList {
 resourceList: List<Resource>
-+addResource(account, role, resourceDTO)
--existsActiveResourceWithAccount(account)
+addResource(account, role, resourceDTO)
+existsActiveResourceWithAccount(account)
 }
 
 class Resource {
@@ -66,14 +74,14 @@ endDate: Date
 percentAllocation: double
 costPerHour: double
 isAccountOfResource(account)
-
+isActive()
 }
 
 AssociateResourceUI o-- AssociateResourceController
 AssociateResourceController o-- ProjectList
 ProjectList *-- Project
-Project *-- ResourceList
-ResourceList o-- Resource
+Project o-- ResourceList
+ResourceList *-- Resource
 AccountList *-- Account
 RoleList *-- Role
 AssociateResourceController o-- AccountList
@@ -81,4 +89,10 @@ AssociateResourceController ..> Account
 AssociateResourceController o-- RoleList
 Resource o-- Account
 Resource o-- Role
+AssociateResourceUI ..> ResourceDTO
+AssociateResourceController ..> ResourceDTO
+Project ..> ResourceDTO
+ResourceList ..> ResourceDTO
+AssociateResourceController ..> Project
+AssociateResourceController ..> Role
 @enduml
