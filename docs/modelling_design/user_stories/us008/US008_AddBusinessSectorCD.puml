@@ -25,5 +25,4 @@ designation : String
 BusinessSectorList "1" *-- "*" BusinessSector : has
 CreateBusinessSectorController "1" o-- "1" BusinessSectorList
 CreateBusinessSectorUI "1" o-- "1" CreateBusinessSectorController
-CreateBusinessSectorController ..> BusinessSector
 @enduml
