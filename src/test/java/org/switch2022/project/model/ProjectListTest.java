@@ -215,22 +215,6 @@ class ProjectListTest {
         assertFalse(result);
     }
 
-    @Test
-    @DisplayName("ensure the userProjectsDTO is not null.")
-    void ensureUserProjectsDTOIsNotNull() {
-
-        Project project = new Project(1, "Test1", "ddd");
-        UserProjectsDTO userProjectsDTO = new UserProjectsDTO(1, "Test1");
-
-        ProjectList pList = new ProjectList();
-        UserProjectsDTO DTO1 = pList.createUserProjectsDTO(project);
-        UserProjectsDTO DTO2 = DTO1;
-
-        assertNotNull(DTO1);
-        assertNotNull(userProjectsDTO);
-        assertSame(DTO1, DTO2);
-    }
-
     /*@Test
     @DisplayName("get a list of resources as a list of DTOs")
     void getAListOfResources() {
