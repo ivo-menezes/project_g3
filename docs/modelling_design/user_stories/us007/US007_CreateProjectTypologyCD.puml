@@ -17,7 +17,7 @@ add(newTypology)
 }
 
 class Typology {
-designation : String
+typologyDesignation : String
 }
 
 CreateTypologyUI "1" o-- "1" CreateTypologyController
