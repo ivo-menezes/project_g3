@@ -17,8 +17,6 @@ public class Project {
     private int numberOfPlannedSprints;
     private String projectStatus = "Planned";
     private double budget;
-    private Typology typology;
-    private BusinessSector businessSector;
     private ResourceList list;
 
     //Constructors

@@ -49,7 +49,7 @@ class ListUserProjectsControllerTest {
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
 
-        controller.listUserProjectsDTO(account1);
+        controller.listUserProjects(account1);
 
         assertNotNull(controller);
     }
@@ -107,7 +107,7 @@ class ListUserProjectsControllerTest {
 
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
-        List result = controller.listUserProjectsDTO(account1);
+        List result = controller.listUserProjects(account1);
         assertNotNull(result);
         assertFalse(result.isEmpty());
     }
@@ -155,7 +155,7 @@ class ListUserProjectsControllerTest {
         project3.addResource(account3,role3,resourceDTO7);
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
-        List<UserProjectsDTO> result = controller.listUserProjectsDTO(account1);
+        List<UserProjectsDTO> result = controller.listUserProjects(account1);
         assertTrue(result instanceof List);
         assertTrue(result.get(0) instanceof UserProjectsDTO);
     }
@@ -185,7 +185,7 @@ class ListUserProjectsControllerTest {
         project1.addResource(account1,role2,resourceDTO3);
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
-        List<Integer> expected = controller.listUserProjectsDTO(account1);
+        List<Integer> expected = controller.listUserProjects(account1);
         List<Integer> notExpected = Arrays.asList(1, 2, 1);
 
         assertNotEquals(expected,notExpected);
@@ -220,7 +220,7 @@ class ListUserProjectsControllerTest {
         project2.addResource(account3,role2,resourceDTO6);
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
-        List result = controller.listUserProjectsDTO(account1);
+        List result = controller.listUserProjects(account1);
         List<Integer> notExpected = Arrays.asList(1);
 
         assertNotSame(notExpected,result);

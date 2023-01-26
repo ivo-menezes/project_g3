@@ -22,8 +22,8 @@ public class ListUserProjectsController {
      * @param currentAccount
      * @return UserProjectsDTOList
      */
-    public List listUserProjectsDTO (Account currentAccount) {
-        List<UserProjectsDTO> userProjectsDTOList = new ArrayList<>();
+    public List listUserProjects (Account currentAccount) {
+        List<UserProjectsDTO> userProjectsList = new ArrayList<>();
         List<Integer> projectCodes = new ArrayList<>();
         int listProjectSize = this.projectList.listSize();
         String emailCurrentAccount = currentAccount.getEmail();
@@ -38,10 +38,10 @@ public class ListUserProjectsController {
                 boolean endDateNull = resource.isActive();
 
                 if (emailsMatch && endDateNull && !projectCodes.contains(project.getCode())){
-                    userProjectsDTOList.add(project.createUserProjectsDTO(project));
+                    userProjectsList.add(project.createUserProjectsDTO(project));
                     projectCodes.add(project.getCode());
                 }
             }
-        } return userProjectsDTOList;
+        } return userProjectsList;
     }
 }
