@@ -71,7 +71,7 @@ class BusinessSectorTest {
         assertEquals(expected, result);
     }
     @Test
-    @DisplayName("Ensure the business doesn't equal other Types of Object")
+    @DisplayName("Ensure the business doesn't equal other business sector")
     void ensureTheBusinessDoesNotEqualsAnotherBusiness(){
         BusinessSector newBusiness = new BusinessSector("Technology");
         BusinessSector anotherBusiness = new BusinessSector("Financial");

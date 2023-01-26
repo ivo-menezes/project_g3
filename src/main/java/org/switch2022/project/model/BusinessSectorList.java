@@ -5,32 +5,13 @@ import java.util.List;
 
 public class BusinessSectorList {
 
-    private List<BusinessSector> businessSectorList;
+    private List<BusinessSector> listBusinessSector;
 
     /***
      * Constructor to initialise a new list of business sectors.
      */
     public BusinessSectorList() {
-        businessSectorList = new ArrayList<>();
-    }
-
-    /***
-     * This method will validate whether there is a business sector in the list with
-     * the input designation.
-     * @param designation this is the data for the validation
-     * @return a boolean, according to whether the designation already exists or not
-     */
-    public boolean validateBusinessSector(String designation){
-        boolean isDesignationValid = null != designation;
-        for (int index = 0; index < this.businessSectorList.size() && isDesignationValid; index++) {
-            BusinessSector business = this.businessSectorList.get(index);
-            String bDesign = business.getDesignation();
-            if (bDesign.equals(designation)) {
-                isDesignationValid = false;
-                break;
-            }
-        }
-        return isDesignationValid;
+        listBusinessSector = new ArrayList<>();
     }
 
     /***
@@ -39,24 +20,29 @@ public class BusinessSectorList {
      * created business sector is added to the list.
      */
     public boolean createBusinessSector(String designation) {
-        if(designation == null){
-            throw new IllegalArgumentException("Designation cannot be null.");
-        }
-        else if (!validateBusinessSector(designation)) {
-            throw new IllegalArgumentException("Designation already exists.");
-        }
 
-        BusinessSector businessSector = new BusinessSector(designation);
+        BusinessSector newBusinessSector = new BusinessSector(designation);
 
-        return addBusiness(businessSector);
+        return addBusiness(newBusinessSector);
     }
 
-    public boolean addBusiness(BusinessSector businessSector){
+    /***
+     * The method will use the Arraylist option of .contain to verify whether the object exists in the
+     * list, before adding it to the list itself.
+     * @param newBusinessSector
+     * @return a boolean true or false, accordingly to whether it exists or not
+     */
+    public boolean listDoesNotContainSector(BusinessSector newBusinessSector){
+    return !listBusinessSector.contains(newBusinessSector);
+    }
+
+    public boolean addBusiness(BusinessSector newBusinessSector){
         boolean addedDesignation = true;
-        if(businessSector == null){
+        if(listDoesNotContainSector(newBusinessSector) && newBusinessSector != null) {
+            this.listBusinessSector.add(newBusinessSector);
+        }else{
             addedDesignation = false;
         }
-        this.businessSectorList.add(businessSector);
         return addedDesignation;
     }
 }

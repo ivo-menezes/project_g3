@@ -24,17 +24,7 @@ class BusinessSectorListTest {
         assertFalse(businessList.addBusiness(newBusiness));
     }
 
-    @Test
-    void validateBusinessSectorIsNewToList() {
-        BusinessSector newBusiness = new BusinessSector("Technology");
-        BusinessSector anotherBusiness = new BusinessSector("Industrial");
-        BusinessSectorList businessList = new BusinessSectorList();
-        businessList.addBusiness(newBusiness);
-        businessList.addBusiness(anotherBusiness);
-        String designation = "Financial";
 
-        assertTrue(businessList.validateBusinessSector(designation));
-    }
     @Test
     void validateBusinessSectorAlreadyExists() {
         BusinessSector newBusiness = new BusinessSector("Technology");
@@ -42,20 +32,20 @@ class BusinessSectorListTest {
         BusinessSectorList businessList = new BusinessSectorList();
         businessList.addBusiness(newBusiness);
         businessList.addBusiness(anotherBusiness);
-        String designation = "Financial";
+        BusinessSector thirdBusiness = new BusinessSector("Financial");
 
-        assertFalse(businessList.validateBusinessSector(designation));
+        assertFalse(businessList.listDoesNotContainSector(thirdBusiness));
     }
     @Test
-    void validateIfTheBusinessIsNull(){
+    void validateIfTheBusinessIsNotInTheList(){
         BusinessSector newBusiness = new BusinessSector("Technology");
         BusinessSector anotherBusiness = new BusinessSector("Financial");
         BusinessSectorList businessList = new BusinessSectorList();
         businessList.addBusiness(newBusiness);
         businessList.addBusiness(anotherBusiness);
-        String designation = null;
+        BusinessSector thirdBusiness = new BusinessSector("Industrial");
 
-        assertFalse(businessList.validateBusinessSector(designation));
+        assertTrue(businessList.listDoesNotContainSector(thirdBusiness));
     }
 
     @Test
@@ -68,19 +58,6 @@ class BusinessSectorListTest {
         String designation = "Financial";
 
         assertTrue(businessList.createBusinessSector(designation));
-    }
-    @Test
-    void checkIfThereIsAnError(){
-            IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            BusinessSector newBusiness = new BusinessSector("Technology");
-            BusinessSector anotherBusiness = new BusinessSector("Industrial");
-            BusinessSectorList businessList = new BusinessSectorList();
-            businessList.addBusiness(newBusiness);
-            businessList.addBusiness(anotherBusiness);
-            String designation = "Technology";
-            businessList.createBusinessSector(designation);
-        });
-        Assertions.assertEquals("Designation already exists.", exception.getMessage());
     }
 
 }

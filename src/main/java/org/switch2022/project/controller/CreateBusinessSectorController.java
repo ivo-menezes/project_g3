@@ -16,7 +16,7 @@ public class CreateBusinessSectorController {
     public boolean createBusinessSector(String designation) {
         boolean result = true;
         newBusinessList = new BusinessSectorList();
-        if (!newBusinessList.validateBusinessSector(designation)) {
+        if (designation == null) {
             result = false;
         } else {
             newBusinessList.createBusinessSector(designation);
