@@ -24,7 +24,9 @@ about the projects they were/are involved.
 
 ### **1.4 – Found out dependencies**
 
-There is a dependency to US002. The user must be registered.
+* There is a dependency to US002. The user must be registered.
+* There is a dependency to US010. The project must be created.
+* There is a dependency to US014. The list of all human resource in the project must be created.
 
 ### **1.5 – Input and output data**
 

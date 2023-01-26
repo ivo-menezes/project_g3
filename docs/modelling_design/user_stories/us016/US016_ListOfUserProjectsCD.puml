@@ -18,17 +18,17 @@ status : String
 getCode()
 getName()
 getList()
+create(userProjectsDTO)
 }
 
 class ProjectList {
 listSize()
 getProjectIndex(i)
-create(userProjectsDTO)
 }
 
 class UserProjectsDTO{
-projectCode
-projectName
+code : Integer
+name : String
 }
 
 class ResourceList {

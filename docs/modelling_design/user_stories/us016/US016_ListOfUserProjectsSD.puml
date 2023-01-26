@@ -1,6 +1,7 @@
 @startuml
 !theme plain
 hide footbox
+title "US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to"
 
 actor User as User
 participant ": UserProjectsUI" as UI
@@ -8,9 +9,10 @@ participant ": UserProjectsController" as Controller
 participant "userProjectsDTOList: List<UserProjectsDTO>" as DTOList
 participant "userProjectsDTO : UserProjectsDTO" as DTO
 participant "account : Account" as account
-participant "project : Project" as Project
 participant ": ProjectList" as ProjectList
+participant "project : Project" as Project
 participant ": ResourceList" as ResourceList
+participant " resource : Resource " as resource
 
 activate User #FFBBBB
 User ->  UI: Requests list of projects that User is allocated to
@@ -23,45 +25,49 @@ Controller -> DTOList ** : create
 
 activate account #FFBBBB
 Controller -> account: getEmail()
-account --> Controller: currentAccountEmail
+account --> Controller: email
 deactivate account
 
 group loop [for each project]
 activate ProjectList #FFBBBB
-Controller -> ProjectList : project = getProjectAtIndex(i)
+Controller -> ProjectList : getProjectAtIndex(i)
+deactivate ProjectList
 
 loop for each resource
-Controller -> Project : resource = getResourceAtIndex(j)
-Project -> ResourceList : resource = getResourceAtIndex(j)
+
+activate Project #FFBBBB
+Controller -> Project : getResourceAtIndex(j)
+Project -> ResourceList : getResourceAtIndex(j)
 activate ResourceList #FFBBBB
+
+ResourceList -> resource : verifyIfUserIsInProject()
+deactivate ResourceList
+
+activate resource #FFBBBB
+resource --> ResourceList  : if emailsMatch && endDateNull &&\n projectCodeNotRepeated  = true
+deactivate resource
+
+activate ResourceList #FFBBBB
+ResourceList --> Project  : if emailsMatch && endDateNull &&\n projectCodeNotRepeated  = true
 deactivate ResourceList
 
 
-ResourceList -> ResourceList : emailsMatch && endDateNull\n&& projectCodeNotRepeated
+Project -> Project : getProjectCode()
+Project -> Project : getProjectName()
 
-end
-
-ResourceList -> ProjectList : emailsMatch && endDateNull &&\n projectCodeNotRepeated  = true
-activate ResourceList #FFBBBB
-deactivate ResourceList
-
-ProjectList -> Project : projectCode = getProjectCode()
-activate Project #FFBBBB
+Project -> DTO ** : create(projectCode, projectName)
 deactivate Project
 
-ProjectList -> Project : projectName = getProjectName()
-activate Project #FFBBBB
-deactivate Project
-
-ProjectList -> DTO ** : create(projectCode, projectName)
+DTO --> Controller : userProjectsDTO created
 
 Controller -> DTOList : add(userProjectsDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
-deactivate ProjectList
 end
 
-Controller --> UI : userProjectsDTOList
+end
+
+Controller --> UI : userProjectsList
 deactivate Controller
 deactivate UI
 
