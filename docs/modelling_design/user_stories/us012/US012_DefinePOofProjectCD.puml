@@ -4,6 +4,17 @@
 class AssociateResourceUI {
 }
 
+class ResourceDTO {
+email: String
+description: String
+projectCode: int
+startDate: Date
+endDate: Date
+percentAllocation: double
+costPerHour: double
+roleName: String
+}
+
 class AssociateResourceController {
 accountList: AccountList
 roleList: RoleList
@@ -32,7 +43,7 @@ description: String
 
 class ProjectList {
 projectList: List<Project>
-addResourceToProject(account, role, resourceDTO)
+getProject(projectCode)
 }
 
 class Project {
@@ -47,7 +58,6 @@ numberOfPlannedSprints: int
 projectStatus: String
 budget: double
 resourceList: ResourceList
-getProject(projectCode)
 addResource(account, role, resourceDTO)
 }
 
@@ -82,4 +92,10 @@ AssociateResourceController ..> Account
 AssociateResourceController o-- RoleList
 Resource o-- Account
 Resource o-- Role
+AssociateResourceUI ..> ResourceDTO
+AssociateResourceController ..> ResourceDTO
+Project ..> ResourceDTO
+ResourceList ..> ResourceDTO
+AssociateResourceController ..> Project
+AssociateResourceController ..> Role
 @enduml

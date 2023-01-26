@@ -4,21 +4,22 @@ hide footbox
 
 Actor Manager
 participant ": AssociateResourceUI" as UI
+participant "resourceDTO:ResourceDTO" as dto
 participant ": AssociateResourceController" as Controller
 participant ":AccountList" as AccountList
 participant "account : Account" as account
 participant ":RoleList" as RoleList
+participant "role : Role" as role
 participant ": ProjectList" as ProjectList
 participant "project : Project" as project
 participant ": ResourceList" as ResourceList
-participant ":Resource" as ResourceClass
-participant ":Account" as AccountClass
 participant "resource : Resource" as resource
 
 activate Manager #FFBBBB
-Manager -> UI : Defines user as PO of project\n (email, role, projectCode, startDate, percentAllocation, costPerHour)
+Manager -> UI : Defines user as PO of project\n (email, roleName, projectCode,\nstartDate, percentAllocation, costPerHour)
 
 activate UI #FFBBBB
+UI --> dto ** : create(email, roleName, projectCode,\n startDate, percentAllocation, costPerHour)
 UI -> Controller : addResource(resourceDTO)
 
 activate Controller #FFBBBB
@@ -35,46 +36,31 @@ Controller -> RoleList : role = getRole(resourceDTO.roleName)
 activate RoleList #FFBBBB
 deactivate RoleList
 
-Controller -> ProjectList : addResourceToProject(account, role, resourceDTO)
+Controller -> ProjectList : project = getProject(resourceDTO.projectCode)
 
 activate ProjectList #FFBBBB
-ProjectList -> ProjectList : project = getProject(resourceDTO.projectCode)
-ProjectList -> project : addResource(account, role, resourceDTO)
+deactivate ProjectList
+Controller -> project : addResource(account, role, resourceDTO)
 
 activate project #FFBBBB
 project -> ResourceList : addResource(account, role, resourceDTO)
 
 activate ResourceList #FFBBBB
-
-loop for each resource
-ResourceList -> ResourceClass : isAccountOfResource(account)
-activate ResourceClass #FFBBBB
-ResourceClass -> AccountClass : equals(account)
-activate AccountClass #FFBBBB
-AccountClass --> ResourceClass : false
-deactivate AccountClass
-ResourceClass --> ResourceList: false
-end
-
+ResourceList -> ResourceList: existsActiveResourceWithAccount(account)
 ResourceList -> ResourceList: isRoleOccupied(role)
-
-deactivate ResourceClass
 
 ResourceList --> resource ** : create(account, role, resourceDTO)
 ResourceList -> ResourceList : add(resource)
 ResourceList --> project: true
 deactivate ResourceList
 
-project --> ProjectList: true
+project --> Controller: true
 deactivate project
-
-ProjectList --> Controller : true
-deactivate ProjectList
 
 Controller --> UI : true
 deactivate Controller
 
-UI -> Manager : confirm
+UI --> Manager : confirm
 deactivate UI
 
 deactivate Manager
