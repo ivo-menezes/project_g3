@@ -33,9 +33,9 @@ public class ResourceList {
     public boolean addResource(Account account, Role role, Project project, ResourceDTO resourceDTO) {
         boolean canResourceBeAdded = false;
 
-        if (role.getDescription().equals("Team Member")) {
+        if (role.getName().equals("Team Member")) {
             canResourceBeAdded = !existsActiveResourceWithAccount(account);
-        } else if (role.getDescription().equals("Product Owner") || role.getDescription().equals("Scrum Master")) {
+        } else if (role.getName().equals("Product Owner") || role.getName().equals("Scrum Master")) {
             canResourceBeAdded = !existsActiveResourceWithAccount(account) && !isRoleOccupied(role);
         }
 

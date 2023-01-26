@@ -8,17 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoleTest {
 
     @Test
-    @DisplayName("ensure return code Role")
+    @DisplayName("ensure return name Role")
     void ensureGetDescription() {
 
         //arrange
-        String description = "Team Member";
-        Role role = new Role(description);
+        String name = "Team Member";
+        Role role = new Role(name);
 
         //act
-        String result = role.getDescription();
+        String result = role.getName();
 
         //assert
-        assertEquals(description, result);
+        assertEquals(name, result);
     }
 }

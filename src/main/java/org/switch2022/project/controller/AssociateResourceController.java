@@ -33,7 +33,7 @@ public class AssociateResourceController {
 
         if (account.isUser()) {
             //resourceAdded= projectList.addResourceToProject(account,role,resourceDTO);
-            Role role = roleList.getRole(resourceDTO.description);
+            Role role = roleList.getRole(resourceDTO.roleName);
             Project project = projectList.getProject(resourceDTO.projectCode);
             resourceAdded = project.addResource(account, role, resourceDTO);
         }
