@@ -19,7 +19,7 @@ public class Profile {
     public boolean isProfileNameValid (String profileName) {
         boolean isValid = false;
 
-        if (profileName == "Administrator" || profileName == "Manager" || profileName == "User") {
+        if (profileName.equals("Administrator")  || profileName.equals("Manager") || profileName.equals("User")) {
             isValid = true;
         } return isValid;
     }
