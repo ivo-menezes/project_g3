@@ -22,7 +22,7 @@ UI -> Controller: listResources(projectCode)
 activate Controller #FFBBBB
 Controller -> ProjectList: getProject()
 activate ProjectList #FFBBBB
-ProjectList -> Controller : project
+ProjectList --> Controller : project
 deactivate ProjectList
 
 Controller -> project : listResources(project)
@@ -36,6 +36,8 @@ ResourceList -> Resource : createResourceDTO(resource)
 activate Resource #FFBBBB
 Resource -> account : getEmail()
 activate account #FFBBBB
+account --> Resource : email
+
 deactivate account
 Resource -> Resource : getRole()
 Resource -> DTO ** : create(email, role)

@@ -14,9 +14,6 @@ public class ListResourcesController {
      * @param projectList ProjectList to be added to controller
      */
     public ListResourcesController(ProjectList projectList) {
-        if(projectList.listSize()<=0) {
-            throw new IllegalArgumentException("List is empty");
-        }
         this.projectList = projectList;
     }
 
