@@ -14,7 +14,7 @@ class AddCustomerControllerTest {
         boolean resultedList = controller.createCustomer("Name");
 
         assertTrue(resultedList);
-        assertNotEquals(false, resultedList);
+        //assertNotEquals(false, resultedList);
     }
 
     @Test
@@ -30,28 +30,15 @@ class AddCustomerControllerTest {
     @DisplayName("Ensure that customer is successfully created")
     void checkIfItCreates(){
         String designation = "Designation";
+        String anotherDesignation = "Designation";
         CustomerList newList = new CustomerList();
         AddCustomerController controller = new AddCustomerController(newList);
+        controller.createCustomer(designation);
 
-        assertTrue(controller.createCustomer(designation));
-        assertNotEquals(false, controller.createCustomer(designation));
+        boolean result = controller.createCustomer(anotherDesignation);
+
+        assertFalse(result);
+        //assertNotEquals(false, controller.createCustomer(designation));
     }
-
-    /***
-     * Using a null to ensure the tests catch the error.
-     */
-
-    @Test
-    @DisplayName("Ensure that customer is not created if designation is null")
-    void checkIfItDesignationIsNotValidated(){
-        CustomerList newList = new CustomerList();
-        AddCustomerController controller = new AddCustomerController(newList);
-
-        assertFalse(controller.createCustomer(null));
-        assertNotEquals(true, controller.createCustomer(null));
-    }
-
-
-
 
 }

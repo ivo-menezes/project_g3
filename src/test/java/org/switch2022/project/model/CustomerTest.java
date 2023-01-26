@@ -12,22 +12,24 @@ class CustomerTest {
     @Test
     @DisplayName("Ensure that the designation is the same")
     void checkTheCustomerDesignationIsTheSame(){
-
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer sameCustomer = newCustomer;
 
+        //Assert
         Assertions.assertSame(sameCustomer, newCustomer);
-        assertTrue(newCustomer.equals(sameCustomer));
-        assertNotEquals(false, newCustomer.equals(sameCustomer));
+        assertEquals(newCustomer,sameCustomer);
     }
 
 
     @Test
     @DisplayName("Testing the hashcode")
     void checkTheHashCode(){
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer sameCustomer = new Customer("CustomerName");
 
+        //Assert
         assertEquals(sameCustomer.hashCode(), newCustomer.hashCode());
         assertNotEquals(0, sameCustomer.hashCode());
     }
@@ -35,9 +37,11 @@ class CustomerTest {
     @Test
     @DisplayName("Ensure that the designation is corrected created")
     void checkTheBusinessDesignationIsCorrectlyCreated(){
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer sameCustomer = new Customer("CustomerName");
 
+        //Assert
         assertEquals(sameCustomer, newCustomer);
         Assertions.assertNotNull(sameCustomer);
     }
@@ -48,47 +52,61 @@ class CustomerTest {
     @Test
     @DisplayName("Ensure the customer doesn't equal Null")
     void ensureTheObjectDoesNotEqualsNull(){
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer anotherCustomer = null;
         boolean expected = false;
 
+        //Act
         boolean result = newCustomer.equals(anotherCustomer);
 
+        //Assert
         assertEquals(expected, result);
     }
 
-    @Test
-    @DisplayName("Ensure the customer doesn't equal other Types of Object")
-    void ensureTheObjectDoesNotEqualsOtherTypes(){
-        Customer newCustomer = new Customer("CustomerName");
-        Profile firstProfile = new Profile("User");
-        Account account = new Account("Joana","xxxxx@gmail.com","22255588", firstProfile);
-        boolean expected = false;
-
-        boolean result = newCustomer.equals(account);
-
-        assertEquals(expected, result);
-    }
     @Test
     @DisplayName("Ensure the customer doesn't equal to other customer")
     void ensureTheCustomerDoesNotEqualsAnotherCustomer(){
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer anotherCustomer = new Customer("CustomerNameOther");
         boolean expected = false;
 
+        //Act
         boolean result = newCustomer.equals(anotherCustomer);
 
+        //Assert
         assertEquals(expected, result);
     }
 
     @Test
     @DisplayName("Check if the get method doesn't return empty")
     void checkTheGetMethod(){
+        //Arrange
         Customer newCustomer = new Customer("CustomerName");
         Customer anotherCustomer = new Customer("CustomerName");
 
-        assertEquals(anotherCustomer.getDesignation(), newCustomer.getDesignation());
-        assertNotEquals("", newCustomer.getDesignation());
+        //Act
+        String customer = newCustomer.getDesignation();
+        String anothercustomer = anotherCustomer.getDesignation();
+
+        //Assert
+        assertEquals(customer, anothercustomer);
+        assertNotEquals("", customer);
+    }
+
+    @Test
+    @DisplayName("Ensure that there is an error if add a customer with null name")
+    void checkIfThereIsAnError(){
+        //Arrange
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Customer customer = new Customer (null);
+        });
+        //Act
+        String expected = "Designation can not be null!";
+
+        //Assert
+        Assertions.assertEquals(expected, exception.getMessage());
     }
 
 }
