@@ -15,9 +15,9 @@ addCustomer(designation)
 
 class CustomerList {
 customerList : List<Customer>
-validateDesignation(designation)
-create(newCustomer)
-save(newCustomer)
+create(designation)
+listDoesNotContain(newCustomer)
+addCustomer(newCustomer)
 
 
 
@@ -29,7 +29,7 @@ save(newCustomer)
 '}
 
 class Customer {
-name : String
+designation : String
 }
 
 AddCustomerUI "     1" o-- "        1" AddCustomerController

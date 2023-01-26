@@ -1,6 +1,7 @@
 @startuml
 !theme plain
 hide footbox
+title "US009 - As Administrator, I want to add a customer"
 
 actor Administrator  as Administrator
 participant ": AddCustomerUI" as UI
@@ -30,10 +31,11 @@ activate List #FFBBBB
 'activate DTO #FFBBBB
 'deactivate DTO
 
-List -> List : validateDesignation(designation)
 
-List --> newCustomer ** : newCustomer = create(newCustomer)
-List -> List : save(newCustomer)
+
+List --> newCustomer ** : create(newCustomer)
+List -> List : listDoesNotContain(newCustomer)
+List -> List : addCustomer(newCustomer)
 
 List --> Controller : Confirms new customer registration
 deactivate List
