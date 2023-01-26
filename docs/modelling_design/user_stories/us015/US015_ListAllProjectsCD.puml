@@ -14,6 +14,12 @@ customer : String
 startDate : Date
 endDate : Date
 projectStatus : String
+getCode()
+getName()
+getCustomer()
+getStartDate()
+getEndDate()
+getStatusProject()
 }
 
 class ProjectList {
