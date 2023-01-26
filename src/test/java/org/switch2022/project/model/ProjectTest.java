@@ -503,4 +503,17 @@ class ProjectTest {
         // assert
         assertTrue(listExpected.containsAll(listResult) && listResult.containsAll(listExpected));
     }
+
+    @Test
+    @DisplayName("ensure the userProjectsDTO is not null.")
+    void ensureUserProjectsDTOIsNotNull() {
+
+        Project project = new Project(1, "Test1", "ddd");
+
+        UserProjectsDTO DTO1 = project.createUserProjectsDTO(project);
+        UserProjectsDTO DTO2 = DTO1;
+
+        assertNotNull(DTO1);
+        assertSame(DTO1, DTO2);
+    }
 }
