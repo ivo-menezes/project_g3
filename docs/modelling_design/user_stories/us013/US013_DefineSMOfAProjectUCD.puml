@@ -1,12 +1,10 @@
 @startuml
 left to right direction
 
-:Profile: as Profile
-Profile <|-- :Manager:
+:Manager: as Manager
 
 rectangle "Project Management System"{
 
-:Manager: as Manager
 Manager -- (Define the Scrum Master)
 
 }
