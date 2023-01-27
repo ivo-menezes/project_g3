@@ -16,7 +16,7 @@ getProject(projectCode)
 class Project {
 projectCode : int
 resourceList : ResourceList
-listResources()
+listResources(project)
 }
 
 class ResourceList{
@@ -35,9 +35,8 @@ account : Account
 role : Role
 startDate : Date
 endDate : Date
-percentAllocation : float
-costPerHour : float
-getEmailOfResource()
+percentAllocation : double
+costPerHour : double
 getRole()
 createResourceDTO()
 }
