@@ -5,16 +5,15 @@ import java.util.Objects;
 
 public class ResourceDTO {
     public String email;
-    public String description;
     public int projectCode;
     public Date startDate;
     public Date endDate;
     public double percentAllocation;
     public double costPerHour;
-    public String role;
+    public String roleName;
 
     public ResourceDTO (String email,
-                        String description,
+                        String roleName,
                         int projectCode,
                         Date startDate,
                         Date endDate,
@@ -22,7 +21,7 @@ public class ResourceDTO {
                         double costPerHour){
 
         this.email = email;
-        this.description = description;
+        this.roleName = roleName;
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -31,23 +30,23 @@ public class ResourceDTO {
     }
 
     public ResourceDTO (String email,
-                        String description,
+                        String roleName,
                         int projectCode,
                         Date startDate,
                         double percentAllocation,
                         double costPerHour){
 
         this.email = email;
-        this.description = description;
+        this.roleName = roleName;
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.percentAllocation = percentAllocation;
         this.costPerHour = costPerHour;
     }
 
-    public ResourceDTO (String email, String role) {
+    public ResourceDTO (String email, String roleName) {
         this.email = email;
-        this.role = role;
+        this.roleName = roleName;
     }
 
     @Override
@@ -59,12 +58,12 @@ public class ResourceDTO {
             return false;
         }
         ResourceDTO that = (ResourceDTO) o;
-        return Objects.equals(email, that.email) && Objects.equals(role, that.role);
+        return Objects.equals(email, that.email) && Objects.equals(roleName, that.roleName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, role);
+        return Objects.hash(email, roleName);
     }
 }
 

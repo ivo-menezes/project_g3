@@ -2,18 +2,18 @@ package org.switch2022.project.model;
 
 public class Role {
 
-    private final String description;
+    private final String name;
 
     /**
      * Constructor to create a role object.
-     * @param description
+     * @param name
      */
 
-    public Role (String description) {
-        this.description= description;
+    public Role (String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getName() {
+        return this.name;
     }
 }

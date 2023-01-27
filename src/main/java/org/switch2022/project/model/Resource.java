@@ -68,7 +68,7 @@ public class Resource {
      * @return a string with the role name.
      */
     public String getRole() {
-        return this.role.getDescription();
+        return this.role.getName();
     }
 
     /**
