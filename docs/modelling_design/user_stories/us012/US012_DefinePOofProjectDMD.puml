@@ -16,6 +16,7 @@ class "Project Resource" {
 Start Date
 End Date
 Percentage of Allocation
+Cost Per Hour
 }
 
 class "Project" {
