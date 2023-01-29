@@ -30,16 +30,6 @@ changeAccountStatus(email, newStatus)
 }
 
 ' Business Layer
-class Services {
-accountList : AccountList
-profileList: ProfileList
-listAccounts()
-createProfile(profileName)
-registerAccount(name, email, phone)
-registerAccount(name, email, phone, photo)
-changeProfile(email, newProfileName)
-changeAccountStatus(email, newStatus)
-}
 
 class Profile {
 name : String
@@ -77,30 +67,85 @@ save(newAccount)
 getAccount(email)
 }
 
+class CreateProjectUI {
+}
+
+class CreateProjectController {
+projectList : ProjectList
+createProject(code, name, description)
+}
+
+
+class ProjectList {
+projectList : List<Project>
+createProject(code, name, description)
+validateProjectCode(code)
+addProject(newProject)
+}
+
+'class AccountList {
+'AccountList : List<Account>
+'checkPermissionsToCreateAProject(accountEmail)
+'}
+
+class Project {
+code : integer
+name : String
+description : String
+}
+
+class CreateTypologyUI {
+}
+
+class CreateTypologyController {
+typologyList : TypologyList
+createTypology(typologyDesignation)
+}
+
+
+class TypologyList {
+typologyList : List<Typology>
+createTypology(typologyDesignation)
+listDoesNotContain(newTypology)
+add(newTypology)
+}
+
+class Typology {
+typologyDesignation : String
+}
+
 ' Associations and dependencies
 
-CreateProfileUI ..> CreateProfileController
-CreateProfileController ..> Services
-Services ..> ProfileList
-Services ..> Profile
-ProfileList "1" --> "*" Profile : has
+CreateProfileUI "1" o-- "1" CreateProfileController
+CreateProfileController "1" o-- "1" ProfileList
+ProfileList "1 " *-- "    *" Profile
 
-RegisterAccountUI ..> RegisterAccountController
-RegisterAccountController ..> Services
-Services ..> AccountList
-Services ..> Account
+RegisterAccountUI "1" o-- "1" RegisterAccountController
+RegisterAccountController  "1" o-- "1"  AccountList
+
 Account ..> Profile
-AccountList "1" --> "*" Account : has
+AccountList "1" *-- "*" Account : has
 
-ChangeProfileUI ..> ChangeProfileController
-ChangeProfileController ..> Services
+ChangeProfileUI "1" o-- "1" ChangeProfileController
+ChangeProfileController "1" o-- "1" AccountList
+ChangeProfileController  "1" o-- "1"  ProfileList
 
-ListAccountsController ..> Services
-ListAccountsUI ..> ListAccountsController
-Services ..> AccountDTO
+ListAccountsController "1" o-- "1" AccountList
+ListAccountsUI "1" o-- "1" ListAccountsController
+AccountList ..> AccountDTO
 AccountDTO ..> Account
 
-AccountStatusController ..> Services
-AccountStatusUI ..> AccountStatusController
+AccountStatusUI "1" o-- "1" AccountStatusController
+AccountStatusController "1" o-- "1  " "AccountList"
+
+CreateProjectUI "1" o--   "1" CreateProjectController
+CreateProjectController "1" o-- "1" ProjectList
+ProjectList "1 " *-- "*" Project
+
+
+CreateTypologyUI "1" o-- "1" CreateTypologyController
+CreateTypologyController "1" o-- "1" TypologyList
+TypologyList "1 " *-- "    *" Typology
+
 
 @enduml
