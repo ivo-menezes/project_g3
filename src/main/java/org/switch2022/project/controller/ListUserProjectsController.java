@@ -29,7 +29,7 @@ public class ListUserProjectsController {
         String emailCurrentAccount = currentAccount.getEmail();
 
         for (int i = 0; i < listProjectSize; i++) {
-            Project project = projectList.getProjectIndex(i);
+            Project project = projectList.getProjectByIndex(i);
             int listResourceSize = project.getList().listResourceSize();
 
             for (int j = 0; j < listResourceSize; j++ ) {
