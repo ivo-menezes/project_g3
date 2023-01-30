@@ -83,9 +83,4 @@ public class Resource {
 
         return resourceDTO;
     }
-
-    public Account getAccount() {
-        return account;
-    }
-
 }
