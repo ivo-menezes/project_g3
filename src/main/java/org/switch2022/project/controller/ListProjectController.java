@@ -30,7 +30,7 @@ public class ListProjectController {
         int listSize = this.projectList.listSize();
 
         for(int index = 0; index < listSize; index++){
-            project = projectList.getProjectIndex(index);
+            project = projectList.getProjectByIndex(index);
             ProjectDTOList.add(projectList.createProjectDTO(project));
         }
         return ProjectDTOList;

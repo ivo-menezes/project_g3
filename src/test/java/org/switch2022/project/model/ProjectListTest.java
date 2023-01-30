@@ -53,8 +53,8 @@ class ProjectListTest {
     }
 
     @Test
-    @DisplayName("Check if the method getProjectIndex works as intended")
-    void testingGetProjectIndex() {
+    @DisplayName("Check if the method getProjectByIndex works as intended")
+    void testingGetProjectByIndex() {
 
         Project project = new Project(200,"proj1",new Date(2023, Calendar.JANUARY,10),new Date(2024,Calendar.JANUARY,22),"client1","Planned");
         Project projectTwo = new Project(201,"proj2",new Date(2003,Calendar.JANUARY,10), new Date(2004,Calendar.JANUARY,20),"client2", "Planned");
@@ -65,7 +65,7 @@ class ProjectListTest {
         projectList.addProject(projectTwo);
         projectList.addProject(projectThree);
 
-        Project result = projectList.getProjectIndex(1);
+        Project result = projectList.getProjectByIndex(1);
 
         assertEquals(projectTwo, result);
     }

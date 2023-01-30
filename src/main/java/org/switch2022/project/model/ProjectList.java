@@ -79,7 +79,7 @@ public class ProjectList {
     }
 
     /***
-     * For the US015, needed to access the profileList size.
+     * For the US015, needed to access the projectList size.
      * Created the method listSize in order to give the Controller the int value
      * of the list size.
      * @return number of elements in projectList
@@ -93,13 +93,13 @@ public class ProjectList {
      * @param index of element to be retrieved
      * @return project at index
      */
-    public Project getProjectIndex(int index) {
+    public Project getProjectByIndex(int index) {
         Project project = this.projectList.get(index);
         return project;
     }
 
     /***
-     * The method will be called to create a project DTO, using the data from the true account.
+     * The method will be called to create a project DTO, using the data from the project.
      * @return projectDTO
      */
     public ProjectDTO createProjectDTO(Project project) {
