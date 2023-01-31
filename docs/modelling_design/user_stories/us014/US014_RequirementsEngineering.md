@@ -18,7 +18,19 @@ From the client clarifications:
 
 ### **1.4 – Found out dependencies**
 
+There is a dependency to US010. The Project must be created/registered.
+
+There is a dependency to US011-13. Users must be previously registered as resources with a role in a project.
+
 ### **1.5 – Input and output data**
+
+**Input data**
+
+- Project code
+
+**Output data**
+
+- List of all resources allocated do a project.
 
 
 
