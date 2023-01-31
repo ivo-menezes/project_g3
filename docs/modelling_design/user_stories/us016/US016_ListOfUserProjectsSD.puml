@@ -40,7 +40,7 @@ Controller -> Project : getResourceAtIndex(j)
 Project -> ResourceList : getResourceAtIndex(j)
 activate ResourceList #FFBBBB
 
-ResourceList -> resource : verifyIfUserIsInProject()
+ResourceList -> resource : verifyIfUserIsInProject
 deactivate ResourceList
 
 activate resource #FFBBBB
