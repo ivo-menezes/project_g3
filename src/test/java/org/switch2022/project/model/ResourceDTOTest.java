@@ -21,7 +21,7 @@ class ResourceDTOTest {
     }
 
     @Test
-    @DisplayName("test Equals for false")
+    @DisplayName("test Equals for false" )
     void testEqualsFalse() {
         // arrange
         String email1 = "deborah@gmail.com";

@@ -46,7 +46,7 @@ public class ResourceDTO {
 
     public ResourceDTO (String email, String roleName) {
         this.email = email;
-        this.roleName = roleName;
+        this.roleName =  roleName;
     }
 
     @Override
