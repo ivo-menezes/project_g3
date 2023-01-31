@@ -13,6 +13,7 @@ Profile <|-- :Manager:
 rectangle "Project Management System"{
 
 User -- (Search project)
+User -- (List projects I'm allocated to)
 
 :Administrator: as Administrator
 Administrator -- (Create profile)
@@ -22,6 +23,9 @@ Administrator -- (Search for users)
 Administrator -- (Change user profile)
 Administrator -- (Inactivate user account)
 Administrator -- (Activate user account)
+Administrator -- (Create Project Typology)
+Administrator -- (Add Business Sector)
+Administrator -- (Add A Customer)
 
 :Manager: as Manager
 Manager -- (Create projects)
@@ -30,6 +34,12 @@ Manager -- (Search all projects)
 Manager -- (Access to all projects)
 Manager -- (Edit Project)
 Manager -- (View All allocation reports)
+Manager -- (Register/Create New Project)
+Manager -- (Associate user as Team Member of project)
+Manager -- (Define PO of a project)
+Manager -- (Define the Scrum Master)
+Manager -- (List of all human resources in a project )
+Manager -- (List of all projects)
 
 :Team Member: as "Team Member"
 "Team Member" -- (Create Sprint Backlog)
