@@ -1,29 +1,33 @@
 @startuml
 
+skinparam linetype ortho
+
 class RegisterAccountUI {}
 
 class RegisterAccountController {
-
-registerAccount(name, email, phone)
-registerAccount(name, email, phone, photo)
-}
-
-class Services {
 accountList : AccountList
 profileList : ProfileList
-registerAccount(name, email, phone)
-registerAccount(name, email, phone, photo)
+registerAccount(registerAccountDTO)
 }
 
 class ProfileList {
 }
 
 class AccountList {
-save(newAccount)
+accountList : AccountList
+addAccount (account)
+registerAccount(registerAccountDTO, profile)
 }
 
 class Profile {
 name: String
+}
+
+class RegisterAccountDTO {
+name : String
+email : String
+phone : String
+photo : String
 }
 
 class Account {
@@ -35,14 +39,14 @@ profile : Profile
 isActive : boolean
 }
 
-RegisterAccountUI "     1" o-- "        1" RegisterAccountController
-RegisterAccountController "     1" o-- "        1" Services
-Services "                               1" o-- "        1" ProfileList
-Services ..> Profile
-Services "        1" o-- "             1" AccountList
-Services ..> Account
+RegisterAccountUI "1" o-- "1" RegisterAccountController
+RegisterAccountController "1" o-- "1" ProfileList
+RegisterAccountController ..> Profile
+RegisterAccountController "1" o-- "1" AccountList
+RegisterAccountController ..> RegisterAccountDTO
+AccountList ..> RegisterAccountDTO
 Account ..> Profile
-AccountList "  1" *-- "   *" Account : has
-ProfileList "1" *-- "                  *" Profile : has
+AccountList "1" *-- "*" Account : has
+ProfileList "1" *-- "*" Profile : has
 
 @enduml
