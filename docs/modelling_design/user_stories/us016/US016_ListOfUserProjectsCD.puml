@@ -51,7 +51,6 @@ UserProjectsUI "       1" o-- "           1" UserProjectsController
 UserProjectsController "1" o-- "                                                 1" ProjectList
 ProjectList ..> UserProjectsDTO
 Project ..> UserProjectsDTO
-UserProjectsController "           1" o-- "               *" Project
 Project "                     1" *-- "     *" ResourceList : has
 ResourceList "                     1" *-- "     *" Resource : has
 
