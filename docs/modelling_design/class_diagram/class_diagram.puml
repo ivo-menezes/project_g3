@@ -269,7 +269,7 @@ RegisterAccountController ..> RegisterAccountDTO
 AccountList ..> RegisterAccountDTO
 
 Account ..> Profile
-AccountList "1" *-- "*" Account : has
+AccountList "1" *-- "*" Account
 
 ChangeProfileUI "1" o-down- "1" ChangeProfileController
 ChangeProfileController "1" o-- "1" AccountList
@@ -327,7 +327,7 @@ CreateTypologyUI "1" o-- "1" CreateTypologyController
 CreateTypologyController "1" o-- "1" TypologyList
 TypologyList "1 " *-- "    *" Typology
 
-BusinessSectorList "1" *-- "*" BusinessSector : has
+BusinessSectorList "1" *-- "*" BusinessSector
 CreateBusinessSectorController "1" o-- "1" BusinessSectorList
 CreateBusinessSectorUI "1" o-- "1" CreateBusinessSectorController
 

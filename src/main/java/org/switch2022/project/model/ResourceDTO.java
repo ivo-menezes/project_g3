@@ -60,10 +60,5 @@ public class ResourceDTO {
         ResourceDTO that = (ResourceDTO) o;
         return Objects.equals(email, that.email) && Objects.equals(roleName, that.roleName);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(email, roleName);
-    }
 }
 
