@@ -11,6 +11,7 @@ createProfile(profileName)
 
 class ProfileList {
 profileList : List<Profile>
+getProfileByName(profileName)
 createProfile(profileName)
 validateProfileName(profileName)
 add(newProfile)
