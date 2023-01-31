@@ -108,7 +108,6 @@ class ListUserProjectsControllerTest {
 
         ListUserProjectsController controller = new ListUserProjectsController(projectList);
         List result = controller.listUserProjects(account1);
-        assertNotNull(result);
         assertFalse(result.isEmpty());
     }
 
@@ -160,6 +159,10 @@ class ListUserProjectsControllerTest {
         assertTrue(result.get(0) instanceof UserProjectsDTO);
     }
 
+    /***
+     * This test will compare two userProjectsLists will compare 2 lists (one created by the userProjectsListController
+     * and another by us) and conclude that they are not equal.
+     */
     @Test
     public void confirmListOfProjectsCodesWorks() {
         Project project1 = new Project(1,"Test1","For testing purposes");
@@ -191,6 +194,10 @@ class ListUserProjectsControllerTest {
         assertNotEquals(expected,notExpected);
     }
 
+    /***
+     * This test will compare two userProjectsLists will compare 2 lists (one created by the userProjectsListController
+     * (this one is empty) and another by us) and conclude that they are not equal.
+     */
     @Test
     public void listUserProjectsEmpty() {
         Project project1 = new Project(1,"Test1","For testing purposes");
