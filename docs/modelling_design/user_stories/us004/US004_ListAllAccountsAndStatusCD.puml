@@ -3,8 +3,8 @@
 class ListAccountsUI {}
 
 class ListAccountsController{
-'accounts: List<Account>
-listAccounts(accountList)
+accountList: AccountList
+listProjectDTO()
 }
 
 
@@ -18,7 +18,7 @@ isActive : boolean
 }
 
 class AccountList {
-'accounts: List<Account>
+accounts: List<Account>
 getAccountAtIndex(index)
 }
 

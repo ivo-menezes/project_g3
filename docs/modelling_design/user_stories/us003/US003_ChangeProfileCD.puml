@@ -3,16 +3,19 @@
 class ChangeProfileUI {}
 
 class ChangeProfileController {
+profileList : ProfileList
+accountList : AccountList
 changeProfile(email, newProfileName)
 }
 
 
 class AccountList {
-'accounts : List<Account>
+account : List<Account>
 getAccount(email)
 }
 
 class ProfileList {
+profiles : List<Profile>
 getProfile(profileName)
 }
 
