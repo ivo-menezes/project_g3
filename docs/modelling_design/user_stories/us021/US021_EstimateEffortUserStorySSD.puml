@@ -1,0 +1,4 @@
+@startuml
+"Team Member" -> System: Insert an estimate effort value
+"Team Member" <-- System: Estimated effort value defined
+@enduml
