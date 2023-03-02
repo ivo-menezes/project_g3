@@ -1,7 +1,8 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Requests to add new business sector
-Administrator <-- System: New business sector added successfully
-
+'Administrator -> System: Requests to add new business sector
+'Administrator <-- System: New business sector added successfully
+Administrator -> System: Create business sector
+Administrator <-- System: Confirms new Business Sector
 @enduml
