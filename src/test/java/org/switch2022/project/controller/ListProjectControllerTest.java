@@ -77,7 +77,7 @@ public class ListProjectControllerTest {
         projectList.addProject(projectTwo);
         projectList.addProject(projectThree);
 
-        // add some accounts to the list
+        // add some projects to the list
         ListProjectController controller = new ListProjectController(projectList);
         List<ProjectDTO> result = controller.listProject(projectList);
         assertTrue(result instanceof List);
