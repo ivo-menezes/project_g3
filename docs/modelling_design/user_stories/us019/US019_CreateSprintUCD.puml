@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"Project Manager"
+
+rectangle "Project Management System"{
+"Project Manager" -- (Create a sprint)
+}
+
+@enduml
