@@ -1,0 +1,26 @@
+@startuml
+skinparam style strictuml
+skinparam groupInheritance 3
+
+Object Sprint {
+sprint number
+start date
+end date
+}
+
+Object Project {
+Code
+Name
+Description
+Start Date
+End Date
+Sprint Duration
+Number of Planned Sprints
+Project Status
+Budget
+Report
+}
+
+"Sprint" "*" -left- "1" "Project": Created by Project Manager  <
+
+@enduml
