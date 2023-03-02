@@ -1,0 +1,4 @@
+@startuml
+"Team Member" -> System: Requests Scrum Board of the current sprint
+"Team Member" <-- System: Scrum Board presented
+@enduml
