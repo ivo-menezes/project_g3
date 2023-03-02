@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+"Team Member"
+
+rectangle "Project Management System"{
+"Team Member" -- (View Scrum Board of current sprint)
+}
+
+@enduml
