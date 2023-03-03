@@ -19,7 +19,7 @@ UI --> DTO **: create(sprintNumber, startDate, endDate)
 UI -> Controller: createSprint(projectCode, sprintDTO)
 activate Controller #FFBBBB
 
-Controller -> ProjectList: project = getProject(projectCode);
+Controller -> ProjectList: getProject(projectCode);
 activate ProjectList #FFBBBB
 deactivate ProjectList
 Controller -> Project: createSprint(sprintDTO);
@@ -28,8 +28,9 @@ activate Project #FFBBBB
 Project -> SprintList: addSprint(sprintDTO);
 activate SprintList #FFBBBB
 
-SprintList -> SprintList: existsSprint(sprintNumber);
-SprintList -> Sprint **: create(sprintNumber, startDate, endDate);
+SprintList -> Sprint **: create(sprintDTO);
+SprintList -> SprintList: hasSprint(sprint);
+SprintList -> SprintList: add(sprint);
 
 SprintList --> Project: Confirms new sprint
 deactivate SprintList
