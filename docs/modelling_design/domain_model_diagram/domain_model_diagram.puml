@@ -124,12 +124,13 @@ Project "1" -left- "1" PB: includes >
 PB "1" -down- "*" US: collected in <
 Sprint "1" -down- "1" SB: defines >
 Sprint "1" -right- "*" Ceremony: includes >
-US "*" -right- "                      1" SB: picked into >
+US "*" -right- "1" SB: picked into >
 
 PR "1" -right- "*" Role : plays >
-SB "1" -right- "   1..*" Task: contains >
+SB "1" -down- "   1..*" Task: contains >
 SB "1" -left- "1" SC: status shown in >
 PR "1" -down- "*" Task: works on >
+SC "1" -down- "*" Task: status shown in <
 ' note on link: The creation of tasks is done by the team members.
 ' The users available for the activities are the team members, the PO and the SM.
 
