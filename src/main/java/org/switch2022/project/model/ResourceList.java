@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * The ResourceList class represents all human resources associated with a project, present and past.
- * Business rules:
+ * Business rules :
  * - a resource with the Team Member role can only be added if there is no current resource (active) with the same account
  * - additionally, there can only be one current resource with the Product Owner, Scrum Master and Project Manager roles
  */
