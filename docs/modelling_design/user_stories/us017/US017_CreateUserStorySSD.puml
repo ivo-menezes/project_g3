@@ -1,9 +1,9 @@
 
 @startuml
 
-"Product Owner" -> System: Requests list of project they are allocated to
-"Product Owner" <-- System: Displays list of projects
-"Product Owner" -> System: Selects project and inserts US data
+'"Product Owner" -> System: Requests list of project they are allocated to
+'"Product Owner" <-- System: Displays list of projects
+"Product Owner" -> System: Selects project and inserts US data\n(projectCode, UserStoryId, actor, text, acceptanceCriteria, priority)
 "Product Owner" <-- System: Confirms US creation and addition to Product Backlog
 
 @enduml
