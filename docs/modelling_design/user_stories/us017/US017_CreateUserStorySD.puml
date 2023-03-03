@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+hide footbox
+title "US017 - As Product Owner, I want to create a user story and add it to the Product Backlog"
+
+actor "Product Owner" as user
+participant ": CreateUserStoryUI" as UI
+participant "userStoryDTO : UserStoryDTO" as dto
+participant ": CreateUserStoryController" as Controller
+participant ": ProjectList" as ProjectList
+participant "project : Project" as Project
+participant "productBacklog : ProductBacklog" as ProductBacklog
+participant "userStory : UserStory" as UserStory
+
+
+activate user #FFBBBB
+user ->  UI: Selects project and inserts US data\n (projectCode, userStoryId, actor, \ntext, acceptanceCriteria, priority)
+
+activate UI #FFBBBB
+UI --> dto ** : create(userStoryId, actor, \ntext, acceptanceCriteria)
+UI -> Controller: createUserStory(projectCode, \nuserStoryDTO, priority)
+
+activate Controller #FFBBBB
+Controller -> ProjectList: project = getProject(projectCode)
+
+activate ProjectList #FFBBBB
+deactivate
+
+Controller -> Project : productBacklog = getProductBacklog()
+
+activate Project #FFBBBB
+deactivate
+
+Controller -> ProductBacklog : createUserStory(userStoryDTO, priority)
+
+activate ProductBacklog #FFBBBB
+ProductBacklog --> UserStory ** : create(userStoryDTO.userStoryId, userStoryDTO.actor,\n userStoryDTO.text, userStoryDTO.acceptanceCriteria)
+ProductBacklog -> ProductBacklog : doesNotContain(userStory)
+ProductBacklog -> ProductBacklog : add(userStory, priority)
+
+ProductBacklog --> Controller : true
+deactivate
+
+Controller --> UI : true
+deactivate
+
+UI --> user : Confirms US creation and addition to Product Backlog
+
+
+@enduml
