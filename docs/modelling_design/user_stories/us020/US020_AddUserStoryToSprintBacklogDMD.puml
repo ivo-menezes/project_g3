@@ -1,0 +1,53 @@
+ @startuml
+!theme plain
+
+'skinparam linetype polyline
+
+Object Project {
+code
+name
+description
+start date
+end date
+sprint duration
+number of planned sprints
+project status
+budget
+}
+
+Object "ProductBacklog" as PB
+
+Object "UserStory" as US {
+us number
+actor
+description
+acceptance criteria
+status
+priority
+}
+
+Object Sprint {
+sprint number
+start date
+end date
+}
+
+Object Ceremony {
+type
+date
+description
+}
+
+Object "SprintBacklog" as SB {
+US effort estimate
+}
+
+Project "1 " -down- "*" Sprint: entails >
+Project "1" -left- "1" PB: includes >
+PB "1" -down- "*" US: collected in <
+Sprint "1  " -- "1" SB: defines >
+Sprint "1" -right- "*" Ceremony: includes >
+US "*" -- "              1" SB: picked into >
+
+
+@enduml
