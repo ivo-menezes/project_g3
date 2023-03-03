@@ -1,0 +1,62 @@
+@startuml
+
+skinparam linetype ortho
+
+class CreateSprintUI {
+}
+
+class sprintDTO {
+sprintNumber: int
+startDate: Date
+endDate: Date
+}
+
+class CreateSprintController {
+projectList: ProjectList
+createSprint(projectCode, sprintDTO)
+}
+
+class ProjectList {
+projectList: List<Project>
+getProject(projectCode)
+}
+
+class Project {
+code: int
+name: String
+description: String
+startDate: Date
+endDate: Date
+customer: String
+sprintDuration: int
+numberOfPlannedSprints: int
+projectStatus: String
+budget: double
+resourceList: ResourceList
+addSprint(sprintDTO)
+}
+
+class SprintList {
+sprintList: List<Sprint>
+create(sprintDTO)
+hasSprint(sprint)
+add(sprintNumber, startDate, endDate)
+}
+
+class Sprint{
+sprintNumber: int
+startDate: Date
+endDate: Date
+}
+
+CreateSprintUI "1" o--  "1" CreateSprintController: has
+CreateSprintController "1" o-- "1" ProjectList: has
+ProjectList "1" *-- "*" Project: contains
+Project "1" o-- "1" SprintList: has
+SprintList "1" *-- "*" Sprint
+CreateSprintUI ..> sprintDTO
+CreateSprintController ..> sprintDTO
+Project ..> sprintDTO
+SprintList ..> sprintDTO
+
+@enduml
