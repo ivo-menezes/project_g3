@@ -1,0 +1,56 @@
+@startuml
+
+class CreateUserStoryUI {}
+
+class CreateUserStoryController {
+projectList : ProjectList
+createUserStory(projectCode, userStoryDTO, priority)
+}
+
+class ProjectList {
+projectList : List<Project>
+getProject(projectCode)
+}
+
+class Project {
+code : Integer
+name : String
+customer : String
+startDate : Date
+endDate : Date
+status : String
+productBacklog : ProductBacklog
+}
+
+class ProductBacklog {
+userStories: List<UserStory>
+completedUserStories : List<UserStory>
+createUserStory(userStoryDTO, priority)
+doesNotContain(userStory)
+add(userStory, priority)
+}
+
+class UserStory {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : String
+}
+
+class UserStoryDTO {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+}
+
+CreateUserStoryUI "1" o-- "1" CreateUserStoryController : has
+CreateUserStoryController "1" o-- "1" ProjectList : has
+CreateUserStoryController ..> UserStoryDTO
+ProductBacklog ..> UserStoryDTO
+ProjectList "      1" *-- "                    *" Project : contains
+Project "1" o-- "1" ProductBacklog : has
+ProductBacklog "1" *-- "*" UserStory : contains
+
+@enduml
