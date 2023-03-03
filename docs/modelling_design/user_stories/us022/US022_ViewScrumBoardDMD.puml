@@ -1,0 +1,23 @@
+@startuml
+
+!theme plain
+
+Object "UserStory" as US {
+us number
+actor
+description
+acceptance criteria
+status
+priority
+}
+
+Object "SprintBacklog" as SB {
+US effort estimate
+}
+
+Object "Scrum board" as SC
+
+US "*" -down- "1" SB: picked into >
+SB "1" -left- "1" SC: status shown in >
+
+@enduml
