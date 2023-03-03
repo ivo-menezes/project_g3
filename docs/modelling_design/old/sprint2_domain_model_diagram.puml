@@ -24,11 +24,23 @@ percentage of allocation
 cost per hour
 }
 
+'together {
+'Object Administrator
+'Object Manager
+'Object User
+'}
+
+'Account <|-- Administrator
+'Account <|-- Manager
+'Account <|-- User
 Account "        1"-right- "    1" Profile : has >
 Account "1"-- "1" Profile : controlled by Admin <
 Account "1   " --- "*" Project : controlled \n by Manager <
 Account "1" -right- " 1  " PR : has <
 PR "1..*" -left- "1" Project : involves <
+'Profile"1" -- "*"Account : controlled by \n administrator <
+'Profile "1"-- "*"Project : created by Manager <
+'Profile"1" -- "*"User : performed by User <
 
 Object Typology {
 designation
@@ -61,7 +73,7 @@ sprint duration
 number of planned sprints
 project status
 budget
-' Report could be its own conceptual class, but we are not modelling with detail yet
+' Report could be its own conceptual class but we are not modelling with detail yet
 'Report
 }
 
@@ -74,6 +86,10 @@ role name
 
 ' here "Controls" includes "creates,lists,changes profile, activates, inactivates"
 ' following Larman p.113 to be parsimonious about associations
+'Administrator "1" -up- "*" Account : Controls >
+'Manager "1" -down- "*" Project : Manages >
+'User "1" -down- "*" Role: Performs >
+
 
 
 '--- additional stuff, not much detail for sprint 1
@@ -85,8 +101,6 @@ us number
 actor
 description
 acceptance criteria
-status
-priority
 }
 
 Object Sprint {
@@ -95,17 +109,7 @@ start date
 end date
 }
 
-Object Ceremony {
-type
-date
-description
-}
-
-Object "SprintBacklog" as SB {
-US effort estimate
-}
-
-Object "Scrum board" as SC
+Object "SprintBacklog" as SB
 
 Object Task {
 name
@@ -118,20 +122,19 @@ hours spent
 percentage of execution
 }
 
+
 Profile "1" -down- "  2..*" Profile: created by Admin >
 Project "1" -down- "*" Sprint: entails >
 Project "1" -left- "1" PB: includes >
-PB "1" -down- "*" US: collected in <
+PB "1" -down- "*" US: collects >
 Sprint "1" -down- "1" SB: defines >
-Sprint "1" -right- "*" Ceremony: includes >
 US "*" -right- "                      1" SB: picked into >
 
 PR "1" -right- "*" Role : plays >
 SB "1" -right- "   1..*" Task: contains >
-SB "1" -left- "1" SC: status shown in >
 PR "1" -down- "*" Task: works on >
-' note on link: The creation of tasks is done by the team members.
-' The users available for the activities are the team members, the PO and the SM.
+'note on link: The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM.
+
 
 note "The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM." as N1
 Task .down. N1

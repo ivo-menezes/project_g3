@@ -10,7 +10,7 @@ import java.util.List;
  * - additionally, there can only be one current resource with the Product Owner, Scrum Master and Project Manager roles
  */
 public class ResourceList {
-    private final List<Resource> resourceList;
+    private final   List<Resource> resourceList;
 
     /**
      * Constructor that initializes an empty list.
