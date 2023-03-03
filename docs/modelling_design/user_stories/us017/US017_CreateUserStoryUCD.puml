@@ -1,0 +1,9 @@
+@startuml
+left to right direction
+
+rectangle "Project Management System"{
+:Product Owner: as actor
+actor -- (Create User Story and add it to the Product Backlog)
+}
+
+@enduml
