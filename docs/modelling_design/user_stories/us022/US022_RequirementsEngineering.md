@@ -12,6 +12,7 @@ As Team Member, I want to view the Scrum Board of current sprint.
 
 **From the client clarifications:**
 
+- "It seems important to me to have a tool that allows knowing and changing the status of each user story in the sprint. The scrum board seems like the obvious candidate."
 
 ### **1.3 – Acceptance criteria**
 
@@ -19,13 +20,10 @@ As Team Member, I want to view the Scrum Board of current sprint.
 
 ### **1.4 – Found out dependencies**
 
-
+- There is a dependency to US017. Since a Scrum Board is a tool that allows knowing the status of the user stories of the current sprint.
+- There is a dependency to US020. The Scrum Board will fetch the requested information from the Sprint Backlog.
 ### **1.5 – Input and output data**
-
-**Input Data:**
-
-- 
 
 **Output Data:**
 
-- 
+- Scrum Board of the current sprint
