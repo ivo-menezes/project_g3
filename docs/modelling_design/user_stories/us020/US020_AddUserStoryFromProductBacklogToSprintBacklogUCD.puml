@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+
+"Team Member"
+rectangle "Project Management System"{
+"Team Member" -- (Add user story from Product Backlog to Sprint Backlog)
+}
+@enduml
