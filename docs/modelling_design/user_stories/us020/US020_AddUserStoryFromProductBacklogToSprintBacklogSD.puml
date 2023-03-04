@@ -1,0 +1,48 @@
+@startuml
+!theme plain
+hide footbox
+title US020 - As Team Member, I want to add a user story in the product backlog \n to the sprint backlog, during the sprint planning ceremony.
+
+actor "Team Member" as user
+participant ": AddUserStoryUI" as UI
+participant ": AddUserStoryController" as Controller
+participant ": ProjectList" as ProjectList
+participant ": ProductBacklog" as ProductBacklog
+participant ":SprintList " as SprintList
+participant "sprint:Sprint " as Sprint
+
+activate user #FFBBBB
+user -> UI:Add user story from Product Backlog \nto SprintBacklog (ProjectCode, UserStoryID, SprintNumber)
+
+activate UI #FFBBBB
+UI -> Controller:addUserStoryFromProductBacklogToSprintBacklog\n(projectCode, userStoryID, sprintNumber)
+
+activate Controller #FFBBBB
+Controller -> ProjectList:getProject(projectCode)
+activate ProjectList #FFBBBB
+ProjectList --> Controller:project
+deactivate ProjectList
+
+Controller -> ProductBacklog:getUserStory(userStoryID)
+activate ProductBacklog #FFBBBB
+ProductBacklog --> Controller:userStory
+deactivate ProductBacklog #FFBBBB
+
+Controller -> SprintList:getSprint(sprintNumber)
+activate SprintList #FFBBBB
+SprintList --> Controller: sprint
+deactivate SprintList #FFBBBB
+
+Controller -> Sprint:addUserStoryToSprintBacklog(userStoryID)
+activate Sprint #FFBBBB
+Sprint -> Sprint:existsUserStory(userStoryID)
+Sprint -> Sprint:add(userStoryID)
+Sprint --> Controller:true
+deactivate Sprint #FFBBBB
+Controller --> UI:true
+deactivate Controller #FFBBBB
+UI --> user:Confirms user story addition to Sprint Backlog.
+deactivate UI #FFBBBB
+deactivate user #FFBBBB
+
+@enduml
