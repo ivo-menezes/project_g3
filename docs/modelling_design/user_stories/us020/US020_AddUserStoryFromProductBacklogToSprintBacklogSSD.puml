@@ -1,0 +1,4 @@
+@startuml
+"Team Member" -> System: Add user story from Product Backlog to Sprint Backlog\n(projectCode, userStoryID, sprintNumber)
+"Team Member" <-- System: Confirms user story addition to Sprint Backlog.
+@enduml
