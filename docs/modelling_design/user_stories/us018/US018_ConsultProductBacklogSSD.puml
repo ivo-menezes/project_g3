@@ -1,0 +1,6 @@
+@startuml
+
+"Product Owner/\n /Scrum Master/\n /Team Member" -> System: Requests product backlog (projectCode)
+"Product Owner/\n /Scrum Master/\n /Team Member" <-- System: Displays product backlog
+
+@enduml

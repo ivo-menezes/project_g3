@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+actor as "Product Owner/\n /Scrum Master/\n /Team Member"
+
+rectangle "Project Management System"{
+"actor" -- (Consult Product Backlog)
+}
+
+@enduml
