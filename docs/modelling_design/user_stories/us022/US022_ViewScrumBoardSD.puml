@@ -1,0 +1,67 @@
+@startuml
+!theme plain
+hide footbox
+
+actor TeamMember as User
+participant ": ViewScrumBoardUI" as UI
+participant ": ViewScrumBoardController" as Controller
+participant ": ProjectList" as List
+participant "project : Project" as Project
+participant ": SprintList" as SprintList
+participant "sprint : Sprint" as Sprint
+participant "lsUS : List<UserStory>" as DTOList
+participant "usDTO : USDto" as Dto
+participant "userStory : UserStory" as US
+participant ": SprintBacklog" as SB
+
+activate User #FFBBBB
+User -> UI: request Scrum Board of the current sprint(projectCode, sprintNumber)
+
+activate UI #FFBBBB
+UI -> Controller: showScrumBoard(projectCode, sprintNumber);
+activate Controller #FFBBBB
+
+Controller -> List: getProject(projectCode);
+activate List #FFBBBB
+List --> Controller: project
+deactivate List
+
+Controller -> Project: getSprintList();
+activate Project #FFBBBB
+Project --> Controller: sprintList
+deactivate Project
+
+Controller -> SprintList: getSprint(sprintNumber);
+activate SprintList #FFBBBB
+SprintList --> Controller: sprint
+deactivate SprintList
+
+Controller -> Sprint: viewScrumBoard();
+activate Sprint #FFBBBB
+
+Sprint -> DTOList **: create
+
+loop for each US
+Sprint -> SB: getUSAtIndex(index);
+activate SB #FFBBBB
+
+SB -> US: usNumber = getUsNumber();
+activate US #FFBBBB
+
+SB -> US: status = getUsStatus();
+deactivate US
+
+SB -> Dto **: create(usNumber, status);
+SB -> DTOList: add(usDTO);
+activate DTOList #FFBBBB
+deactivate DTOList
+deactivate SB
+end
+
+Sprint --> Controller: lsUS
+Controller --> UI: lsUS
+deactivate Controller
+
+UI --> User: lsUS
+deactivate User
+@enduml
