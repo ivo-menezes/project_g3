@@ -7,7 +7,8 @@ actor "Team Member" as user
 participant ": AddUserStoryUI" as UI
 participant ": AddUserStoryController" as Controller
 participant ": ProjectList" as ProjectList
-participant ": ProductBacklog" as ProductBacklog
+participant "project:Project" as Project
+participant "productBacklog:ProductBacklog" as ProductBacklog
 participant ":SprintList " as SprintList
 participant "sprint:Sprint " as Sprint
 
@@ -23,6 +24,12 @@ activate ProjectList #FFBBBB
 ProjectList --> Controller:project
 deactivate ProjectList
 
+
+Controller -> Project:getProductBacklog()
+activate Project #FFBBBB
+Project --> Controller: productBacklog
+deactivate Project
+
 Controller -> ProductBacklog:getUserStory(userStoryID)
 activate ProductBacklog #FFBBBB
 ProductBacklog --> Controller:userStory
@@ -33,10 +40,10 @@ activate SprintList #FFBBBB
 SprintList --> Controller: sprint
 deactivate SprintList #FFBBBB
 
-Controller -> Sprint:addUserStoryToSprintBacklog(userStoryID)
+Controller -> Sprint:addUserStoryToSprintBacklog(userStory)
 activate Sprint #FFBBBB
-Sprint -> Sprint:existsUserStory(userStoryID)
-Sprint -> Sprint:add(userStoryID)
+Sprint -> Sprint:existsUserStory(userStory)
+Sprint -> Sprint:add(userStory)
 Sprint --> Controller:true
 deactivate Sprint #FFBBBB
 Controller --> UI:true
