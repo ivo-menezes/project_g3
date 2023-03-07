@@ -1,0 +1,48 @@
+@startuml
+!theme plain
+hide footbox
+
+actor "User" as User
+participant ": EstimateEffortUI" as UI
+participant ": EstimateEffortController" as Controller
+participant ": ProjectList" as PL
+'participant ": Project" as P
+participant ": SprintList" as SL
+'participant ": Sprint" as S
+participant ": SprintBacklog" as SB
+participant ": UserStory" as US
+
+
+
+User ->  UI: Estimate effort of a User Story (projectCode, sprintNumber, userStoryId)
+activate User #FFBBBB
+activate UI #FFBBBB
+UI -> Controller: estimateEffortUserStory()
+activate Controller #FFBBBB
+Controller -> PL: getProject(projectCode)
+activate PL #FFBBBB
+PL -> PL: checkPermissionToAccessProject(email)
+PL --> Controller: project
+deactivate PL
+Controller -> SL: getSprint(sprintNumber)
+activate SL #FFBBBB
+SL --> Controller: sprint
+deactivate SL
+Controller -> SB: getUserStory(userStoryId)
+activate SB #FFBBBB
+SB --> Controller: userStory
+deactivate SB
+Controller -> US: estimateEffortOfUserStory()
+activate US #FFBBBB
+US --> Controller: user story effort estimated
+deactivate US
+Controller --> UI: user story effort estimated
+deactivate Controller
+UI --> User: user story effort estimated
+deactivate UI
+
+
+
+
+
+@enduml
