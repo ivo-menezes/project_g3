@@ -11,6 +11,12 @@ status
 priority
 }
 
+Object Sprint {
+sprint number
+start date
+end date
+}
+
 Object "SprintBacklog" as SB {
 US effort estimate
 }
@@ -18,6 +24,7 @@ US effort estimate
 Object "Scrum board" as SC
 
 US "*" -down- "1" SB: picked into >
+Sprint "1" -left- "1" SB: defines >
 SB "1" -left- "1" SC: status shown in >
 
 @enduml
