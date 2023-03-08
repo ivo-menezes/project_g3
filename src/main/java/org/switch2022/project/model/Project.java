@@ -18,6 +18,7 @@ public class Project {
     private String projectStatus = "Planned";
     private double budget;
     private ResourceList list;
+    private SprintList sprintList;
 
     //Constructors
 
@@ -35,6 +36,7 @@ public class Project {
         this.projectStatus = projectStatus;
         this.budget = budget;
         this.list = new ResourceList();
+        this.sprintList = new SprintList();
     }
 
     public Project(int code, String name, String description) {
@@ -45,6 +47,7 @@ public class Project {
         this.name = name;
         this.description = description;
         this.list = new ResourceList();
+        this.sprintList = new SprintList();
     }
 
     public Project(int code, String name, Date startDate, Date endDate, String costumer, String projectStatus) {
@@ -131,5 +134,9 @@ public class Project {
      */
     public UserProjectsDTO createUserProjectsDTO(Project project) {
         return new UserProjectsDTO(project.getCode(), project.getName());
+    }
+
+    public boolean addSprint(SprintDTO sprintDTO){
+                return sprintList.createSprint(sprintDTO);
     }
 }
