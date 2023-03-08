@@ -1,0 +1,43 @@
+@startuml
+!theme plain
+
+Object Project {
+code
+name
+description
+start date
+end date
+sprint duration
+number of planned sprints
+project status
+budget
+' Report could be its own conceptual class, but we are not modelling with detail yet
+'Report
+}
+
+Object Sprint {
+sprint number
+start date
+end date
+}
+
+
+Object "SprintBacklog" as SB {
+US effort estimate
+}
+
+Object "UserStory" as US {
+us number
+actor
+description
+acceptance criteria
+status
+priority
+}
+
+
+Project "1" -down- "*" Sprint: entails >
+Sprint "1" -down- "1" SB: defines >
+US "*" -right- "1" SB: picked into >
+
+@enduml
