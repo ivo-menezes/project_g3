@@ -33,6 +33,7 @@ numberOfPlannedSprints: int
 projectStatus: String
 budget: double
 resourceList: ResourceList
+sprintList: SprintList
 addSprint(sprintDTO)
 }
 
