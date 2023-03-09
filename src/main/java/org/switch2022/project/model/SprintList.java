@@ -12,16 +12,37 @@ public class SprintList {
     }
 
     public boolean createSprint(SprintDTO sprintDTO) {
+        boolean isCreated;
         if (sprintDTO == null) {
             throw new IllegalArgumentException("Sprint DTO must not be empty");
         }
         Sprint sprint = new Sprint(sprintDTO.sprintNumber, sprintDTO.startDate, sprintDTO.endDate);
-        return add(sprint);
+
+        if(!isValidDate(sprintDTO)) {
+            isCreated = false;
+        }else{
+            isCreated = add(sprint);
+        }
+        return isCreated;
     }
 
+    public boolean isValidDate(SprintDTO sprintDTO){
+        boolean isValid = true;
+
+        for(int index = 0; index < this.sprintList.size();index ++) {
+            Sprint sprint = this.sprintList.get(index);
+            Date dateToCompare = sprint.getEndDate(), startDateDTO = sprintDTO.startDate, endDateDTO = sprintDTO.endDate;
+            if (dateToCompare.after(startDateDTO) || dateToCompare.equals(startDateDTO) || dateToCompare.after(startDateDTO) && dateToCompare.before(endDateDTO)){
+                isValid = false;
+            } else if(startDateDTO.after(endDateDTO) || startDateDTO.equals(endDateDTO)) {
+                    isValid = false;
+                }
+            }
+            return isValid;
+        }
+
     public boolean hasSprint(Sprint sprint){
-        boolean sprintExists = sprintList.contains(sprint);
-        return sprintExists;
+        return sprintList.contains(sprint);
     }
 
     public boolean add(Sprint sprint){

@@ -1,0 +1,65 @@
+@startuml
+
+class ViewScrumBoardUI {
+}
+
+class ViewScrumBoardController {
+project: Project
+sprint: Sprint
+showScrumBoard(projectCode, sprintNumber)
+}
+
+class ProjectList {
+projectList: List<Project>
+getProject(projectCode)
+}
+
+class Project {
+code: int
+name: String
+description: String
+startDate: Date
+endDate: Date
+customer: String
+sprintDuration: int
+numberOfPlannedSprints: int
+projectStatus: String
+budget: double
+resourceList: ResourceList
+sprintList: SprintList
+getSprintList();
+}
+
+class SprintList {
+sprintList: List<Sprint>
+getSprint(sprintNumber)
+}
+
+class usDTO{
+id: String
+status: enum
+}
+
+class Sprint{
+sprintNumber: int
+startDate: Date
+endDate: Date
+sprintBackLog: List<US>
+createScrumBoardList();
+getUSAtIndex(index);
+getID();
+getUsStatus();
+create(id, status);
+addToScrumBoard(usDTO);
+}
+
+ViewScrumBoardUI "1" o--  "1" ViewScrumBoardController: has
+ViewScrumBoardController "1" o-- "1" ProjectList: has
+ProjectList "1" *-- "*" Project: contains
+Project "1" o-- "1" SprintList: has
+SprintList "1" *-- "*" Sprint: contains
+ViewScrumBoardController ..> Project
+Sprint .right.> usDTO
+
+
+@enduml
