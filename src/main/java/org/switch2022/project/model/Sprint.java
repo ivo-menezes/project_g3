@@ -32,6 +32,9 @@ public class Sprint {
         return Objects.hash(sprintNumber, startDate, endDate);
     }
 
+    public Date getStartDate(){return this.startDate;}
+    public Date getEndDate(){return this.endDate;}
+
     public boolean addUserStoryToSprintBacklog (UserStory userStory) {
         boolean added=false;
 

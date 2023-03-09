@@ -525,7 +525,7 @@ class ProjectTest {
 
     @Test
     @DisplayName("addSprintProject")
-    void addSprintProjectSuccessefully() {
+    void addSprintProjectSuccessfully() {
         //arrange
         Project project = new Project(1, "test", "test");
         SprintDTO sprintDTO = new SprintDTO();
