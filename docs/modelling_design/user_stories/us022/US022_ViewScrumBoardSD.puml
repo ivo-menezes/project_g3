@@ -12,7 +12,6 @@ participant "sprint : Sprint" as Sprint
 participant "lsUS : List<UserStory>" as DTOList
 participant "usDTO : USDto" as Dto
 participant "userStory : UserStory" as US
-participant ": SprintBacklog" as SB
 
 activate User #FFBBBB
 User -> UI: request Scrum Board of the current sprint(projectCode, sprintNumber)
@@ -42,26 +41,24 @@ activate Sprint #FFBBBB
 Sprint -> DTOList **: create
 
 loop for each US
-Sprint -> SB: getUSAtIndex(index);
-activate SB #FFBBBB
+Sprint -> Sprint: getUSAtIndex(index);
 
-SB -> US: usNumber = getUsNumber();
+Sprint -> US: getUsNumber();
 activate US #FFBBBB
 
-SB -> US: status = getUsStatus();
+Sprint -> US: getUsStatus();
 deactivate US
 
-SB -> Dto **: create(usNumber, status);
-SB -> DTOList: add(usDTO);
+Sprint -> Dto **: create(usNumber, status);
+Sprint -> DTOList: add(usDTO);
 activate DTOList #FFBBBB
 deactivate DTOList
-deactivate SB
 end
 
 Sprint --> Controller: lsUS
 Controller --> UI: lsUS
 deactivate Controller
 
-UI --> User: lsUS
+UI --> User: Scrum Board presented
 deactivate User
 @enduml
