@@ -10,6 +10,7 @@ participant ": CreateUserStoryController" as Controller
 participant ": ProjectList" as ProjectList
 participant "project : Project" as Project
 participant "productBacklog : ProductBacklog" as ProductBacklog
+participant ": FactoryUserStoryImpl" as Factory
 participant "userStory : UserStory" as UserStory
 
 
@@ -31,10 +32,15 @@ Controller -> Project : productBacklog = getProductBacklog()
 activate Project #FFBBBB
 deactivate
 
-Controller -> ProductBacklog : createUserStory(userStoryDTO, priority)
+Controller -> ProductBacklog : createAndAddUserStory(userStoryDTO, priority)
 
 activate ProductBacklog #FFBBBB
-ProductBacklog --> UserStory ** : create(userStoryDTO.userStoryId, userStoryDTO.actor,\n userStoryDTO.text, userStoryDTO.acceptanceCriteria)
+ProductBacklog -> Factory : userStory = createUserStoryFromDTO(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
+
+activate Factory #FFBBBB
+Factory --> UserStory ** : create(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
+deactivate Factory
+
 ProductBacklog -> ProductBacklog : doesNotContain(userStory)
 ProductBacklog -> ProductBacklog : add(userStory, priority)
 
