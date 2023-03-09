@@ -35,6 +35,11 @@ sprintList: List<Sprint>
 getSprint(sprintNumber)
 }
 
+class usDTO{
+id: String
+status: enum
+}
+
 class Sprint{
 sprintNumber: int
 startDate: Date
@@ -42,9 +47,9 @@ endDate: Date
 sprintBackLog: List<US>
 createScrumBoardList();
 getUSAtIndex(index);
-getUSNUmber();
+getID();
 getUsStatus();
-create(usNumber, status);
+create(id, status);
 addToScrumBoard(usDTO);
 }
 
@@ -54,7 +59,7 @@ ProjectList "1" *-- "*" Project: contains
 Project "1" o-- "1" SprintList: has
 SprintList "1" *-- "*" Sprint: contains
 ViewScrumBoardController ..> Project
-
+Sprint .right.> usDTO
 
 
 @enduml

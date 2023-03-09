@@ -43,14 +43,14 @@ Sprint -> DTOList **: create
 loop for each US
 Sprint -> Sprint: getUSAtIndex(index);
 
-Sprint -> US: getUsNumber();
+Sprint -> US: getID();
 activate US #FFBBBB
 
 Sprint -> US: getUsStatus();
 deactivate US
 
-Sprint -> Dto **: create(usNumber, status);
-Sprint -> DTOList: add(usDTO);
+Sprint -> Dto **: create(id, status);
+Sprint -> DTOList: addToScrumBoard(usDTO);
 activate DTOList #FFBBBB
 deactivate DTOList
 end
