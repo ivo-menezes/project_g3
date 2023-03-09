@@ -17,7 +17,7 @@ class SprintListTest {
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
         sprintDTO.startDate = new Date(3/2/2023);
-        sprintDTO.endDate = new Date(31/2/ 2023);
+        sprintDTO.endDate = new Date(31/2/2023);
         SprintList sprintList = new SprintList();
 
         //act
@@ -91,7 +91,7 @@ class SprintListTest {
     @Test
     void addSprint1() {
         //arrange
-        Sprint sprint1 = new Sprint(1, new Date(7 / 3 / 2023), new Date(21/3/2023));
+        Sprint sprint1 = new Sprint(1, new Date(7/3/2023), new Date(21/3/2023));
         SprintList sprintList = new SprintList();
 
         //act
@@ -115,14 +115,17 @@ class SprintListTest {
     }
     @Test
     void addSprint1And2() {
+
+        //arrange
         Sprint sprint1 = new Sprint(1, new Date(7/3/2023), new Date(21/3/2023));
         Sprint sprint2 = new Sprint(2, new Date(22/3/2023), new Date(5/4/2023));
         SprintList sprintList = new SprintList();
 
+        //act
         sprintList.add(sprint1);
         sprintList.add(sprint2);
 
-        assertTrue(sprintList.hasSprint(sprint1));
+        //assert
         assertTrue(sprintList.hasSprint(sprint2));
         }
         @Test

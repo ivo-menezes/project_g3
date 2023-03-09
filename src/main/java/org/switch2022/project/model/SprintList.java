@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SprintList {
-    private List<Sprint> sprintList;
+    private List<Sprint>sprintList;
 
     public SprintList() {
         this.sprintList = new ArrayList<Sprint>();
@@ -42,7 +42,8 @@ public class SprintList {
         }
 
     public boolean hasSprint(Sprint sprint){
-        return sprintList.contains(sprint);
+        boolean contains = sprintList.contains(sprint);
+        return contains;
     }
 
     public boolean add(Sprint sprint){
