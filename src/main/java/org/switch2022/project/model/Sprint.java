@@ -35,6 +35,11 @@ public class Sprint {
     public Date getStartDate(){return this.startDate;}
     public Date getEndDate(){return this.endDate;}
 
+    /**
+     * Add a user story to the sprint backlog.
+     * @param userStory
+     * @return true if the user story was added to the Sprint Backlog, or false otherwise.
+     */
     public boolean addUserStoryToSprintBacklog (UserStory userStory) {
         boolean added=false;
 
@@ -44,6 +49,12 @@ public class Sprint {
         }
         return added;
     }
+
+    /**
+     * Checks if it contains the user story in the sprint backlog.
+     * @param userStory
+     * @return returns false if the user story does not exist, or true otherwise.
+     */
     private boolean existsUserStory (UserStory userStory) {
         boolean exists=false;
 
@@ -54,5 +65,8 @@ public class Sprint {
             exists = true;
         }
         return exists;
+    }
+    public int getSprintNumber() {
+        return this.sprintNumber;
     }
 }
