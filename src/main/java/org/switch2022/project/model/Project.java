@@ -6,6 +6,10 @@ import java.util.Objects;
 
 public class Project {
 
+    /**
+     * Instantiate productBacklog for project.
+     */
+    ProductBacklog productBacklog = new ProductBacklog();
     //Attributes
     private int code;
     private String name;
@@ -18,6 +22,7 @@ public class Project {
     private String projectStatus = "Planned";
     private double budget;
     private ResourceList list;
+
     private SprintList sprintList;
 
     //Constructors
@@ -61,6 +66,20 @@ public class Project {
         this.customer = costumer;
         this.projectStatus = projectStatus;
         this.list = new ResourceList();
+    }
+
+    /**
+     * Get the project's product backlog.
+     *
+     * @return productBacklog
+     */
+
+    public SprintList getSprintList() {
+        return sprintList;
+    }
+
+    public ProductBacklog getProductBacklog() {
+        return productBacklog;
     }
 
     /***

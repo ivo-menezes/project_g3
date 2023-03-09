@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class ProjectTest {
 
@@ -577,4 +579,37 @@ class ProjectTest {
         //assert
         assertTrue(result);
     }
+
+    @Test
+    @DisplayName("Get product backlog")
+    void getProductBacklog() {
+        //arrange
+        Project project = mock(Project.class);
+        ProductBacklog productBacklog = mock(ProductBacklog.class);
+
+        Mockito.when(project.getProductBacklog()).thenReturn(productBacklog);
+
+        //act
+        ProductBacklog result = project.getProductBacklog();
+
+         // assert
+        assertEquals(productBacklog, result);
+    }
+
+    @Test
+    @DisplayName("Get sprint list")
+    void getSprintList() {
+        //arrange
+        Project project = mock(Project.class);
+        SprintList sprintList = mock(SprintList.class);
+
+        Mockito.when(project.getSprintList()).thenReturn(sprintList);
+
+        //act
+        SprintList result = project.getSprintList();
+
+        // assert
+        assertEquals(sprintList, result);
+    }
+
 }
