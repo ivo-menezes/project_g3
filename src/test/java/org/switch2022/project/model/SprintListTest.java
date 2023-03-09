@@ -16,8 +16,8 @@ class SprintListTest {
         //arrange
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = new Date(01 / 01 / 2023);
-        sprintDTO.endDate = new Date(31 / 01 / 2023);
+        sprintDTO.startDate = new Date(3/2/2023);
+        sprintDTO.endDate = new Date(31/2/ 2023);
         SprintList sprintList = new SprintList();
 
         //act
@@ -32,14 +32,14 @@ class SprintListTest {
         //arrange
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = new Date(01 / 01 / 2023);
-        sprintDTO.endDate = new Date(31 / 01 / 2023);
+        sprintDTO.startDate = new Date(1/2/2023);
+        sprintDTO.endDate = new Date(31/2/2023);
         SprintList sprintList = new SprintList();
 
         SprintDTO sprintDTOTwo = new SprintDTO();
         sprintDTOTwo.sprintNumber = 1;
-        sprintDTOTwo.startDate = new Date(02 / 01 / 2023);
-        sprintDTOTwo.endDate = new Date(30 / 01 / 2023);
+        sprintDTOTwo.startDate = new Date(1/2/2023);
+        sprintDTOTwo.endDate = new Date(31/2/2023);
 
         //act
         sprintList.createSprint(sprintDTO);
@@ -51,7 +51,7 @@ class SprintListTest {
 
     @Test
     void addSameSprint() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         //arrange
         SprintDTO sprintDTO = new SprintDTO();
@@ -76,8 +76,8 @@ class SprintListTest {
     @Test
     void hasSprint() {
         //arrange
-        Sprint sprint = new Sprint(1, new Date(01 / 01 / 2023), new Date(31 / 01 / 2023));
-        Sprint sprintTwo = new Sprint(1, new Date(01 / 01 / 2023), new Date(31 / 01 / 2023));
+        Sprint sprint = new Sprint(1, new Date(2/3/2023), new Date(31/3/2023));
+        Sprint sprintTwo = new Sprint(1, new Date(2/3/2023), new Date(31/3/2023));
         SprintList sprintList = new SprintList();
 
         //act
@@ -90,50 +90,53 @@ class SprintListTest {
 
     @Test
     void addSprint1() {
-        Sprint sprint1 = new Sprint(1, new Date(7 / 3 / 2023), new Date(21 / 03 / 2023));
-        Sprint sprint2 = new Sprint(2, new Date(22 / 3 / 2023), new Date(04 / 04 / 2023));
+        //arrange
+        Sprint sprint1 = new Sprint(1, new Date(7 / 3 / 2023), new Date(21/3/2023));
         SprintList sprintList = new SprintList();
 
+        //act
         sprintList.add(sprint1);
-        assertEquals(true, sprintList.hasSprint(sprint1));
+
+        //assert
+        assertTrue(sprintList.hasSprint(sprint1));
     }
 
     @Test
     void addSprint2() {
-        Sprint sprint1 = new Sprint(1, new Date(07 / 03 / 2023), new Date(21 / 03 / 2023));
-        Sprint sprint2 = new Sprint(2, new Date(22 / 03 / 2023), new Date(04 / 04 / 2023));
+        //arrange
+        Sprint sprint2 = new Sprint(2, new Date(22/3/2023), new Date(5/4/2023));
         SprintList sprintList = new SprintList();
 
+        //act
         sprintList.add(sprint2);
-        assertEquals(true, sprintList.hasSprint(sprint2));
+
+        //assert
+        assertTrue(sprintList.hasSprint(sprint2));
     }
     @Test
     void addSprint1And2() {
-        Sprint sprint1 = new Sprint(1, new Date(07 / 03 / 2023), new Date(21 / 03 / 2023));
-        Sprint sprint2 = new Sprint(2, new Date(22 / 03 / 2023), new Date(04 / 04 / 2023));
+        Sprint sprint1 = new Sprint(1, new Date(7/3/2023), new Date(21/3/2023));
+        Sprint sprint2 = new Sprint(2, new Date(22/3/2023), new Date(5/4/2023));
         SprintList sprintList = new SprintList();
 
         sprintList.add(sprint1);
         sprintList.add(sprint2);
 
-        assertEquals(true, sprintList.hasSprint(sprint1));
-        assertEquals(true, sprintList.hasSprint(sprint2));
+        assertTrue(sprintList.hasSprint(sprint1));
+        assertTrue(sprintList.hasSprint(sprint2));
         }
         @Test
         void addSprintNull() {
 
-        Sprint sprint = null;
         SprintList sprintList = new SprintList();
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            sprintList.add(null);
-        });
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> sprintList.add(null));
         String expectedMessage = "Sprint must not be empty";
         String actualMessage = exception.getMessage();
         Assertions.assertEquals(expectedMessage, actualMessage);
     }
     @Test
     void doesNotAddSprintWithinExistingDates() throws ParseException{
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         //Arrange
 
@@ -172,7 +175,7 @@ class SprintListTest {
 
     @Test
     void checkIfDoesNotAddSprintDTOWithOverLappingDates() throws ParseException{
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         //Arrange
 

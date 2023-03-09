@@ -42,8 +42,7 @@ public class SprintList {
         }
 
     public boolean hasSprint(Sprint sprint){
-        boolean sprintExists = sprintList.contains(sprint);
-        return sprintExists;
+        return sprintList.contains(sprint);
     }
 
     public boolean add(Sprint sprint){
