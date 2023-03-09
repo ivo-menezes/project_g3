@@ -3,6 +3,8 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,25 +50,28 @@ class SprintListTest {
     }
 
     @Test
-    void addTwoSprints() {
+    void addSameSprint() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+
         //arrange
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = new Date(1 / 2 / 2023);
-        sprintDTO.endDate = new Date(31 / 2 / 2023);
-        SprintList sprintList = new SprintList();
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
 
         SprintDTO sprintDTOTwo = new SprintDTO();
         sprintDTOTwo.sprintNumber = 2;
-        sprintDTOTwo.startDate = new Date(2 / 3 / 2023);
-        sprintDTOTwo.endDate = new Date(30 / 3 / 2023);
+        sprintDTOTwo.startDate = formatter.parse("01/03/2022");
+        sprintDTOTwo.endDate = formatter.parse("30/03/2023");
 
         //act
+        SprintList sprintList = new SprintList();
         sprintList.createSprint(sprintDTO);
-        boolean result = sprintList.createSprint(sprintDTOTwo);
+        sprintList.createSprint(sprintDTOTwo);
 
         //assert
-        assertTrue(result);
+        assertFalse(sprintList.createSprint(sprintDTOTwo));
     }
     @Test
     void hasSprint() {
@@ -115,17 +120,6 @@ class SprintListTest {
         assertEquals(true, sprintList.hasSprint(sprint2));
         }
         @Test
-        void addSameSprint() {
-        Sprint sprint1 = new Sprint(1, new Date(07 / 03 / 2023), new Date(21 / 03 / 2023));
-        SprintList sprintList = new SprintList();
-
-        sprintList.add(sprint1);
-        sprintList.add(sprint1);
-
-        assertEquals(true, sprintList.hasSprint(sprint1));
-
-        }
-        @Test
         void addSprintNull() {
 
         Sprint sprint = null;
@@ -136,5 +130,81 @@ class SprintListTest {
         String expectedMessage = "Sprint must not be empty";
         String actualMessage = exception.getMessage();
         Assertions.assertEquals(expectedMessage, actualMessage);
+    }
+    @Test
+    void doesNotAddSprintWithinExistingDates() throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+
+        //Arrange
+
+        SprintDTO sprintDTO = new SprintDTO();
+        sprintDTO.sprintNumber = 1;
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
+        SprintDTO sprintDTOTwo = new SprintDTO();
+        sprintDTOTwo.sprintNumber = 2;
+        sprintDTOTwo.startDate = formatter.parse("02/03/2022");
+        sprintDTOTwo.endDate = formatter.parse("30/03/2022");
+
+        SprintDTO sprintDTOThree = new SprintDTO();
+        sprintDTOThree.sprintNumber = 3;
+        sprintDTOThree.startDate = formatter.parse("02/03/2022");
+        sprintDTOThree.endDate = formatter.parse("30/04/2022");
+
+        SprintDTO sprintDTOFour = new SprintDTO();
+        sprintDTOFour.sprintNumber = 4;
+        sprintDTOFour.startDate = formatter.parse("02/03/2022");
+        sprintDTOFour.endDate = formatter.parse("30/03/2022");
+
+        //Act
+
+        SprintList sprintList = new SprintList();
+
+        sprintList.createSprint(sprintDTO);
+        sprintList.createSprint(sprintDTOTwo);
+        sprintList.createSprint(sprintDTOThree);
+
+        //Assert
+
+        assertFalse(sprintList.createSprint(sprintDTOFour));
+    }
+
+    @Test
+    void checkIfDoesNotAddSprintDTOWithOverLappingDates() throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+
+        //Arrange
+
+        SprintDTO sprintDTO = new SprintDTO();
+        sprintDTO.sprintNumber = 1;
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
+        SprintDTO sprintDTOTwo = new SprintDTO();
+        sprintDTOTwo.sprintNumber = 2;
+        sprintDTOTwo.startDate = formatter.parse("30/03/2022");
+        sprintDTOTwo.endDate = formatter.parse("30/03/2022");
+
+        SprintDTO sprintDTOThree = new SprintDTO();
+        sprintDTOThree.sprintNumber = 3;
+        sprintDTOThree.startDate = formatter.parse("02/04/2022");
+        sprintDTOThree.endDate = formatter.parse("30/04/2022");
+
+        SprintDTO sprintDTOFour = new SprintDTO();
+        sprintDTOFour.sprintNumber = 4;
+        sprintDTOFour.startDate = formatter.parse("02/03/2022");
+        sprintDTOFour.endDate = formatter.parse("02/03/2022");
+
+        //Act
+
+        SprintList sprintList = new SprintList();
+        sprintList.createSprint(sprintDTO);
+        sprintList.createSprint(sprintDTOTwo);
+        sprintList.createSprint(sprintDTOThree);
+
+        //Assert
+
+        assertFalse(sprintList.createSprint(sprintDTOFour));
     }
 }
