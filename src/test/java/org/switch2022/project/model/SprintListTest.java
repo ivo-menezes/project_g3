@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -73,6 +74,7 @@ class SprintListTest {
         //assert
         assertFalse(sprintList.createSprint(sprintDTOTwo));
     }
+
     @Test
     void hasSprint() {
         //arrange
@@ -113,6 +115,7 @@ class SprintListTest {
         //assert
         assertTrue(sprintList.hasSprint(sprint2));
     }
+
     @Test
     void addSprint1And2() {
 
@@ -212,5 +215,32 @@ class SprintListTest {
         //Assert
 
         assertFalse(sprintList.createSprint(sprintDTOFour));
+    }
+    @Test
+    @DisplayName("ensure return the sprint")
+    void ensureGetSprint() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(10 - 03 - 2023), new Date(20 - 03 - 2023));
+        SprintList sprintList = new SprintList();
+        sprintList.add(sprint);
+
+        //Act
+        Sprint result = sprintList.getSprint(10);
+
+        //Arrange
+        assertEquals(sprint, result);
+    }
+    @Test
+    @DisplayName("ensure an exception is returned when the sprint is not found.")
+    void ensureGetSprintException() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(10 - 03 - 2023), new Date(20 - 03 - 2023));
+        SprintList sprintList = new SprintList();
+        sprintList.add(sprint);
+
+        //Act and Assert
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            sprintList.getSprint(20);
+        });
     }
 }
