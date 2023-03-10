@@ -7,6 +7,15 @@ public class ProductBacklog {
     private final List<UserStory> userStories = new ArrayList<>();
     private final List<UserStory> completedUserStories = new ArrayList<>();
 
+    private final IFactoryUserStory factoryUserStory;
+
+    public ProductBacklog(IFactoryUserStory factory) {
+        if (factory == null) {
+            throw new IllegalArgumentException("Factory must not be null");
+        }
+        this.factoryUserStory = factory;
+    }
+
     /**
      * Checks if user story is already in product backlog (either not completed or completed).
      *
@@ -55,17 +64,29 @@ public class ProductBacklog {
      * @param priority     of user story
      * @return true if successfully created and added, false otherwise
      */
-    public boolean createUserStory(UserStoryDTO userStoryDTO, int priority) {
+    public boolean createAndAddUserStory(UserStoryDTO userStoryDTO, int priority) {
         if (userStoryDTO == null) {
             throw new IllegalArgumentException("User Story DTO must not be null");
         }
 
+        UserStory userStory = createUserStoryFromDTO(userStoryDTO);
 
-        UserStory userStory = new UserStory(userStoryDTO.id,
+        return add(userStory, priority);
+    }
+
+    /**
+     * Creates user story from DTO.
+     *
+     * @param userStoryDTO to unpack
+     * @return userStory
+     */
+    private UserStory createUserStoryFromDTO(UserStoryDTO userStoryDTO) {
+
+        UserStory userStory = factoryUserStory.createUserStory(userStoryDTO.id,
                 userStoryDTO.actor,
                 userStoryDTO.text,
                 userStoryDTO.acceptanceCriteria);
 
-        return add(userStory, priority);
+        return userStory;
     }
 }

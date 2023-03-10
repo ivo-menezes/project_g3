@@ -9,7 +9,7 @@ public class Project {
     /**
      * Instantiate productBacklog for project.
      */
-    ProductBacklog productBacklog = new ProductBacklog();
+    ProductBacklog productBacklog = new ProductBacklog(new FactoryUserStoryImpl());
     //Attributes
     private int code;
     private String name;
