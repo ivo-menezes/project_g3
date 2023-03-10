@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProductBacklog {
+
+
     private final List<UserStory> userStories = new ArrayList<>();
     private final List<UserStory> completedUserStories = new ArrayList<>();
 
@@ -94,6 +96,7 @@ public class ProductBacklog {
     /**
      * Retrieves a user story from the product backlog, given a userStoryID.
      * Only works for not completed user stories.
+     *
      * @param userStoryID is a string provided by the user.
      * @return user story if it is found, otherwise thrown an exception.
      */
@@ -111,5 +114,14 @@ public class ProductBacklog {
             }
         }
         return userStoryToReturn;
+    }
+
+    /**
+     * This method retrieves the list of user stories yet to be implemented.
+     *
+     * @return list of user stories to be implemented
+     */
+    public List<UserStory> getUserStoryList() {
+        return this.userStories;
     }
 }

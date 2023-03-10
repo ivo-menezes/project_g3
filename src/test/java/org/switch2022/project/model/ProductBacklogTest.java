@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -429,5 +432,29 @@ class ProductBacklogTest {
 
         //act and assert
         Assertions.assertThrows(NullPointerException.class, () -> productBacklog.getUserStory("3"));
+    }
+
+    @Test
+    @DisplayName("ensure userStory list is retrieved")
+    void ensureUserStoryListIsRetrieved() {
+        //arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        UserStory userStoryDoubleTwo = mock(UserStory.class);
+
+        List<UserStory> expectedList = new ArrayList<>();
+        expectedList.add(userStoryDouble);
+        expectedList.add(userStoryDoubleTwo);
+
+        productBacklog.add(userStoryDouble, 1);
+        productBacklog.add(userStoryDoubleTwo, 2);
+
+        //act
+        List<UserStory> resultList = productBacklog.getUserStoryList();
+
+        //assert
+        assertEquals(expectedList, resultList);
     }
 }
