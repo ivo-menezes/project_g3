@@ -155,6 +155,10 @@ public class Project {
         return new UserProjectsDTO(project.getCode(), project.getName());
     }
 
+    /**
+     * With SprintDTO as a parameter it adds a sprint to the sprintList
+     * @param sprintDTO
+     */
     public boolean addSprint(SprintDTO sprintDTO){
                 return sprintList.createSprint(sprintDTO);
     }

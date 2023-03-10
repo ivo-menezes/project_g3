@@ -11,6 +11,11 @@ public class SprintList {
         this.sprintList = new ArrayList<Sprint>();
     }
 
+    /**
+     * Method createSprint with SprintDTO object as parameter
+     * @param sprintDTO
+     * @return true (isCreated) if the sprint is created successfully, otherwise returns false or throws exception
+     */
     public boolean createSprint(SprintDTO sprintDTO) {
         boolean isCreated;
         if (sprintDTO == null) {
@@ -26,6 +31,11 @@ public class SprintList {
         return isCreated;
     }
 
+    /**
+     * isValidDate checks and compares the startDate and endDate in order to validate them
+     * @param sprintDTO
+     * @return true (isValid) if endDate is after startDate otherwise returns false
+     */
     public boolean isValidDate(SprintDTO sprintDTO){
         boolean isValid = true;
 
@@ -41,11 +51,20 @@ public class SprintList {
             return isValid;
         }
 
+    /**
+     * Checks if a Sprint exists in the sprintList
+     * @param sprint
+     */
     public boolean hasSprint(Sprint sprint) {
         boolean contains = sprintList.contains(sprint);
         return contains;
     }
 
+    /**
+     * Adds a sprint to the sprintList
+     * @param sprint
+     * @return true if sprint is added successfully or false if already exists or is empty
+     */
     public boolean add(Sprint sprint) {
         if (sprint == null) {
             throw new IllegalArgumentException("Sprint must not be empty");
@@ -61,7 +80,7 @@ public class SprintList {
     /**
      * Retrieves a sprint from the sprintList given a sprintNumber.
      * @param sprintNumber
-     * @return sprint when it is found, otherwise an exception is thrown.
+     * @return true if sprint it is found, otherwise an exception is thrown.
      */
     public Sprint getSprint(int sprintNumber) {
         boolean foundSprint = false;

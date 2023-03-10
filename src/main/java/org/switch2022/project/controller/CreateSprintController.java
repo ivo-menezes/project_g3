@@ -12,6 +12,12 @@ public class CreateSprintController {
         this.sprintDTO = sprintDTO;
     }
 
+    /**
+     * With projectCode and SprintDTO as parameters this method gets a project by is code and adds a sprint to it
+     * @param projectCode
+     * @param sprintDTO
+     * @return boolean if sprint is added to the project
+     */
     public boolean createSprint(int projectCode, SprintDTO sprintDTO) {
         if (sprintDTO == null) {
             throw new IllegalArgumentException("SprintDTO must not be null.");

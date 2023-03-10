@@ -32,6 +32,10 @@ public class Sprint {
         return Objects.hash(sprintNumber, startDate, endDate);
     }
 
+    /**
+     * Get StartDate and EndDate methods
+     * @return startDate and endDate respectively
+     */
     public Date getStartDate(){return this.startDate;}
     public Date getEndDate(){return this.endDate;}
 
