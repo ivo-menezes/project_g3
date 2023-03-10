@@ -3,7 +3,6 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -406,26 +405,29 @@ class ProductBacklogTest {
     @DisplayName("ensure user story is returned")
     void ensureUserStoryIsReturned() {
         //arrange
-        ProductBacklog productBacklog = mock(ProductBacklog.class);
-        UserStory userStory2 = new UserStory("2", "Team member", "teste", "teste");
-
-        Mockito.when(productBacklog.getUserStory("2")).thenReturn(userStory2);
+        IFactoryUserStory factoryUserStory = mock(IFactoryUserStory.class);
+        UserStory userStory = mock(UserStory.class);
+        when(userStory.getId()).thenReturn("2");
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        productBacklog.add(userStory, 0);
         //act
         UserStory userStoryToReturn = productBacklog.getUserStory("2");
         //assert
-        assertEquals(userStory2, userStoryToReturn);
+        assertEquals(userStory, userStoryToReturn);
     }
     @Test
     @DisplayName("ensure an exception is returned when the user story is not found")
     void ensureGetUserStoryException() {
         //arrange
-        ProductBacklog productBacklog = mock(ProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(IFactoryUserStory.class);
+        UserStory userStory = mock(UserStory.class);
+        when(userStory.getId()).thenReturn("2");
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        productBacklog.add(userStory, 0);
 
-        Mockito.when(productBacklog.getUserStory("2")).thenThrow(NullPointerException.class);
+        //Mockito.when(productBacklog.getUserStory("2")).thenThrow(NullPointerException.class);
 
         //act and assert
-        NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
-            productBacklog.getUserStory("2");
-        });
+        Assertions.assertThrows(NullPointerException.class, () -> productBacklog.getUserStory("3"));
     }
 }
