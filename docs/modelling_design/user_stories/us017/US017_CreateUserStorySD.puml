@@ -35,7 +35,8 @@ deactivate
 Controller -> ProductBacklog : createAndAddUserStory(userStoryDTO, priority)
 
 activate ProductBacklog #FFBBBB
-ProductBacklog -> Factory : userStory = createUserStoryFromDTO(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
+ProductBacklog -> ProductBacklog : createUserStoryFromDTO(userStoryDTO)
+ProductBacklog -> Factory : userStory = createUserStory(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
 
 activate Factory #FFBBBB
 Factory --> UserStory ** : create(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
