@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SprintListTest {
 
@@ -242,5 +244,85 @@ class SprintListTest {
         NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
             sprintList.getSprint(20);
         });
+    }
+
+    /***
+     * This test checks whether a mock object of sprintDTO will be successfully used by the
+     * createSprint method of the SprintList class.
+     * @throws ParseException for the parsing of the chosen dates for the mock sprintDTO object
+     */
+    @Test
+    @DisplayName("Testing the creation of Sprints with a mock SprintDto")
+    void checkTheCreationOfSprints() throws ParseException {
+        //arrange
+        SprintList sprintList = new SprintList();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        SprintDTO sprintDTO = mock(SprintDTO.class);
+        sprintDTO.sprintNumber = 1;
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
+        //act
+        boolean result = sprintList.createSprint(sprintDTO);
+
+        //assert
+        assertTrue(result);
+    }
+
+    /***
+     * Testing the creation of a mock sprintList and compare the result of both
+     * original sprintlist and the mock list.
+     * @throws ParseException for the parsing of the chosen dates for the mock sprintDTO object
+     */
+    @Test
+    @DisplayName("Testing the list with another mock list")
+    void checkTheCreationOfSprintsWithMockList() throws ParseException {
+        //arrange
+        SprintList sprintList = new SprintList();
+        SprintList sprintListMock = mock(SprintList.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        SprintDTO sprintDTO = mock(SprintDTO.class);
+        sprintDTO.sprintNumber = 1;
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
+        //act
+        when(sprintListMock.createSprint(sprintDTO)).thenReturn(true);
+        boolean result = sprintList.createSprint(sprintDTO);
+
+        //assert
+        assertEquals(sprintListMock.createSprint(sprintDTO), result);
+    }
+
+    /***
+     * This test checks whether the sprintList object will successfully add a second mock sprintDTO
+     * to the list, after the addition of a first mock sprintDTO.
+     * @throws ParseException for the parsing of the chosen dates for the mock sprintDTO object
+     */
+    @Test
+    @DisplayName("Testing the addition of two sprintDTOs to list")
+    void checkTheCreationAndAdditionWithTwoSprintDTOs() throws ParseException {
+        //arrange
+        SprintList sprintList = new SprintList();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        SprintDTO sprintDTO = mock(SprintDTO.class);
+        sprintDTO.sprintNumber = 1;
+        sprintDTO.startDate = formatter.parse("01/02/2022");
+        sprintDTO.endDate = formatter.parse("15/02/2022");
+
+        SprintDTO sprintDTOTwo = mock(SprintDTO.class);
+        sprintDTOTwo.sprintNumber = 2;
+        sprintDTOTwo.startDate = formatter.parse("01/03/2022");
+        sprintDTOTwo.endDate = formatter.parse("15/03/2022");
+
+        //act
+        sprintList.createSprint(sprintDTO);
+        boolean result = sprintList.createSprint(sprintDTOTwo);
+
+        //assert
+        assertTrue(result);
     }
 }
