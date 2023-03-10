@@ -40,6 +40,7 @@ id : String
 actor : String
 text : String
 acceptanceCriteria : String
+status : Status
 }
 
 ConsultProductBacklogUI "1" o-- "1" ConsultProductBacklogController : has
