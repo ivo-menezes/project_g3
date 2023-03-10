@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductBacklog {
     private final List<UserStory> userStories = new ArrayList<>();
@@ -88,5 +89,27 @@ public class ProductBacklog {
                 userStoryDTO.acceptanceCriteria);
 
         return userStory;
+    }
+
+    /**
+     * Retrieves a user story from the product backlog, given a userStoryID.
+     * Only works for not completed user stories.
+     * @param userStoryID is a string provided by the user.
+     * @return user story if it is found, otherwise thrown an exception.
+     */
+    public UserStory getUserStory(String userStoryID) {
+        boolean foundUserStory = false;
+        UserStory userStoryToReturn = null;
+
+        for (int i = 0; i < userStories.size() && !foundUserStory; i++) {
+            UserStory userStory = userStories.get(i);
+            if (Objects.equals(userStory.getId(), userStoryID)) {
+                userStoryToReturn = userStory;
+            }
+            if (userStoryToReturn == null) {
+                throw new NullPointerException("User story not found");
+            }
+        }
+        return userStoryToReturn;
     }
 }

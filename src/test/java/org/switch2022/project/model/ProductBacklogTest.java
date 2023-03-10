@@ -1,7 +1,9 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -398,5 +400,32 @@ class ProductBacklogTest {
         String resultMessage = exception.getMessage();
         // assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("ensure user story is returned")
+    void ensureUserStoryIsReturned() {
+        //arrange
+        ProductBacklog productBacklog = mock(ProductBacklog.class);
+        UserStory userStory2 = new UserStory("2", "Team member", "teste", "teste");
+
+        Mockito.when(productBacklog.getUserStory("2")).thenReturn(userStory2);
+        //act
+        UserStory userStoryToReturn = productBacklog.getUserStory("2");
+        //assert
+        assertEquals(userStory2, userStoryToReturn);
+    }
+    @Test
+    @DisplayName("ensure an exception is returned when the user story is not found")
+    void ensureGetUserStoryException() {
+        //arrange
+        ProductBacklog productBacklog = mock(ProductBacklog.class);
+
+        Mockito.when(productBacklog.getUserStory("2")).thenThrow(NullPointerException.class);
+
+        //act and assert
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            productBacklog.getUserStory("2");
+        });
     }
 }
