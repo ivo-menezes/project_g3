@@ -54,7 +54,7 @@ public class Account {
             return false;
         }
         Account account = (Account) o;
-        return name.equals(account.name) && email.equals(account.email) && phone.equals(account.phone) && profile.equals(account.profile);
+        return email.equals(account.email);
     }
 
     @Override

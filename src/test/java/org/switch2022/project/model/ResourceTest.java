@@ -2,152 +2,191 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class ResourceTest {
 
     @Test
-    void ensureIsAccountOfResourceTrue() {
-        //arrange
-        Profile profile = new Profile("Manager");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Team Member");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+    @DisplayName("Ensure the account is a resource")
+    void isAccountOfResourceTrue() {
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("Manager");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Team Member");
+        Resource resource = new Resource(role, account, project, new Date(10-03-2021), 50, 80);
 
-        //act
+        //Act
         boolean result = resource.isAccountOfResource(account);
 
-        //assert
+        //Assert
         assertTrue(result);
     }
     @Test
-    void ensureIsAccountOfResourceFalse() {
-        //arrange
-        Profile profile = new Profile("Manager");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Deborah", "xxxxx@gmail.com", "33399988", profile);
-        Account accountTwo = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role( "Team Member");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+    @DisplayName("Ensure the account is not a resource")
+    void isAccountOfResourceFalse() {
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("Manager");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Account secondAccount = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Team Member");
+        Resource resource = new Resource(role, account, project, new Date(10-03-2021), 50, 80);
 
-        //act
-        boolean result = resource.isAccountOfResource(accountTwo);
+        //Act
+        boolean result = resource.isAccountOfResource(secondAccount);
 
-        //assert
+        //Assert
         assertFalse(result);
     }
 
     @Test
-    @DisplayName("ensure hasRole returns true if role matches")
+    @DisplayName("Ensure hasRole returns true if role matches")
     void hasRoleIsTrue() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
-        // act
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(23-01-2023), 50, 80);
+
+        //Act
         boolean result = resource.hasRole(role);
-        // assert
+
+        //Assert
         assertTrue(result);
     }
 
     @Test
-    @DisplayName("ensure hasRole returns false if role doesn't match")
+    @DisplayName("Ensure hasRole returns false if role doesn't match")
     void hasRoleIsFalse() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
-        Role anotherRole = new Role( "Scrum Master");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
-        // act
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
+        Role anotherRole = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Scrum Master");
+        Resource resource = new Resource(role, account, project, new Date(23-01-2023), 50, 80);
+
+        //Act
         boolean result = resource.hasRole(anotherRole);
-        // assert
+
+        //Assert
         assertFalse(result);
     }
 
     @Test
-    @DisplayName("ensure isActive returns true if endDate is null")
+    @DisplayName("Ensure isActive returns true if endDate is null")
     void isActiveIsTrue() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
-        // act
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(10-03-2023), 50, 80);
+
+        //Act
         boolean result = resource.isActive();
-        // assert
+
+        //Assert
         assertTrue(result);
     }
 
     @Test
-    @DisplayName("ensure isActive returns false if endDate is not null")
+    @DisplayName("Ensure isActive returns false if endDate is not null")
     void isActiveIsFalse() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
-        Resource resource = new Resource(role, account, project, new Date(), 50, 80);
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
+        Resource resource = new Resource(role, account, project, new Date(),50, 80);
         Date endDate = new Date();
-        // act
+
+        //Act
         resource.setEndDate(endDate);
         boolean result = resource.isActive();
-        // assert
+
+        //Assert
         assertFalse(result);
     }
+
     @Test
-    @DisplayName("retrieve email from resource account")
+    @DisplayName("Retrieve email from resource account")
     void retrieveEmailFromResource(){
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Mockito.when(account.getEmail()).thenReturn("deborah@gmail.com");
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
-        String emailExpected = "xxxxx@gmail.com";
-        // act
+        String emailExpected = "deborah@gmail.com";
+
+        //Act
         String emailResult = resource.getEmailOfResource();
-        // assert
+
+        //Assert
         assertEquals(emailExpected, emailResult);
     }
     @Test
-    @DisplayName("get role from resorce")
+    @DisplayName("Get role from resource")
     void getRoleFromResource() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
         String roleExpected = "Product Owner";
-        // act
+
+        //Act
         String roleResult = resource.getRole();
-        // assert
+
+        //Assert
         assertEquals(roleExpected, roleResult);
     }
     @Test
-    @DisplayName("create resourceDTO")
+    @DisplayName("Create resourceDTO")
     void createResourceDTO() {
-        // arrange
-        Profile profile = new Profile("User");
-        Project project = new Project(1, "test", "test");
-        Account account = new Account ("Pedro", "xxxxx@gmail.com", "33399988", profile);
-        Role role = new Role("Product Owner");
+        //Arrange
+        Profile profile = mock(Profile.class);
+        Mockito.when(profile.getProfileName()).thenReturn("User");
+        Project project = mock(Project.class);
+        Account account = mock(Account.class);
+        Mockito.when(account.getEmail()).thenReturn("deborah@gmail.com");
+        Role role = mock(Role.class);
+        Mockito.when(role.getName()).thenReturn("Product Owner");
+
         Resource resource = new Resource(role, account, project, new Date(), 50, 80);
-        ResourceDTO expected = new ResourceDTO("xxxxx@gmail.com", "Product Owner");
-        // act
+        ResourceDTO expected = new ResourceDTO("deborah@gmail.com", "Product Owner");
+
+        //Act
         ResourceDTO result = resource.createResourceDTO();
-        // assert
+
+        //Assert
         assertEquals(expected, result);
     }
-
-
 }
