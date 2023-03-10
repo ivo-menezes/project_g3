@@ -85,7 +85,6 @@ class UserStoryTest {
     }
 
 
-
     @Test
     @DisplayName("object equals itself")
     void testEqualsWithItself() {
@@ -152,6 +151,7 @@ class UserStoryTest {
         boolean result = userStory.equals(anotherUserStory);
         assertFalse(result);
     }
+
     @Test
     @DisplayName("equal objects have same hash code")
     void testSameHashCode() {
@@ -185,6 +185,7 @@ class UserStoryTest {
         int anotherUserStoryHashCode = anotherUserStory.hashCode();
         assertNotEquals(userStoryHashCode, anotherUserStoryHashCode);
     }
+
     @Test
     @DisplayName("ensure user story ID is returned")
     void ensureUserStoryIsReturned() {
@@ -199,4 +200,60 @@ class UserStoryTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    @DisplayName("ensure user story actor is returned")
+    void ensureUserStoryActorIsReturned() {
+        //arrange
+        UserStory userStory = new UserStory("1", "Product Owner", "This is text", "These are acceptance criteria");
+        String expected = "Product Owner";
+
+        //act
+        String result = userStory.getActor();
+
+        //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("ensure user story text is returned")
+    void ensureUserStoryTextIsReturned() {
+        //arrange
+        UserStory userStory = new UserStory("1", "Product Owner", "This is text", "These are acceptance criteria");
+        String expected = "This is text";
+
+        //act
+        String result = userStory.getText();
+
+        //assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("ensure user story acceptanceCriteria are returned")
+    void ensureUserStoryAcceptanceCriteriaAreReturned() {
+        //arrange
+        UserStory userStory = new UserStory("1", "Product Owner", "This is text", "These are acceptance criteria");
+        String expected = "These are acceptance criteria";
+        //act
+        String result = userStory.getAcceptanceCriteria();
+
+        //assert
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    @DisplayName("ensure user story status is returned")
+    void ensureUserStoryStatusIsReturned(){
+        //arrange
+        UserStory userStory = new UserStory("1", "Product Owner", "This is text", "These are acceptance criteria");
+        UserStory.Status expected = UserStory.Status.TODO;
+
+        //act
+        UserStory.Status result = userStory.getStatus();
+
+        //assert
+        assertEquals(expected, result);
+
+    }
 }

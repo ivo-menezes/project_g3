@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class UserStory {
 
+
     /**
      * Acceptable user story statuses.
      */
@@ -48,6 +49,22 @@ public class UserStory {
 
     public String getId() {
         return id;
+    }
+
+    public String getActor() {
+        return actor;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getAcceptanceCriteria() {
+        return acceptanceCriteria;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override
