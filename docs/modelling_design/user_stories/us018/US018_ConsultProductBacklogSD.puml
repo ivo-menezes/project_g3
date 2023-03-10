@@ -1,0 +1,59 @@
+@startuml
+!theme plain
+hide footbox
+title "US018 - As Product Owner/Scrum Master/Team Member, I want to consult the product backlog, \n i.e. to get the list of user stories sorted by priority."
+
+actor "Product Owner/\n/Scrum Master/\n/Team Member" as user
+participant ": ConsultProductBacklogUI" as UI
+participant ": ConsultProductBacklogController" as Controller
+participant ": ProjectList" as ProjectList
+participant "project : Project" as Project
+participant "productBacklog :\nProductBacklog" as ProductBacklog
+participant ": UserStoryMapper" as Mapper
+participant "lsUserStory :\n List<UserStoryDTO>" as DTOList
+
+
+
+activate user #FFBBBB
+user -> UI: Requests product backlog(projectCode)
+
+activate UI #FFBBBB
+UI-> Controller:getProductBacklog(projectCode)
+
+activate Controller #FFBBBB
+Controller -> ProjectList: project = getProject(projectCode)
+activate ProjectList #FFBBBB
+deactivate ProjectList
+
+Controller -> Project: productBacklog = getProductBacklog()
+activate Project #FFBBBB
+deactivate Project
+
+
+Controller -> ProductBacklog: userStoryList = getUserStoryList()
+activate ProductBacklog #FFBBBB
+deactivate ProductBacklog
+Controller -> Mapper : toDTOList(userStoryList)
+
+activate Mapper #FFBBBB
+Mapper --> DTOList ** : create
+
+loop for each userStory in userStoryList
+Mapper -> Mapper : toDTO(userStory)
+Mapper -> DTOList: add(userStoryDTO)
+activate DTOList #FFBBBB
+deactivate DTOList
+end
+
+Mapper --> Controller : lsUserStory
+deactivate Mapper
+
+
+Controller --> UI: lsUserStory
+deactivate Controller
+
+UI --> user: Displays product backlog
+deactivate UI
+
+
+@enduml
