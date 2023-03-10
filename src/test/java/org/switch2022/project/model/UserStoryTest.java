@@ -185,4 +185,18 @@ class UserStoryTest {
         int anotherUserStoryHashCode = anotherUserStory.hashCode();
         assertNotEquals(userStoryHashCode, anotherUserStoryHashCode);
     }
+    @Test
+    @DisplayName("ensure user story ID is returned")
+    void ensureUserStoryIsReturned() {
+        //arrange
+        UserStory userStory = new UserStory("1", "Team member", "test", "text");
+        String expected = "1";
+
+        //act
+        String result = userStory.getId();
+
+        //assert
+        assertEquals(expected, result);
+    }
+
 }

@@ -46,6 +46,10 @@ public class UserStory {
         this.status = Status.TODO;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
