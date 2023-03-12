@@ -47,10 +47,17 @@ endDate: Date
 sprintBackLog: List<US>
 createScrumBoardList();
 getUSAtIndex(index);
-getID();
-getUsStatus();
 create(id, status);
-addToScrumBoard(usDTO);
+}
+
+class UserStory {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : String
+getID();
+getStatus();
 }
 
 ViewScrumBoardUI "1" o--  "1" ViewScrumBoardController: has
@@ -58,8 +65,10 @@ ViewScrumBoardController "1" o-- "1" ProjectList: has
 ProjectList "1" *-- "*" Project: contains
 Project "1" o-- "1" SprintList: has
 SprintList "1" *-- "*" Sprint: contains
+Sprint "1 " *-- " *  " UserStory : contains
 ViewScrumBoardController ..> Project
 Sprint .right.> usDTO
+usDTO ..> UserStory
 
 
 @enduml
