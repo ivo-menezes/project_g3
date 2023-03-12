@@ -3,70 +3,82 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.configuration.IMockitoConfiguration;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectListTest {
 
     @Test
-    @DisplayName("ensure return the project")
+    @DisplayName("Ensure return the project")
     void ensureGetProject() {
-        Project project = new Project(1, "testOne", "testTwo", new Date(), new Date(), 2, 2, "Planned", 1000);
+        //Arrange
+        Project project = mock(Project.class);
+        Mockito.when(project.getCode()).thenReturn(1);
         ProjectList projectList = new ProjectList();
         projectList.addProject(project);
 
-        //act
+        //Act
         Project result = projectList.getProject(1);
 
-        //assert
+        //Arrange
         assertEquals(project, result);
     }
 
     @Test
-    @DisplayName("ensure return null when doesn't found project")
+    @DisplayName("Ensure return null when doesn't found project")
     void ensureGetProjectNull() {
-        Project project = new Project(1, "testOne", "testTwo", new Date(), new Date(), 2, 2, "Planned", 1000);
+        //Arrange
+        Project project = mock(Project.class);
+        Mockito.when(project.getCode()).thenReturn(1);
         ProjectList projectList = new ProjectList();
         projectList.addProject(project);
 
-        //act
+        //Act
         Project result = projectList.getProject(2);
 
-        //assert
+        //Assert
         assertNull(result);
     }
 
     @Test
-    @DisplayName("ensure the project has been added.")
+    @DisplayName("Ensure the project has been added.")
     void ensureAddProjectTrue() {
-        //arrange
+        //Arrange
+        Project project = mock(Project.class);
+        Mockito.when(project.getCode()).thenReturn(1);
         ProjectList projectList = new ProjectList();
 
-        //act
-        boolean result = projectList.addProject(new Project(1, "test", "test"));
+        //Act
+        boolean result = projectList.addProject(project);
 
-        //
+        //Assert
         assertTrue(result);
     }
 
     @Test
     @DisplayName("Check if the method getProjectByIndex works as intended")
     void testingGetProjectByIndex() {
-
-        Project project = new Project(200,"proj1",new Date(2023, Calendar.JANUARY,10),new Date(2024,Calendar.JANUARY,22),"client1","Planned");
-        Project projectTwo = new Project(201,"proj2",new Date(2003,Calendar.JANUARY,10), new Date(2004,Calendar.JANUARY,20),"client2", "Planned");
-        Project projectThree = new Project(202,"proj3",new Date(2010,Calendar.FEBRUARY,24), new Date(2026,Calendar.FEBRUARY,24),"client3", "Planned");
+        //Arrange
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+        Project projectThree = mock(Project.class);
 
         ProjectList projectList = new ProjectList();
-        projectList.addProject(project);
+        projectList.addProject(projectOne);
         projectList.addProject(projectTwo);
         projectList.addProject(projectThree);
 
+        //Act
         Project result = projectList.getProjectByIndex(1);
 
+        //Assert
         assertEquals(projectTwo, result);
     }
 
