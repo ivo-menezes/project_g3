@@ -1,0 +1,86 @@
+@startuml
+
+class AddUserStoryUI {}
+
+class AddUserStoryController {
+projectList : ProjectList
+addUserStoryFromProductBacklogToSprintBacklog(projectCode, userStoryID, sprintNumber)
+}
+
+class ProjectList {
+projectList : List<Project>
+getProject(projectCode)
+}
+
+class Project {
+code : int
+name : String
+description : String
+customer : String
+startDate : Date
+endDate : Date
+sprintDuration : int
+numberOfPlannedSprints : int
+projectStatus : String
+budget : double
+list : ResourceList
+productBacklog : ProductBacklog
+sprintList : SprintList
+getProductBacklog()
+getSprintList()
+}
+
+class SprintList {
+sprintList : List<Sprint>
+getSprint(sprintNumber)
+}
+
+class Sprint {
+sprintNumber : int
+startDate : Date
+endDate : Date
+sprintBacklog : List<UserStory>
+getSprintNumber()
+existsUserStory()
+addUserStoryToSprintBacklog()
+}
+
+class ProductBacklog {
+userStories: List<UserStory>
+completedUserStories : List<UserStory>
+factoryUserStory : IFactoryUserStory
+getUserStory(UserStoryID)
+
+}
+
+'class FactoryUserStoryImpl {
+'createUserStory(id, actor, text, acceptanceCriteria)
+'}
+
+'interface IFactoryUserStory {
+'createUserStory(id, actor, text, acceptanceCriteria)
+'}
+
+class UserStory {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : String
+getID()
+}
+
+
+AddUserStoryUI "1 " o-- "1 " AddUserStoryController : has
+AddUserStoryController "1 " o-- "1 " ProjectList : has
+ProjectList "      1" *-- "                    *" Project : contains
+Project "1 " o-- "1  " ProductBacklog : has
+Project "1  " o-- "1 " SprintList : has
+ProductBacklog "1  " *-- " * " UserStory : contains
+SprintList "1  " *-- " * " Sprint : contains
+Sprint "1 " *-- " *  " UserStory : contains
+'FactoryUserStoryImpl  ..|> IFactoryUserStory
+'ProductBacklog "1" o-- "1" FactoryUserStoryImpl
+'FactoryUserStoryImpl ..> UserStory : creates
+
+@enduml
