@@ -50,7 +50,7 @@ Sprint -> US: getUsStatus();
 deactivate US
 
 Sprint -> Dto **: create(id, status);
-Sprint -> DTOList: addToScrumBoard(usDTO);
+Sprint -> DTOList: add(usDTO);
 activate DTOList #FFBBBB
 deactivate DTOList
 end
