@@ -5,11 +5,12 @@ import org.switch2022.project.model.*;
 public class CreateSprintController {
 
     private ProjectList projectList;
-    private SprintDTO sprintDTO;
 
-    public CreateSprintController(ProjectList projectList, SprintDTO sprintDTO) {
+    public CreateSprintController(ProjectList projectList) {
+        if (projectList == null) {
+            throw new IllegalArgumentException("SprintDTO must not be null.");
+        }
         this.projectList = projectList;
-        this.sprintDTO = sprintDTO;
     }
 
     /**

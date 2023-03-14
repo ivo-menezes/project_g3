@@ -66,6 +66,7 @@ public class Project {
         this.customer = costumer;
         this.projectStatus = projectStatus;
         this.list = new ResourceList();
+        this.sprintList = new SprintList();
     }
 
     /**
@@ -160,6 +161,6 @@ public class Project {
      * @param sprintDTO
      */
     public boolean addSprint(SprintDTO sprintDTO){
-                return sprintList.createSprint(sprintDTO);
+        return this.sprintList.createSprint(sprintDTO);
     }
 }
