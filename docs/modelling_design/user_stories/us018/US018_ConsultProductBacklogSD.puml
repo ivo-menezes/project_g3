@@ -8,10 +8,10 @@ participant ": ConsultProductBacklogUI" as UI
 participant ": ConsultProductBacklogController" as Controller
 participant ": ProjectList" as ProjectList
 participant "project : Project" as Project
-participant "productBacklog :\nProductBacklog" as ProductBacklog
+participant "productBacklog :\n ProductBacklog" as ProductBacklog
 participant ": UserStoryMapper" as Mapper
 participant "lsUserStory :\n List<UserStoryDTO>" as DTOList
-
+participant "userStoryList :\n List<UserStory>" as USList
 
 
 activate user #FFBBBB
@@ -21,17 +21,19 @@ activate UI #FFBBBB
 UI-> Controller:getProductBacklog(projectCode)
 
 activate Controller #FFBBBB
-Controller -> ProjectList: project = getProject(projectCode)
+Controller -> ProjectList: getProject(projectCode)
 activate ProjectList #FFBBBB
+ProjectList--> Controller: project
 deactivate ProjectList
 
-Controller -> Project: productBacklog = getProductBacklog()
+Controller -> Project: getProductBacklog()
 activate Project #FFBBBB
+Project --> Controller: productBacklog
 deactivate Project
 
-
-Controller -> ProductBacklog: userStoryList = getUserStoryList()
+Controller -> ProductBacklog: getUserStoryList()
 activate ProductBacklog #FFBBBB
+ProductBacklog --> Controller: userStoryList
 deactivate ProductBacklog
 Controller -> Mapper : toDTOList(userStoryList)
 
@@ -44,6 +46,7 @@ Mapper -> DTOList: add(userStoryDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
 end
+
 
 Mapper --> Controller : lsUserStory
 deactivate Mapper
