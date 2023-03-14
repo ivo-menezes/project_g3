@@ -48,6 +48,25 @@ class ConsultProductBacklogControllerTest {
 
     }
 
+    @DisplayName("ensure exception is thrown when userStoryMapper is null")
+    @Test
+    void nullMapperThrowsException(){
+
+        //arrange
+        ProjectList projectList = mock(ProjectList.class);
+        UserStoryMapper userStoryMapper = null;
+        String expectedMessage = "Mapper must not be null";
+
+        //act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            new ConsultProductBacklogController(projectList, userStoryMapper);
+        });
+        String resultMessage = exception.getMessage();
+
+        //assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
     @DisplayName("ensure controller returns list of userStoryDTOs")
     @Test
     void ensureUserStoryDTOListIsReturned() {

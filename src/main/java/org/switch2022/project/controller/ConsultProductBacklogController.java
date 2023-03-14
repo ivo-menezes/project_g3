@@ -17,8 +17,12 @@ public class ConsultProductBacklogController {
      */
     public ConsultProductBacklogController(ProjectList projectList, UserStoryMapper userStoryMapper) {
 
-        if (projectList == null) {
+        if(projectList == null) {
             throw new IllegalArgumentException("Project List must not be null");
+        }
+
+        if(userStoryMapper == null) {
+            throw new IllegalArgumentException("Mapper must not be null");
         }
 
         this.projectList = projectList;
