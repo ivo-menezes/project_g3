@@ -47,4 +47,36 @@ class UserStoryMapperTest {
         assertEquals(expectedDTOList, resultDTOList);
     }
 
+    @DisplayName("successfully create a UserStory from a UserStoryDTO")
+    @Test
+    void fromDTO() {
+        // Arrange
+        String id = "US007";
+        String actor = "Product Owner";
+        String text = "As a Product Owner, I want to communicate telepathically with the application.";
+        String accept = "We don't do that here.";
+
+        // mocked DTO with attributes
+        UserStoryDTO dto = mock(UserStoryDTO.class);
+        dto.id = id;
+        dto.actor = actor;
+        dto.text = text;
+        dto.acceptanceCriteria = accept;
+
+        // mocked UserStory and factory
+        UserStory userStoryDouble = mock(UserStory.class);
+        IFactoryUserStory factoryDouble = mock(IFactoryUserStory.class);
+        // mocked factory will return mocked user story only if dto attributes above are used
+        when(factoryDouble.createUserStory(id, actor, text, accept)).thenReturn(userStoryDouble);
+
+        // a real mapper
+        UserStoryMapper mapper = new UserStoryMapper();
+
+        // Act
+        UserStory result = mapper.fromDTO(dto, factoryDouble);
+
+        // Assert
+        // if fromDTO() is working, the mocked user story had to be returned
+        assertEquals(userStoryDouble, result);
+    }
 }

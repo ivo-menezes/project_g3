@@ -11,12 +11,14 @@ public class ProductBacklog {
     private final List<UserStory> completedUserStories = new ArrayList<>();
 
     private final IFactoryUserStory factoryUserStory;
+    private final UserStoryMapper mapper;
 
     public ProductBacklog(IFactoryUserStory factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
         this.factoryUserStory = factory;
+        this.mapper = new UserStoryMapper();
     }
 
     /**
@@ -85,12 +87,7 @@ public class ProductBacklog {
      */
     private UserStory createUserStoryFromDTO(UserStoryDTO userStoryDTO) {
 
-        UserStory userStory = factoryUserStory.createUserStory(userStoryDTO.id,
-                userStoryDTO.actor,
-                userStoryDTO.text,
-                userStoryDTO.acceptanceCriteria);
-
-        return userStory;
+        return this.mapper.fromDTO(userStoryDTO, this.factoryUserStory);
     }
 
     /**

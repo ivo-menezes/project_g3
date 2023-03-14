@@ -40,4 +40,19 @@ public class UserStoryMapper {
 
     }
 
+    /**
+     * Creates a User Story from a UserStoryDTO.
+     *
+     * @param dto containing user story data
+     * @param factory that creates UserStory objects
+     * @return a new instance of UserStory with the appropriate data
+     */
+    public UserStory fromDTO(UserStoryDTO dto, IFactoryUserStory factory) {
+
+        return factory.createUserStory(dto.id,
+                dto.actor,
+                dto.text,
+                dto.acceptanceCriteria);
+    }
+
 }
