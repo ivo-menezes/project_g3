@@ -1,10 +1,7 @@
 package org.switch2022.project.model;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Sprint {
     private int sprintNumber;
@@ -72,5 +69,37 @@ public class Sprint {
     }
     public int getSprintNumber() {
         return this.sprintNumber;
+    }
+
+    /***
+     * The method will create a list of UserStoryDTOs, where the only data required will be the US ID and respective status.
+     * @return a list, containing the UserStoryDTOs in the SprintBacklog belonging to the current sprint.
+     */
+    public List<UserStoryDTO> createScrumBoardList(){
+        List<UserStoryDTO> scrumBoard = new ArrayList<>();
+
+        for(int index = 0; index < this.sprintBacklog.size(); index++){
+            UserStory userStoryAtIndex = getUSAtIndex(index);
+            String iD = userStoryAtIndex.getId();
+            UserStory.Status status = userStoryAtIndex.getStatus();
+            scrumBoard.add(create(iD, status));
+        }
+        return scrumBoard;
+    }
+
+    /***
+     *Getting the US at the indicated index for the Scrum Board List
+     * @param index
+     * @return US
+     */
+    private UserStory getUSAtIndex(int index){
+        UserStory userStoryAtIndex =this.sprintBacklog.get(index);
+        return userStoryAtIndex;
+    }
+    private UserStoryDTO create (String iD, UserStory.Status status){
+        UserStoryDTO usDTO = new UserStoryDTO();
+        usDTO.id = iD;
+        usDTO.status = status;
+        return usDTO;
     }
 }

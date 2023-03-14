@@ -4,11 +4,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SprintTest {
 
@@ -107,5 +111,52 @@ class SprintTest {
             sprint.addUserStoryToSprintBacklog(userStory);
         });
     }
+    @Test
+    @DisplayName("ensure the creation and addition of USDTO to Scrum Board list")
+    void createAndAddUsDTOToScrumBoardList() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
+        Sprint sprint = new Sprint(1, formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
+
+        UserStory userStory = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        sprint.addUserStoryToSprintBacklog(userStory);
+        sprint.addUserStoryToSprintBacklog(userStoryTwo);
+
+        List result = sprint.createScrumBoardList();
+
+        assertNotNull(result);
+    }
+    @Test
+    @DisplayName("ensure the Scrum Board list isn't empty")
+    void testingTheScrumBoardListIsNotEmpty() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Sprint sprint = new Sprint(1, formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
+
+        UserStory userStory = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        sprint.addUserStoryToSprintBacklog(userStory);
+        sprint.addUserStoryToSprintBacklog(userStoryTwo);
+
+        List result = sprint.createScrumBoardList();
+
+        assertFalse(result.isEmpty());
+    }
+    @Test
+    @DisplayName("ensure the USDTO isn't null")
+    void testingTheCreationOfUSDTO() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Sprint sprint = new Sprint(1, formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
+        UserStory userStory = mock(UserStory.class);
+
+        sprint.addUserStoryToSprintBacklog(userStory);
+        List result = sprint.createScrumBoardList();
+        UserStoryDTO userStoryDTO = (UserStoryDTO) result.get(0);
+
+        assertNotNull(userStoryDTO);
+    }
 }
