@@ -1,0 +1,62 @@
+@startuml
+
+class EstimateEffortUI {
+}
+
+class EstimateEffortController {
+projectList: ProjectList
+estimateEffortUserStory (int projectCode, \nint sprintNumber, String idUserStory, double effort)
+}
+
+class ProjectList {
+projectList: List<Project>
+getProject(projectCode)
+}
+
+class Project {
+code: int
+name: String
+description: String
+startDate: Date
+endDate: Date
+customer: String
+sprintDuration: int
+numberOfPlannedSprints: int
+projectStatus: String
+budget: double
+resourceList: ResourceList
+sprintList: SprintList
+getSprintList();
+}
+
+class SprintList {
+sprintList: List<Sprint>
+getSprint(sprintNumber)
+}
+
+class Sprint {
+sprintNumber: int
+startDate: Date
+endDate: Date
+sprintBackLog: List<US>
+estimateEffortUserStory (userStoryID, effort)
+}
+
+class UserStory {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : String
+getID()
+}
+
+EstimateEffortUI "1" o--  "1" EstimateEffortController: has
+EstimateEffortController "1" o-- "1" ProjectList: has
+ProjectList "1" *-- "*" Project: contains
+Project "1" o-- "1" SprintList: has
+SprintList "1" *-- "*" Sprint: contains
+Sprint "1 " *-- " *  " UserStory : contains
+EstimateEffortController ..> Project
+
+@enduml
