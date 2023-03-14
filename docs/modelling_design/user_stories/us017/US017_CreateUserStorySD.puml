@@ -10,7 +10,8 @@ participant ": CreateUserStoryController" as Controller
 participant ": ProjectList" as ProjectList
 participant "project : Project" as Project
 participant "productBacklog : ProductBacklog" as ProductBacklog
-participant ": FactoryUserStoryImpl" as Factory
+participant ": UserStoryMapper" as Mapper
+participant "factoryUserStory: FactoryUserStoryImpl" as Factory
 participant "userStory : UserStory" as UserStory
 
 
@@ -22,25 +23,33 @@ UI --> dto ** : create(userStoryId, actor, \ntext, acceptanceCriteria)
 UI -> Controller: createUserStory(projectCode, \nuserStoryDTO, priority)
 
 activate Controller #FFBBBB
-Controller -> ProjectList: project = getProject(projectCode)
+Controller -> ProjectList: getProject(projectCode)
 
 activate ProjectList #FFBBBB
+ProjectList --> Controller: project
 deactivate
 
-Controller -> Project : productBacklog = getProductBacklog()
+Controller -> Project : getProductBacklog()
 
 activate Project #FFBBBB
+Project --> Controller: productBacklog
 deactivate
 
 Controller -> ProductBacklog : createAndAddUserStory(userStoryDTO, priority)
 
 activate ProductBacklog #FFBBBB
-ProductBacklog -> ProductBacklog : createUserStoryFromDTO(userStoryDTO)
-ProductBacklog -> Factory : userStory = createUserStory(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
+ProductBacklog -> Mapper : fromDTO(userStoryDTO, factoryUserStory)
+
+activate Mapper #FFBBBB
+Mapper -> Factory : createUserStory(\nuserStoryDTO.userStoryId,\nuserStoryDTO.actor,\nuserStoryDTO.text,\nuserStoryDTO.acceptanceCriteria)
 
 activate Factory #FFBBBB
-Factory --> UserStory ** : create(userStoryDTO.userStoryId,\n userStoryDTO.actor,\n userStoryDTO.text,\n userStoryDTO.acceptanceCriteria)
+Factory --> UserStory ** : create(\nuserStoryDTO.userStoryId,\nuserStoryDTO.actor,\nuserStoryDTO.text,\nuserStoryDTO.acceptanceCriteria)
+Factory --> Mapper : userStory
 deactivate Factory
+
+Mapper --> ProductBacklog: userStory
+deactivate Mapper
 
 ProductBacklog -> ProductBacklog : doesNotContain(userStory)
 ProductBacklog -> ProductBacklog : add(userStory, priority)
@@ -52,6 +61,5 @@ Controller --> UI : true
 deactivate
 
 UI --> user : Confirms US creation and addition to Product Backlog
-
 
 @enduml
