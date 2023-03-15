@@ -575,9 +575,10 @@ class ProjectTest {
         sprintDTOTwo.startDate = new Date(1 / 2 / 2023);
         sprintDTOTwo.endDate = new Date(31 / 2 / 2023);
         //act
-        boolean result = project.addSprint(sprintDTO);
+        project.addSprint(sprintDTO);
+        boolean result = project.addSprint(sprintDTOTwo);
         //assert
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
