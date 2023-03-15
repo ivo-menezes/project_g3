@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.switch2022</groupId>
     <artifactId>switch2022project-g3</artifactId>
     <name>switch-2022 switch-2022-g3</name>
-    <version>1.0-SNAPSHOT</version>
-
-    <!--
-    In this file, DO NOT EDIT any of following elements
-    -->
+    <version>1.0-SNAPSHOT</version>    <!--    In this file, DO NOT EDIT any of following elements    -->
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -25,33 +18,31 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
             <version>4.9.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>4.9.0</version>
+        </dependency>        <!-- Students can only add new dependencies to this section -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
         </dependency>
-
-        <!-- Students can only add new dependencies to this section -->
-
     </dependencies>
-
     <build>
-        <plugins>
-            <!-- Required for compiling the project usign maven -->
+        <plugins>            <!-- Required for compiling the project using maven -->
             <plugin><!-- Compiler configuration-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -59,20 +50,15 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-
-                    <showWarnings>false</showWarnings>   <!-- Needs this -->
-
-                    <compilerArgs>
-
-                    </compilerArgs>
-
+                    <showWarnings>false</showWarnings>
+                    <!-- Needs this -->
+                    <compilerArgs></compilerArgs>
                     <encoding>${project.build.sourceEncoding}</encoding>
-
                 </configuration>
             </plugin>
-
             <!-- Required for running unit tests -->
             <plugin>
+                <!-- <groupId>org.apache.maven.plugins</groupId> -->
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
@@ -85,7 +71,6 @@
                     </properties>
                 </configuration>
             </plugin>
-
             <!-- Required for generating coverage report -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -110,9 +95,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Required for generating PIT Mutation reports -->
+            </plugin>            <!-- Required for generating PIT Mutation reports -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -139,7 +122,6 @@
                         <outputFormat>XML</outputFormat>
                         <outputFormat>HTML</outputFormat>
                     </outputFormats>
-
                 </configuration>
             </plugin>
         </plugins>

@@ -8,7 +8,7 @@ public class CreateSprintController {
 
     public CreateSprintController(ProjectList projectList) {
         if (projectList == null) {
-            throw new IllegalArgumentException("SprintDTO must not be null.");
+            throw new IllegalArgumentException("projectList must not be null.");
         }
         this.projectList = projectList;
     }
