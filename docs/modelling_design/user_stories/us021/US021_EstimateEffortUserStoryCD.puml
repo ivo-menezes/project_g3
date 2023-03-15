@@ -39,7 +39,8 @@ sprintNumber: int
 startDate: Date
 endDate: Date
 sprintBackLog: List<US>
-estimateEffortUserStory (userStoryID, effort)
+validEffortEstimate(effort)
+estimateEffortForUserStory (userStoryID, effort)
 }
 
 class UserStory {
