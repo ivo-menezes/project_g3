@@ -21,6 +21,7 @@ activate Controller #FFBBBB
 
 Controller -> ProjectList: getProject(projectCode);
 activate ProjectList #FFBBBB
+ProjectList --> Controller: project
 deactivate ProjectList
 Controller -> Project: createSprint(sprintDTO);
 activate Project #FFBBBB
@@ -32,13 +33,13 @@ SprintList -> Sprint **: create(sprintDTO);
 SprintList -> SprintList: hasSprint(sprint);
 SprintList -> SprintList: add(sprint);
 
-SprintList --> Project: Confirms new sprint
+SprintList --> Project: true
 deactivate SprintList
 
-Project --> Controller: Confirms created Sprint
+Project --> Controller: true
 deactivate Project
 
-Controller --> UI : Confirms created Sprint
+Controller --> UI : true
 deactivate Controller
 
 UI --> User: Confirms created Sprint
