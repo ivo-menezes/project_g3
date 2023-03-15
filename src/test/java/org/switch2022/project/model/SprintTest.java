@@ -3,6 +3,10 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
+import org.switch2022.project.controller.ListUserProjectsController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +16,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class SprintTest {
 
@@ -158,5 +161,85 @@ class SprintTest {
         UserStoryDTO userStoryDTO = (UserStoryDTO) result.get(0);
 
         assertNotNull(userStoryDTO);
+    }
+    @Test
+    @DisplayName("Ensure that effort value is not valid")
+    void effortValueIsNotValid() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
+        double effort = 7.0;
+
+        //Act
+        boolean result = sprint.validEffortEstimate(effort);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, 0.5, 1.0, 2.0, 3.0, 5.0, 8.0, 13.0, 20.0, 40.0})
+    @DisplayName("Ensure that effort value is valid")
+    void effortValueIsValidPT(double effort) {
+        Sprint sprint = new Sprint(10, new Date(07-03-2023), new Date(15-03-2023));
+        assertTrue(sprint.validEffortEstimate(effort));
+    }
+
+    @Test
+    @DisplayName("Ensure that effort value of an user story is estimated")
+    void effortValueOfAnUserStoryIsEstimated() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprint.addUserStoryToSprintBacklog(userStoryDouble);
+        Mockito.when(userStoryDouble.getId()).thenReturn("1");
+
+        //Act
+        boolean result = sprint.estimateEffortForUserStory("1", 2.0);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure that effort value of an user story is not estimated if user story does not exist")
+    void effortValueOfAnUserStoryIsNotEstimatedIfUserStoryDoesNotExist() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprint.addUserStoryToSprintBacklog(userStoryDouble);
+        Mockito.when(userStoryDouble.getId()).thenReturn("1");
+
+        //Act
+        boolean result = sprint.estimateEffortForUserStory("2", 2.0);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure that effort value of an user story is not estimated when userStoryId is null")
+    void effortValueOfAnUserStoryIsNotEstimatedWhenUserStoryIdIsNull() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprint.addUserStoryToSprintBacklog(userStoryDouble);
+        Mockito.when(userStoryDouble.getId()).thenReturn("1");
+        String userStoryId = null;
+
+        //Act & Assert
+        assertThrows(NullPointerException.class, () -> {sprint.estimateEffortForUserStory(userStoryId, 2.0);} );
+    }
+
+    @Test
+    @DisplayName("Ensure that effort value of an user story is not estimated when effort is null")
+    void effortValueOfAnUserStoryIsNotEstimatedWhenEffortIsNull() {
+        //Arrange
+        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprint.addUserStoryToSprintBacklog(userStoryDouble);
+        Mockito.when(userStoryDouble.getId()).thenReturn("1");
+
+        //Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {sprint.estimateEffortForUserStory("1", 2.8);} );
     }
 }

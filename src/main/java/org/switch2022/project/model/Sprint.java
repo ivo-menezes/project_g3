@@ -9,6 +9,8 @@ public class Sprint {
     private Date endDate;
     private List <UserStory> sprintBacklog = new ArrayList<>();
 
+    private Map<String, Double> effortEstimates = new HashMap<>();
+
     public Sprint(int sprintNumber, Date startDate, Date endDate){
         if(sprintNumber <= 0 || startDate == null || endDate == null){
             throw new IllegalArgumentException("Missing value, please try again.");
@@ -101,5 +103,42 @@ public class Sprint {
         usDTO.id = iD;
         usDTO.status = status;
         return usDTO;
+    }
+
+    /**
+     * Check if the effort value are in the Fibonacci sequence.
+     * @param effort
+     * @return true if effort value are in the Fibonacci sequence.
+     */
+    public boolean validEffortEstimate (double effort) {
+
+        List<Double> validateEffortValues = new ArrayList<>(Arrays.asList(0.0, 0.5, 1.0, 2.0, 3.0, 5.0, 8.0, 13.0, 20.0, 40.0));
+        return validateEffortValues.contains(effort);
+    }
+
+    /**
+     * Estimate effort of a user story in a sprint.
+     * @param userStoryID
+     * @param effort
+     * @return a HasMap with a user story id and respective effort value.
+     */
+    public boolean estimateEffortForUserStory (String userStoryID, double effort) {
+        boolean effortSaved = false;
+
+        if (userStoryID == null) {
+            throw new NullPointerException ("User story cannot be null");
+        }
+
+        if(!validEffortEstimate(effort)) {
+            throw new IllegalArgumentException ("This effort value is invalid");
+        }
+
+        for (UserStory userStory : sprintBacklog){
+            if (userStory.getId() == userStoryID) {
+                this.effortEstimates.put(userStoryID,effort);
+                effortSaved = true;
+            }
+        }
+        return effortSaved;
     }
 }
