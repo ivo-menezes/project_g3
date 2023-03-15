@@ -23,7 +23,7 @@ As Product Owner, I want to create a user story and add it to the Product Backlo
 
 - *Question:* When creating a US, is its number given automatically? When creating a US, are there criteria to ensure it is not repeated?
 
-- *Answer:*The US ID is given by the author. It is not automatic. Obviously, there can't be two US with the same ID. This includes concluded US. Note that for example US03 and US03v2 are not the same.
+- *Answer:* The US ID is given by the author. It is not automatic. Obviously, there can't be two US with the same ID. This includes concluded US. Note that for example US03 and US03v2 are not the same.
 
 ### **1.3 – Acceptance criteria**
 
@@ -39,7 +39,8 @@ As Product Owner, I want to create a user story and add it to the Product Backlo
 **Input Data:**
 
 - Project code
-- US ID, Actor, Text and Acceptance Criteria
+- User Story ID, Actor, Text and Acceptance Criteria
+- User Story priority, i.e. position that it will take in the list
 
 **Output data:**
 - User Story successfully created and added to Product Backlog.
