@@ -1,7 +1,5 @@
 @startuml
 
-class CreateUserStoryUI {}
-
 class CreateUserStoryController {
 projectList : ProjectList
 createUserStory(projectCode, userStoryDTO, priority)
@@ -26,6 +24,7 @@ class ProductBacklog {
 userStories: List<UserStory>
 completedUserStories : List<UserStory>
 factoryUserStory : IFactoryUserStory
+mapper : UserStoryMapper
 createUserStoryFromDTO(userStoryDTO)
 createAndAddUserStory(userStoryDTO, priority)
 doesNotContain(userStory)
@@ -48,6 +47,10 @@ acceptanceCriteria : String
 status : String
 }
 
+class UserStoryMapper {
+fromDTO(UserStoryDTO)
+}
+
 class UserStoryDTO {
 id : String
 actor : String
@@ -55,15 +58,18 @@ text : String
 acceptanceCriteria : String
 }
 
-CreateUserStoryUI "1" o-- "1" CreateUserStoryController : has
-CreateUserStoryController "1" o-- "1" ProjectList : has
+CreateUserStoryController "1" o-- "1" ProjectList
 CreateUserStoryController ..> UserStoryDTO
+CreateUserStoryController ..> Project
+CreateUserStoryController ..> ProductBacklog
 ProductBacklog ..> UserStoryDTO
-ProjectList "      1" *-- "                    *" Project : contains
-Project "1" o-- "1" ProductBacklog : has
-ProductBacklog "1" *-- "*" UserStory : contains
+ProjectList "      1" *-- "                    *" Project
+Project "1" o-- "1" ProductBacklog
+ProductBacklog "1" *-- "*" UserStory
+ProductBacklog "1" o-- "1" UserStoryMapper
+UserStoryMapper ..> UserStoryDTO
 FactoryUserStoryImpl  ..|> IFactoryUserStory
 ProductBacklog "1" o-- "1" FactoryUserStoryImpl
-FactoryUserStoryImpl ..> UserStory : creates
+FactoryUserStoryImpl ..> UserStory
 
 @enduml
