@@ -6,10 +6,10 @@ actor "User" as User
 participant ": EstimateEffortUI" as UI
 participant ": EstimateEffortController" as Controller
 participant ": ProjectList" as PL
-participant ": Project" as P
-participant ": SprintList" as SL
-participant ": Sprint" as S
-participant ": SprintBacklog" as SB
+participant "project : Project" as P
+participant "sprintList : SprintList" as SL
+participant "sprint : Sprint" as S
+participant "userStory : UserStory" as US
 
 User ->  UI: Estimate effort of a User Story (projectCode, sprintNumber, userStoryId, effortEstimateValue)
 activate User #FFBBBB
@@ -28,15 +28,17 @@ Controller -> SL: getSprint(sprintNumber)
 activate SL #FFBBBB
 SL --> Controller: sprint
 deactivate SL
-Controller -> S: getSprintBacklog()
+Controller -> S: estimateEffortOfUserStory(userStoryId, effortEstimateValue)
 activate S #FFBBBB
-S --> Controller: sprintBacklog
+S -> S: validEffortEstimate(effort)
+S -> US: getId()
+activate US #FFBBBB
+US --> S: userStoryId
+deactivate US
+S -> S: put(userStoryId, effort)
+S --> Controller: true
 deactivate S
-Controller -> SB: estimateEffortOfUserStory(userStoryId, effortEstimateValue)
-activate SB #FFBBBB
-SB --> Controller: user story effort estimated
-deactivate SB
-Controller --> UI: user story effort estimated
+Controller --> UI: true
 deactivate Controller
 UI --> User: user story effort estimated
 deactivate UI
