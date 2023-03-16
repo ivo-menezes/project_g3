@@ -1,7 +1,5 @@
 @startuml
 
-class EstimateEffortUI {
-}
 
 class EstimateEffortController {
 projectList: ProjectList
@@ -26,7 +24,15 @@ projectStatus: String
 budget: double
 resourceList: ResourceList
 sprintList: SprintList
-getSprintList();
+getProductBacklog()
+getSprintList()
+}
+
+class ProductBacklog {
+userStories: List<UserStory>
+completedUserStories : List<UserStory>
+factoryUserStory : IFactoryUserStory
+getUserStory(UserStoryID)
 }
 
 class SprintList {
@@ -39,6 +45,7 @@ sprintNumber: int
 startDate: Date
 endDate: Date
 sprintBackLog: List<US>
+existsUserStory (userStory)
 validEffortEstimate(effort)
 estimateEffortForUserStory (userStoryID, effort)
 }
@@ -52,12 +59,12 @@ status : String
 getID()
 }
 
-EstimateEffortUI "1" o--  "1" EstimateEffortController: has
-EstimateEffortController "1" o-- "1" ProjectList: has
-ProjectList "1" *-- "*" Project: contains
-Project "1" o-- "1" SprintList: has
-SprintList "1" *-- "*" Sprint: contains
-Sprint "1 " *-- " *  " UserStory : contains
-EstimateEffortController ..> Project
+EstimateEffortController "      1" o-- "      1" ProjectList
+ProjectList "       1" *-- "                     *" Project
+Project "                             1 " o-- "1  " ProductBacklog
+ProductBacklog "1  " *-- "                                              * " UserStory
+Project "1" o-- "                       1" SprintList
+SprintList "              1" *-- "                                *" Sprint
+Sprint "                                            1 "*-- " *  " UserStory
 
 @enduml
