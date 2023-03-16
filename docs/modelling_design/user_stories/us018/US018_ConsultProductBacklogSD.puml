@@ -1,5 +1,6 @@
 @startuml
 !theme plain
+autonumber
 hide footbox
 title "US018 - As Product Owner/Scrum Master/Team Member, I want to consult the product backlog, \n i.e. to get the list of user stories sorted by priority."
 
