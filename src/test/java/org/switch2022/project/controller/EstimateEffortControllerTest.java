@@ -25,7 +25,6 @@ class EstimateEffortControllerTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-
     @DisplayName("estimating the effort of an user story succeeds")
     @Test
     void estimateEffortUserStorySucceeds(){
@@ -43,11 +42,6 @@ class EstimateEffortControllerTest {
         when(userStoryDouble1.getId()).thenReturn("US001");
         when(userStoryDouble2.getId()).thenReturn("US002");
         when(sprintDouble.estimateEffortForUserStory("US002", 3.0)).thenReturn(true);
-
-        projectListDouble.addProject(projectDouble);
-        sprintListDouble.add(sprintDouble);
-        sprintDouble.addUserStoryToSprintBacklog(userStoryDouble1);
-        sprintDouble.addUserStoryToSprintBacklog(userStoryDouble2);
 
         // create a new (real) controller
         EstimateEffortController controller = new EstimateEffortController(projectListDouble);
@@ -76,11 +70,6 @@ class EstimateEffortControllerTest {
         when(userStoryDouble1.getId()).thenReturn("US001");
         when(userStoryDouble2.getId()).thenReturn("US002");
         when(sprintDouble.estimateEffortForUserStory("US003", 3.0)).thenReturn(false);
-
-        projectListDouble.addProject(projectDouble);
-        sprintListDouble.add(sprintDouble);
-        sprintDouble.addUserStoryToSprintBacklog(userStoryDouble1);
-        sprintDouble.addUserStoryToSprintBacklog(userStoryDouble2);
 
         // create a new (real) controller
         EstimateEffortController controller = new EstimateEffortController(projectListDouble);
