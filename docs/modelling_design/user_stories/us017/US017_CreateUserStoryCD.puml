@@ -44,7 +44,7 @@ id : String
 actor : String
 text : String
 acceptanceCriteria : String
-status : String
+status : Status
 }
 
 class UserStoryMapper {
@@ -68,8 +68,10 @@ Project "1" o-- "1" ProductBacklog
 ProductBacklog "1" *-- "*" UserStory
 ProductBacklog "1" o-- "1" UserStoryMapper
 UserStoryMapper ..> UserStoryDTO
-FactoryUserStoryImpl  ..|> IFactoryUserStory
-ProductBacklog "1" o-- "1" FactoryUserStoryImpl
+UserStoryDTO ..> UserStory
+UserStoryMapper ..> UserStory
+FactoryUserStoryImpl -up..|> IFactoryUserStory
+ProductBacklog "1" o-- "1" IFactoryUserStory
 FactoryUserStoryImpl ..> UserStory
 
 @enduml
