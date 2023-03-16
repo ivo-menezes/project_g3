@@ -1,6 +1,6 @@
 package org.switch2022.project.model;
 
-public class UserStoryAssembler {
+public class UserStoryScrumBoardMapper {
 
     public UserStoryDTO toDTO(UserStory userStory) {
         UserStoryDTO userStoryDTO = new UserStoryDTO();
