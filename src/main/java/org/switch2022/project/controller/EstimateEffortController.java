@@ -14,9 +14,10 @@ public class EstimateEffortController {
 
     public boolean estimateEffortUserStory (int projectCode, int sprintNumber, String userStoryID, double effort) {
         Project project = projectList.getProject(projectCode);
+        ProductBacklog productBacklog = project.getProductBacklog();
+        UserStory userStory = productBacklog.getUserStory(userStoryID);
         SprintList sprintList = project.getSprintList();
         Sprint sprint = sprintList.getSprint(sprintNumber);
 
-        return sprint.estimateEffortForUserStory(userStoryID, effort);
-    }
+        return sprint.estimateEffortForUserStory(userStory, effort);}
 }

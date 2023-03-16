@@ -31,23 +31,23 @@ class EstimateEffortControllerTest {
         // Arrange
         ProjectList projectListDouble = mock(ProjectList.class);
         Project projectDouble = mock(Project.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        UserStory userStoryDouble1 = mock(UserStory.class);
         SprintList sprintListDouble = mock(SprintList.class);
         Sprint sprintDouble = mock(Sprint.class);
-        UserStory userStoryDouble1 = mock(UserStory.class);
-        UserStory userStoryDouble2 = mock(UserStory.class);
 
         when(projectListDouble.getProject(1)).thenReturn(projectDouble);
+        when(projectDouble.getProductBacklog()).thenReturn(productBacklogDouble);
+        when(productBacklogDouble.getUserStory("US001")).thenReturn(userStoryDouble1);
         when(projectDouble.getSprintList()). thenReturn(sprintListDouble);
         when(sprintListDouble.getSprint(1)). thenReturn(sprintDouble);
-        when(userStoryDouble1.getId()).thenReturn("US001");
-        when(userStoryDouble2.getId()).thenReturn("US002");
-        when(sprintDouble.estimateEffortForUserStory("US002", 3.0)).thenReturn(true);
+        when(sprintDouble.estimateEffortForUserStory(userStoryDouble1, 3.0)).thenReturn(true);
 
         // create a new (real) controller
         EstimateEffortController controller = new EstimateEffortController(projectListDouble);
 
         // Act
-        boolean result = controller.estimateEffortUserStory(1, 1, "US002", 3.0);
+        boolean result = controller.estimateEffortUserStory(1, 1, "US001", 3.0);
 
         // Assert
         assertTrue(result);
@@ -59,23 +59,23 @@ class EstimateEffortControllerTest {
         // Arrange
         ProjectList projectListDouble = mock(ProjectList.class);
         Project projectDouble = mock(Project.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        UserStory userStoryDouble1 = mock(UserStory.class);
         SprintList sprintListDouble = mock(SprintList.class);
         Sprint sprintDouble = mock(Sprint.class);
-        UserStory userStoryDouble1 = mock(UserStory.class);
-        UserStory userStoryDouble2 = mock(UserStory.class);
 
         when(projectListDouble.getProject(1)).thenReturn(projectDouble);
+        when(projectDouble.getProductBacklog()).thenReturn(productBacklogDouble);
+        when(productBacklogDouble.getUserStory("US001")).thenReturn(userStoryDouble1);
         when(projectDouble.getSprintList()). thenReturn(sprintListDouble);
         when(sprintListDouble.getSprint(1)). thenReturn(sprintDouble);
-        when(userStoryDouble1.getId()).thenReturn("US001");
-        when(userStoryDouble2.getId()).thenReturn("US002");
-        when(sprintDouble.estimateEffortForUserStory("US003", 3.0)).thenReturn(false);
+        when(sprintDouble.estimateEffortForUserStory(userStoryDouble1, 3.0)).thenReturn(true);
 
         // create a new (real) controller
         EstimateEffortController controller = new EstimateEffortController(projectListDouble);
 
         // Act
-        boolean result = controller.estimateEffortUserStory(1, 1, "US003", 3.0);
+        boolean result = controller.estimateEffortUserStory(1, 1, "US002", 3.0);
 
         // Assert
         assertFalse(result);

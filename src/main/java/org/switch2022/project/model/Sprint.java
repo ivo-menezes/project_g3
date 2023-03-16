@@ -89,7 +89,7 @@ public class Sprint {
 
     /**
      * Check if the effort value are in the Fibonacci sequence.
-     * @param effort
+     * @param effort of user story in a sprint
      * @return true if effort value are in the Fibonacci sequence.
      */
     public boolean validEffortEstimate (double effort) {
@@ -100,27 +100,19 @@ public class Sprint {
 
     /**
      * Estimate effort of a user story in a sprint.
-     * @param userStoryID
-     * @param effort
-     * @return a HasMap with a user story id and respective effort value.
+     *  @param userStory
+     *  @param effort of user story in a sprint
+     *  @return a HasMap with a user story id and respective effort value.
      */
-    public boolean estimateEffortForUserStory (String userStoryID, double effort) {
+    public boolean estimateEffortForUserStory ( UserStory userStory, double effort) {
         boolean effortSaved = false;
-
-        if (userStoryID == null) {
-            throw new NullPointerException ("User story cannot be null");
+        if (!validEffortEstimate(effort)) {
+            throw new IllegalArgumentException("This effort value is invalid");
+        }
+        if (existsUserStory(userStory)) {
+            this.effortEstimates.put(userStory.getId(), effort);
+            effortSaved = true;
         }
 
-        if(!validEffortEstimate(effort)) {
-            throw new IllegalArgumentException ("This effort value is invalid");
-        }
-
-        for (UserStory userStory : sprintBacklog){
-            if (userStory.getId() == userStoryID) {
-                this.effortEstimates.put(userStoryID,effort);
-                effortSaved = true;
-            }
-        }
-        return effortSaved;
-    }
+        return effortSaved;}
 }

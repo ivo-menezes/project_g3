@@ -193,7 +193,7 @@ class SprintTest {
         Mockito.when(userStoryDouble.getId()).thenReturn("1");
 
         //Act
-        boolean result = sprint.estimateEffortForUserStory("1", 2.0);
+        boolean result = sprint.estimateEffortForUserStory(userStoryDouble, 2.0);
 
         //Assert
         assertTrue(result);
@@ -205,28 +205,12 @@ class SprintTest {
         //Arrange
         Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
         UserStory userStoryDouble = mock(UserStory.class);
-        sprint.addUserStoryToSprintBacklog(userStoryDouble);
-        Mockito.when(userStoryDouble.getId()).thenReturn("1");
 
         //Act
-        boolean result = sprint.estimateEffortForUserStory("2", 2.0);
+        boolean result = sprint.estimateEffortForUserStory(userStoryDouble, 2.0);
 
         //Assert
         assertFalse(result);
-    }
-
-    @Test
-    @DisplayName("Ensure that effort value of an user story is not estimated when userStoryId is null")
-    void effortValueOfAnUserStoryIsNotEstimatedWhenUserStoryIdIsNull() {
-        //Arrange
-        Sprint sprint = new Sprint(10, new Date(07 - 03 - 2023), new Date(15 - 03 - 2023));
-        UserStory userStoryDouble = mock(UserStory.class);
-        sprint.addUserStoryToSprintBacklog(userStoryDouble);
-        Mockito.when(userStoryDouble.getId()).thenReturn("1");
-        String userStoryId = null;
-
-        //Act & Assert
-        assertThrows(NullPointerException.class, () -> {sprint.estimateEffortForUserStory(userStoryId, 2.0);} );
     }
 
     @Test
@@ -239,6 +223,6 @@ class SprintTest {
         Mockito.when(userStoryDouble.getId()).thenReturn("1");
 
         //Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> {sprint.estimateEffortForUserStory("1", 2.8);} );
+        assertThrows(IllegalArgumentException.class, () -> {sprint.estimateEffortForUserStory(userStoryDouble, 2.8);} );
     }
 }
