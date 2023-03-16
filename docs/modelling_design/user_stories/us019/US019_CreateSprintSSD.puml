@@ -3,5 +3,5 @@
 "Project Manager" -> System: Requests creation of a sprint\n(projectCode, sprintNumber, startDate, endDate)
 '"Project Manager" <-- System: Authorization granted
 '"Project Manager"  -> System: Add user stories to be part of the sprint
-"Project Manager"  <-- System: Sprint created with success
+"Project Manager"  <-- System: Confirms created Sprint
 @enduml
