@@ -25,11 +25,11 @@ class ViewScrumBoardControllerTest {
         when(project.getSprintList()).thenReturn(sprintList);
         when(sprintList.getSprint(1)).thenReturn(sprint);
         List<UserStoryDTO> userStories = new ArrayList<>();
-        when(sprint.createScrumBoardList()).thenReturn(userStories);
+        when(sprint.viewScrumBoardList()).thenReturn(userStories);
+        ViewScrumBoardController controller = new ViewScrumBoardController(projectList);
 
         //act
-        ViewScrumBoardController controller = new ViewScrumBoardController(projectList);
-        List<UserStoryDTO> result = controller.showScrumBoard(1, 1);
+        List<UserStoryDTO> result = controller.viewScrumBoard(1, 1);
 
         //assert
         assertEquals(userStories, result);
@@ -49,12 +49,12 @@ class ViewScrumBoardControllerTest {
         when(projectList.getProject(1)).thenReturn(project);
         when(project.getSprintList()).thenReturn(sprintList);
         when(sprintList.getSprint(1)).thenReturn(sprint);
-        when(sprint.createScrumBoardList()).thenReturn(userStories);
+        when(sprint.viewScrumBoardList()).thenReturn(userStories);
+        ViewScrumBoardController controller = new ViewScrumBoardController(projectList);
 
         //act
 
-        ViewScrumBoardController controller = new ViewScrumBoardController(projectList);
-        List<UserStoryDTO> result = controller.showScrumBoard(1, 1);
+        List<UserStoryDTO> result = controller.viewScrumBoard(1, 1);
 
         //assert
         assertFalse(result.isEmpty());
