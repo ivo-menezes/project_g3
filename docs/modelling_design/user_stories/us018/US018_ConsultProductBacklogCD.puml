@@ -43,11 +43,11 @@ acceptanceCriteria : String
 status : Status
 }
 
-ConsultProductBacklogUI "1" o-- "1" ConsultProductBacklogController
-ConsultProductBacklogController "1" o-- "1" ProjectList
-ProjectList "1" *-- "*" Project
-Project "1" o-- "1" ProductBacklog
-ConsultProductBacklogController "1" o-- "1" UserStoryMapper
+ConsultProductBacklogUI "1" o-- "1" ConsultProductBacklogController : has
+ConsultProductBacklogController "1" o-- "1" ProjectList : has
+ProjectList "1" *-- "*" Project : contains
+Project "1" o-- "1" ProductBacklog : contains
+ConsultProductBacklogController "1" o-- "1" UserStoryMapper : has
 ConsultProductBacklogController ..> UserStoryDTO
 UserStoryMapper ..> UserStoryDTO
 
