@@ -15,6 +15,9 @@ budget
 'Report
 }
 
+Object ProductBacklog
+
+
 Object Sprint {
 sprint number
 start date
@@ -35,9 +38,18 @@ status
 priority
 }
 
+Object Ceremony {
+type
+date
+description
+}
 
-Project "1" -down- "*" Sprint: entails >
-Sprint "1" -down- "1" SB: defines >
-US "*" -right- "1" SB: picked into >
+
+Project "                          1" -down- "*" Sprint: entails >
+Sprint "                     1" -down- "           1" SB: defines >
+US "                                                                     *" -right- "          1" SB: picked into >
+Project "1" -left- "1" ProductBacklog: includes >
+ProductBacklog "1" -down- "*" US: collected in <
+Sprint "1" -right- "*" Ceremony: includes >
 
 @enduml
