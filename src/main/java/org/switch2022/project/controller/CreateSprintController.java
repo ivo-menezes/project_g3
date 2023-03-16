@@ -25,7 +25,8 @@ public class CreateSprintController {
         }
 
         Project project = projectList.getProject(projectCode);
-        return project.addSprint(sprintDTO);
+        SprintList sprintList = project.getSprintList();
+        return sprintList.createSprint(sprintDTO);
     }
 }
 
