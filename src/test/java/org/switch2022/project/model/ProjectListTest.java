@@ -32,7 +32,7 @@ class ProjectListTest {
     }
 
     @Test
-    @DisplayName("Ensure return null when doesn't found project")
+    @DisplayName("Ensure an exception is returned when the sprint is not found.")
     void ensureGetProjectNull() {
         //Arrange
         Project project = mock(Project.class);
@@ -40,11 +40,10 @@ class ProjectListTest {
         ProjectList projectList = new ProjectList();
         projectList.addProject(project);
 
-        //Act
-        Project result = projectList.getProject(2);
-
-        //Assert
-        assertNull(result);
+        //Act and Assert
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            projectList.getProject(20);
+        });
     }
 
     @Test

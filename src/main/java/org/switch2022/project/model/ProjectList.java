@@ -20,14 +20,20 @@ public class ProjectList {
      * @return project
      */
     public Project getProject(int projectCode) {
-        Project foundProject = null;
+        boolean foundProject = false;
+        Project projectToReturn = null;
 
-        for (Project project : projectList) {
+        for (int i = 0; i < projectList.size() && !foundProject; i++) {
+            Project project = projectList.get(i);
             if (project.getCode() == projectCode) {
-                foundProject = project;
+                projectToReturn = project;
+                foundProject = true;
             }
         }
-        return foundProject;
+        if (projectToReturn == null) {
+            throw new NullPointerException("project not found");
+        }
+        return projectToReturn;
     }
 
     /**
