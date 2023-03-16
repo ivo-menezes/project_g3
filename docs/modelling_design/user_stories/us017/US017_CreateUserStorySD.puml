@@ -1,6 +1,7 @@
 @startuml
 !theme plain
 hide footbox
+autonumber
 title "US017 - As Product Owner, I want to create a user story and add it to the Product Backlog"
 
 actor "Product Owner" as user
