@@ -1,5 +1,6 @@
 @startuml
 !theme plain
+autonumber
 hide footbox
 title US020 - As Team Member, I want to add a user story in the product backlog \n to the sprint backlog, during the sprint planning ceremony.
 
@@ -9,7 +10,7 @@ participant ": AddUserStoryController" as Controller
 participant ": ProjectList" as ProjectList
 participant "project:Project" as Project
 participant "productBacklog:ProductBacklog" as ProductBacklog
-participant ":SprintList " as SprintList
+participant "sprintList:SprintList " as SprintList
 participant "sprint:Sprint " as Sprint
 
 activate user #FFBBBB

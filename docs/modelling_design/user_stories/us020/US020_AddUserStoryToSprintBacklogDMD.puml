@@ -15,6 +15,18 @@ project status
 budget
 }
 
+Object Typology {
+designation
+}
+
+Object BusinessSector {
+designation
+}
+
+Object Customer {
+designation
+}
+
 Object "ProductBacklog" as PB
 
 Object "UserStory" as US {
@@ -30,6 +42,7 @@ Object Sprint {
 sprint number
 start date
 end date
+US effort estimate
 }
 
 Object Ceremony {
@@ -39,9 +52,11 @@ description
 }
 
 Object "SprintBacklog" as SB {
-US effort estimate
 }
 
+Project "*" -up- "                      1" Typology : has >
+Project "*" -up- "1" BusinessSector: has >
+Project "*" -up- "1" Customer: has >
 Project "1 " -down- "*" Sprint: entails >
 Project "1" -left- "1" PB: includes >
 PB "1" -down- "*" US: collected in <

@@ -1,7 +1,5 @@
 @startuml
 
-class AddUserStoryUI {}
-
 class AddUserStoryController {
 projectList : ProjectList
 addUserStoryFromProductBacklogToSprintBacklog(projectCode, userStoryID, sprintNumber)
@@ -71,16 +69,13 @@ getID()
 }
 
 
-AddUserStoryUI "1 " o-- "1 " AddUserStoryController : has
-AddUserStoryController "1 " o-- "1 " ProjectList : has
-ProjectList "      1" *-- "                    *" Project : contains
-Project "1 " o-- "1  " ProductBacklog : has
-Project "1  " o-- "1 " SprintList : has
-ProductBacklog "1  " *-- " * " UserStory : contains
-SprintList "1  " *-- " * " Sprint : contains
-Sprint "1 " *-- " *  " UserStory : contains
-'FactoryUserStoryImpl  ..|> IFactoryUserStory
-'ProductBacklog "1" o-- "1" FactoryUserStoryImpl
-'FactoryUserStoryImpl ..> UserStory : creates
+
+AddUserStoryController "1 " o-- "1 " ProjectList
+ProjectList "      1" *-- "                    *" Project
+Project "1 " o-- "1  " ProductBacklog
+Project "1  " o-- "1 " SprintList
+ProductBacklog "1  " *-- " * " UserStory
+SprintList "1  " *-- " * " Sprint
+Sprint "1 " *-- " *  " UserStory
 
 @enduml
