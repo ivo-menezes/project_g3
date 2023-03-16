@@ -1,12 +1,9 @@
 @startuml
 
-class ViewScrumBoardUI {
-}
-
 class ViewScrumBoardController {
-project: Project
-sprint: Sprint
-showScrumBoard(projectCode, sprintNumber)
+projectList: ProjectList
+sprintList: SprintList
+viewScrumBoard(projectCode, sprintNumber)
 }
 
 class ProjectList {
@@ -35,9 +32,9 @@ sprintList: List<Sprint>
 getSprint(sprintNumber)
 }
 
-class usDTO{
+class userStoryDTO{
 id: String
-status: enum
+status: Status
 }
 
 class Sprint{
@@ -45,9 +42,7 @@ sprintNumber: int
 startDate: Date
 endDate: Date
 sprintBackLog: List<US>
-createScrumBoardList();
-getUSAtIndex(index);
-create(id, status);
+viewScrumBoardList();
 }
 
 class UserStory {
@@ -55,20 +50,24 @@ id : String
 actor : String
 text : String
 acceptanceCriteria : String
-status : String
-getID();
-getStatus();
+status : Status
 }
 
-ViewScrumBoardUI "1" o--  "1" ViewScrumBoardController: has
-ViewScrumBoardController "1" o-- "1" ProjectList: has
-ProjectList "1" *-- "*" Project: contains
-Project "1" o-- "1" SprintList: has
-SprintList "1" *-- "*" Sprint: contains
-Sprint "1 " *-- " *  " UserStory : contains
+class UserStoryAssembler{
+toDTO(userStory)
+}
+
+ViewScrumBoardController "1" o-- "1" ProjectList
+ProjectList "1" *-- "*" Project
+Project "1" o-- "1" SprintList
+SprintList "1" *-- "*" Sprint
+Sprint "1 " *-- " *  " UserStory
 ViewScrumBoardController ..> Project
-Sprint .right.> usDTO
-usDTO ..> UserStory
+Sprint .right.> userStoryDTO
+ViewScrumBoardController ..> SprintList
+Sprint "1" o-right- "1" UserStoryAssembler
+UserStoryAssembler ..> userStoryDTO
+ViewScrumBoardController .down.> Sprint
 
 
 @enduml
