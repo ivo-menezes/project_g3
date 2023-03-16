@@ -1,5 +1,7 @@
 @startuml
 !theme plain
+autonumber
+title "US022 - As Team Member, I want to view the Scrum Board of current sprint."
 hide footbox
 
 actor TeamMember as User
@@ -7,10 +9,10 @@ participant ": ViewScrumBoardUI" as UI
 participant ": ViewScrumBoardController" as Controller
 participant ": ProjectList" as List
 participant "project : Project" as Project
-participant ": SprintList" as SprintList
+participant "sprintList : SprintList" as SprintList
 participant "sprint : Sprint" as Sprint
-participant "lsUS : List<UserStory>" as DTOList
-participant ": UserStoryAssembler" as Assembler
+participant "listUserStoryDTO : List<UserStory>" as DTOList
+participant ": UserStoryScrumBoardMapper" as Assembler
 participant "userStoryDTO : UserStoryDto" as Dto
 participant "userStory : UserStory" as US
 
@@ -47,14 +49,16 @@ loop for each UserStory in SprintBacklog
 Sprint -> Assembler: toDTO (userStory);
 activate Assembler #FFBBBB
 Assembler --> Dto **: toDTO;
+Assembler --> Sprint: userStoryDTO
 deactivate Assembler
 Sprint -> DTOList: add(userStoryDTO);
 activate DTOList #FFBBBB
 deactivate DTOList
 end
 
-Sprint --> Controller: lsUS
-Controller --> UI: lsUS
+Sprint --> Controller: listUserStoryDTO
+deactivate Sprint
+Controller --> UI: listUserStoryDTO
 deactivate Controller
 
 UI --> User: Scrum Board presented
