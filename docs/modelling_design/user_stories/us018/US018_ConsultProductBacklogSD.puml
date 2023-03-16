@@ -59,5 +59,4 @@ deactivate Controller
 UI --> user: Displays product backlog
 deactivate UI
 
-
 @enduml
