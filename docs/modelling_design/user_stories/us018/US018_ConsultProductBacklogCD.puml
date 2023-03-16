@@ -1,5 +1,4 @@
 @startuml
-class ConsultProductBacklogUI {}
 
 class ConsultProductBacklogController {
 projectList : ProjectList
@@ -43,7 +42,7 @@ acceptanceCriteria : String
 status : Status
 }
 
-ConsultProductBacklogUI "1" o-- "1" ConsultProductBacklogController
+
 ConsultProductBacklogController "1 " o-- "1" ProjectList
 ProjectList "1" *-- "*" Project
 Project "1" o-- "1" ProductBacklog
