@@ -2,30 +2,6 @@
 
 skinparam linetype ortho
 
-' UIs
-class CreateProfileUI {}
-class RegisterAccountUI {}
-class ChangeProfileUI {}
-class ListAccountsUI {}
-class AccountStatusUI {}
-class CreateProjectUI {}
-class AssociateResourceUI {}
-
-class ResourceDTO {
-email: String
-projectCode: int
-startDate: Date
-percentAllocation: double
-costPerHour: double
-roleName: String
-}
-
-class ListResourcesUI {}
-class ListProjectUI {}
-class UserProjectsUI {}
-class CreateTypologyUI {}
-class CreateBusinessSectorUI{}
-class AddCustomerUI {}
 
 ' Controllers
 class CreateProfileController {
@@ -102,6 +78,38 @@ customerList : CustomerList
 addCustomer(designation)
 }
 
+class CreateUserStoryController {
+projectList : ProjectList
+createUserStory(projectCode, userStoryDTO, priority)
+}
+
+class ConsultProductBacklogController {
+projectList : ProjectList
+userStoryMapper : UserStoryMapper
+getProductBacklog(projectCode)
+}
+
+class CreateSprintController {
+projectList: ProjectList
+createSprint(projectCode, sprintDTO)
+}
+
+class AddUserStoryController {
+projectList : ProjectList
+addUserStoryFromProductBacklogToSprintBacklog(projectCode, userStoryID, sprintNumber)
+}
+
+class EstimateEffortController {
+projectList: ProjectList
+estimateEffortUserStory (int projectCode, \nint sprintNumber, String idUserStory, double effort)
+}
+
+class ViewScrumBoardController {
+projectList: ProjectList
+sprintList: SprintList
+viewScrumBoard(projectCode, sprintNumber)
+}
+
 ' Business Layer
 
 class Profile {
@@ -154,6 +162,7 @@ getProjectIndex(i)
 create(projectDTO)
 }
 
+
 'class AccountList {
 'AccountList : List<Account>
 'checkPermissionsToCreateAProject(accountEmail)
@@ -171,6 +180,8 @@ numberOfPlannedSprints: int
 projectStatus: String
 budget: double
 resourceList: ResourceList
+productBacklog : ProductBacklog
+sprintList: SprintList
 addResource(account, role, resourceDTO)
 listResources(project)
 getCode()
@@ -179,6 +190,8 @@ getCustomer()
 getStartDate()
 getEndDate()
 getStatusProject()
+getProductBacklog()
+getSprintList()
 }
 
 class RoleList {
@@ -254,14 +267,92 @@ class Customer {
 designation : String
 }
 
+class UserStoryMapper{
+toDTOList(userStoryList)
+toDTO(userStory)
+}
+
+class ProductBacklog {
+userStories: List<UserStory>
+completedUserStories : List<UserStory>
+factoryUserStory : IFactoryUserStory
+mapper : UserStoryMapper
+createUserStoryFromDTO(userStoryDTO)
+createAndAddUserStory(userStoryDTO, priority)
+doesNotContain(userStory)
+add(userStory, priority)
+getUserStoryList()
+getUserStory(UserStoryID)
+}
+
+class FactoryUserStoryImpl {
+createUserStory(id, actor, text, acceptanceCriteria)
+}
+
+interface IFactoryUserStory {
+createUserStory(id, actor, text, acceptanceCriteria)
+}
+
+class UserStory {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : Status
+getID()
+}
+
+class UserStoryMapper {
+fromDTO(UserStoryDTO)
+toDTOList(userStoryList)
+toDTO(userStory)
+}
+
+class UserStoryDTO {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+}
+
+class SprintList {
+sprintList: List<Sprint>
+isValidDate(sprintDTO)
+createSprint(sprintDTO)
+hasSprint(sprint)
+add(sprint)
+getSprint(sprintNumber)
+}
+
+class Sprint{
+sprintNumber: int
+startDate: Date
+endDate: Date
+sprintBacklog : List<UserStory>
+getSprintNumber()
+existsUserStory()
+addUserStoryToSprintBacklog()
+validEffortEstimate(effort)
+estimateEffortForUserStory (userStoryID, effort)
+viewScrumBoardList()
+}
+
+class sprintDTO {
+sprintNumber: int
+startDate: Date
+endDate: Date
+}
+
+class UserStoryScrumBoardMapper{
+toDTO(userStory)
+}
+
 
 ' Associations and dependencies
 
-CreateProfileUI "1" o-down- "1" CreateProfileController
 CreateProfileController "1" o-- "1" ProfileList
 ProfileList "1 " *-- "    *" Profile
 
-RegisterAccountUI "1" o-- "1" RegisterAccountController
 RegisterAccountController "1" o-- "1" ProfileList
 RegisterAccountController ..> Profile
 RegisterAccountController "1" o-- "1" AccountList
@@ -271,25 +362,20 @@ AccountList ..> RegisterAccountDTO
 Account ..> Profile
 AccountList "1" *-- "*" Account
 
-ChangeProfileUI "1" o-down- "1" ChangeProfileController
 ChangeProfileController "1" o-- "1" AccountList
 ChangeProfileController  "1" o-- "1"  ProfileList
 ChangeProfileController ..> Account
 
 ListAccountsController "1" o-- "1" AccountList
-ListAccountsUI "1" o-- "1" ListAccountsController
 AccountList ..> AccountDTO
 AccountDTO ..> Account
 
-AccountStatusUI "1" o-- "1" AccountStatusController
 AccountStatusController "1" o-- "1  " "AccountList"
 AccountStatusController "1" ..> "1" Account
 
-CreateProjectUI "1" o-down- "1" CreateProjectController
 CreateProjectController "1" o-- "1" ProjectList
 ProjectList "1 " *-- "*" Project
 
-AssociateResourceUI o-down- AssociateResourceController
 AssociateResourceController o-down- ProjectList
 Project o-- ResourceList
 ResourceList *-- Resource
@@ -300,38 +386,77 @@ AssociateResourceController ..> Account
 AssociateResourceController o-- RoleList
 Resource o-left- Account
 Resource o-left- Role
-AssociateResourceUI ..> ResourceDTO
 AssociateResourceController ..> ResourceDTO
 Project .right.> ResourceDTO
 ResourceList .right.> ResourceDTO
 AssociateResourceController ..> Project
 AssociateResourceController .right.> Role
 
-ListResourcesUI "1 " o-down- "1 " ListResourcesController
 ListResourcesController "1 " o-- "1 " ProjectList
 ListResourcesController .down.> Project
 ResourceDTO "1" .down.> Resource
 
 ListProjectController "1" o-down- "1" ProjectList
-ListProjectUI "1" o-down- "1" ListProjectController
 ProjectList ..> ProjectDTO
 ProjectDTO ..> Project
 
-UserProjectsUI "1" o-- "1" UserProjectsController
 UserProjectsController "1" o-- "1" ProjectList
 ProjectList ..> UserProjectsDTO
 Project ..> UserProjectsDTO
 UserProjectsController "1" o-- "*" Project
 
-CreateTypologyUI "1" o-- "1" CreateTypologyController
 CreateTypologyController "1" o-- "1" TypologyList
 TypologyList "1 " *-- "    *" Typology
 
 BusinessSectorList "1" *-- "*" BusinessSector
 CreateBusinessSectorController "1" o-- "1" BusinessSectorList
-CreateBusinessSectorUI "1" o-- "1" CreateBusinessSectorController
 
-AddCustomerUI "     1" o-- "        1" AddCustomerController
 AddCustomerController "     1" o-- "        1" CustomerList
 CustomerList "  1" *-- "   *" Customer
+
+CreateUserStoryController "1" o-- "1" ProjectList
+CreateUserStoryController ..> UserStoryDTO
+CreateUserStoryController ..> Project
+CreateUserStoryController ..> ProductBacklog
+ProductBacklog ..> UserStoryDTO
+Project "1" o-- "1" ProductBacklog
+ProductBacklog "1" *-- "*" UserStory
+ProductBacklog "1" o-- "1" UserStoryMapper
+UserStoryMapper ..> UserStoryDTO
+UserStoryDTO ..> UserStory
+UserStoryMapper ..> UserStory
+FactoryUserStoryImpl -up..|> IFactoryUserStory
+ProductBacklog "1" o-- "1" IFactoryUserStory
+FactoryUserStoryImpl ..> UserStory
+
+ConsultProductBacklogController "1 " o-- "1" ProjectList
+ConsultProductBacklogController "1" o-- "1" UserStoryMapper
+ConsultProductBacklogController ..> UserStoryDTO
+UserStoryMapper ..> UserStoryDTO
+
+CreateSprintController "1" o-- "1" ProjectList
+CreateSprintController ..> Project
+CreateSprintController ..> SprintList
+Project "1" o-- "1" SprintList
+CreateSprintController ..> sprintDTO
+SprintList "1" *-- "*" Sprint
+Project ..> sprintDTO
+SprintList ..> sprintDTO
+
+AddUserStoryController "1 " o-- "1 " ProjectList
+Sprint "1 " *-- " *  " UserStory
+
+EstimateEffortController "      1" o-- "      1" ProjectList
+
+ViewScrumBoardController "1" o-- "1" ProjectList
+ViewScrumBoardController ..> Project
+ViewScrumBoardController ..> SprintList
+ViewScrumBoardController .down.> Sprint
+ViewScrumBoardController ..> SprintList
+Sprint "1" o-right- "1" UserStoryScrumBoardMapper
+Sprint .right.> userStoryDTO
+UserStoryScrumBoardMapper ..> userStoryDTO
+
+
+
 @enduml
