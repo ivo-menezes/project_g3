@@ -2,9 +2,6 @@
 
 skinparam linetype ortho
 
-class CreateSprintUI {
-}
-
 class sprintDTO {
 sprintNumber: int
 startDate: Date
@@ -34,14 +31,15 @@ projectStatus: String
 budget: double
 resourceList: ResourceList
 sprintList: SprintList
-addSprint(sprintDTO)
+getSprintList()
 }
 
 class SprintList {
 sprintList: List<Sprint>
-create(sprintDTO)
+isValidDate(sprintDTO)
+createSprint(sprintDTO)
 hasSprint(sprint)
-add(sprintNumber, startDate, endDate)
+add(sprint)
 }
 
 class Sprint{
@@ -50,12 +48,12 @@ startDate: Date
 endDate: Date
 }
 
-CreateSprintUI "1" o--  "1" CreateSprintController: has
-CreateSprintController "1" o-- "1" ProjectList: has
-ProjectList "1" *-- "*" Project: contains
-Project "1" o-- "1" SprintList: has
+CreateSprintController "1" o-- "1" ProjectList
+ProjectList "1" *-- "*" Project
+CreateSprintController ..> Project
+CreateSprintController ..> SprintList
+Project "1" o-- "1" SprintList
 SprintList "1" *-- "*" Sprint
-CreateSprintUI ..> sprintDTO
 CreateSprintController ..> sprintDTO
 Project ..> sprintDTO
 SprintList ..> sprintDTO
