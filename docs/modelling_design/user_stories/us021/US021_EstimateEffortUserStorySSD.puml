@@ -1,4 +1,4 @@
 @startuml
-"Team Member" -> System: Insert an estimate effort value
-"Team Member" <-- System: Estimated effort value defined
+"Team Member" -> System: Estimate the effort of a user story in a sprint \n (projectCode, sprintNumber, userStoryID, effort)
+"Team Member" <-- System: Effort of a user story estimated
 @enduml
