@@ -77,32 +77,14 @@ public class Sprint {
      * The method will create a list of UserStoryDTOs, where the only data required will be the US ID and respective status.
      * @return a list, containing the UserStoryDTOs in the SprintBacklog belonging to the current sprint.
      */
-    public List<UserStoryDTO> createScrumBoardList(){
+    public List<UserStoryDTO> viewScrumBoardList(){
         List<UserStoryDTO> scrumBoard = new ArrayList<>();
+        UserStoryAssembler userStoryAssembler = new UserStoryAssembler();
 
-        for(int index = 0; index < this.sprintBacklog.size(); index++){
-            UserStory userStoryAtIndex = getUSAtIndex(index);
-            String iD = userStoryAtIndex.getId();
-            UserStory.Status status = userStoryAtIndex.getStatus();
-            scrumBoard.add(create(iD, status));
+         for (UserStory userStory : sprintBacklog) {
+            scrumBoard.add(userStoryAssembler.toDTO(userStory));
         }
         return scrumBoard;
-    }
-
-    /***
-     *Getting the US at the indicated index for the Scrum Board List
-     * @param index
-     * @return US
-     */
-    private UserStory getUSAtIndex(int index){
-        UserStory userStoryAtIndex =this.sprintBacklog.get(index);
-        return userStoryAtIndex;
-    }
-    private UserStoryDTO create (String iD, UserStory.Status status){
-        UserStoryDTO usDTO = new UserStoryDTO();
-        usDTO.id = iD;
-        usDTO.status = status;
-        return usDTO;
     }
 
     /**

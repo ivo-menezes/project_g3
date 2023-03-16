@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
-import org.switch2022.project.controller.ListUserProjectsController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -127,7 +126,7 @@ class SprintTest {
         sprint.addUserStoryToSprintBacklog(userStory);
         sprint.addUserStoryToSprintBacklog(userStoryTwo);
 
-        List result = sprint.createScrumBoardList();
+        List result = sprint.viewScrumBoardList();
 
         assertNotNull(result);
     }
@@ -144,7 +143,7 @@ class SprintTest {
         sprint.addUserStoryToSprintBacklog(userStory);
         sprint.addUserStoryToSprintBacklog(userStoryTwo);
 
-        List result = sprint.createScrumBoardList();
+        List result = sprint.viewScrumBoardList();
 
         assertFalse(result.isEmpty());
     }
@@ -157,7 +156,7 @@ class SprintTest {
         UserStory userStory = mock(UserStory.class);
 
         sprint.addUserStoryToSprintBacklog(userStory);
-        List result = sprint.createScrumBoardList();
+        List result = sprint.viewScrumBoardList();
         UserStoryDTO userStoryDTO = (UserStoryDTO) result.get(0);
 
         assertNotNull(userStoryDTO);

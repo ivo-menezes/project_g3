@@ -8,7 +8,7 @@ import java.util.List;
  *
  */
 public class ViewScrumBoardController {
-    private ProjectList projectList;
+    final private ProjectList projectList;
 
     public ViewScrumBoardController(ProjectList projectList) {
         this.projectList = projectList;
