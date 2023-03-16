@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectList;
 import org.switch2022.project.model.SprintDTO;
+import org.switch2022.project.model.SprintList;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,11 +26,13 @@ class CreateSprintControllerTest {
         Project projectMock = mock(Project.class);
         ProjectList projectList = mock(ProjectList.class);
         when(projectList.getProject(projectCode)).thenReturn(projectMock);
+        SprintList sprintList = mock(SprintList.class);
+        when(projectMock.getSprintList()).thenReturn(sprintList);
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
         sprintDTO.startDate = formatter.parse("01/02/2022");
         sprintDTO.endDate = formatter.parse("15/02/2022");
-        when(projectMock.addSprint(sprintDTO)).thenReturn(true);
+        when(sprintList.createSprint(sprintDTO)).thenReturn(true);
 
         CreateSprintController controller = new CreateSprintController(projectList);
         boolean result = controller.createSprint(projectCode,sprintDTO);
@@ -72,6 +75,8 @@ class CreateSprintControllerTest {
         Project projectMock = mock(Project.class);
         ProjectList projectListMock = mock(ProjectList.class);
         when(projectListMock.getProject(projectCode)).thenReturn(projectMock);
+        SprintList sprintList = mock(SprintList.class);
+        when(projectMock.getSprintList()).thenReturn(sprintList);
         SprintDTO sprintDTO = new SprintDTO();
         sprintDTO.sprintNumber = 1;
         sprintDTO.startDate = formatter.parse("01/02/2022");
@@ -82,8 +87,8 @@ class CreateSprintControllerTest {
         sprintDTO.startDate = formatter.parse("01/02/2022");
         sprintDTO.endDate = formatter.parse("15/02/2022");
 
-        when(projectMock.addSprint(sprintDTO)).thenReturn(true);
-        when(projectMock.addSprint(sprintDTOTwo)).thenReturn(false);
+        when(sprintList.createSprint(sprintDTO)).thenReturn(true);
+        when(sprintList.createSprint(sprintDTOTwo)).thenReturn(false);
 
         CreateSprintController controller = new CreateSprintController(projectListMock);
         controller.createSprint(projectCode,sprintDTO);

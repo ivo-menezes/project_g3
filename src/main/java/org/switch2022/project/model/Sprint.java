@@ -79,10 +79,10 @@ public class Sprint {
      */
     public List<UserStoryDTO> viewScrumBoardList(){
         List<UserStoryDTO> scrumBoard = new ArrayList<>();
-        UserStoryAssembler userStoryAssembler = new UserStoryAssembler();
+        UserStoryScrumBoardMapper userStoryScrumBoardMapper = new UserStoryScrumBoardMapper();
 
          for (UserStory userStory : sprintBacklog) {
-            scrumBoard.add(userStoryAssembler.toDTO(userStory));
+            scrumBoard.add(userStoryScrumBoardMapper.toDTO(userStory));
         }
         return scrumBoard;
     }

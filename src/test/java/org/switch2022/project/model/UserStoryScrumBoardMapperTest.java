@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class UserStoryAssemblerTest {
+class UserStoryScrumBoardMapperTest {
 
     @Test
     @DisplayName("ensure the DTO is created")
@@ -29,9 +29,9 @@ class UserStoryAssemblerTest {
         userStoryDTOTwo.id = "US002";
         userStoryDTOTwo.status = UserStory.Status.IN_PROGRESS;
 
-        UserStoryAssembler userStoryAssembler = new UserStoryAssembler();
-        UserStoryDTO result = userStoryAssembler.toDTO(userStoryMock);
-        userStoryAssembler.toDTO(userStoryMockTwo);
+        UserStoryScrumBoardMapper userStoryScrumBoardMapper = new UserStoryScrumBoardMapper();
+        UserStoryDTO result = userStoryScrumBoardMapper.toDTO(userStoryMock);
+        userStoryScrumBoardMapper.toDTO(userStoryMockTwo);
 
         //assert
         assertEquals(userStoryDTO, result);
