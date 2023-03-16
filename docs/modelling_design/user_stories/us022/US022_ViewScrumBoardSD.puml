@@ -17,7 +17,7 @@ participant "userStoryDTO : UserStoryDto" as Dto
 participant "userStory : UserStory" as US
 
 activate User #FFBBBB
-User -> UI: request Scrum Board of the current sprint(projectCode, sprintNumber)
+User -> UI: request Scrum Board of the \ncurrent sprint(projectCode, sprintNumber)
 
 activate UI #FFBBBB
 UI -> Controller: viewScrumBoard(projectCode, sprintNumber);

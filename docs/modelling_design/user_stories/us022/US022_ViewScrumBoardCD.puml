@@ -1,5 +1,7 @@
 @startuml
 
+skinparam linetype ortho
+
 class ViewScrumBoardController {
 projectList: ProjectList
 sprintList: SprintList
@@ -24,7 +26,7 @@ projectStatus: String
 budget: double
 resourceList: ResourceList
 sprintList: SprintList
-getSprintList();
+getSprintList()
 }
 
 class SprintList {
@@ -42,7 +44,7 @@ sprintNumber: int
 startDate: Date
 endDate: Date
 sprintBackLog: List<US>
-viewScrumBoardList();
+viewScrumBoardList()
 }
 
 class UserStory {
@@ -53,7 +55,7 @@ acceptanceCriteria : String
 status : Status
 }
 
-class UserStoryAssembler{
+class UserStoryScrumBoardMapper{
 toDTO(userStory)
 }
 
@@ -65,8 +67,8 @@ Sprint "1 " *-- " *  " UserStory
 ViewScrumBoardController ..> Project
 Sprint .right.> userStoryDTO
 ViewScrumBoardController ..> SprintList
-Sprint "1" o-right- "1" UserStoryAssembler
-UserStoryAssembler ..> userStoryDTO
+Sprint "1" o-right- "1" UserStoryScrumBoardMapper
+UserStoryScrumBoardMapper ..> userStoryDTO
 ViewScrumBoardController .down.> Sprint
 
 
