@@ -1,6 +1,8 @@
 @startuml
 !theme plain
 hide footbox
+autonumber
+title "US019 - As Project Manager, I want to create a sprint."
 
 actor ProjectManager as User
 participant ": CreateSprintUI" as UI
@@ -8,11 +10,11 @@ participant "sprintDTO : SprintDTO" as DTO
 participant ": CreateSprintController" as Controller
 participant ": ProjectList" as ProjectList
 participant "project : Project" as Project
-participant ":SprintList" as SprintList
+participant "sprintList : SprintList" as SprintList
 participant "sprint : Sprint" as Sprint
 
 activate User #FFBBBB
-User ->  UI: Requests creation of a sprint (projectCode, sprintNumber, startDate, endDate)
+User ->  UI: Requests creation of a sprint \n(projectCode, sprintNumber, startDate, endDate)
 
 activate UI #FFBBBB
 UI --> DTO **: create(sprintNumber, startDate, endDate)
@@ -23,21 +25,21 @@ Controller -> ProjectList: getProject(projectCode);
 activate ProjectList #FFBBBB
 ProjectList --> Controller: project
 deactivate ProjectList
-Controller -> Project: createSprint(sprintDTO);
+Controller -> Project: getSprintList();
 activate Project #FFBBBB
+Project --> Controller: sprintList
+deactivate Project
 
-Project -> SprintList: addSprint(sprintDTO);
+Controller -> SprintList: createSprint(sprintDTO);
 activate SprintList #FFBBBB
 
-SprintList -> Sprint **: create(sprintDTO);
+SprintList -> SprintList: isValidDate(sprintDTO);
+SprintList -> Sprint **: createSprint(sprintDTO);
 SprintList -> SprintList: hasSprint(sprint);
 SprintList -> SprintList: add(sprint);
 
-SprintList --> Project: true
+SprintList --> Controller: true
 deactivate SprintList
-
-Project --> Controller: true
-deactivate Project
 
 Controller --> UI : true
 deactivate Controller
