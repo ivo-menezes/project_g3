@@ -1,10 +1,6 @@
  @startuml
 !theme plain
 
-'skinparam linetype polyline
-
-'--- part relevant to sprint 1
-
 Object Account {
 name
 phone number
@@ -17,7 +13,7 @@ Object Profile {
 name
 }
 
-Object "ProjectResource" as PR {
+Object Resource {
 start date
 end date
 percentage of allocation
@@ -27,8 +23,8 @@ cost per hour
 Account "        1"-right- "    1" Profile : has >
 Account "1"-- "1" Profile : controlled by Admin <
 Account "1   " --- "*" Project : controlled \n by Manager <
-Account "1" -right- " 1  " PR : has <
-PR "1..*" -left- "1" Project : involves <
+Account "1" -right- " 1  " Resource : has <
+Resource "1..*" -left- "1" Project : involves <
 
 Object Typology {
 designation
@@ -37,12 +33,12 @@ designation
 Account "1" -down-"*" Typology : created by Admin <
 Typology "1" -- "                                   *" Project : has <
 
-Object "BusinessSector" as BS {
+Object BusinessSector {
 designation
 }
 
-Account "1" -down- "*" BS : created by Admin <
-BS "1" -- "*" Project : has <
+Account "1" -down- "*" BusinessSector : created by Admin <
+BusinessSector "1" -- "*" Project : has <
 
 Object Customer {
 designation
@@ -61,26 +57,15 @@ sprint duration
 number of planned sprints
 project status
 budget
-' Report could be its own conceptual class, but we are not modelling with detail yet
-'Report
 }
 
-' following the Association Class Role pattern (Fig.11) from "Modeling Roles"
-' Role attributes does not include Project Code because Larman says to avoid attributes that are like "foreign keys" (p.126)
 Object Role {
 role name
 }
 
+Object ProductBacklog
 
-' here "Controls" includes "creates,lists,changes profile, activates, inactivates"
-' following Larman p.113 to be parsimonious about associations
-
-
-'--- additional stuff, not much detail for sprint 1
-' put enduml tag before this comment to shorten diagram
-Object "ProductBacklog" as PB
-
-Object "UserStory" as US {
+Object UserStory {
 us number
 actor
 description
@@ -93,6 +78,7 @@ Object Sprint {
 sprint number
 start date
 end date
+US effort estimate
 }
 
 Object Ceremony {
@@ -101,11 +87,10 @@ date
 description
 }
 
-Object "SprintBacklog" as SB {
-US effort estimate
+Object SprintBacklog {
 }
 
-Object "Scrum board" as SC
+Object ScrumBoard
 
 Object Task {
 name
@@ -120,19 +105,17 @@ percentage of execution
 
 Profile "1" -down- "  2..*" Profile: created by Admin >
 Project "1" -down- "*" Sprint: entails >
-Project "1" -left- "1" PB: includes >
-PB "1" -down- "*" US: collected in <
-Sprint "1" -down- "1" SB: defines >
+Project "1" -left- "1" ProductBacklog: includes >
+ProductBacklog "1" -down- "*" UserStory: collected in <
+Sprint "1" -down- "1" SprintBacklog: defines >
 Sprint "1" -right- "*" Ceremony: includes >
-US "*" -right- "1" SB: picked into >
+UserStory "*" -- "1" SprintBacklog: picked into >
 
-PR "1" -right- "*" Role : plays >
-SB "1" -down- "   1..*" Task: contains >
-SB "1" -left- "1" SC: status shown in >
-PR "1" -down- "*" Task: works on >
-SC "1" -down- "*" Task: status shown in <
-' note on link: The creation of tasks is done by the team members.
-' The users available for the activities are the team members, the PO and the SM.
+Resource "1" -right- "1" Role : plays >
+SprintBacklog "1" -down- "   1..*" Task: contains >
+SprintBacklog "1" -left- "1" ScrumBoard: status shown in >
+Resource "1" -down- "*" Task: works on >
+ScrumBoard "1" -down- "*" Task: status shown in <
 
 note "The creation of tasks is done by the team members.\nThe users available for the activities are the team members, the PO and the SM." as N1
 Task .down. N1
