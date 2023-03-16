@@ -1,41 +1,51 @@
 @startuml
 !theme plain
+title US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony.
+autonumber
 hide footbox
 
-actor "User" as User
+actor "Team Member" as User
 participant ": EstimateEffortUI" as UI
 participant ": EstimateEffortController" as Controller
 participant ": ProjectList" as PL
 participant "project : Project" as P
+participant "productBacklog : ProductBacklog" as PB
 participant "sprintList : SprintList" as SL
 participant "sprint : Sprint" as S
 participant "userStory : UserStory" as US
 
-User ->  UI: Estimate effort of a User Story (projectCode, sprintNumber, userStoryId, effortEstimateValue)
+User ->  UI: Estimate effort of a User Story (projectCode, sprintNumber, userStoryID, effortEstimateValue)
 activate User #FFBBBB
 activate UI #FFBBBB
-UI -> Controller: estimateEffortUserStory(projectCode, sprintNumber, userStoryId, effortEstimateValue)
+UI -> Controller: estimateEffortUserStory(projectCode, sprintNumber, userStoryID, effortEstimateValue)
 activate Controller #FFBBBB
 Controller -> PL: getProject(projectCode)
 activate PL #FFBBBB
 PL --> Controller: project
 deactivate PL
-Controller -> P: getSprintList()
 activate P #FFBBBB
+Controller -> P: getProductBacklog()
+P --> Controller: productBacklog
+Controller -> P: getSprintList()
 P --> Controller: sprintList
 deactivate P
+activate PB #FFBBBB
+Controller -> PB: getUserStory(userStoryID)
+PB --> Controller: userStory
+deactivate PB
 Controller -> SL: getSprint(sprintNumber)
 activate SL #FFBBBB
 SL --> Controller: sprint
 deactivate SL
-Controller -> S: estimateEffortOfUserStory(userStoryId, effortEstimateValue)
+Controller -> S: estimateEffortOfUserStory(userStoryID, effortEstimateValue)
 activate S #FFBBBB
 S -> S: validEffortEstimate(effort)
-S -> US: getId()
+S -> S: existsUserStory(userStory)
+S -> US: getID()
 activate US #FFBBBB
-US --> S: userStoryId
+US --> S: userStoryID
 deactivate US
-S -> S: put(userStoryId, effort)
+S -> S: put(userStoryID, effort)
 S --> Controller: true
 deactivate S
 Controller --> UI: true
