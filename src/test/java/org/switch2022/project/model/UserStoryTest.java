@@ -10,10 +10,11 @@ class UserStoryTest {
     @Test
     @DisplayName("create a user story successfully")
     void createUserStory() {
-        new UserStory("US001",
+        UserStory userStory = new UserStory("US001",
                 "Product Owner",
                 "As Product Owner, I want to create a user story and add it to the Product Backlog",
                 "None");
+        assertInstanceOf(UserStory.class, userStory);
     }
 
     @Test
