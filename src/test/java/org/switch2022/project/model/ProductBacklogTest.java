@@ -32,6 +32,7 @@ class ProductBacklogTest {
     void createProductBacklogSucceeds() {
         IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
+        assertInstanceOf(ProductBacklog.class, productBacklog);
     }
 
 
