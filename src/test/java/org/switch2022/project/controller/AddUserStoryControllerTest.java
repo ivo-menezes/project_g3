@@ -20,7 +20,7 @@ class AddUserStoryControllerTest {
         String expected = "Project List must not be null";
         ProjectList projectList = null;
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> new CreateUserStoryController(projectList));
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> new AddUserStoryController(projectList));
         String resultMessage = result.getMessage();
         // assert
         assertEquals(expected, resultMessage);
@@ -147,25 +147,15 @@ class AddUserStoryControllerTest {
         Assertions.assertThrows(NullPointerException.class, () -> addUserStoryController.addUserStoryFromProductBacklogToSprintBacklog(123, "2", 1));
     }
 
-    /*
-    NOTA IMPORTANTE: Para este teste funcionar, é preciso alterar o método getProject
-    da ProjectList, de forma a lançar uma exceção se o projeto não for encontrando. Essa exceção
-    impedirá que o método retorne um Project null. Ver com Deborah.
-
     @Test
-    @DisplayName("ensure user story in non-existent project cannot be added")
+    @DisplayName("ensure exception is thrown if trying to add user story in non-existent project")
     void ensureUserStoryInNonExistentProjectCannotBeAdded() {
         //arrange
         ProjectList projectList = mock(ProjectList.class);
         AddUserStoryController addUserStoryController = new AddUserStoryController(projectList);
 
-        when(projectList.getProject(123)).thenReturn(null);
-
-        boolean expected = false;
-        //act
-        boolean result = addUserStoryController.addUserStoryFromProductBacklogToSprintBacklog(123, "2", 1);
-        //assert
-        assertEquals(expected,result);
-    }*/
+        //act and assert
+        Assertions.assertThrows(NullPointerException.class, () -> addUserStoryController.addUserStoryFromProductBacklogToSprintBacklog(123, "2", 1));
+    }
 
 }
