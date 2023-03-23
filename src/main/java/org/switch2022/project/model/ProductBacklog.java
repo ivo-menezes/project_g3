@@ -63,6 +63,17 @@ public class ProductBacklog {
     }
 
     /**
+     * Tries to add user story to the product backlog.
+     * By default, user story is added at the end of the list.
+     *
+     * @param userStory to be added
+     * @return true if user story successfully added, false otherwise
+     */
+    public boolean add(UserStory userStory) {
+        return add(userStory, this.userStories.size());
+    }
+
+    /**
      * Creates a new user story and adds it to the product backlog
      *
      * @param userStoryDTO containing user story information
@@ -77,6 +88,17 @@ public class ProductBacklog {
         UserStory userStory = createUserStoryFromDTO(userStoryDTO);
 
         return add(userStory, priority);
+    }
+
+    /**
+     * Creates a new user story and adds it to the product backlog.
+     * By default, user story is added to the end of the product backlog.
+     *
+     * @param userStoryDTO containing user story information
+     * @return true if successfully created and added, false otherwise
+     */
+    public boolean createAndAddUserStory(UserStoryDTO userStoryDTO) {
+        return createAndAddUserStory(userStoryDTO, this.userStories.size());
     }
 
     /**

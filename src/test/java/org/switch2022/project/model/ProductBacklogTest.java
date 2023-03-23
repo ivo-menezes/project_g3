@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +36,24 @@ class ProductBacklogTest {
         assertInstanceOf(ProductBacklog.class, productBacklog);
     }
 
+    @Test
+    @DisplayName("successfully create and add user story to empty product backlog")
+    void createUserStoryAndAddToEmptuBacklog() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
+
+        UserStoryDTO dtoDouble = mock(UserStoryDTO.class);
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        when(factoryUserStoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
+
+        // Act
+        boolean result = productBacklog.createAndAddUserStory(dtoDouble);
+
+        // Assert
+        assertTrue(result);
+    }
 
     @Test
     @DisplayName("successfully create and add user story to empty product backlog with priority 0")
@@ -99,7 +118,6 @@ class ProductBacklogTest {
         assertTrue(result);
     }
 
-    // falta aqui teste unitário (com mock) para verificar que 2 user stories iguais não podem ser adicionadas
 
     @Test
     @DisplayName("create and successfully add two different user stories to product backlog")
@@ -238,75 +256,70 @@ class ProductBacklogTest {
         assertTrue(result);
     }
 
-    // falta aqui teste para verificar que não é possível adicionar 2 user stories com o mesmo id (usando mock)
-
-    // "Integration tests" (tests without mock)
     @Test
-    @DisplayName("successfully create and add user story from DTO to empty product backlog with priority 0")
-    void createUserStoryWithPriorityZero() {
-        // arrange
-        UserStoryDTO dto = new UserStoryDTO();
-        dto.id = "US001";
-        dto.actor = "Manager";
-        dto.text = "As Manager, I want to give everybody a break";
-        dto.acceptanceCriteria = "None";
+    @DisplayName("add two different user stories and ensure the second one is at the end of the list")
+    void ensureUserStoryIsAddedAtTheEnd() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
-        int priority = 0;
+        UserStory userStoryDouble1 = mock(UserStory.class);
+        UserStory userStoryDouble2 = mock(UserStory.class);
 
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        // Act
+        productBacklog.add(userStoryDouble1);
+        productBacklog.add(userStoryDouble2);
 
-        // act
-        boolean result = productBacklog.createAndAddUserStory(dto, priority);
-
-        // assert
-        assertTrue(result);
+        // Assert
+        List<UserStory> userStories = productBacklog.getUserStoryList();
+        assertEquals(userStoryDouble2, userStories.get(1));
     }
 
     @Test
-    @DisplayName("successfully create and add user story from DTO to empty product backlog with priority 5")
-    void createUserStoryWithPriorityFive() {
-        // arrange
-        UserStoryDTO dto = new UserStoryDTO();
-        dto.id = "US001";
-        dto.actor = "Manager";
-        dto.text = "As Manager, I want to give everybody a break";
-        dto.acceptanceCriteria = "None";
+    @DisplayName("add US to non-empty backlog at priority 2 and length of backlog is 3")
+    void ensureUserStoryIsAddedWithPriority2AndBacklogLength3() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
-        int priority = 5;
+        UserStory userStoryDouble1 = mock(UserStory.class);
+        UserStory userStoryDouble2 = mock(UserStory.class);
+        UserStory userStoryDouble3 = mock(UserStory.class);
+        UserStory userStoryDouble4 = mock(UserStory.class);
+        int priority = 2;
 
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        // Act
+        productBacklog.add(userStoryDouble1);
+        productBacklog.add(userStoryDouble2);
+        productBacklog.add(userStoryDouble3);
+        productBacklog.add(userStoryDouble4, priority);
 
-        // act
-        boolean result = productBacklog.createAndAddUserStory(dto, priority);
-
-        // assert
-        assertTrue(result);
+        // Assert
+        List<UserStory> userStories = productBacklog.getUserStoryList();
+        assertEquals(userStoryDouble4, userStories.get(2));
     }
 
     @Test
-    @DisplayName("successfully create and add user story from DTO to empty product backlog with priority -2")
-    void createUserStoryWithPriorityMinusTwo() {
-        // arrange
-        UserStoryDTO dto = new UserStoryDTO();
-        dto.id = "US001";
-        dto.actor = "Manager";
-        dto.text = "As Manager, I want to give everybody a break";
-        dto.acceptanceCriteria = "None";
+    @DisplayName("add US to non-empty backlog at priority 2 and length of backlog is 1")
+    void ensureUserStoryIsAddedWithPriority2AndBacklogLength1() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
-        int priority = -2;
+        UserStory userStoryDouble1 = mock(UserStory.class);
+        UserStory userStoryDouble2 = mock(UserStory.class);
+        int priority = 2;
 
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        // Act
+        productBacklog.add(userStoryDouble1);
+        productBacklog.add(userStoryDouble2, priority);
 
-        // act
-        boolean result = productBacklog.createAndAddUserStory(dto, priority);
-
-        // assert
-        assertTrue(result);
+        // Assert
+        List<UserStory> userStories = productBacklog.getUserStoryList();
+        assertEquals(userStoryDouble2, userStories.get(1));
     }
 
+    // not sure how it is possible to test this case with isolation
     @Test
     @DisplayName("create and add user story to product backlog already containing equal user story fails")
     void createUserStoryWithSameIdFails() {
@@ -334,75 +347,6 @@ class ProductBacklogTest {
 
         // assert
         assertFalse(result);
-    }
-
-    @Test
-    @DisplayName("create and successfully add two different user stories to product backlog")
-    void createTwoUserStories() {
-        // arrange
-        UserStoryDTO dto = new UserStoryDTO();
-        dto.id = "US001";
-        dto.actor = "Manager";
-        dto.text = "As Manager, I want to give everybody a break";
-        dto.acceptanceCriteria = "None";
-
-        UserStoryDTO dto2 = new UserStoryDTO();
-        dto2.id = "US002";
-        dto2.actor = "Administrator";
-        dto2.text = "As Administrator, I want to delete all accounts";
-        dto2.acceptanceCriteria = "None";
-
-        int priority = 0;
-
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
-
-        // act
-        productBacklog.createAndAddUserStory(dto, priority);
-        boolean result = productBacklog.createAndAddUserStory(dto2, priority);
-
-        // assert
-        assertTrue(result);
-    }
-
-    @Test
-    @DisplayName("creating user story with null DTO throws exception")
-    void createUserStoryWithNullDTOThrowsException() {
-        // arrange
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
-
-        UserStoryDTO dto = null;
-        int priority = 0;
-
-        String expectedMessage = "User Story DTO must not be null";
-        // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            productBacklog.createAndAddUserStory(dto, priority);
-        });
-        String resultMessage = exception.getMessage();
-        // assert
-        assertEquals(expectedMessage, resultMessage);
-    }
-
-    @Test
-    @DisplayName("trying to add null user story throws exception")
-    void addNullUserStoryThrowsException() {
-        // arrange
-        IFactoryUserStory factoryUserStory = new FactoryUserStoryImpl();
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
-
-        UserStory userStory = null;
-        int priority = 5;
-
-        String expectedMessage = "User Story must not be null";
-        // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            productBacklog.add(userStory, priority);
-        });
-        String resultMessage = exception.getMessage();
-        // assert
-        assertEquals(expectedMessage, resultMessage);
     }
 
     @Test
