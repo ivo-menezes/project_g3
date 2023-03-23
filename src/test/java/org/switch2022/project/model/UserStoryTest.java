@@ -2,6 +2,8 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,13 +36,49 @@ class UserStoryTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    @DisplayName("US constructor throws exception with empty or blank id")
+    void emptyOrBlankIdThrowsException(String id) {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    new UserStory(id,
+                            "Product Owner",
+                            "As Product Owner, I want to create a user story and add it to the Product Backlog",
+                            "None");
+                }
+        );
+
+        String expectedMessage = "User Story ID must not be empty";
+        String resultMessage = exception.getMessage();
+        assertEquals(expectedMessage, resultMessage);
+    }
+
     @Test
-    @DisplayName("throws exception with blank actor")
-    void blankActorThrowsException() {
+    @DisplayName("US constructor throws exception with null actor")
+    void nullActorThrowsException() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    new UserStory("US01",
+                            null,
+                            "As Product Owner, I want to create a user story and add it to the Product Backlog",
+                            "None");
+                }
+        );
+
+        String expectedMessage = "User Story actor must not be empty";
+        String resultMessage = exception.getMessage();
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    @DisplayName("US constructor throws exception with empty or blank actor")
+    void emptyOrBlankActorThrowsException(String actor) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new UserStory("US002",
-                            "    ",
+                            actor,
                             "As Product Owner, I want to create a user story and add it to the Product Backlog",
                             "None");
                 }
@@ -52,13 +90,31 @@ class UserStoryTest {
     }
 
     @Test
-    @DisplayName("throws exception with empty text")
-    void emptyTextThrowsException() {
+    @DisplayName("US constructor throws exception with null text")
+    void nullTextThrowsException() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    new UserStory("US001",
+                            "Product Owner",
+                            null,
+                            "None");
+                }
+        );
+
+        String expectedMessage = "User Story text must not be empty";
+        String resultMessage = exception.getMessage();
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    @DisplayName("US constructor throws exception with empty or blank text")
+    void emptyOrBlankTextThrowsException(String text) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new UserStory("US002",
                             "Manager",
-                            "",
+                            text,
                             "None");
                 }
         );
@@ -69,14 +125,32 @@ class UserStoryTest {
     }
 
     @Test
-    @DisplayName("throws exception with empty acceptance criteria")
-    void emptyAcceptanceCriteriaThrowsException() {
+    @DisplayName("US constructor throws exception with null acceptance criteria")
+    void nullAcceptanceCriteriaThrowsException() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    new UserStory("US001",
+                            "Product Owner",
+                            "As Product Owner, I want to create a user story and add it to the Product Backlog",
+                            null);
+                }
+        );
+
+        String expectedMessage = "User Story acceptance criteria must not be empty";
+        String resultMessage = exception.getMessage();
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    @DisplayName("US constructor throws exception with empty or blank acceptance criteria")
+    void emptyAcceptanceCriteriaThrowsException(String ac) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new UserStory("US002",
                             "Manager",
                             "As Product Owner, I want to create a user story and add it to the Product Backlog",
-                            "");
+                            ac);
                 }
         );
 
