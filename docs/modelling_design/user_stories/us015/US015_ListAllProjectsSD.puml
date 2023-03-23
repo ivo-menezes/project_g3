@@ -1,60 +1,48 @@
 @startuml
 !theme plain
+autonumber
 hide footbox
 title "US015 - As Manager, I want to get a list of all projects"
 
 actor Manager as Manager
 participant ": ListProjectUI" as UI
 participant ": ListProjectController" as Controller
-participant "lsProject : List<ProjectDTO>" as DTOList
-participant "ProjectDTO : ProjectDTO" as DTO
 participant ": ProjectList" as ProjectList
-participant "project : Project" as project
-
+participant ": ProjectMapper" as Mapper
+participant "lsProject : List<ProjectDTO>" as DTOList
 
 activate Manager #FFBBBB
-Manager ->  UI: Requests list of all projects
+Manager -> UI: Requests list of all projects
 
 activate UI #FFBBBB
 UI -> Controller: listProjects()
 
 activate Controller #FFBBBB
-Controller -> DTOList ** : create
-
-loop for each project
-Controller -> ProjectList : getProject(i)
+Controller -> ProjectList : getProjectList()
 activate ProjectList #FFBBBB
-ProjectList -> project : getCode()
-activate project #FFBBBB
-deactivate project
-ProjectList -> project : getName()
-activate project #FFBBBB
-deactivate project
-ProjectList -> project : getCustomer()
-activate project #FFBBBB
-deactivate project
-ProjectList -> project : getStartDate()
-activate project #FFBBBB
-deactivate project
-ProjectList -> project : getEndDate()
-activate project #FFBBBB
-deactivate project
-ProjectList -> project : getStatusProject()
-activate project #FFBBBB
-deactivate project
 
-ProjectList -> DTO ** : create(code, name, customer, start date, end date, status project)
+ProjectList -> Controller : projectList
+deactivate ProjectList
 
-Controller -> DTOList : add(projectDTO)
+Controller -> Mapper : toDTOList(projectList)
+activate Mapper #FFBBBB
+
+Mapper -> DTOList ** : create
+
+loop for each project in ProjectList
+Mapper -> Mapper : toDTO(project)
+Mapper -> DTOList : add(projectDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
-deactivate ProjectList
 end
+
+Mapper -> Controller : lsProject
+deactivate Mapper
 
 Controller --> UI : lsProject
 deactivate Controller
-deactivate UI
 
 UI --> Manager: Displays all projects
+deactivate UI
 deactivate Manager #FFBBBB
 @enduml
