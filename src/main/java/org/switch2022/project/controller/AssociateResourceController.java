@@ -1,5 +1,6 @@
 package org.switch2022.project.controller;
 
+import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.*;
 
 public class AssociateResourceController {

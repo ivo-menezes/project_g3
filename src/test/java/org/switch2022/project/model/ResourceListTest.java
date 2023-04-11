@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.switch2022.project.mapper.ResourceDTO;
 
 import java.util.ArrayList;
 import java.util.Date;

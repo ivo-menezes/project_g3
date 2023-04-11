@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectList;
-import org.switch2022.project.model.UserStoryDTO;
+import org.switch2022.project.mapper.UserStoryDTO;
 
 public class CreateUserStoryController {
     private final ProjectList projectList;

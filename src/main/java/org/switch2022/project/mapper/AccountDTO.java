@@ -1,4 +1,4 @@
-package org.switch2022.project.model;
+package org.switch2022.project.mapper;
 
 public class AccountDTO {
     public String email;

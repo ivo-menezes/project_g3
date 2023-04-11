@@ -2,7 +2,7 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectList;
-import org.switch2022.project.model.ResourceDTO;
+import org.switch2022.project.mapper.ResourceDTO;
 
 import java.util.List;
 

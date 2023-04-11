@@ -3,10 +3,10 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

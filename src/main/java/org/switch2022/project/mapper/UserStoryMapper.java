@@ -1,4 +1,7 @@
-package org.switch2022.project.model;
+package org.switch2022.project.mapper;
+
+import org.switch2022.project.model.IFactoryUserStory;
+import org.switch2022.project.model.UserStory;
 
 import java.util.ArrayList;
 import java.util.List;

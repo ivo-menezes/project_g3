@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.mapper.RegisterAccountDTO;
+
 import java.util.Objects;
 
 public class Account {

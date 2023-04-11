@@ -2,6 +2,8 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.mapper.AccountDTO;
+import org.switch2022.project.mapper.RegisterAccountDTO;
 
 import java.util.ArrayList;
 

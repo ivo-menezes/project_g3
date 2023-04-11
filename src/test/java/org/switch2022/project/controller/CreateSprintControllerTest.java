@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectList;
-import org.switch2022.project.model.SprintDTO;
+import org.switch2022.project.mapper.SprintDTO;
 import org.switch2022.project.model.SprintList;
 
 import java.text.ParseException;

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectList;
-import org.switch2022.project.model.UserStoryDTO;
+import org.switch2022.project.mapper.UserStoryDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

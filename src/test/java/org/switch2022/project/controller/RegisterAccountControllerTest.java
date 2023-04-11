@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.AccountList;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.ProfileList;
-import org.switch2022.project.model.RegisterAccountDTO;
+import org.switch2022.project.mapper.RegisterAccountDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
