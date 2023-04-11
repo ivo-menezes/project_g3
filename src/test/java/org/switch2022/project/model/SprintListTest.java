@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.SprintDTO;
+import org.switch2022.project.model.sprint.Sprint;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

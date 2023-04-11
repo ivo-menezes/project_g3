@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.mapper.SprintDTO;
+import org.switch2022.project.model.sprint.Sprint;
 
 import java.util.ArrayList;
 import java.util.Date;
