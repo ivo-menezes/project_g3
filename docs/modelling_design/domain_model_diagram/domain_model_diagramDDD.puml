@@ -1,15 +1,15 @@
 @startuml
 !theme plain
-skinparam linetype polyline
+skinparam linetype ortho
 package "Account" as Acc #Wheat{
     Object Account <<Entity>> <<Root>> {
     }
 }
-Object name <<VO>> #Gainsboro
-Object phoneNumber <<VO>> #Gainsboro
-Object email <<VO>> #Gainsboro
-Object photo <<VO>> #Gainsboro
-Object accountStatus <<VO>> #Gainsboro
+Object name <<VO>> #powderblue
+Object phoneNumber <<VO>> #powderblue
+Object email <<VO>> #powderblue
+Object photo <<VO>> #powderblue
+Object accountStatus <<VO>> #powderblue
 
 Account -->  name
 Account -->  phoneNumber
@@ -22,10 +22,10 @@ package "Resource" as Res #Wheat {
     }
 }
 
-Object timePeriod <<VO>> #Gainsboro
-Object percentageOfAllocation <<VO>> #Gainsboro
-Object costPerHour <<VO>> #Gainsboro
-Object role <<VO>> #Gainsboro
+Object timePeriod <<VO>> #powderblue
+Object percentageOfAllocation <<VO>> #powderblue
+Object costPerHour <<VO>> #powderblue
+Object role <<VO>> #powderblue
 
 Resource --> timePeriod
 Resource --> percentageOfAllocation
@@ -35,17 +35,15 @@ Resource --> role
 
 package "Project" as Proj #Wheat {
     Object Project <<Entity>> <<Root>> {
-    code
-    name
-    description
-    start date
-    end date
-    sprint duration
-    number of planned sprints
-    project status
-    budget
     }
 }
+
+Object projectCode <<vo>> #powderblue
+Object projectName <<vo>> #powderblue
+Object durationInWeeks <<vo>> #powderblue
+Object numberOfPlannedSprints <<vo>> #powderblue
+Object projectStatus <<vo>> #powderblue
+Object projectBudget <<vo>> #powderblue
 
 package Typology as Typo #Wheat {
     Object Typology <<Entity>> {
@@ -79,12 +77,12 @@ package "UserStory" as US #Wheat{
     Object UserStory <<Entity>> <<Root>>
 }
 
-Object uSNumber <<VO>> #Gainsboro
-Object actor <<VO>> #Gainsboro
-Object description <<VO>> #Gainsboro
-Object acceptanceCriteria <<VO>> #Gainsboro
-Object status <<VO>> #Gainsboro
-Object priority <<VO>> #Gainsboro
+Object uSNumber <<VO>> #powderblue
+Object actor <<VO>> #powderblue
+Object description <<VO>> #powderblue
+Object acceptanceCriteria <<VO>> #powderblue
+Object status <<VO>> #powderblue
+Object priority <<VO>> #powderblue
 
 UserStory --> uSNumber
 UserStory --> actor
@@ -92,6 +90,15 @@ UserStory --> description
 UserStory --> acceptanceCriteria
 UserStory --> status
 UserStory --> priority
+
+Project --> projectCode
+Project --> projectName
+Project --> description
+Project --> timePeriod
+Project --> durationInWeeks
+Project --> numberOfPlannedSprints
+Project --> projectStatus
+Project --> projectBudget
 
 package "Profile" as Prof #Wheat {
 Object Profile <<Entity>> <<Root>> {
