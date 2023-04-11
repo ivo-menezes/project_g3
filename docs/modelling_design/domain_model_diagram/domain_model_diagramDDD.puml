@@ -17,9 +17,6 @@ package "Resource" as Res {
     percentage of allocation
     cost per hour
     role
-'    }
-'    Object Role <<VO>> {
-'    role name
     }
 }
 package "Project" as Proj {
