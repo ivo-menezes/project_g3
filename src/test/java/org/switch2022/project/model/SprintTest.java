@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.model.userStory.UserStory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

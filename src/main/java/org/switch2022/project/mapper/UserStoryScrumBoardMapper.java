@@ -1,6 +1,6 @@
 package org.switch2022.project.mapper;
 
-import org.switch2022.project.model.UserStory;
+import org.switch2022.project.model.userStory.UserStory;
 
 public class UserStoryScrumBoardMapper {
 

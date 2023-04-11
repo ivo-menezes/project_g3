@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.model.userStory.FactoryUserStoryImpl;
+import org.switch2022.project.model.userStory.IFactoryUserStory;
+import org.switch2022.project.model.userStory.UserStory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.userStory;
+
+import org.switch2022.project.model.userStory.UserStory;
 
 public interface IFactoryUserStory {
 

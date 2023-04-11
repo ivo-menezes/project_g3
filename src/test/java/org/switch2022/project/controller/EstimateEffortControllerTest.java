@@ -3,6 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.userStory.UserStory;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

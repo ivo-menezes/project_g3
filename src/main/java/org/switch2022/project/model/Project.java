@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.mapper.SprintDTO;
 import org.switch2022.project.mapper.UserProjectsDTO;
+import org.switch2022.project.model.userStory.FactoryUserStoryImpl;
 
 import java.util.Date;
 import java.util.List;

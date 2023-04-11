@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.mapper.UserStoryScrumBoardMapper;
+import org.switch2022.project.model.userStory.UserStory;
 
 import java.util.*;
 
