@@ -1,120 +1,149 @@
 @startuml
 !theme plain
-skinparam linetype ortho
-package "Account" as Acc #Wheat{
-    Object Account <<Entity>> <<Root>> {
-    }
-}
-Object name <<VO>> #powderblue
-Object phoneNumber <<VO>> #powderblue
-Object email <<VO>> #powderblue
-Object photo <<VO>> #powderblue
-Object accountStatus <<VO>> #powderblue
+'skinparam linetype ortho
 
-Account -->  name
-Account -->  phoneNumber
-Account -->  email
-Account -->  photo
-Account -->  accountStatus
-
-package "Resource" as Res #Wheat {
-    Object Resource <<Entity>> <<Root>> {
-    }
+skinparam package {
+    backgroundColor SandyBrown
 }
 
-Object timePeriod <<VO>> #powderblue
-Object percentageOfAllocation <<VO>> #powderblue
-Object costPerHour <<VO>> #powderblue
-Object role <<VO>> #powderblue
-
-Resource --> timePeriod
-Resource --> percentageOfAllocation
-Resource --> costPerHour
-Resource --> role
-
-
-package "Project" as Proj #Wheat {
-    Object Project <<Entity>> <<Root>> {
-    }
+skinparam object {
+    backgroundColor LightCyan
 }
 
-Object projectCode <<vo>> #powderblue
-Object projectName <<vo>> #powderblue
-Object durationInWeeks <<vo>> #powderblue
-Object numberOfPlannedSprints <<vo>> #powderblue
-Object projectStatus <<vo>> #powderblue
-Object projectBudget <<vo>> #powderblue
-
-package Typology as Typo #Wheat {
-    Object Typology <<Entity>> {
-    designation
-    }
-    }
-
-package BusinessSector as Bus #Wheat {
-Object BusinessSector <<Entity>> {
-            designation
-            }
-            }
-
-package Customer as Cost #Wheat {
-    Object Customer <<Entity>> {
-    designation
-    }
-    }
-
-package "Sprint" as Spr #Wheat {
-    Object Sprint <<Entity>> <<Root>> {
-    sprint number
-    start date
-    end date
-    US effort estimate
-    }
-    Object UserStoryInSprint <<Entity>> {
-    }
+skinparam object<<ID>> {
+    backgroundColor LightSkyBlue
 }
-package "UserStory" as US #Wheat{
+
+skinparam object<<Entity>> {
+    backgroundColor Moccasin
+}
+
+' - Value Objects
+' -- plain VOs
+Object Name <<VO>>
+Object PhoneNumber <<VO>>
+Object Email <<VO>>
+Object Photo <<VO>>
+Object AccountStatus <<VO>>
+Object TimePeriod <<VO>>
+Object PercentageOfAllocation <<VO>>
+Object CostPerHour <<VO>>
+Object Role <<VO>>
+Object Actor <<VO>>
+Object Description <<VO>>
+Object AcceptanceCriteria <<VO>>
+Object ProjectName <<VO>>
+Object SprintDuration <<VO>>
+Object NumberOfPlannedSprints <<VO>>
+Object ProjectStatus <<VO>>
+Object ProjectBudget <<VO>>
+Object USEffortEstimate <<VO>>
+Object USStatus <<VO>>
+Object USPriority <<VO>>
+Object Designation <<VO>>
+
+' -- DomainID VOs
+Object ProjectCode <<VO>> <<ID>>
+Object SprintNumber <<VO>> <<ID>>
+Object USNumber <<VO>> <<ID>>
+Object AccountID <<VO>> <<ID>>
+Object ProfileName <<VO>> <<ID>>
+Object TypologyID <<VO>> <<ID>>
+Object BusinessSectorID <<VO>> <<ID>>
+Object CustomerID <<VO>> <<ID>>
+
+' - Entities in Aggregates (packages)
+package "Project" as Proj {
+    Object Project <<Entity>> <<Root>>
+}
+
+Project -down-> "1" ProjectCode
+Project --> "1" ProjectName
+Project --> "1" Description
+Project --> "1" TimePeriod
+Project --> "1" SprintDuration
+Project --> "1" NumberOfPlannedSprints
+Project --> "1" ProjectStatus
+Project --> "1" ProjectBudget
+
+package "Sprint" as Spr {
+    Object Sprint <<Entity>> <<Root>>
+    Object UserStoryInSprint <<Entity>>
+}
+
+Sprint --> "*" UserStoryInSprint
+Sprint -up-> "1" ProjectCode
+Sprint --> "1" SprintNumber
+Sprint --> "1" TimePeriod
+
+UserStoryInSprint --> "1" USNumber
+UserStoryInSprint --> "1" USEffortEstimate
+
+package "UserStory" as US {
     Object UserStory <<Entity>> <<Root>>
 }
 
-Object uSNumber <<VO>> #powderblue
-Object actor <<VO>> #powderblue
-Object description <<VO>> #powderblue
-Object acceptanceCriteria <<VO>> #powderblue
-Object status <<VO>> #powderblue
-Object priority <<VO>> #powderblue
+UserStory -up-> "1" ProjectCode
+UserStory --> "1" USNumber
+UserStory --> "1" Actor
+UserStory --> "1" Description
+UserStory --> "1" AcceptanceCriteria
+UserStory --> "1" USStatus
+UserStory --> "1" USPriority
 
-UserStory --> uSNumber
-UserStory --> actor
-UserStory --> description
-UserStory --> acceptanceCriteria
-UserStory --> status
-UserStory --> priority
 
-Project --> projectCode
-Project --> projectName
-Project --> description
-Project --> timePeriod
-Project --> durationInWeeks
-Project --> numberOfPlannedSprints
-Project --> projectStatus
-Project --> projectBudget
-
-package "Profile" as Prof #Wheat {
-Object Profile <<Entity>> <<Root>> {
-profileName
+package "Account" as Acc {
+    Object Account <<Entity>> <<Root>>
 }
 
+Account --> "1" Name
+Account -->  "1" PhoneNumber
+Account --> "1" Email
+Account --> "1" Photo
+Account --> "1" AccountStatus
+Account --> "1" AccountID
 
-BusinessSector --> "1" Project
-Customer --> "1" Project
-Typology --> "1" Project
-Sprint "1" -- "*" UserStoryInSprint
-Account -up-> "             1" Profile
-'Resource "1" -down- "1" Role
-Project "1" - "*" Sprint
-Project "1" -> "*" UserStory
-Project -left-> "*" Resource
-UserStoryInSprint "*" - "1" UserStory
-Resource "1" <- "*" Account
+package "Resource" as Res {
+    Object Resource <<Entity>> <<Root>>
+}
+
+Resource --> "1" TimePeriod
+Resource --> "1" PercentageOfAllocation
+Resource --> "1" CostPerHour
+Resource --> "1" Role
+Resource --> "1" ProjectCode
+Resource --> "1" AccountID
+
+package Typology as Typo {
+    Object Typology <<Entity>>
+    }
+
+Typology -up-> "1" Designation
+Typology --> "1" TypologyID
+Project -up-> "1" TypologyID
+
+package BusinessSector as Bus {
+    Object BusinessSector <<Entity>>
+            }
+
+BusinessSector -up-> "1" Designation
+BusinessSector --> "1" BusinessSectorID
+Project -up-> "1" BusinessSectorID
+
+package Customer as Cost {
+    Object Customer <<Entity>>
+    }
+
+Customer -up-> "1" Designation
+Customer --> "1" CustomerID
+Project -up-> "1" CustomerID
+
+package "Profile" as Prof {
+    Object Profile <<Entity>> <<Root>>
+    }
+
+Profile --> "1" ProfileName
+
+Account -up-> "1" ProfileName
+
 @enduml
