@@ -1,25 +1,39 @@
 @startuml
 !theme plain
 skinparam linetype polyline
-package "Account" as Acc {
+package "Account" as Acc #Wheat{
     Object Account <<Entity>> <<Root>> {
-    name
-    phone number
-    email
-    photo: [0..1]
-    account status: [Active, Inactive]
     }
 }
-package "Resource" as Res {
+Object name <<VO>> #Gainsboro
+Object phoneNumber <<VO>> #Gainsboro
+Object email <<VO>> #Gainsboro
+Object photo <<VO>> #Gainsboro
+Object accountStatus <<VO>> #Gainsboro
+
+Account -->  name
+Account -->  phoneNumber
+Account -->  email
+Account -->  photo
+Account -->  accountStatus
+
+package "Resource" as Res #Wheat {
     Object Resource <<Entity>> <<Root>> {
-    start date
-    end date
-    percentage of allocation
-    cost per hour
-    role
     }
 }
-package "Project" as Proj {
+
+Object timePeriod <<VO>> #Gainsboro
+Object percentageOfAllocation <<VO>> #Gainsboro
+Object costPerHour <<VO>> #Gainsboro
+Object role <<VO>> #Gainsboro
+
+Resource --> timePeriod
+Resource --> percentageOfAllocation
+Resource --> costPerHour
+Resource --> role
+
+
+package "Project" as Proj #Wheat {
     Object Project <<Entity>> <<Root>> {
     code
     name
@@ -61,7 +75,7 @@ package "Sprint" as Spr {
     Object UserStoryInSprint <<Entity>> {
     }
 }
-package "UserStory" as US{
+package "UserStory" as US #Wheat{
     Object UserStory <<Entity>> <<Root>> {
     us number
     actor
@@ -72,7 +86,8 @@ package "UserStory" as US{
     }
 }
 
-package "Profile" as Prof{
+
+package "Profile" as Prof #Wheat {
 Object Profile <<Entity>> <<Root>> {
 profileName
 }
@@ -82,7 +97,7 @@ BusinessSector --> "1" Project
 Customer --> "1" Project
 Typology --> "1" Project
 Sprint "1" -- "*" UserStoryInSprint
-Account -down-> "             1" Profile
+Account -up-> "             1" Profile
 'Resource "1" -down- "1" Role
 Project "1" - "*" Sprint
 Project "1" -> "*" UserStory
