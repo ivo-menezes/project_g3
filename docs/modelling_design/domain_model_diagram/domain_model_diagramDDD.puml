@@ -1,0 +1,95 @@
+@startuml
+!theme plain
+skinparam linetype polyline
+package "Account" as Acc {
+    Object Account <<Entity>> <<Root>> {
+    name
+    phone number
+    email
+    photo: [0..1]
+    account status: [Active, Inactive]
+    }
+}
+package "Resource" as Res {
+    Object Resource <<Entity>> <<Root>> {
+    start date
+    end date
+    percentage of allocation
+    cost per hour
+    role
+'    }
+'    Object Role <<VO>> {
+'    role name
+    }
+}
+package "Project" as Proj {
+    Object Project <<Entity>> <<Root>> {
+    code
+    name
+    description
+    start date
+    end date
+    sprint duration
+    number of planned sprints
+    project status
+    budget
+    }
+}
+
+package Typology as Typo {
+    Object Typology <<Entity>> {
+    designation
+    }
+    }
+
+package BusinessSector as Bus {
+Object BusinessSector <<Entity>> {
+            designation
+            }
+            }
+
+package Customer as Cost {
+    Object Customer <<Entity>> {
+    designation
+    }
+    }
+
+package "Sprint" as Spr {
+    Object Sprint <<Entity>> <<Root>> {
+    sprint number
+    start date
+    end date
+    US effort estimate
+    }
+    Object UserStoryInSprint <<Entity>> {
+    }
+}
+package "UserStory" as US{
+    Object UserStory <<Entity>> <<Root>> {
+    us number
+    actor
+    description
+    acceptance criteria
+    status
+    priority
+    }
+}
+
+package "Profile" as Prof{
+Object Profile <<Entity>> <<Root>> {
+profileName
+}
+
+
+BusinessSector --> "1" Project
+Customer --> "1" Project
+Typology --> "1" Project
+Sprint "1" -- "*" UserStoryInSprint
+Account -down-> "             1" Profile
+'Resource "1" -down- "1" Role
+Project "1" - "*" Sprint
+Project "1" -> "*" UserStory
+Project -left-> "*" Resource
+UserStoryInSprint "*" - "1" UserStory
+Resource "1" <- "*" Account
+@enduml
