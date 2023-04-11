@@ -47,25 +47,25 @@ package "Project" as Proj #Wheat {
     }
 }
 
-package Typology as Typo {
+package Typology as Typo #Wheat {
     Object Typology <<Entity>> {
     designation
     }
     }
 
-package BusinessSector as Bus {
+package BusinessSector as Bus #Wheat {
 Object BusinessSector <<Entity>> {
             designation
             }
             }
 
-package Customer as Cost {
+package Customer as Cost #Wheat {
     Object Customer <<Entity>> {
     designation
     }
     }
 
-package "Sprint" as Spr {
+package "Sprint" as Spr #Wheat {
     Object Sprint <<Entity>> <<Root>> {
     sprint number
     start date
@@ -76,16 +76,22 @@ package "Sprint" as Spr {
     }
 }
 package "UserStory" as US #Wheat{
-    Object UserStory <<Entity>> <<Root>> {
-    us number
-    actor
-    description
-    acceptance criteria
-    status
-    priority
-    }
+    Object UserStory <<Entity>> <<Root>>
 }
 
+Object uSNumber <<VO>> #Gainsboro
+Object actor <<VO>> #Gainsboro
+Object description <<VO>> #Gainsboro
+Object acceptanceCriteria <<VO>> #Gainsboro
+Object status <<VO>> #Gainsboro
+Object priority <<VO>> #Gainsboro
+
+UserStory --> uSNumber
+UserStory --> actor
+UserStory --> description
+UserStory --> acceptanceCriteria
+UserStory --> status
+UserStory --> priority
 
 package "Profile" as Prof #Wheat {
 Object Profile <<Entity>> <<Root>> {
