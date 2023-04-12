@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.mapper.AccountDTO;
 import org.switch2022.project.model.AccountList;
-import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.profile.Profile;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;

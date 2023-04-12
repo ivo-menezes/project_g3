@@ -1,7 +1,7 @@
 package org.switch2022.project.model.account;
 
 import org.switch2022.project.mapper.RegisterAccountDTO;
-import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.profile.Profile;
 
 import java.util.Objects;
 

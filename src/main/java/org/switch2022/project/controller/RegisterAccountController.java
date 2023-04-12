@@ -1,7 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.AccountList;
-import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.ProfileList;
 import org.switch2022.project.mapper.RegisterAccountDTO;
 

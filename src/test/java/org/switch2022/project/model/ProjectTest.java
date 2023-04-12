@@ -8,6 +8,7 @@ import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.mapper.SprintDTO;
 import org.switch2022.project.mapper.UserProjectsDTO;
 import org.switch2022.project.model.account.Account;
+import org.switch2022.project.model.profile.Profile;
 
 import java.util.ArrayList;
 import java.util.Calendar;

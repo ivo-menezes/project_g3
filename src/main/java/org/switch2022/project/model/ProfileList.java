@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.model.profile.Profile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
