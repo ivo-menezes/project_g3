@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.AccountDTO;
 import org.switch2022.project.mapper.RegisterAccountDTO;
+import org.switch2022.project.model.account.Account;
 
 import java.util.ArrayList;
 
