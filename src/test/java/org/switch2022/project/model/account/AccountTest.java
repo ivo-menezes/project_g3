@@ -1,4 +1,4 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.account;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
