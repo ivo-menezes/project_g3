@@ -5,16 +5,14 @@ autonumber
 title "US017 - As Product Owner, I want to create a user story and add it to the Product Backlog"
 
 actor "Product Owner" as user
-participant ": CreateUserStoryUI" as UI
-participant "userStoryDTO : UserStoryDTO" as dto
-participant ": CreateUserStoryController" as Controller
-participant ": ProjectList" as ProjectList
-participant "project : Project" as Project
-participant "productBacklog : ProductBacklog" as ProductBacklog
-participant ": UserStoryMapper" as Mapper
-participant "factoryUserStory: FactoryUserStoryImpl" as Factory
-participant "userStory : UserStory" as UserStory
-
+participant ":CreateUserStoryUI" as UI
+participant "userStoryDTO :UserStoryDTO" as dto
+participant ":CreateUserStoryController" as Controller
+participant ":UserStoryService" as Services
+participant ":ProjectRepository" as Repository
+participant "factoryUserStory :FactoryUserStoryImpl" as Factory
+participant "userStory :UserStory" as UserStory
+participant "userStoryRepository :UserStoryRepository" as UsRepository
 
 activate user #FFBBBB
 user ->  UI: Selects project and inserts US data\n (projectCode, userStoryId, actor, \ntext, acceptanceCriteria, priority)
@@ -24,43 +22,37 @@ UI --> dto ** : create(userStoryId, actor, \ntext, acceptanceCriteria)
 UI -> Controller: createUserStory(projectCode, \nuserStoryDTO, priority)
 
 activate Controller #FFBBBB
-Controller -> ProjectList: getProject(projectCode)
+Controller -> Services: create (projectCode, userStoryDTO, priority)
 
-activate ProjectList #FFBBBB
-ProjectList --> Controller: project
+activate Services #FFBBBB
+Services -> Repository: containsID(projectCode)
+
+activate Repository #FFBBBB
+Repository -->Services: true
 deactivate
-
-Controller -> Project : getProductBacklog()
-
-activate Project #FFBBBB
-Project --> Controller: productBacklog
-deactivate
-
-Controller -> ProductBacklog : createAndAddUserStory(userStoryDTO, priority)
-
-activate ProductBacklog #FFBBBB
-ProductBacklog -> Mapper : fromDTO(userStoryDTO, factoryUserStory)
-
-activate Mapper #FFBBBB
-Mapper -> Factory : createUserStory(\nuserStoryDTO.userStoryId,\nuserStoryDTO.actor,\nuserStoryDTO.text,\nuserStoryDTO.acceptanceCriteria)
+Services -> Factory:createUserStory\n (userStoryDTO, priority)
 
 activate Factory #FFBBBB
-Factory --> UserStory ** : create(\nuserStoryDTO.userStoryId,\nuserStoryDTO.actor,\nuserStoryDTO.text,\nuserStoryDTO.acceptanceCriteria)
-Factory --> Mapper : userStory
-deactivate Factory
-
-Mapper --> ProductBacklog: userStory
-deactivate Mapper
-
-ProductBacklog -> ProductBacklog : doesNotContain(userStory)
-ProductBacklog -> ProductBacklog : add(userStory, priority)
-
-ProductBacklog --> Controller : true
+Factory --> "userStoryID:UserStoryID" ** :create (userStoryDTO.userStoryID)
+Factory --> "userStoryActor:UserStoryActor" ** :create (userStoryDTO.actor)
+Factory --> "userStoryPriority:UserStoryPriority"** :create (userStoryDTO.priority)
+Factory --> "userStoryStatus:UserStoryStatus" ** :create ()
+Factory --> "userStoryAcceptanceCriteria:UserStoryAcceptanceCriteria" ** :create (userStoryDTO.acceptanceCriteria)
+Factory --> "description:Description" ** :create (userStoryDTO.description)
+Factory --> UserStory ** :create (userStoryID,\n userStoryActor,\n userStoryPriority,\n userStoryStatus,\n userStoryAcceptanceCriteria,\n description )
+Factory --> Services :userStory
+Services -> UsRepository :save(userStory)
 deactivate
 
-Controller --> UI : true
+activate UsRepository #FFBBBB
+UsRepository ->UsRepository :containsID
+UsRepository ->UsRepository :put(userStoryID, userStory)
+UsRepository --> Services: true
 deactivate
-
-UI --> user : Confirms US creation and addition to Product Backlog
+Services --> Controller: true
+deactivate
+Controller --> UI: true
+deactivate
+UI --> user: Confirms US creation and addition to Product Backlog.
 
 @enduml
