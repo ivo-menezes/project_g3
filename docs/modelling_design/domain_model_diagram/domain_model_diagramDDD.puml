@@ -29,23 +29,23 @@ Object TimePeriod <<VO>>
 Object PercentageOfAllocation <<VO>>
 Object CostPerHour <<VO>>
 Object Role <<VO>>
-Object Actor <<VO>>
+Object UserStoryActor <<VO>>
 Object Description <<VO>>
-Object AcceptanceCriteria <<VO>>
+Object UserStoryAcceptanceCriteria <<VO>>
 Object ProjectName <<VO>>
 Object SprintDuration <<VO>>
 Object NumberOfPlannedSprints <<VO>>
 Object ProjectStatus <<VO>>
 Object ProjectBudget <<VO>>
-Object USEffortEstimate <<VO>>
-Object USStatus <<VO>>
-Object USPriority <<VO>>
+Object UserStoryEffortEstimate <<VO>>
+Object UserStoryStatus <<VO>>
+Object UserStoryPriority <<VO>>
 Object Designation <<VO>>
 
 ' -- DomainID VOs
 Object ProjectCode <<VO>> <<ID>>
 Object SprintNumber <<VO>> <<ID>>
-Object USNumber <<VO>> <<ID>>
+Object UserStoryID <<VO>> <<ID>>
 Object AccountID <<VO>> <<ID>>
 Object ProfileName <<VO>> <<ID>>
 Object TypologyID <<VO>> <<ID>>
@@ -76,20 +76,20 @@ Sprint -up-> "1" ProjectCode
 Sprint --> "1" SprintNumber
 Sprint --> "1" TimePeriod
 
-UserStoryInSprint --> "1" USNumber
-UserStoryInSprint --> "1" USEffortEstimate
+UserStoryInSprint --> "1" UserStoryID
+UserStoryInSprint --> "1" UserStoryEffortEstimate
 
 package "UserStory" as US {
     Object UserStory <<Entity>> <<Root>>
 }
 
 UserStory -up-> "1" ProjectCode
-UserStory --> "1" USNumber
-UserStory --> "1" Actor
+UserStory --> "1" UserStoryID
+UserStory --> "1" UserStoryActor
 UserStory --> "1" Description
-UserStory --> "1" AcceptanceCriteria
-UserStory --> "1" USStatus
-UserStory --> "1" USPriority
+UserStory --> "1" UserStoryAcceptanceCriteria
+UserStory --> "1" UserStoryStatus
+UserStory --> "1" UserStoryPriority
 
 
 package "Account" as Acc {
