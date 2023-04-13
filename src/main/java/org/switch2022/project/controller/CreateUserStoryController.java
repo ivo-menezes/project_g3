@@ -1,27 +1,34 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.ProductBacklog;
-import org.switch2022.project.model.project.Project;
-import org.switch2022.project.model.ProjectList;
 import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.service.UserStoryService;
 
 public class CreateUserStoryController {
-    private final ProjectList projectList;
+    private final UserStoryService service;
 
-    public CreateUserStoryController(ProjectList projectList) {
-        if (projectList == null) {
-            throw new IllegalArgumentException("Project List must not be null");
+    public CreateUserStoryController(UserStoryService service) {
+        if (service == null) {
+            throw new IllegalArgumentException("UserStoryService must not be null.");
         }
-        this.projectList = projectList;
+        this.service = service;
     }
 
-    public boolean createUserStory(int projectCode, UserStoryDTO userStoryDTO, int priority) {
-        if (userStoryDTO == null) {
-            throw new IllegalArgumentException("UserStoryDTO must not be null");
+    public boolean createUserStory(ProjectCode projectCode, UserStoryDTO userStoryDTO, UserStoryPriority priority) {
+        if (projectCode == null) {
+            throw new IllegalArgumentException("projectCode must not be null.");
         }
 
-        Project project = projectList.getProject(projectCode);
-        ProductBacklog productBacklog = project.getProductBacklog();
-        return productBacklog.createAndAddUserStory(userStoryDTO, priority);
+        if (userStoryDTO == null) {
+            throw new IllegalArgumentException("userStoryDTO must not be null.");
+        }
+
+        if (priority == null) {
+            throw new IllegalArgumentException("priority must not be null.");
+        }
+
+
+        return service.createUserStory(projectCode, userStoryDTO, priority);
     }
 }

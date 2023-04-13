@@ -14,6 +14,10 @@ public class UserStoryPriority implements ValueObject {
         }
     }
 
+    public int getValue() {
+        return this.priority;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
