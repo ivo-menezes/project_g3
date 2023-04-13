@@ -8,6 +8,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.project.Project;
+import org.switch2022.project.model.resource.Resource;
 
 import java.util.Arrays;
 import java.util.Calendar;
