@@ -4,6 +4,7 @@ import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.model.project.Project;
+import org.switch2022.project.model.role.Role;
 
 public class AssociateResourceController {
     private AccountList accountList;

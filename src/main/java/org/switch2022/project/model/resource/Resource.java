@@ -1,7 +1,7 @@
 package org.switch2022.project.model.resource;
 
 import org.switch2022.project.mapper.ResourceDTO;
-import org.switch2022.project.model.Role;
+import org.switch2022.project.model.role.Role;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.model.project.Project;
 

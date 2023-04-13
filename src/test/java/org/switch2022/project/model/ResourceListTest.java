@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.model.project.Project;
+import org.switch2022.project.model.role.Role;
 
 import java.util.ArrayList;
 import java.util.Date;
