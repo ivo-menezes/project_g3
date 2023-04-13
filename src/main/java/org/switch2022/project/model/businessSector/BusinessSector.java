@@ -1,4 +1,4 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.businessSector;
 
 import java.util.Objects;
 

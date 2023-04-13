@@ -3,6 +3,8 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.customer.Customer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 

@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.typology.Typology;
 
 import static org.junit.jupiter.api.Assertions.*;
 

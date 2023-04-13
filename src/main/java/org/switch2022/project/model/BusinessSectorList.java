@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.model.businessSector.BusinessSector;
+
 import java.util.ArrayList;
 import java.util.List;
 
