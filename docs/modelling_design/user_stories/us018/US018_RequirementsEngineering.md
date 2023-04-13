@@ -16,7 +16,8 @@ stories (US) is the “product backlog”, i.e., the ordered set (by priority) o
 
 - *Question:* What kind of information should the Product Backlog contain?
 - *Answer:*  The Product Backlog is the list of User Stories to be implemented (not concluded nor deleted). Probably it should be a list of strings.
-- 
+
+ 
 - *Question:* How to define the priority of User Stories? Is it possible for two User Stories to have the same priority?
 - *Answer:* The product Backlog is the list of User Stories yet to be implemented, by descendent order of priority. Naturally, two User Stories can not have the same priority since a list can not have two elements in the same position [...] the priority/position in the list can be set by the Product Owner. New User Stories can be added to the Product Backlog. The relative User Story positioning can be defined by the Product Owner.
 
