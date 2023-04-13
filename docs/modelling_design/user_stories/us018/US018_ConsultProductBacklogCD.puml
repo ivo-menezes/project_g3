@@ -1,0 +1,39 @@
+@startuml
+
+class ConsultProductBacklogController {
+getProductBacklog(projectCode)
+}
+
+class UserStoryServices {
+getProductBacklog(projectCode)
+}
+
+class ProjectRepository {
+containsID(projectCode)
+}
+
+class UserStoryMapper{
+getProductBacklog(projectCode)
+toDTO(userStory)
+}
+
+class UserStoryRepository {
+getProductBacklog(projectCode)
+}
+
+class UserStoryDTO {
+id : String
+actor : String
+text : String
+acceptanceCriteria : String
+status : Status
+}
+
+ConsultProductBacklogController "1" *-- "1" UserStoryServices
+UserStoryServices "1" *-left- "1" ProjectRepository
+UserStoryServices "1" *-- "1" UserStoryMapper
+UserStoryMapper "1" *-- "1" UserStoryRepository
+UserStoryMapper ..> UserStoryDTO
+UserStoryRepository ..> UserStoryDTO
+
+@enduml
