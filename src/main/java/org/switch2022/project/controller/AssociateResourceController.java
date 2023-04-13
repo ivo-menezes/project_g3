@@ -3,6 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.account.Account;
+import org.switch2022.project.model.project.Project;
 
 public class AssociateResourceController {
     private AccountList accountList;

@@ -1,6 +1,6 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Project;
+import org.switch2022.project.model.project.Project;
 import org.switch2022.project.mapper.ProjectDTO;
 import org.switch2022.project.model.ProjectList;
 

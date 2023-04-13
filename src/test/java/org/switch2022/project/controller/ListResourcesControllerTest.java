@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.project.Project;
 
 import java.util.ArrayList;
 import java.util.List;

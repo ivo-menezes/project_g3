@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.mapper.UserStoryMapper;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.project.Project;
 import org.switch2022.project.model.userStory.UserStory;
 
 import java.util.ArrayList;

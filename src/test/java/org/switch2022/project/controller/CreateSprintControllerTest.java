@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.switch2022.project.model.Project;
+import org.switch2022.project.model.project.Project;
 import org.switch2022.project.model.ProjectList;
 import org.switch2022.project.mapper.SprintDTO;
 import org.switch2022.project.model.SprintList;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.switch2022.project.mapper.ProjectDTO;
+import org.switch2022.project.model.project.Project;
 
 import java.util.Calendar;
 import java.util.Date;

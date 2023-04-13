@@ -1,8 +1,12 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.project;
 
 import org.switch2022.project.mapper.ResourceDTO;
 import org.switch2022.project.mapper.SprintDTO;
 import org.switch2022.project.mapper.UserProjectsDTO;
+import org.switch2022.project.model.ProductBacklog;
+import org.switch2022.project.model.ResourceList;
+import org.switch2022.project.model.Role;
+import org.switch2022.project.model.SprintList;
 import org.switch2022.project.model.account.Account;
 import org.switch2022.project.model.userStory.FactoryUserStoryImpl;
 
