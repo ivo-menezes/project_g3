@@ -1,7 +1,8 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.role;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Role;
 
 import static org.junit.jupiter.api.Assertions.*;
 
