@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface Repository <ID extends DomainId, T extends AggregateRoot<ID> > {
 
-    public T save(T entity);
+    public boolean save(T entity);
 
     public Iterable<T> findAll();
 
