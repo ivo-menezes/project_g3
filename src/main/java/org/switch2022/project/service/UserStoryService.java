@@ -64,7 +64,7 @@ public class UserStoryService {
 
         ProjectDDD project = projectOptional.get();
 
-        UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryDTO);
+        UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryDTO, projectCode);
 
         return this.userStoryRepository.save(userStory) && project.addToProductBacklog(userStory.identity(), priority);
 

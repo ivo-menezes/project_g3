@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class UserStoryDDD implements AggregateRoot<UserStoryID> {
 
+    private ProjectCode projectCode;
+
     private UserStoryID userStoryID;
 
     private UserStoryActor userStoryActor;
@@ -26,7 +28,12 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
      * @param userStoryDescription        of user story
      * @param userStoryAcceptanceCriteria of user story
      */
-    public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
+    public UserStoryDDD(ProjectCode projectCode, UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
+
+        if (projectCode == null) {
+            throw new IllegalArgumentException("User Story project code must not be null");
+        }
+
         if (userStoryID == null) {
             throw new IllegalArgumentException("User Story ID must not be null");
         }
@@ -43,12 +50,15 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
             throw new IllegalArgumentException("User Story acceptance criteria must not be null");
         }
 
+        this.projectCode = projectCode;
         this.userStoryID = userStoryID;
         this.userStoryActor = userStoryActor;
         this.userStoryDescription = userStoryDescription;
         this.userStoryAcceptanceCriteria = userStoryAcceptanceCriteria;
         this.userStoryStatus = userStoryStatus.TO_DO;
     }
+
+    public ProjectCode getProjectCode() { return projectCode; }
 
     public UserStoryID identity() { return userStoryID; }
 
@@ -65,17 +75,16 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof UserStoryDDD)) {
             return false;
         }
-        UserStoryDDD userStory = (UserStoryDDD) o;
-        return this.userStoryID.equals(userStory.userStoryID);
+        UserStoryDDD that = (UserStoryDDD) o;
+        return projectCode.equals(that.projectCode) && userStoryID.equals(that.userStoryID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userStoryID);
+        return Objects.hash(projectCode, userStoryID);
     }
-
 
 }

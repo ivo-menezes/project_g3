@@ -99,7 +99,7 @@ class UserStoryServiceTest {
 
         // factoryDouble has to be trained to return a userStoryDouble
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
-        when(factoryDouble.createUserStory(userStoryDTODouble)).thenReturn(userStoryDouble);
+        when(factoryDouble.createUserStory(userStoryDTODouble, projectCodeDouble)).thenReturn(userStoryDouble);
 
         // usRepositoryDouble has to be trained to respond with true when asked to save a UserStory
         Repository<UserStoryID, UserStoryDDD> usRepositoryDouble = mock(Repository.class);
