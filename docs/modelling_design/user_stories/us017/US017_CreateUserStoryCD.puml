@@ -1,56 +1,63 @@
 @startuml
+skinparam linetype ortho
 
 class CreateUserStoryController {
-projectList : ProjectList
 createUserStory(projectCode, userStoryDTO, priority)
 }
 
-class ProjectList {
-projectList : List<Project>
-getProject(projectCode)
+class UserStoryService {
+create (projectCode, userStoryDTO, priority)
 }
 
-class Project {
-code : Integer
-name : String
-customer : String
-startDate : Date
-endDate : Date
-status : String
-productBacklog : ProductBacklog
-}
-
-class ProductBacklog {
-userStories: List<UserStory>
-completedUserStories : List<UserStory>
-factoryUserStory : IFactoryUserStory
-mapper : UserStoryMapper
-createUserStoryFromDTO(userStoryDTO)
-createAndAddUserStory(userStoryDTO, priority)
-doesNotContain(userStory)
-add(userStory, priority)
-}
-
-class FactoryUserStoryImpl {
-createUserStory(id, actor, text, acceptanceCriteria)
+class ProjectRepository {
+containsID(projectCode)
 }
 
 interface IFactoryUserStory {
-createUserStory(id, actor, text, acceptanceCriteria)
+createUserStory(userStoryDTO, priority)
+}
+
+class FactoryUserStoryImpl {
+createUserStory(userStoryDTO, priority)
+}
+
+class UserStoryID {
+id: String
+}
+
+class UserStoryActor {
+id: String
+}
+
+class UserStoryStatus {
+enum: Status
+}
+
+class UserStoryAcceptanceCriteria {
+acceptanceCriteria: String
+}
+
+class Description {
+description: String
 }
 
 class UserStory {
-id : String
-actor : String
-text : String
-acceptanceCriteria : String
-status : Status
 }
 
-class UserStoryMapper {
-fromDTO(UserStoryDTO)
+class UserStoryRepository {
+save(userStory)
+containsID()
+put(userStoryID, userStory)
 }
 
+class Project {
+addToSet(userStoryID, priority)
+}
+/'
+class ProjectCode {
+projectCode :String
+}
+'/
 class UserStoryDTO {
 id : String
 actor : String
@@ -58,20 +65,23 @@ text : String
 acceptanceCriteria : String
 }
 
-CreateUserStoryController "1" o-- "1" ProjectList
+CreateUserStoryController "1" o--"1" UserStoryService
+UserStoryService "1" o--"1" ProjectRepository
 CreateUserStoryController ..> UserStoryDTO
-CreateUserStoryController ..> Project
-CreateUserStoryController ..> ProductBacklog
-ProductBacklog ..> UserStoryDTO
-ProjectList "      1" *-- "                    *" Project
-Project "1" o-- "1" ProductBacklog
-ProductBacklog "1" *-- "*" UserStory
-ProductBacklog "1" o-- "1" UserStoryMapper
-UserStoryMapper ..> UserStoryDTO
+ProjectRepository "      1" *-- "                    *" Project
 UserStoryDTO ..> UserStory
-UserStoryMapper ..> UserStory
-FactoryUserStoryImpl -up..|> IFactoryUserStory
-ProductBacklog "1" o-- "1" IFactoryUserStory
-FactoryUserStoryImpl ..> UserStory
+
+
+FactoryUserStoryImpl -..|> IFactoryUserStory
+UserStoryID -..> FactoryUserStoryImpl
+UserStoryActor-..> FactoryUserStoryImpl
+UserStoryStatus-..> FactoryUserStoryImpl
+UserStoryAcceptanceCriteria-..> FactoryUserStoryImpl
+Description-..> FactoryUserStoryImpl
+UserStory-..> FactoryUserStoryImpl
+FactoryUserStoryImpl -..> UserStoryDTO
+UserStoryService ..> IFactoryUserStory
+UserStoryService ..> UserStoryRepository
+UserStoryService ..> Project
 
 @enduml
