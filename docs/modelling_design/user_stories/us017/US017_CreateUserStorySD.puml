@@ -13,6 +13,7 @@ participant ":ProjectRepository" as Repository
 participant "factoryUserStory :FactoryUserStoryImpl" as Factory
 participant "userStory :UserStory" as UserStory
 participant "userStoryRepository :UserStoryRepository" as UsRepository
+participant ":Project" as Project
 
 activate user #FFBBBB
 user ->  UI: Selects project and inserts US data\n (projectCode, userStoryId, actor, \ntext, acceptanceCriteria, priority)
@@ -47,6 +48,10 @@ activate UsRepository #FFBBBB
 UsRepository ->UsRepository :containsID(userStoryID)
 UsRepository ->UsRepository :put(userStoryID, userStory)
 UsRepository --> Services: true
+deactivate
+Services -> Project :addToSet(userStoryID, priority)
+activate Project #FFBBBB
+Project --> Services: true
 deactivate
 Services --> Controller: true
 deactivate
