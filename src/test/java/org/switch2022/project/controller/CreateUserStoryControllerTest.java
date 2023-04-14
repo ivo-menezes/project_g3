@@ -76,10 +76,60 @@ class CreateUserStoryControllerTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-    // other possible tests:
-    // - null userStoryDTO
-    // - userStoryDTO with blank field
-    // - null priority
+    @DisplayName("Fails to create a US due to insufficient/invalid information: null userStoryDTO")
+    @Test
+    void createUserStoryWithNullUserStoryDTOThrowsException() {
+        // arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        UserStoryDTO userStoryDTO = null;
+        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
+
+        IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
+        Repository<UserStoryID, UserStoryDDD> usRepositoryDouble = mock(Repository.class);
+        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+
+        CreateUserStoryController controller = new CreateUserStoryController(service);
+
+        String expectedMessage = "userStoryDTO must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            controller.createUserStory(projectCodeDouble, userStoryDTO, priorityDouble);
+        });
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("Fails to create a US due to insufficient/invalid information: null priority")
+    @Test
+    void createUserStoryWithNullPriorityThrowsException() {
+        // arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
+        UserStoryPriority priority = null;
+
+        IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
+        Repository<UserStoryID, UserStoryDDD> usRepositoryDouble = mock(Repository.class);
+        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+
+        CreateUserStoryController controller = new CreateUserStoryController(service);
+
+        String expectedMessage = "priority must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            controller.createUserStory(projectCodeDouble, userStoryDTODouble, priority);
+        });
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
 
     @DisplayName("Create US and add it to an empty backlog.")
     @Test
