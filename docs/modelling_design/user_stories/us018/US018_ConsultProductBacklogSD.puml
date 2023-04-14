@@ -28,11 +28,13 @@ Services -> ProjRepository: containsID(projectCode)
 activate ProjRepository #FFBBBB
 ProjRepository --> Services: true
 deactivate ProjRepository
-Services -> Mapper: getProductBacklog(projectCode)
+Services -> Repository: getProductBacklog(projectCode)
+activate Repository #FFBBBB
+Repository --> Services: productBacklog
+deactivate
+Services -> Mapper: toDTO(userStoryList)
 activate Mapper #FFBBBB
 
-Mapper -> Repository: getProductBacklog(projectCode)
-activate Repository #FFBBBB
 Mapper --> DTOList ** : create
 
 loop for each userStory in UserStoryRepository
@@ -44,13 +46,11 @@ activate DTOList #FFBBBB
 deactivate DTOList
 end
 
-
 Mapper --> Services : productBacklog
 deactivate Mapper
 
 Services --> Controller : productBacklog
 deactivate Services
-
 
 Controller --> UI: productBacklog
 deactivate Controller
