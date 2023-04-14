@@ -1,4 +1,5 @@
 @startuml
+skinparam linetype ortho
 
 class ConsultProductBacklogController {
 getProductBacklog(projectCode)
@@ -12,13 +13,16 @@ class ProjectRepository {
 containsID(projectCode)
 }
 
-class UserStoryMapper{
-getProductBacklog(projectCode)
-toDTO(userStory)
+class ProjectCode {
+id : String
 }
 
 class UserStoryRepository {
 getProductBacklog(projectCode)
+}
+
+class UserStoryMapper{
+toDTO(userStoryList)
 }
 
 class UserStoryDTO {
@@ -29,11 +33,42 @@ acceptanceCriteria : String
 status : Status
 }
 
+interface ValueObject {
+}
+
+interface DomainID {
+}
+
+interface Repository {
+}
+
+interface AggregateRoot {
+}
+
+interface DomainEntity {
+}
+
 ConsultProductBacklogController "1" *-- "1" UserStoryServices
 UserStoryServices "1" *-left- "1" ProjectRepository
 UserStoryServices "1" *-- "1" UserStoryMapper
-UserStoryMapper "1" *-- "1" UserStoryRepository
+UserStoryServices "1" *-- "1" UserStoryRepository
 UserStoryMapper ..> UserStoryDTO
+UserStoryMapper .left.> UserStoryRepository
 UserStoryRepository ..> UserStoryDTO
+ProjectCode .up.> ProjectRepository
+ProjectCode .up.> UserStoryServices
+ProjectCode .right.> UserStoryRepository
+
+UserStoryRepository -..|> Repository
+ProjectRepository -..|> Repository
+ProjectCode -.down.|> DomainID
+
+DomainID --|> ValueObject
+
+Repository --|> DomainID
+Repository --|> AggregateRoot
+
+AggregateRoot --|> DomainID
+AggregateRoot --|> DomainEntity
 
 @enduml
