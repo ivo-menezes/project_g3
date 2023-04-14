@@ -65,6 +65,21 @@ text : String
 acceptanceCriteria : String
 }
 
+interface ValueObject {
+}
+
+interface DomainID {
+}
+
+interface Repository {
+}
+
+interface AggregateRoot {
+}
+
+interface DomainEntity {
+}
+
 CreateUserStoryController "1" o--"1" UserStoryService
 UserStoryService "1" o--"1" ProjectRepository
 CreateUserStoryController ..> UserStoryDTO
@@ -83,5 +98,25 @@ FactoryUserStoryImpl -..> UserStoryDTO
 UserStoryService ..> IFactoryUserStory
 UserStoryService ..> UserStoryRepository
 UserStoryService ..> Project
+
+UserStoryActor -..|> ValueObject
+UserStoryStatus -..|> ValueObject
+Description -..|> ValueObject
+UserStoryAcceptanceCriteria -..|> ValueObject
+UserStoryID -..|> DomainID
+
+UserStoryRepository -..|> Repository
+ProjectRepository -..|> Repository
+
+Project -..|> AggregateRoot
+UserStory -..|> AggregateRoot
+
+DomainID --|> ValueObject
+
+Repository --|> DomainID
+Repository --|> AggregateRoot
+
+AggregateRoot --|> DomainID
+AggregateRoot --|> DomainEntity
 
 @enduml
