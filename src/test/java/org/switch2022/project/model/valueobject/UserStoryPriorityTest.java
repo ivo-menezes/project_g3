@@ -41,7 +41,7 @@ class UserStoryPriorityTest {
     @Test
     @DisplayName(("Test for potential Conditional Boundary Changes"))
     public void testChangedConditionalBoundaryMutation() {
-        // Test with a changed conditional boundary mutation: from 0 to -1
+
         try {
             new UserStoryPriority(invalidPriority);
             fail("Expected IllegalArgumentException to be thrown.");
@@ -64,6 +64,37 @@ class UserStoryPriorityTest {
 
         assertTrue(isEqual);
     }
+
+    /***
+     * Ths test checks if one object of UserStoryPriority created with another object will
+     * equal itself.
+     */
+    @Test
+    @DisplayName(("Test for UserStoryPriority object equals itself"))
+    public void checkIfUserStoryPriorityEqualsItself(){
+        UserStoryPriority userStoryPriorityOne = new UserStoryPriority(priorityTwo);
+        UserStoryPriority userStoryPriorityTwo = userStoryPriorityOne;
+
+        assertSame(userStoryPriorityOne, userStoryPriorityTwo);
+    }
+    /***
+     * Ths test checks if one object of UserStoryPriority created with another object will
+     * equal itself and won't return a different result.
+     */
+    @Test
+    @DisplayName(("Test for UserStoryPriority object equals itself"))
+    public void checkIfUserStoryPriorityEqualsItselfWillNotReturnFalse(){
+        UserStoryPriority userStoryPriorityOne = new UserStoryPriority(priorityTwo);
+        UserStoryPriority userStoryPriorityTwo = userStoryPriorityOne;
+
+        boolean isEqual = userStoryPriorityOne.equals(userStoryPriorityTwo);
+
+        assertNotEquals(false, isEqual);
+    }
+
+    /***
+     *
+     */
     @Test
     @DisplayName(("Test for UserStoryPriority with same value won't cause issue"))
     public void checkIfCreatingWithSamePriorityWillNotResultInError(){
@@ -92,6 +123,17 @@ class UserStoryPriorityTest {
         UserStoryPriority userStoryPriorityTwo = new UserStoryPriority(priorityTwo);
 
         boolean isNotEqual = userStoryPriorityOne.equals(userStoryPriorityTwo);
+
+        assertNotEquals(true, isNotEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure the return won't be true for different objects")
+    public void checkIfWillNoReturnEquals(){
+        UserStoryPriority userStoryPriorityOne = new UserStoryPriority(priorityOne);
+        Object userStoryObject = null;
+
+        boolean isNotEqual = userStoryPriorityOne.equals(userStoryObject);
 
         assertNotEquals(true, isNotEqual);
     }
