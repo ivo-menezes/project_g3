@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/salt
+
+salt
+
+<style>
+title {
+  HorizontalAlignment center
+  FontSize 18
+  FontColor black
+}
+</style>
+
+title <b>Create User Story</b>
+{+
+
+<b> Number
+{+ "          "}
+<b> Actor
+{+ "                                     "}
+<b> Description
+{+ "                                     "}
+<b> Priority
+{+ "          "}
+{^"<b>Acceptance criteria"
+{+ "                           " | [<&trash>Delete] }
+
+[<&plus>Add]
+}
+{  [<&circle-x>Cancel] | [<&circle-check>Save ]}
+}
+@enduml
