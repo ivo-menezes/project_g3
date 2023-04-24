@@ -1,0 +1,62 @@
+@startsalt
+{
+
+title Create Project
+{+
+   .
+   "                         "
+}
+Project Name
+{+
+   .
+   "                         "
+}
+Description
+{+
+   .
+   "                         "
+}
+Start Date
+{+
+   .
+   "                         "
+}
+End Date
+{+
+   .
+   "                         "
+}
+Customer
+{+
+   .
+   "                         "
+}
+Sprint Duration
+{+
+   .
+   "                         "
+}
+Number of Planned Sprints
+{+
+   .
+   "                         "
+}
+Project Status
+{+
+   .
+   "                         "
+}
+Budget
+{+
+   .
+   "                         "
+}
+
+{  [<&circle-check>Save ] | [<&circle-x>Cancel]}
+{ [View Projects ]}
+
+}
+
+
+
+@endsalt
