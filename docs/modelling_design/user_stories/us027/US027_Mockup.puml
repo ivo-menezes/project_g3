@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/salt
+salt
+<style>
+title {
+  HorizontalAlignment center
+  FontSize 18
+  FontColor black
+}
+</style>
+title <b>Create Sprint</b>
+{+
+{ <b> Number | [<color:#9a9a9a>#AutoNumber] }
+{ ^Start date <&calendar>^ | ^End date <&calendar>^ }
+{ [<&circle-check> Save ] | [<&circle-x> Cancel]}
+}
+@enduml
