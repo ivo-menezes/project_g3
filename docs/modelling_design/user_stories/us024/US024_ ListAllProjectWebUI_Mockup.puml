@@ -1,0 +1,24 @@
+@startuml
+title List all Project in the web UI
+salt
+{+
+{.{[<&magnifying-glass>     Search]}|.{[Create Project]}}
+.
+{
+.{+
+"<b>Project A                                  "|[<&pencil>]
+"<b>Project B                                  "|[<&pencil>]
+"<b>Project C                                  "|[<&pencil>]
+"<b>Project D                                  "|[<&pencil>]
+"<b>Project E                                  "|[<&pencil>]
+"<b>Project F                                  "|[<&pencil>]
+"<b>Project G                                  "|[<&pencil>]
+"<b>Project H                                  "|[<&pencil>]
+"<b>Project I                                  "|[<&pencil>]
+"<b>Project J                                  "|[<&pencil>]
+}
+.
+{<&arrow-circle-left> Previous}.{<&arrow-circle-right> Next}
+}
+}
+@enduml
