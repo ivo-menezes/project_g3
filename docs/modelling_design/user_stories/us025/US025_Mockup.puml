@@ -20,13 +20,18 @@ title <b>Create User Story</b>
 {+ "                                     "}
 <b> Description
 {+ "                                     "}
-<b> Priority
+<b> Priority</b> (optional)
 {+ "          "}
-{^"<b>Acceptance criteria"
-{+ "                           " | [<&trash>Delete] }
+{<b>Acceptance criteria
+{+
+   Enter acceptance criteria here
 
-[<&plus>Add]
+   .
+   "                         "
 }
-{  [<&circle-x>Cancel] | [<&circle-check>Save ]}
+
+
+}
+{ [<&circle-check>Save ] |  [<&circle-x>Cancel] }
 }
 @enduml
