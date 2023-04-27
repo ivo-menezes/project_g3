@@ -22,7 +22,6 @@ skinparam object<<Entity>> {
 ' -- plain VOs
 Object Name <<VO>>
 Object PhoneNumber <<VO>>
-Object Email <<VO>>
 Object Photo <<VO>>
 Object AccountStatus <<VO>>
 Object TimePeriod <<VO>>
@@ -46,7 +45,7 @@ Object Designation <<VO>>
 Object ProjectCode <<VO>> <<ID>>
 Object SprintNumber <<VO>> <<ID>>
 Object UserStoryID <<VO>> <<ID>>
-Object AccountID <<VO>> <<ID>>
+Object Email <<VO>> <<ID>>
 Object ProfileName <<VO>> <<ID>>
 Object TypologyID <<VO>> <<ID>>
 Object BusinessSectorID <<VO>> <<ID>>
@@ -55,9 +54,12 @@ Object CustomerID <<VO>> <<ID>>
 ' - Entities in Aggregates (packages)
 package "Project" as Proj {
     Object Project <<Entity>> <<Root>>
+    Object ProductBacklog <<Entity>>
 }
 
-Project -down-> "1" ProjectCode
+Project -down-> "1" ProductBacklog
+ProductBacklog --> "*" UserStoryID
+Project --> "1" ProjectCode
 Project --> "1" ProjectName
 Project --> "1" Description
 Project --> "1" TimePeriod
@@ -72,7 +74,7 @@ package "Sprint" as Spr {
 }
 
 Sprint --> "*" UserStoryInSprint
-Sprint -up-> "1" ProjectCode
+Sprint --> "1" ProjectCode
 Sprint --> "1" SprintNumber
 Sprint --> "1" TimePeriod
 
@@ -101,7 +103,7 @@ Account -->  "1" PhoneNumber
 Account --> "1" Email
 Account --> "1" Photo
 Account --> "1" AccountStatus
-Account --> "1" AccountID
+
 
 package "Resource" as Res {
     Object Resource <<Entity>> <<Root>>
@@ -111,8 +113,8 @@ Resource --> "1" TimePeriod
 Resource --> "1" PercentageOfAllocation
 Resource --> "1" CostPerHour
 Resource --> "1" Role
-Resource --> "1" ProjectCode
-Resource --> "1" AccountID
+Resource -up-> "1" ProjectCode
+Resource --> "1" Email
 
 package Typology as Typo {
     Object Typology <<Entity>>
