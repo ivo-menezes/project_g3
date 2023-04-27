@@ -1,0 +1,54 @@
+@startuml
+!theme plain
+autonumber
+hide footbox
+title "US015 - As Manager, I want to get a list of all projects"
+
+actor Manager as Manager
+participant ": ListProjectUI" as UI
+participant ": ListProjectController" as Controller
+participant ": Services" as Services
+participant ": ProjectRepository" as ProjectRepository
+participant ": ProjectMapper" as Mapper
+participant "lsProject : List<ProjectDTO>" as DTOList
+
+activate Manager #FFBBBB
+Manager -> UI: Requests list of all projects
+
+activate UI #FFBBBB
+UI -> Controller: listProjects()
+activate Controller #FFBBBB
+Controller -> Services: listProjects()
+
+activate Services #FFBBBB
+Services -> ProjectRepository : getProjectList()
+activate ProjectRepository #FFBBBB
+
+ProjectRepository -> Services : ": ProjectRepository"
+deactivate ProjectRepository
+
+Services -> Mapper : toDTOList(projectList)
+activate Mapper #FFBBBB
+
+Mapper -> DTOList ** : create
+
+loop for each project in ProjectList
+Mapper -> Mapper : toDTO(project)
+Mapper -> DTOList : add(projectDTO)
+activate DTOList #FFBBBB
+deactivate DTOList
+end
+
+Mapper -> Services : lsProject
+deactivate Mapper
+
+Services --> Controller : lsProject
+deactivate Services
+
+Controller --> UI : IsProject
+deactivate Controller
+
+UI --> Manager: Displays all projects
+deactivate UI
+deactivate Manager #FFBBBB
+@enduml
