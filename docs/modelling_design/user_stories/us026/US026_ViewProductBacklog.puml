@@ -1,0 +1,20 @@
+@startsalt
+'https://plantuml.com/salt
+
+{
+    title Product Backlog for project XPTO
+
+    {#
+          Number | Text | Status
+          US001 | As Administrator, I want to create user profiles. | Planned
+          US002 | As Administrator, I want to register an user. | In progress
+          US003 | As Administrator, I want to change the profile of an user account. | Testing
+    }
+
+    {
+        [Add User Story]
+        [Back to Project]
+    }
+}
+
+@endsalt

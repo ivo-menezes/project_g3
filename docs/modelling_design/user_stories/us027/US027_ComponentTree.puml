@@ -1,0 +1,22 @@
+@startuml
+
+[App] as App
+[SprintAddForm] as Sprint
+[Button] as Button
+[NumberFormInput] as Number
+[SaveButton] as Save
+[CancelButton] as Cancel
+[Date] as Date
+[StartDateInput] as SDate
+[EndDateInput] as EDate
+
+App -- Sprint
+Sprint -- Button
+Sprint -- Date
+Sprint -- Number
+Button -- Save
+Button -- Cancel
+Date -- SDate
+Date -- EDate
+
+@enduml
