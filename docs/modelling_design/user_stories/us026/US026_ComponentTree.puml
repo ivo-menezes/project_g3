@@ -1,0 +1,19 @@
+@startuml
+
+[ProductBacklogContainer] as PBContainer
+[ProductBacklogTable] as PBTable
+[TableBody] as TBody
+[TableHeader] as THeader
+[Button] as Button
+[AddUserStory] as AddUS
+[BackToProject] as BackProj
+
+PBContainer -- PBTable
+PBTable -- TBody
+PBTable -- THeader
+PBContainer -- Button
+Button -- AddUS
+Button -- BackProj
+
+
+@enduml
