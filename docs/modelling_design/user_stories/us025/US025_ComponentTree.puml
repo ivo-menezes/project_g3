@@ -1,0 +1,18 @@
+@startuml
+
+[UserStoryContainer] as CRContainer
+[CreateUSForm] as USForm
+[InputForm] as Form
+[FormButton] as Button
+[SaveButton] as Save
+[CancelButton] as Cancel
+
+
+CRContainer -- USForm
+USForm -- Form
+USForm -- Button
+Button -- Save
+Button -- Cancel
+
+
+@enduml
