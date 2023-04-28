@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const Welcome = () => {
     return (
-        <div>
+        <div className="container">
             <Header className='header-welcome' text='Welcome!'/>
             <Link to='/listProjects'>
-                <Button name='Projects'/>
+                <Button className='button-welcome' name='Projects'/>
             </Link>
 
         </div>

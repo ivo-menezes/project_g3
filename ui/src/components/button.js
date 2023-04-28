@@ -1,7 +1,7 @@
 import React from "react";
 
 const Button = (props) => {
-    return <button>{props.name}</button>
+    return <button{...props}>{props.name}</button>
 };
 
 export default Button;

@@ -12,9 +12,31 @@ code {
     monospace;
 }
 
+/* Welcome page style */
+
 .header-welcome {
-  color: red;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: #243757;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;;
+  font-size: 70px;
 }
+.button-welcome {
+  background-color: #0079BF;
+  border-radius: 10px;
+  font-family: "Times New Roman";
+  font-weight: 700;
+  font-size: 18px;
+  padding: 32px;
+  border: none;
+  cursor: pointer;
+  color: #FFF;
+  margin: 32px 0;
+}
+
+.container{
+  text-align: center;
+  width: 300px;
+  margin: auto;
+  height: 300px;
+}
+
