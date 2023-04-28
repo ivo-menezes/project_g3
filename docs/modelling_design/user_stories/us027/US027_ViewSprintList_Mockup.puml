@@ -1,0 +1,25 @@
+@startuml
+title View the project sprint list in the web UI
+salt
+{+
+.
+{
+.{+
+"<b>Sprint #1                    "|[<&magnifying-glass>]
+"<b>Sprint #2                    "|[<&magnifying-glass>]
+"<b>Sprint #3                    "|[<&magnifying-glass>]
+"<b>Sprint #4                    "|[<&magnifying-glass>]
+"<b>Sprint #5                    "|[<&magnifying-glass>]
+"<b>Sprint #6                    "|[<&magnifying-glass>]
+"<b>Sprint #7                    "|[<&magnifying-glass>]
+"<b>Sprint #8                    "|[<&magnifying-glass>]
+"<b>Sprint #9                    "|[<&magnifying-glass>]
+"<b>Sprint #10                   "|[<&magnifying-glass>]
+}
+
+.{[Create Sprint]}
+
+{<&arrow-circle-left> Previous}.{<&arrow-circle-right> Next}
+}
+}
+@enduml
