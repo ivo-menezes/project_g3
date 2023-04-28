@@ -6,10 +6,8 @@ const ListProjects = () => {
     return (
         <div>
             <Grid/>
-            <Button name='Next'/>
-            <Button name='Previous'/>
             <Link to='/createProject'>
-            <Button name='Create Project'/>
+            <Button className='button-ListProjects' name='Create Project'/>
             </Link>
         </div>
     )

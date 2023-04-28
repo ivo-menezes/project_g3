@@ -40,3 +40,51 @@ code {
   height: 300px;
 }
 
+/* Grid components style */
+
+.project-list {
+  list-style-type: auto;
+  margin: 15px;
+  padding: 0px 2px 0px 2px;
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 2px solid #ccc;
+  padding: 0px 10px;
+}
+
+.project-title {
+  margin: 0;
+}
+
+.project-button-view {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.project-button-view:hover {
+  background-color: #7ea6c1;
+}
+
+/* List Projects page style */
+
+.button-ListProjects{
+  background-color: #218838;
+  border-radius: 10px;
+  font-family: "Times New Roman";
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  color: #FFF;
+  margin: 32px 0;
+}

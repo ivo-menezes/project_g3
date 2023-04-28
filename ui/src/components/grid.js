@@ -4,12 +4,12 @@ import projects from "../store/projects";
 const Grid = () => {
     return (
         <div>
-            <ol>
+            <ol className='project-list'>
                 {
                     projects.map(item => (
-                        <li key={item.id}>
+                        <li className='project-item' key={item.id}>
                             <h3>{item.title}</h3>
-                                <Button name='Edit'></Button>
+                            <Button className='project-button-view' name='View'></Button>
                         </li>
                     ))
                 }
