@@ -7,6 +7,8 @@ import ListProjects from "../pages/listProjects";
 import CreateProject from "../pages/createProject";
 import TestPage from "../pages/testPage";
 import CreateUserStory from '../pages/createUserStory';
+import ListSprints from '../pages/listSprint';
+
 
 const Router= createBrowserRouter([
     {
@@ -29,6 +31,10 @@ const Router= createBrowserRouter([
     {
         path: "/createUserStory",
         element: <CreateUserStory/>
+    },
+    {
+        path: "/listSprints",
+        element: <ListSprints/>
     }
 ]);
 export default Router;

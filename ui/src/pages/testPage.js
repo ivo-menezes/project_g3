@@ -8,6 +8,9 @@ const TestPage = () => {
             <Link to='/createUserStory'>
                 <Button className='button-ListProjects' name='Create User Story' />
             </Link>
+            <Link to='/listSprints'>
+                <Button className='button-ListProjects' name='Sprint List' />
+            </Link>
         </div>
     )
 }

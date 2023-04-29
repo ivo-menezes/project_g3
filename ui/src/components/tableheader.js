@@ -5,7 +5,7 @@ const TableHeader = ({ headers }) => {
         <thead>
         <tr>
             {Object.values(headers).map((header, index) =>
-                (<th key={index} style={{border: '1px solid black'}}>{header.label}</th>
+                (<th key={index}>{header.label}</th>
                 ))}
         </tr>
         </thead>

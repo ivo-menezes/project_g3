@@ -126,3 +126,42 @@ code {
 .form-input input:focus {
   border: 1px solid #1e90ff;
 }
+
+.table-sprint{
+  width: 75%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.table-sprint th,
+.table-sprint td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 3px solid #ABB2B9;
+}
+.table-sprint th:first-child,
+.table-sprint td:first-child {
+  width: 30px;
+}
+.table-sprint th:not(:first-child),
+.table-sprint td:not(:first-child) {
+  width: 100px;
+}
+.table-sprint td:last-child {
+  width: 1px;
+  border-bottom: none;
+}
+.table-sprint th:last-child {
+  width: 1px;
+}
+.sprint-button-view {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.table-sprint tr:hover {background-color: lightblue;}
+
+
