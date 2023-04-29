@@ -88,3 +88,41 @@ code {
   color: #FFF;
   margin: 32px 0;
 }
+
+/* Form page style */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  max-width: 300px;
+}
+
+.form-input label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-input input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-input input:focus {
+  border: 1px solid #1e90ff;
+}

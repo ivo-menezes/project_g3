@@ -8,3 +8,12 @@ export function changeText(valor) {
         },
     }
 };
+
+export const ADD_USER_STORY = 'ADD_USER_STORY';
+
+export const addUserStory = (userStory) => {
+    return {
+        type: ADD_USER_STORY,
+        payload: userStory,
+    }
+};

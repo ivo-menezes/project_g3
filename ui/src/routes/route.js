@@ -5,6 +5,8 @@ import {
 import App from "../App";
 import ListProjects from "../pages/listProjects";
 import CreateProject from "../pages/createProject";
+import TestPage from "../pages/testPage";
+import CreateUserStory from '../pages/createUserStory';
 
 const Router= createBrowserRouter([
     {
@@ -19,6 +21,14 @@ const Router= createBrowserRouter([
     {
         path: "/createProject",
         element: <CreateProject/>
+    },
+    {
+        path: "/testPage",
+        element: <TestPage />
+    },
+    {
+        path: "/createUserStory",
+        element: <CreateUserStory/>
     }
 ]);
 export default Router;

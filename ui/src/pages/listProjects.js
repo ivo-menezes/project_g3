@@ -9,6 +9,9 @@ const ListProjects = () => {
             <Link to='/createProject'>
             <Button className='button-ListProjects' name='Create Project'/>
             </Link>
+            <Link to='/testPage'>
+                <Button className='button-ListProjects' name='Test Page'/>
+            </Link>
         </div>
     )
 }
