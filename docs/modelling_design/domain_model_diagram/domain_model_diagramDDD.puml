@@ -39,6 +39,7 @@ Object ProjectBudget <<VO>>
 Object UserStoryEffortEstimate <<VO>>
 Object UserStoryStatus <<VO>>
 Object UserStoryPriority <<VO>>
+Object UserStoryNumber <<VO>>
 Object Designation <<VO>>
 
 ' -- DomainID VOs
@@ -85,7 +86,8 @@ package "UserStory" as US {
     Object UserStory <<Entity>> <<Root>>
 }
 
-UserStory -up-> "1" ProjectCode
+UserStoryID --> "1" ProjectCode
+UserStoryID --> "1" UserStoryNumber
 UserStory --> "1" UserStoryID
 UserStory --> "1" UserStoryActor
 UserStory --> "1" Description
@@ -144,7 +146,7 @@ package "Profile" as Prof {
     Object Profile <<Entity>> <<Root>>
     }
 
-Profile --> "1" ProfileName
+Profile -up-> "1" ProfileName
 
 Account -up-> "1" ProfileName
 
