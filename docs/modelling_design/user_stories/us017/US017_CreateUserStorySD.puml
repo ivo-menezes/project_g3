@@ -14,43 +14,62 @@ participant "factoryUserStory :FactoryUserStoryImpl" as Factory
 participant "userStory :UserStory" as UserStory
 participant "userStoryRepository :UserStoryRepository" as UsRepository
 participant ":Project" as Project
+participant "DATA : HashMap" as hashmap
+participant "productBacklog : ProductBacklog" as pb
+participant "openUserStories : List<UserStoryID>" as uslist
 
 activate user #FFBBBB
-user ->  UI: Selects project and inserts US data\n (projectCode, userStoryId, actor, \ntext, acceptanceCriteria, priority)
+user ->  UI: Selects project and inserts US data\n (projectCode, userStoryNumber, actor, \ntext, acceptanceCriteria, priority)
 
 activate UI #FFBBBB
-UI --> dto ** : create(userStoryId, actor, \ntext, acceptanceCriteria)
+UI --> dto ** : create(userStoryNumber, actor, \ntext, acceptanceCriteria)
 UI -> Controller: createUserStory(projectCode, \nuserStoryDTO, priority)
 
 activate Controller #FFBBBB
 Controller -> Services: createUserStory (projectCode,\n userStoryDTO, priority)
 
 activate Services #FFBBBB
-Services -> Repository: containsID(projectCode)
+Services --> "projectCodeVO : ProjectCode" **: create(projectCode)
+Services -> Repository: containsID(projectCodeVO)
 
 activate Repository #FFBBBB
 Repository -->Services: true
 deactivate
-Services -> Factory:createUserStory\n (projectCode, userStoryDTO)
+
+Services -> Factory:createUserStory\n (projectCodeVO,\nuserStoryDTO.userStoryNumber,\nuserStoryDTO.actor,\nuserStoryDTO.acceptanceCriteria,\n userStoryDTO.description)
 
 activate Factory #FFBBBB
-Factory --> "userStoryID:UserStoryID" ** :create (userStoryDTO.userStoryID)
+Factory --> "userStoryNumber:UserStoryNumber" ** : create(userStoryDTO.userStoryNumber)
+Factory --> "userStoryID:UserStoryID" ** :create (userStoryNumber, projectCodeVO)
 Factory --> "userStoryActor:UserStoryActor" ** :create (userStoryDTO.actor)
 Factory --> "userStoryAcceptanceCriteria:UserStoryAcceptanceCriteria" ** :create (userStoryDTO.acceptanceCriteria)
 Factory --> "description:Description" ** :create (userStoryDTO.description)
-Factory --> UserStory ** :create (projectCode, \n userStoryID,\n userStoryActor,\n userStoryAcceptanceCriteria,\n description )
+Factory --> UserStory ** :create (userStoryID,\n userStoryActor,\n userStoryAcceptanceCriteria,\n description )
 Factory --> Services :userStory
 deactivate
+
 Services -> UsRepository :save(userStory)
 
-
 activate UsRepository #FFBBBB
-UsRepository ->UsRepository :containsID(userStoryID)
-UsRepository ->UsRepository :put(userStoryID, userStory)
+UsRepository -> hashmap :containsID(userStoryID)
+hashmap --> UsRepository : false
+UsRepository -> hashmap :put(userStoryID, userStory)
+hashmap --> UsRepository : null
 UsRepository --> Services: true
 deactivate
-Services -> Project :addToSet(userStoryID, priority)
+
+Services -> Project :addToProductBacklog(userStoryID, priority)
+
 activate Project #FFBBBB
+Project -> pb: addUserStory(userStoryID, priority)
+
+activate pb #FFBBBB
+pb -> uslist : contains(userStoryID)
+uslist --> pb : false
+pb -> uslist : add(priority, userStoryID)
+pb --> Project : true
+deactivate
+
 Project --> Services: true
 deactivate
 Services --> Controller: true
