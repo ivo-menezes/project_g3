@@ -12,7 +12,7 @@ class DescriptionTest {
 
     @Test
     public void shouldCreateAValidDescription() {
-        new UserStoryID(description1);
+        new Description(description1);
     }
 
     @Test

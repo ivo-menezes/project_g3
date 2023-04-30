@@ -10,6 +10,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.userStory.UserStoryFactoryImpl;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.model.valueobject.UserStoryNumber;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
 import org.switch2022.project.repository.ProjectRepository;
 import org.switch2022.project.repository.UserStoryRepository;
@@ -295,7 +296,8 @@ class CreateUserStoryControllerTest {
         // the controller to be tested
         CreateUserStoryController controller = new CreateUserStoryController(service);
 
-        UserStoryID expectedID = new UserStoryID(dto3.id);
+        UserStoryNumber userStoryNumber = new UserStoryNumber("US019");
+        UserStoryID expectedID = new UserStoryID(userStoryNumber, projectCode);
 
         // Act
         controller.createUserStory(projectCode, dto1, priority1);
@@ -353,7 +355,8 @@ class CreateUserStoryControllerTest {
         // the controller to be tested
         CreateUserStoryController controller = new CreateUserStoryController(service);
 
-        UserStoryID expectedID = new UserStoryID(dto3.id);
+        UserStoryNumber userStoryNumber = new UserStoryNumber("US019");
+        UserStoryID expectedID = new UserStoryID(userStoryNumber, projectCode);
 
         // Act
         controller.createUserStory(projectCode, dto1, priority1);

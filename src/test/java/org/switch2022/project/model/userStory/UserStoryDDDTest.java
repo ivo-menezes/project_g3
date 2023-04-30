@@ -13,45 +13,20 @@ class UserStoryDDDTest {
     @DisplayName("create a user story successfully")
     void createUserStoryDDD() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
         //Act
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor, userStoryDescription, userStoryAcceptanceCriteria);
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor, userStoryDescription, userStoryAcceptanceCriteria);
         //Assert
         assertInstanceOf(UserStoryDDD.class, userStory);
-    }
-
-    @DisplayName("US constructor throws exception with null project code")
-    void nullProjectCodeThrowsException() {
-        //Arrange
-        UserStoryID userStoryID = mock(UserStoryID.class);
-        UserStoryActor userStoryActor = mock(UserStoryActor.class);
-        Description userStoryDescription = mock(Description.class);
-        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
-        String expectedMessage = "User Story project code must not be null";
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class, () -> {
-                    new UserStoryDDD(null, userStoryID,
-                            userStoryActor,
-                            userStoryDescription,
-                            userStoryAcceptanceCriteria);
-                }
-        );
-        //Act
-        String resultMessage = exception.getMessage();
-        //Assert
-        assertEquals(expectedMessage, resultMessage);
     }
 
     @Test
     @DisplayName("US constructor throws exception with null id")
     void nullIdThrowsException() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
@@ -59,7 +34,7 @@ class UserStoryDDDTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    new UserStoryDDD(projectCode, null,
+                    new UserStoryDDD(null,
                             userStoryActor,
                             userStoryDescription,
                             userStoryAcceptanceCriteria);
@@ -75,7 +50,6 @@ class UserStoryDDDTest {
     @DisplayName("US constructor throws exception with null actor")
     void nullActorThrowsException() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
@@ -83,7 +57,7 @@ class UserStoryDDDTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    new UserStoryDDD(projectCode, userStoryID, null,
+                    new UserStoryDDD(userStoryID, null,
                             userStoryDescription,
                             userStoryAcceptanceCriteria);
                 }
@@ -97,7 +71,6 @@ class UserStoryDDDTest {
     @DisplayName("US constructor throws exception with null description")
     void nullDescriptionThrowsException() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
@@ -105,7 +78,7 @@ class UserStoryDDDTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    new UserStoryDDD(projectCode, userStoryID, userStoryActor, null,
+                    new UserStoryDDD(userStoryID, userStoryActor, null,
                             userStoryAcceptanceCriteria);
                 }
         );
@@ -119,7 +92,6 @@ class UserStoryDDDTest {
     @DisplayName("US constructor throws exception with null acceptance criteria")
     void nullAcceptanceCriteriaThrowsException() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
@@ -127,7 +99,7 @@ class UserStoryDDDTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+                    new UserStoryDDD(userStoryID, userStoryActor,
                             userStoryDescription, null ); }
         );
         //Act
@@ -139,14 +111,13 @@ class UserStoryDDDTest {
     @DisplayName("object equals itself")
     void testEqualsWithItself() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD us = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD us = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         UserStoryDDD us2 = us;
         //Act
@@ -158,14 +129,13 @@ class UserStoryDDDTest {
     @DisplayName("object does not equal null")
     void testEqualsWithNull() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD us = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD us = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         //Act
         boolean result = us.equals(null);
@@ -176,14 +146,13 @@ class UserStoryDDDTest {
     @DisplayName("object does not equal object of another class")
     void testEqualsWithAnotherClass() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD us = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD us = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
 
         String fakeUserStory = "US001";
@@ -194,16 +163,15 @@ class UserStoryDDDTest {
     @DisplayName("object equals object with same id")
     void testEqualsWithEqualId() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
-        UserStoryDDD anotherUserStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD anotherUserStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         //Act
         boolean result = userStory.equals(anotherUserStory);
@@ -215,7 +183,6 @@ class UserStoryDDDTest {
     @DisplayName("object does not equal object with different id")
     void testEqualsWithDifferentId() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID_1 = mock(UserStoryID.class);
         UserStoryID userStoryID_2 = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
@@ -223,9 +190,9 @@ class UserStoryDDDTest {
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID_1, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID_1, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
-        UserStoryDDD anotherUserStory = new UserStoryDDD(projectCode, userStoryID_2, userStoryActor,
+        UserStoryDDD anotherUserStory = new UserStoryDDD(userStoryID_2, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         //Act
         boolean result = userStory.equals(anotherUserStory);
@@ -236,7 +203,6 @@ class UserStoryDDDTest {
     @DisplayName("equal objects have same hash code")
     void testSameHashCode() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor_1 = mock(UserStoryActor.class);
         UserStoryActor userStoryActor_2 = mock(UserStoryActor.class);
@@ -247,9 +213,9 @@ class UserStoryDDDTest {
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria_2 =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor_1,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor_1,
                 userStoryDescription_1, userStoryAcceptanceCriteria_1);
-        UserStoryDDD anotherUserStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor_2,
+        UserStoryDDD anotherUserStory = new UserStoryDDD(userStoryID, userStoryActor_2,
                 userStoryDescription_2, userStoryAcceptanceCriteria_2);
         //Act
         int userStoryHashCode = userStory.hashCode();
@@ -262,7 +228,6 @@ class UserStoryDDDTest {
     @DisplayName("different objects have different hash code")
     void testDifferentHashCode() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID_1 = mock(UserStoryID.class);
         UserStoryID userStoryID_2 = mock(UserStoryID.class);
         UserStoryActor userStoryActor_1 = mock(UserStoryActor.class);
@@ -274,10 +239,10 @@ class UserStoryDDDTest {
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria_2 =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID_1,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID_1,
                 userStoryActor_1, userStoryDescription_1,
                 userStoryAcceptanceCriteria_1);
-        UserStoryDDD anotherUserStory = new UserStoryDDD(projectCode, userStoryID_2,
+        UserStoryDDD anotherUserStory = new UserStoryDDD(userStoryID_2,
                 userStoryActor_2, userStoryDescription_2, userStoryAcceptanceCriteria_2);
         //Act
         int userStoryHashCode = userStory.hashCode();
@@ -286,40 +251,18 @@ class UserStoryDDDTest {
         assertNotEquals(userStoryHashCode, anotherUserStoryHashCode);
     }
 
-    @Test
-    @DisplayName("ensure user story project code is returned")
-    void ensureUserStoryProjectCodeIsReturned() {
-        //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
-        UserStoryID userStoryID = mock(UserStoryID.class);
-        UserStoryActor userStoryActor = mock(UserStoryActor.class);
-        Description userStoryDescription = mock(Description.class);
-        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
-                mock(UserStoryAcceptanceCriteria.class);
-
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
-                userStoryDescription, userStoryAcceptanceCriteria);
-        ProjectCode expected = projectCode;
-
-        //Act
-        ProjectCode result = userStory.getProjectCode();
-
-        //Assert
-        assertEquals(expected, result);
-    }
 
     @Test
     @DisplayName("ensure user story ID is returned")
     void ensureUserStoryIsReturned() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         UserStoryID expected = userStoryID;
 
@@ -334,14 +277,13 @@ class UserStoryDDDTest {
     @DisplayName("ensure user story actor is returned")
     void ensureUserStoryActorIsReturned() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         UserStoryActor expected = userStoryActor;
 
@@ -356,14 +298,13 @@ class UserStoryDDDTest {
     @DisplayName("ensure user story description is returned")
     void ensureUserStoryDescriptionIsReturned() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         Description expected = userStoryDescription;
 
@@ -377,14 +318,13 @@ class UserStoryDDDTest {
     @DisplayName("ensure user story acceptance criteria are returned")
     void ensureUserStoryAcceptanceCriteriaAreReturned() {
         //Arrange
-        ProjectCode projectCode = mock(ProjectCode.class);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryActor userStoryActor = mock(UserStoryActor.class);
         Description userStoryDescription = mock(Description.class);
         UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
                 mock(UserStoryAcceptanceCriteria.class);
 
-        UserStoryDDD userStory = new UserStoryDDD(projectCode, userStoryID, userStoryActor,
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
                 userStoryDescription, userStoryAcceptanceCriteria);
         UserStoryAcceptanceCriteria expected = userStoryAcceptanceCriteria;
 

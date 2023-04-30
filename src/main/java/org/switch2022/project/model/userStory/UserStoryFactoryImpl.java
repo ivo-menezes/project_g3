@@ -1,22 +1,33 @@
 package org.switch2022.project.model.userStory;
 
-import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.model.valueobject.*;
 
 public class UserStoryFactoryImpl implements IUserStoryFactory {
 
     @Override
-    public UserStoryDDD createUserStory(UserStoryDTO dto, ProjectCode projectCode) {
+    public UserStoryDDD createUserStory(UserStoryID userStoryID,
+                                        UserStoryActor actor,
+                                        Description description,
+                                        UserStoryAcceptanceCriteria acceptanceCriteria) {
 
-        if (dto == null) {
-            throw new IllegalArgumentException("UserStoryDTO must not be null.");
+        if (userStoryID == null) {
+            throw new IllegalArgumentException("userStoryID cannot be null");
         }
 
-        UserStoryID id = new UserStoryID(dto.id);
-        UserStoryActor actor = new UserStoryActor(dto.actor);
-        Description description = new Description(dto.text);
-        UserStoryAcceptanceCriteria criteria = new UserStoryAcceptanceCriteria(dto.acceptanceCriteria);
+        if (actor == null) {
+            throw new IllegalArgumentException("actor cannot be null");
+        }
 
-        return new UserStoryDDD(projectCode, id, actor, description, criteria);
+        if (description == null) {
+            throw new IllegalArgumentException("description cannot be null");
+        }
+
+        if (acceptanceCriteria == null) {
+            throw new IllegalArgumentException("acceptanceCriteria cannot be null");
+        }
+
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, actor, description, acceptanceCriteria);
+
+        return userStory;
     }
 }

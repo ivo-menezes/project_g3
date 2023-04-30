@@ -7,13 +7,12 @@ import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.model.valueobject.*;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -88,6 +87,10 @@ class UserStoryServiceTest {
         // arrange
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
+        userStoryDTODouble.id = "US017";
+        userStoryDTODouble.actor = "Administrator";
+        userStoryDTODouble.text = "blah blah";
+        userStoryDTODouble.acceptanceCriteria = "none";
         UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
@@ -99,7 +102,7 @@ class UserStoryServiceTest {
 
         // factoryDouble has to be trained to return a userStoryDouble
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
-        when(factoryDouble.createUserStory(userStoryDTODouble, projectCodeDouble)).thenReturn(userStoryDouble);
+        when(factoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
 
         // usRepositoryDouble has to be trained to respond with true when asked to save a UserStory
         Repository<UserStoryID, UserStoryDDD> usRepositoryDouble = mock(Repository.class);

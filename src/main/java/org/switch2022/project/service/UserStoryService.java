@@ -5,9 +5,7 @@ import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.model.valueobject.*;
 
 import java.util.Optional;
 
@@ -64,7 +62,14 @@ public class UserStoryService {
 
         ProjectDDD project = projectOptional.get();
 
-        UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryDTO, projectCode);
+        UserStoryNumber userStoryNumber = new UserStoryNumber(userStoryDTO.id);
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+
+        UserStoryActor actor = new UserStoryActor(userStoryDTO.actor);
+        Description description = new Description(userStoryDTO.text);
+        UserStoryAcceptanceCriteria criteria = new UserStoryAcceptanceCriteria(userStoryDTO.acceptanceCriteria);
+
+        UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryID, actor, description, criteria);
 
         return this.userStoryRepository.save(userStory) && project.addToProductBacklog(userStory.identity(), priority);
 

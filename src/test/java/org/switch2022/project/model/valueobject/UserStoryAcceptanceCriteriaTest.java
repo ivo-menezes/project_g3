@@ -11,7 +11,7 @@ class UserStoryAcceptanceCriteriaTest {
 
     @Test
     public void shouldCreateAValidAcceptanceCriteria() {
-        new UserStoryID(acceptanceCriteria1);
+        new UserStoryAcceptanceCriteria(acceptanceCriteria1);
     }
 
     @Test

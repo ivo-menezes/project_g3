@@ -3,82 +3,48 @@ package org.switch2022.project.model.valueobject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class UserStoryIDTest {
 
-    final String expectedMessage = "ID must not be null";
-    final String ID1 = "US001";
-    final String ID2 = "US002";
+    final String expectedMessage1 = "userStoryNumber must not be null";
+    final String expectedMessage2 = "projectCode must not be null";
+    final UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+    final ProjectCode projectCode = mock(ProjectCode.class);
 
     @Test
     public void shouldCreateAValidUserStoryID() {
-        new UserStoryID(ID1);
+        new UserStoryID(userStoryNumber, projectCode);
     }
 
     @Test
-    public void shouldThrowExceptionUserStoryIDWithNullId() {
+    public void shouldThrowExceptionUserStoryIDWithNullUserStoryNumber() {
 
         Exception exception = assertThrows(Exception.class, () -> {
-            new UserStoryID(null);
+            new UserStoryID(null, projectCode);
         });
 
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(expectedMessage1));
     }
 
     @Test
-    public void shouldThrowExceptionUserStoryIDWithEmptyID() {
+    public void shouldThrowExceptionUserStoryIDWithNullProjectCode() {
 
         Exception exception = assertThrows(Exception.class, () -> {
-            new UserStoryID("");
+            new UserStoryID(userStoryNumber,null);
         });
 
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    public void shouldThrowExceptionUserStoryIDWithBlankID() {
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            new UserStoryID("   ");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    public void shouldThrowExceptionUserStoryIDWithTabID() {
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            new UserStoryID("\t");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    public void shouldThrowExceptionUserStoryIDWithReturnID() {
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            new UserStoryID("\n");
-        });
-
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(expectedMessage2));
     }
 
     @Test
     public void shouldReturnFalseEqualsWithNull() {
 
-        UserStoryID userStoryID = new UserStoryID(ID1);
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
 
         boolean isEquals = userStoryID.equals(null);
 
@@ -88,7 +54,7 @@ class UserStoryIDTest {
     @Test
     public void shouldReturnTrueEqualsWithSameObject() {
 
-        UserStoryID userStoryID = new UserStoryID(ID1);
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
 
         boolean isEquals = userStoryID.equals(userStoryID);
 
@@ -98,8 +64,8 @@ class UserStoryIDTest {
     @Test
     public void shouldReturnTrueEqualsWithSameIds() {
 
-        UserStoryID userStoryID1 = new UserStoryID(ID1);
-        UserStoryID userStoryID2 = new UserStoryID(ID1);
+        UserStoryID userStoryID1 = new UserStoryID(userStoryNumber, projectCode);
+        UserStoryID userStoryID2 = new UserStoryID(userStoryNumber, projectCode);
 
         boolean isEquals = userStoryID1.equals(userStoryID2);
 
@@ -107,21 +73,15 @@ class UserStoryIDTest {
     }
 
     @Test
-    public void shouldReturnTrueEqualsWithDifferentIds() {
+    public void shouldReturnFalseEqualsWithDifferentUserStoryNumbers() {
 
-        UserStoryID userStoryID1 = new UserStoryID(ID1);
-        UserStoryID userStoryID2 = new UserStoryID(ID2);
+        UserStoryID userStoryID1 = new UserStoryID(userStoryNumber, projectCode);
+        UserStoryNumber userStoryNumber2 = mock(UserStoryNumber.class);
+        UserStoryID userStoryID2 = new UserStoryID(userStoryNumber2, projectCode);
 
         boolean isEquals = userStoryID1.equals(userStoryID2);
 
         assertFalse(isEquals);
     }
 
-    @Test
-    public void toStringShouldReturnTheIdString() {
-
-        UserStoryID userStoryID = new UserStoryID(ID1);
-
-        assertEquals(userStoryID.toString(), ID1);
-    }
 }

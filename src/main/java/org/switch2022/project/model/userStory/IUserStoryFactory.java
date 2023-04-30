@@ -1,9 +1,11 @@
 package org.switch2022.project.model.userStory;
 
-import org.switch2022.project.mapper.UserStoryDTO;
-import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.*;
 
 public interface IUserStoryFactory {
 
-    UserStoryDDD createUserStory(UserStoryDTO dto, ProjectCode projectCode);
+    UserStoryDDD createUserStory(UserStoryID userStoryID,
+                                 UserStoryActor actor,
+                                 Description description,
+                                 UserStoryAcceptanceCriteria acceptanceCriteria);
 }

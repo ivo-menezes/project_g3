@@ -7,8 +7,6 @@ import java.util.Objects;
 
 public class UserStoryDDD implements AggregateRoot<UserStoryID> {
 
-    private ProjectCode projectCode;
-
     private UserStoryID userStoryID;
 
     private UserStoryActor userStoryActor;
@@ -28,11 +26,7 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
      * @param userStoryDescription        of user story
      * @param userStoryAcceptanceCriteria of user story
      */
-    public UserStoryDDD(ProjectCode projectCode, UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
-
-        if (projectCode == null) {
-            throw new IllegalArgumentException("User Story project code must not be null");
-        }
+    public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
 
         if (userStoryID == null) {
             throw new IllegalArgumentException("User Story ID must not be null");
@@ -50,7 +44,6 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
             throw new IllegalArgumentException("User Story acceptance criteria must not be null");
         }
 
-        this.projectCode = projectCode;
         this.userStoryID = userStoryID;
         this.userStoryActor = userStoryActor;
         this.userStoryDescription = userStoryDescription;
@@ -58,7 +51,6 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
         this.userStoryStatus = userStoryStatus.TO_DO;
     }
 
-    public ProjectCode getProjectCode() { return projectCode; }
 
     public UserStoryID identity() { return userStoryID; }
 
@@ -79,12 +71,12 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
             return false;
         }
         UserStoryDDD that = (UserStoryDDD) o;
-        return projectCode.equals(that.projectCode) && userStoryID.equals(that.userStoryID);
+        return userStoryID.equals(that.userStoryID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectCode, userStoryID);
+        return Objects.hash(userStoryID);
     }
 
 }
