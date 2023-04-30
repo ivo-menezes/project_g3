@@ -10,3 +10,6 @@
   - didn't change this yet because what happens between UI and Controller will change with implementation of REST API; DTO will be a json object that will probably be unpacked by Service or between Controller and Service.
 
 - Service should verify contents of DTO and, if necessary, form another DTO to pass into the domain (for security reasons) \[prof. Baltarejo, Sprint Review 4\]. Verifications could be checking string sizes, check strings for certain command keywords, etc.
+
+- ProductBacklog should be a separate entity and not a list inside Project because there will be several methods associated with it, which would decrease the cohesion of Project
+  - not implemented yet because this change would break everything that depends on Project constructor; this will get solved when Dependency Injection with Spring is used
