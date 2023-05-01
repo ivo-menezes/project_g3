@@ -42,17 +42,29 @@ code {
 
 /* List Projects page style */
 
+.header-listProjects {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #4a4a4a;
+  text-transform: uppercase;
+}
+
 .button-ListProjects{
-  background-color: #218838;
-  border-radius: 10px;
-  font-family: "Times New Roman";
-  font-weight: 700;
-  font-size: 18px;
-  padding: 15px;
-  border: none;
+  border: 0;
+  padding: 10px;
+  width: 200px;
+  height: 50px;
+  display: inline-block;
+  margin: 10px;
   cursor: pointer;
-  color: #FFF;
-  margin: 32px 0;
+  border-radius: 4px;
+  background-color: #1abc9c;
+}
+
+.bt-container {
+  text-align: center
 }
 
 /* Form page style */
@@ -114,8 +126,8 @@ code {
   width: 100px;
 }
 .table-sprint td:last-child {
-  width: 1px;
-  border-bottom: none;
+  width: 0%;
+  border-bottom: 3px solid #ABB2B9;
 }
 .table-sprint th:last-child {
   width: 1px;

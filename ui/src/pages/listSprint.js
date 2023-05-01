@@ -10,6 +10,7 @@ const headers = {
     header1: { label: "ID" },
     header2: { label: "Start Date" },
     header3: { label: "End Date" },
+    header4: { label: "" },
 };
 
 const ListSprints = () => {
