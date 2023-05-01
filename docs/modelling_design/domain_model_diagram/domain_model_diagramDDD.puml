@@ -36,6 +36,7 @@ Object SprintDuration <<VO>>
 Object NumberOfPlannedSprints <<VO>>
 Object ProjectStatus <<VO>>
 Object ProjectBudget <<VO>>
+Object SprintNumber <<VO>>
 Object UserStoryEffortEstimate <<VO>>
 Object UserStoryStatus <<VO>>
 Object UserStoryPriority <<VO>>
@@ -44,8 +45,8 @@ Object Designation <<VO>>
 
 ' -- DomainID VOs
 Object ProjectCode <<VO>> <<ID>>
-Object SprintNumber <<VO>> <<ID>>
 Object UserStoryID <<VO>> <<ID>>
+Object SprintID <<VO>> <<ID>>
 Object Email <<VO>> <<ID>>
 Object ProfileName <<VO>> <<ID>>
 Object TypologyID <<VO>> <<ID>>
@@ -61,22 +62,24 @@ package "Project" as Proj {
 Project -down-> "1" ProductBacklog
 ProductBacklog --> "*" UserStoryID
 Project --> "1" ProjectCode
-Project --> "1" ProjectName
+Project -up-> "1" ProjectName
 Project --> "1" Description
 Project --> "1" TimePeriod
 Project --> "1" SprintDuration
 Project --> "1" NumberOfPlannedSprints
 Project --> "1" ProjectStatus
-Project --> "1" ProjectBudget
+Project -up-> "1" ProjectBudget
 
 package "Sprint" as Spr {
     Object Sprint <<Entity>> <<Root>>
     Object UserStoryInSprint <<Entity>>
 }
 
+SprintID --> "1" ProjectCode
+SprintID --> "1" SprintNumber
 Sprint --> "*" UserStoryInSprint
 Sprint --> "1" ProjectCode
-Sprint --> "1" SprintNumber
+Sprint --> "1" SprintID
 Sprint --> "1" TimePeriod
 
 UserStoryInSprint --> "1" UserStoryID
@@ -111,11 +114,11 @@ package "Resource" as Res {
     Object Resource <<Entity>> <<Root>>
 }
 
-Resource --> "1" TimePeriod
+Resource -up-> "1" TimePeriod
 Resource --> "1" PercentageOfAllocation
 Resource --> "1" CostPerHour
 Resource --> "1" Role
-Resource -up-> "1" ProjectCode
+Resource --> "1" ProjectCode
 Resource --> "1" Email
 
 package Typology as Typo {
