@@ -4,89 +4,157 @@ import React, {useContext} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link} from "react-router-dom";
+import {addProject} from "../context/Actions";
+import DropDownList from "../components/dropDownList";
+import Date from "../components/date";
 
 const CreateProject = () => {
     const {state, dispatch} = useContext(AppContext);
-    const {textValue} = state;
-    const {code} = textValue;
+    const {
+        code,
+        name,
+        description,
+        customer,
+        startDate,
+        endDate,
+        budget,
+        selectedStatus,
+        selectedTypology,
+        selectedSprintDuration,
+        NumberOfPlannedSprints
+    } = state;
 
+    const status = [
+        "Planned ",
+        "Inception",
+        "Elaboration",
+        "Construction",
+        "Transition",
+        "Warranty",
+        "Closed"
+    ]
+
+    const typology = [
+        "Fixed Cost",
+        "Time and materials",
+    ]
+
+    const sprintDuration = [
+        '1 - Week',
+        '2 - Weeks',
+        '3 - Weeks',
+        '4 - Weeks',
+    ]
+
+    const save = () => {
+        const project = {
+            code,
+            name,
+            description,
+            customer,
+            startDate,
+            endDate,
+            budget,
+            selectedStatus,
+            selectedTypology,
+            selectedSprintDuration
+        }
+
+        const action = addProject(project);
+        dispatch(action);
+        alert('Project Created')
+    };
     return (
-        <div className="form-container">
-            <Header text="Create Project" />
-            <form>
-                <TextField
-                    mandatory = {true}
-                    label = 'Code Project'
-                    placeholder = '...'
+        <section className='form-create-project'>
+            <Header className= 'header-create-project' text="CREATE PROJECT"/>
+            <form onSubmit={save}>
+
+                <TextField  className="textField"
+                    mandatory={true}
+                    label='Code'
                     dispatch={dispatch}
-                    value ={code}
-                    className="form-input"
+                    value={code}
                 />
 
-                <TextField
-                    mandatory = {true}
-                    label = 'Project Name'
-                    placeholder = '...'
+                <TextField className="textField"
+                    mandatory={true}
+                    label='Name'
                     dispatch={dispatch}
-                    value ={code}
-                    className="form-input"
+                    value={name}
                 />
 
-                <TextField
-                    mandatory = {true}
-                    label = 'Project Description'
-                    placeholder = '...'
+                <TextField className="textField"
+                    mandatory={true}
+                    label='Description'
                     dispatch={dispatch}
-                    value ={code}
-                    className="form-input"
+                    value={description}
                 />
 
-                <TextField
-                    mandatory = {true}
-                    label = 'Customer'
-                    placeholder = '...'
+                <TextField className="textField"
+                    mandatory={true}
+                    label='Customer'
                     dispatch={dispatch}
-                    value ={code}
-                    className="form-input"
+                    value={customer}
                 />
 
-                <div>
-                    <label htmlFor="start-date" className="form-input label" >Start Date:</label>
-                    <input
-                        type="date"
-                        id="start-date"
-                        name="start-date"
-                        onChange={(event) => console.log(event.target.value)}
-                    />
-                </div>
-
-                <TextField
-                    mandatory = {true}
-                    label = 'Project Status'
-                    placeholder = 'PLANNED'
+                <Date
+                    mandatory={true}
                     dispatch={dispatch}
-                    value ={code}
-                    readOnly={true}
-                    className="form-input"
+                    selectedDate={startDate}
+                    dateFormat="dd/MM/yyyy"
+                    label='Start Date'
                 />
 
-                <TextField
-                    mandatory = {true}
-                    label = 'Budget'
-                    placeholder = '...'
+                <Date
+                    mandatory={false}
                     dispatch={dispatch}
-                    value ={code}
-                    className="form-input"
+                    selectedDate={endDate}
+                    dateFormat="dd/MM/yyyy"
+                    label='End Date'
+                />
+                <DropDownList
+                    mandatory={true}
+                    label='Status'
+                    dispatch={dispatch}
+                    items={status}
+                    value={selectedStatus}
                 />
 
-                <div>
-                    <Button className="form-submit" name="Save" />
-                    <Link to="/listProjects">
-                        <Button className="form-submit" name="Cancel" />
-                    </Link>
-                </div>
+                <DropDownList
+                    mandatory={true}
+                    label='Typology'
+                    dispatch={dispatch}
+                    items={typology}
+                    value={selectedTypology}
+                />
+
+                <DropDownList
+                    mandatory={true}
+                    label='Sprint Duration'
+                    dispatch={dispatch}
+                    items={sprintDuration}
+                    value={selectedSprintDuration}
+                />
+
+                <TextField className="textField"
+                    mandatory={true}
+                    label='Number Of Planned Sprints'
+                    dispatch={dispatch}
+                    value={NumberOfPlannedSprints}
+                />
+
+                <TextField className="textField"
+                    mandatory={true}
+                    label='Budget'
+                    dispatch={dispatch}
+                    value={budget}
+                />
+                <Button className= 'button-form-createProject-save'name="Save"/>
+                <Link to="/listProjects">
+                    <Button className= 'button-form-createProject-cancel' name="Cancel"/>
+                </Link>
             </form>
-        </div>
+        </section>
     );
 }
 export default CreateProject;

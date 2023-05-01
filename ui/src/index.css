@@ -40,40 +40,6 @@ code {
   height: 300px;
 }
 
-/* Grid components style */
-
-.project-list {
-  list-style-type: auto;
-  margin: 15px;
-  padding: 0px 2px 0px 2px;
-}
-
-.project-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  border: 2px solid #ccc;
-  padding: 0px 10px;
-}
-
-.project-title {
-  margin: 0;
-}
-
-.project-button-view {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.project-button-view:hover {
-  background-color: #7ea6c1;
-}
-
 /* List Projects page style */
 
 .button-ListProjects{
@@ -164,4 +130,120 @@ code {
 }
 .table-sprint tr:hover {background-color: lightblue;}
 
+
+/* Create Project page style */
+
+.header-create-project {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #4a4a4a;
+  text-transform: uppercase;
+}
+
+.form-create-project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
+  max-width: 700px;
+}
+
+.form-create-project form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-create-project form > * {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-create-project .button-form-createProject-save {
+  background-color: #1abc9c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-project .button-form-createProject-save:hover {
+  background-color: #148f77;
+}
+
+.form-create-project .button-form-createProject-cancel {
+  background-color: #95a5a6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-project .button-form-createProject-cancel:hover {
+  background-color: #7f8c8d;
+}
+
+.form-create-project label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.form-create-project input,
+.form-create-project select {
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+.form-create-project input:required:invalid:focus,
+.form-create-project select:required:invalid:focus {
+  border: 2px solid #e74c3c;
+}
+
+.form-create-project input:required:valid,
+.form-create-project select:required:valid {
+  border: 2px solid #2ecc71;
+}
+
+.form-create-project .mandatory {
+  color: #e74c3c;
+}
+
+.textField {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.textField label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.textField input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.textField input:focus {
+  outline: none;
+  border-color: #4b9cdb;
+}
 

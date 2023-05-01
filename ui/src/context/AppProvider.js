@@ -5,10 +5,11 @@ import reducer from './Reducer';
 import projects from "../store/projects";
 
 const AppProvider = (props) =>{
-
     const initialState = {
         projectList: projects,
         textValue:'',
+        startDate: null,
+        endDate: null,
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);
