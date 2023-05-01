@@ -1,0 +1,42 @@
+@startuml
+
+[CreateProjectContainer] as Project
+[Button] as Button
+[DateInput] as Date
+[DropList] as DropList
+[InputForm] as InputForm
+[SaveButton] as Save
+[CancelButton] as Cancel
+[StartDateInput] as SDate
+[EndDateInput] as EDate
+[ProjectCodeInput] as ProjCode
+[ProjectNameInput] as ProjName
+[ProjectDescriptionInput] as ProjDescription
+[CustomerInput] as Customer
+[NumberOfPlannedSprintsInput] as NPS
+[BudgetInput] as Budget
+[StatusInput] as StatusInput
+[TypologyInput] as Typology
+[SprintDurationInput] as SprintDuration
+
+
+Project -- InputForm
+Project -- Button
+Project -- Date
+Project -- DropList
+InputForm -- ProjCode
+InputForm -- ProjName
+InputForm -- ProjDescription
+InputForm -- Customer
+InputForm -- NPS
+InputForm -- Budget
+DropList -- StatusInput
+DropList -- Typology
+DropList -- SprintDuration
+Button -- Save
+Button -- Cancel
+Date -- SDate
+Date -- EDate
+
+
+@enduml
