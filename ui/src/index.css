@@ -259,3 +259,120 @@ code {
   border-color: #4b9cdb;
 }
 
+
+/* Create Sprint page style */
+
+.header-create-sprint {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #4a4a4a;
+  text-transform: uppercase;
+}
+
+.form-create-sprint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
+  max-width: 700px;
+}
+
+.form-create-sprint form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-create-sprint form > * {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-create-sprint .button-form-createSprint-save {
+  background-color: #1abc9c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-sprint .button-form-createSprint-save:hover {
+  background-color: #148f77;
+}
+
+.form-create-sprint .button-form-createSprint-cancel {
+  background-color: #95a5a6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-sprint .button-form-createSprint-cancel:hover {
+  background-color: #7f8c8d;
+}
+
+.form-create-sprint label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.form-create-sprint input,
+.form-create-sprint select {
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+.form-create-sprint input:required:invalid:focus,
+.form-create-sprint select:required:invalid:focus {
+  border: 2px solid #e74c3c;
+}
+
+.form-create-sprint input:required:valid,
+.form-create-sprint select:required:valid {
+  border: 2px solid #2ecc71;
+}
+
+.form-create-sprint .mandatory {
+  color: #e74c3c;
+}
+
+.textField {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.textField label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.textField input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.textField input:focus {
+  outline: none;
+  border-color: #4b9cdb;
+}
+

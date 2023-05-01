@@ -3,6 +3,7 @@ export const ADD_USER_STORY = 'ADD_USER_STORY';
 export const  ADD_PROJECT = 'ADD_PROJECT';
 export const SET_START_DATE = 'SET_START_DATE'
 export const SET_END_DATE = 'SET_END_DATE'
+export const ADD_SPRINT = 'ADD_SPRINT'
 
 
 export function changeText(value) {
@@ -39,5 +40,12 @@ export const setEndDate = (endDate) => {
     return {
         type: SET_END_DATE,
         payload: endDate,
+    }
+}
+
+export const addSprint = (sprint) => {
+    return {
+        type: ADD_SPRINT,
+        payload: sprint,
     }
 }
