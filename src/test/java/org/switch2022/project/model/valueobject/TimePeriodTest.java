@@ -37,7 +37,7 @@ class TimePeriodTest {
         //act
 
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new TimePeriod(startDate, endDate);;
+            new TimePeriod(startDate, endDate);
         });
         String resultMessage = result.getMessage();
 
@@ -59,7 +59,7 @@ class TimePeriodTest {
         //act
 
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new TimePeriod(startDate, endDate);;
+            new TimePeriod(startDate, endDate);
         });
         String resultMessage = result.getMessage();
 
@@ -80,7 +80,7 @@ class TimePeriodTest {
         //act
 
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new TimePeriod(startDate, endDate);;
+            new TimePeriod(startDate, endDate);
         });
         String resultMessage = result.getMessage();
 
@@ -106,7 +106,7 @@ class TimePeriodTest {
         boolean isEqual = timePeriodOne.equals(timePeriodTwo);
 
         // Assert
-        assertEquals(true, isEqual);
+        assertTrue( isEqual);
     }
 
     @Test

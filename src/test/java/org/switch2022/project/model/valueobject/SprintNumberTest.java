@@ -44,7 +44,7 @@ class SprintNumberTest {
         boolean isEqual = sprintNumberOne.equals(sprintNumberTwo);
 
         // Assert
-        assertEquals(true, isEqual);
+        assertTrue(isEqual);
     }
 
     @Test
