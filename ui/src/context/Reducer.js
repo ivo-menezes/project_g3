@@ -16,7 +16,7 @@ const reducer = (state, action) => {
         case ADD_USER_STORY:
             return {
                 ...state,
-                userStories: [...state.userStories, action.payload],
+                backlogs: [...state.backlogs, action.payload],
             };
         case ADD_PROJECT:
             return {

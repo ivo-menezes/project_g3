@@ -1,29 +1,29 @@
-import React, { useReducer } from 'react';
-import { ADD_USER_STORY } from '../context/Actions';
-import reducer from '../context/Reducer';
+import React, { useContext } from "react";
+import AppContext from "../context/AppContext";
+import { addUserStory } from '../context/Actions';
 import Button from '../components/button';
 import Header from '../components/header';
 import TextArea from '../components/textArea';
 import TextField from '../components/textField';
 import { Link } from 'react-router-dom';
 
-
-const initialState = { textValue: "", userStories: [] };
-
 const CreateUserStory = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-
+    const { state, dispatch } = useContext(AppContext);
+    const { number, actor, description, priority, ac } = state;
 
     const submitForm = (event) => {
         event.preventDefault();
-        dispatch({
-            type: ADD_USER_STORY,
-            payload: { number, actor, description, priority, ac }
-        });
+        const userStory = {
+            number,
+            actor,
+            description,
+            priority,
+            ac
+        }
+        const action = addUserStory(userStory);
+        dispatch(action);
+        alert('User Story Created')
     };
-
-
-    const { number, actor, description, priority, ac } = state;
 
     return (
         <div className="form-container">
