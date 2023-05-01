@@ -2,47 +2,69 @@
 !theme plain
 hide footbox
 autonumber
-title "US019 - As Project Manager, I want to create a sprint."
+title "US027 - As Project Manager, I want to create a sprint."
 
 actor ProjectManager as User
 participant ": CreateSprintUI" as UI
 participant "sprintDTO : SprintDTO" as DTO
 participant ": CreateSprintController" as Controller
-participant ": ProjectList" as ProjectList
-participant "project : Project" as Project
-participant "sprintList : SprintList" as SprintList
+participant ": SprintService" as Services
+participant ": projectCode : ProjectCode" as ProjecCode
+participant ": ProjectRepository" as Repository
+participant "newSprintDTO : SprintDTO" as newDTO
+participant "factorySprint :FactorySprintImpl" as Factory
+participant "sprint : Sprint" as Sprint
+participant ": SprintRepository" as SprintRepository
+participant "sprintData : HashMap" as HashMap
 participant "sprint : Sprint" as Sprint
 
 activate User #FFBBBB
 User ->  UI: Requests creation of a sprint \n(projectCode, sprintNumber, startDate, endDate)
 
 activate UI #FFBBBB
-UI --> DTO **: create(sprintNumber, startDate, endDate)
-UI -> Controller: createSprint(projectCode, sprintDTO)
+UI --> DTO **: create(projectCode, \n sprintNumber,\n startDate, endDate)
+UI -> Controller: createSprint( sprintDTO)
 activate Controller #FFBBBB
 
-Controller -> ProjectList: getProject(projectCode);
-activate ProjectList #FFBBBB
-ProjectList --> Controller: project
-deactivate ProjectList
-Controller -> Project: getSprintList();
-activate Project #FFBBBB
-Project --> Controller: sprintList
-deactivate Project
+Controller -> Services: createSprint(sprintDTO)
 
-Controller -> SprintList: createSprint(sprintDTO);
-activate SprintList #FFBBBB
+activate Services #FFBBBB
+Services -> Services : inspectDTO(sprintDTO.projectCode, \n sprintDTO.sprintNumber, sprintDTO.startDate, \n sprintDTO.endDate)
+Services -> ProjecCode ** : create(sprintDTO.projectCode)
+Services -> Repository: containsID(projectCode)
+activate Repository #FFBBBB
+Repository -->Services: true
+deactivate
 
-SprintList -> SprintList: isValidDate(sprintDTO);
-SprintList -> Sprint **: createSprint(sprintDTO);
-SprintList -> SprintList: hasSprint(sprint);
-SprintList -> SprintList: add(sprint);
+Services --> newDTO **: create(projectCode, sprintNumber,\n startDate, endDate)
 
-SprintList --> Controller: true
-deactivate SprintList
+Services -> Factory:createSprint\n (newSprintDTO)
 
-Controller --> UI : true
-deactivate Controller
+activate Factory #FFBBBB
+Factory -> "sprintID : SprintID" ** : create(newSprintDTO.projectCode, sprintDTO.sprintNumber)
+Factory -> "timePeriod : TimePeriod" ** : create (newSprintDTO.startDate, sprintDTO.endDate)
+Factory --> Sprint ** :create (sprintID, \n timePeriod)
+Factory -> Services : sprint
+deactivate
+
+Services -> SprintRepository :save(sprint)
+activate SprintRepository #FFBBBB
+SprintRepository -> HashMap : containsID(sprintID)
+activate HashMap #FFBBBB
+HashMap --> SprintRepository : false
+SprintRepository -> HashMap : put(sprintID, sprint)
+deactivate HashMap #FFBBBB
+SprintRepository --> Services: true
+deactivate
+
+
+
+Services --> Controller: true
+deactivate
+Controller --> UI: true
+deactivate
+
+
 
 UI --> User: Confirms created Sprint
 deactivate UI
