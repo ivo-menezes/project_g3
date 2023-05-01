@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import AppContext from '../context/AppContext';
 
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 import Header from "../components/header";
 import Table from "../components/table";
+import Button from "../components/button";
 
 
 const ConsultBacklog = () => {
@@ -38,6 +39,14 @@ const ConsultBacklog = () => {
         <div>
             <Header className='header-listProjects' text={`Backlog for Project ${projectCode}`}/>
             <Table data={backlog} headers={formattedHeaders}/>
+            <div className='bt-container '>
+            <Link to='/createUserStory'>
+                <Button className='button-ListProjects' name='Add UserStory'/>
+            </Link>
+            <Link to='/listProjects'>
+                <Button className='button-ListProjects' name='Back to Project'/>
+            </Link>
+        </div>
         </div>
     )
 }
