@@ -2,23 +2,22 @@
 title List all Project in the web UI
 salt
 {+
-{.{[<&magnifying-glass>     Search]}|.{[Create Project]}}
 .
 {
 .{+
-"<b>Project A                                  "|[<&pencil>]
-"<b>Project B                                  "|[<&pencil>]
-"<b>Project C                                  "|[<&pencil>]
-"<b>Project D                                  "|[<&pencil>]
-"<b>Project E                                  "|[<&pencil>]
-"<b>Project F                                  "|[<&pencil>]
-"<b>Project G                                  "|[<&pencil>]
-"<b>Project H                                  "|[<&pencil>]
-"<b>Project I                                  "|[<&pencil>]
-"<b>Project J                                  "|[<&pencil>]
+"<b>Project 1                    "|[<&magnifying-glass>]
+"<b>Project 2                    "|[<&magnifying-glass>]
+"<b>Project 3                    "|[<&magnifying-glass>]
+"<b>Project 4                    "|[<&magnifying-glass>]
+"<b>Project 5                    "|[<&magnifying-glass>]
+"<b>Project 6                    "|[<&magnifying-glass>]
+"<b>Project 7                    "|[<&magnifying-glass>]
+"<b>Project 8                    "|[<&magnifying-glass>]
+"<b>Project 9                    "|[<&magnifying-glass>]
+"<b>Project 10                   "|[<&magnifying-glass>]
 }
-.
-{<&arrow-circle-left> Previous}.{<&arrow-circle-right> Next}
+.{[Create Sprint]}
+
 }
 }
 @enduml
