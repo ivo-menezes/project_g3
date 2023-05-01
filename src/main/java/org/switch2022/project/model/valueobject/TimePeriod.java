@@ -1,6 +1,6 @@
 package org.switch2022.project.model.valueobject;
 
-import org.switch2022.project.ddd.DomainId;
+
 import org.switch2022.project.ddd.ValueObject;
 
 import java.util.Date;
@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public class TimePeriod implements ValueObject {
 
-    private Date startDate;
+    final private Date startDate;
 
-    private Date endDate;
+    final private Date endDate;
 
 
     public TimePeriod(Date startDate, Date endDate) {

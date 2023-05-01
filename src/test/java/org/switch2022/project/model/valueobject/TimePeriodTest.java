@@ -3,6 +3,7 @@ package org.switch2022.project.model.valueobject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,8 +16,8 @@ class TimePeriodTest {
 
         //Arrange
 
-        Date startDate = new Date(2023 , 1 ,5);
-        Date endDate = new Date(2023 , 1 ,5);
+        Date startDate = new Date(2023 , Calendar.JANUARY,5);
+        Date endDate = new Date(2023 , Calendar.JANUARY ,5);
 
         //act
         new TimePeriod(startDate, endDate);
@@ -30,7 +31,7 @@ class TimePeriodTest {
         //Arrange
 
         Date startDate = (null);
-        Date endDate = new Date(2023 , 1 ,5);
+        Date endDate = new Date(2023 , Calendar.JANUARY ,5);
         String expectedMessage = "Start date must not be null" ;
 
         //act
@@ -51,7 +52,7 @@ class TimePeriodTest {
 
         //Arrange
 
-        Date startDate = new Date(2023 , 1 ,5);
+        Date startDate = new Date(2023 , Calendar.JANUARY ,5);
         Date endDate = null;
         String expectedMessage = "End date must not be null" ;
 
@@ -72,8 +73,8 @@ class TimePeriodTest {
 
         //Arrange
 
-        Date startDate = new Date(2023 , 1 ,5 );
-        Date endDate = new Date(2023 , 1 ,4);
+        Date startDate = new Date(2023 , Calendar.JANUARY ,5 );
+        Date endDate = new Date(2023 , Calendar.JANUARY ,4);
         String expectedMessage = "Start date must be sooner than end date" ;
 
         //act
@@ -92,8 +93,8 @@ class TimePeriodTest {
     @DisplayName("Test to ensure the two equals object are equal")
     public void checkIfUserStoryPriorityEqualsItselfWillNotReturnFalse() {
         //Arrange
-        Date startDate = new Date(2023, 1, 4);
-        Date endDate = new Date(2023, 1, 5);
+        Date startDate = new Date(2023, Calendar.JANUARY, 4);
+        Date endDate = new Date(2023, Calendar.JANUARY, 5);
         TimePeriod timePeriodOne = new TimePeriod(startDate,endDate);
         TimePeriod timePeriodTwo = new TimePeriod(startDate,endDate);
 
@@ -112,9 +113,9 @@ class TimePeriodTest {
     @DisplayName("Test to ensure the return won't be true for different objects")
     public void checkIfWillNoReturnEquals() {
         //Arrange
-        Date startDate = new Date(2023, 1, 3);
-        Date endDate = new Date(2023, 1, 4);
-        Date startDateTwo = new Date(2023, 1, 2);
+        Date startDate = new Date(2023, Calendar.JANUARY, 3);
+        Date endDate = new Date(2023, Calendar.JANUARY, 4);
+        Date startDateTwo = new Date(2023, Calendar.JANUARY, 2);
         TimePeriod timePeriodOne = new TimePeriod(startDate,endDate);
         TimePeriod timePeriodTwo = new TimePeriod(startDateTwo,endDate);
 
