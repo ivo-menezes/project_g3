@@ -2,11 +2,12 @@
 {
 
 title Create Project
+Code
 {+
    .
    "                         "
 }
-Project Name
+Name
 {+
    .
    "                         "
@@ -52,8 +53,9 @@ Budget
    "                         "
 }
 
-{  [<&circle-check>Save ] | [<&circle-x>Cancel]}
-{ [View Projects ]}
+{  [<&circle-check>Save ] |
+[<&circle-x>Cancel]}
+
 
 }
 
