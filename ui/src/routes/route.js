@@ -10,6 +10,7 @@ import CreateUserStory from '../pages/createUserStory';
 import ListSprints from '../pages/listSprint';
 import ConsultBacklog from '../pages/consultBacklog';
 import CreateSprint from '../pages/createSprint';
+import ViewSprint from "../pages/viewSprintPage";
 
 
 const Router= createBrowserRouter([
@@ -45,6 +46,10 @@ const Router= createBrowserRouter([
     {
         path: "/backlog/:projectCode",
         element: <ConsultBacklog />
+    },
+    {
+        path: "/viewSprintPage",
+        element: <ViewSprint />
     }
 ]);
 export default Router;
