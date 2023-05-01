@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+title "US010 - As Manager, I want to register/create a new project."
+
+actor "Manager" as user
+participant ":CreateProjectUI" as UI
+participant "projectDTO :ProjectDTO" as dto
+participant ":CreateProjectController" as Controller
+participant ":ProjectService" as Services
+participant ":ProjectRepository" as Repository
+participant "factoryProject :FactoryProjectImpl" as Factory
+
+activate user #FFBBBB
+user ->  UI: Request to create a project (projectCode, name, description)
+
+activate UI #FFBBBB
+UI --> dto ** : create(projectCode, name, description)
+UI -> Controller: createProject(projectDTO)
+
+activate Controller #FFBBBB
+Controller -> Services: createProject(projectDTO)
+
+activate Services #FFBBBB
+Services -> Repository: containsID(projectCode)
+
+activate Repository #FFBBBB
+Repository -->Services: false
+deactivate
+Services -> Factory:createProject(projectDTO)
+
+activate Factory #FFBBBB
+Factory --> "projectCode:ProjectCode" ** :create (projectCodeDTO.projectCode)
+Factory --> "projectName:ProjectName" ** :create (projectCodeDTO.name)
+Factory --> "description:Description" ** :create (projectCodeDTO.description)
+Factory --> "project:Project" ** :create (projectCode, \n projectName,\n description )
+Factory --> Services :project
+deactivate
+Services -> Repository :save(project)
+activate Repository #FFBBBB
+Repository -->Services : true
+deactivate
+Services --> Controller: true
+deactivate
+Controller --> UI: true
+deactivate
+UI --> user: Confirms project creation.
+
+@enduml
