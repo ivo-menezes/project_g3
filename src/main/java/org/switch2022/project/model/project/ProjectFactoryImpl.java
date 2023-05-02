@@ -1,7 +1,9 @@
 package org.switch2022.project.model.project;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.model.valueobject.*;
 
+@Component
 public class ProjectFactoryImpl implements IProjectFactory {
     @Override
     public ProjectDDD createProject(ProjectCode projectCode,
