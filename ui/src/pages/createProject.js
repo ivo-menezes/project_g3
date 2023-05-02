@@ -66,92 +66,104 @@ const CreateProject = () => {
     };
     return (
         <section className='form-create-project'>
-            <Header className= 'header-create-project' text="CREATE PROJECT"/>
+            <Header className='header-create-project' text="CREATE PROJECT"/>
             <form onSubmit={save}>
 
-                <TextField  className="textField"
-                    mandatory={true}
-                    label='Code'
-                    dispatch={dispatch}
-                    value={code}
+                <TextField className="textField"
+                           mandatory={true}
+                           label='Code'
+                           dispatch={dispatch}
+                           value={code}
                 />
 
                 <TextField className="textField"
-                    mandatory={true}
-                    label='Name'
-                    dispatch={dispatch}
-                    value={name}
+                           mandatory={true}
+                           label='Name'
+                           dispatch={dispatch}
+                           value={name}
                 />
 
                 <TextField className="textField"
-                    mandatory={true}
-                    label='Description'
-                    dispatch={dispatch}
-                    value={description}
+                           mandatory={true}
+                           label='Description'
+                           dispatch={dispatch}
+                           value={description}
                 />
 
                 <TextField className="textField"
-                    mandatory={true}
-                    label='Customer'
-                    dispatch={dispatch}
-                    value={customer}
+                           mandatory={true}
+                           label='Customer'
+                           dispatch={dispatch}
+                           value={customer}
                 />
 
-                <Date
-                    mandatory={true}
-                    dispatch={dispatch}
-                    selectedDate={startDate}
-                    dateFormat="dd/MM/yyyy"
-                    label='Start Date'
-                />
+                <div className="date">
+                    <Date
+                        mandatory={true}
+                        dispatch={dispatch}
+                        selectedDate={startDate}
+                        dateFormat="dd/MM/yyyy"
+                        label='Start Date'
+                    />
+                </div>
 
-                <Date
-                    mandatory={false}
-                    dispatch={dispatch}
-                    selectedDate={endDate}
-                    dateFormat="dd/MM/yyyy"
-                    label='End Date'
-                />
-                <DropDownList
-                    mandatory={true}
-                    label='Status'
-                    dispatch={dispatch}
-                    items={status}
-                    value={selectedStatus}
-                />
+                <div className="date">
+                    <Date
+                        mandatory={false}
+                        dispatch={dispatch}
+                        selectedDate={endDate}
+                        dateFormat="dd/MM/yyyy"
+                        label='End Date'
+                    />
+                </div>
 
-                <DropDownList
-                    mandatory={true}
-                    label='Typology'
-                    dispatch={dispatch}
-                    items={typology}
-                    value={selectedTypology}
-                />
+                <div className="dropDownList">
+                    <DropDownList
+                        mandatory={true}
+                        label='Status'
+                        dispatch={dispatch}
+                        items={status}
+                        value={selectedStatus}
+                    />
+                </div>
 
-                <DropDownList
-                    mandatory={true}
-                    label='Sprint Duration'
-                    dispatch={dispatch}
-                    items={sprintDuration}
-                    value={selectedSprintDuration}
+                <div className="dropDownList">
+                    <DropDownList
+                        mandatory={true}
+                        label='Typology'
+                        dispatch={dispatch}
+                        items={typology}
+                        value={selectedTypology}
+                    />
+                </div>
+
+                <div className="dropDownList">
+                    <DropDownList
+                        mandatory={true}
+                        label='Sprint Duration'
+                        dispatch={dispatch}
+                        items={sprintDuration}
+                        value={selectedSprintDuration}
+                    />
+                </div>
+
+
+                <TextField className="textField"
+                           mandatory={true}
+                           label='Number Of Planned Sprints'
+                           dispatch={dispatch}
+                           value={NumberOfPlannedSprints}
                 />
 
                 <TextField className="textField"
-                    mandatory={true}
-                    label='Number Of Planned Sprints'
-                    dispatch={dispatch}
-                    value={NumberOfPlannedSprints}
+                           mandatory={true}
+                           label='Budget'
+                           dispatch={dispatch}
+                           value={budget}
                 />
-
-                <TextField className="textField"
-                    mandatory={true}
-                    label='Budget'
-                    dispatch={dispatch}
-                    value={budget}
-                />
-                <Button className= 'button-form-createProject-save'name="Save"/>
+                <Button className='button-form-createProject-save' name="Save"/>
                 <Link to="/listProjects">
-                    <Button className= 'button-form-createProject-cancel' name="Cancel"/>
+                    <Button className='button-form-createProject-cancel' name="Cancel"/>
                 </Link>
             </form>
         </section>
