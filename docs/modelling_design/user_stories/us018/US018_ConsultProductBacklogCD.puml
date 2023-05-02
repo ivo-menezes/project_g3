@@ -5,24 +5,34 @@ class ConsultProductBacklogController {
 getProductBacklog(projectCode)
 }
 
-class UserStoryServices {
+class UserStoryService {
 getProductBacklog(projectCode)
+create(projectCode)
+}
+
+class UserStoryRepository {
+getOpenUserStories(openUserStoryIDs)
 }
 
 class ProjectRepository {
-containsID(projectCode)
+getByID(projectCodeVO)
+}
+
+class Project{
+getProductBacklog()
+}
+
+class ProductBacklog {
+openUserStories : List<UserStoryID>
+getOpenUserStoryIDs()
 }
 
 class ProjectCode {
 id : String
 }
 
-class UserStoryRepository {
-getProductBacklog(projectCode)
-}
-
 class UserStoryMapper{
-toDTO(userStoryList)
+toDTO(openUserStoryList)
 }
 
 class UserStoryDTO {
@@ -48,26 +58,23 @@ interface AggregateRoot {
 interface DomainEntity {
 }
 
-ConsultProductBacklogController "1" *-- "1" UserStoryServices
-UserStoryServices "1" *-left- "1" ProjectRepository
-UserStoryServices "1" *-- "1" UserStoryMapper
-UserStoryServices "1" *-- "1" UserStoryRepository
+ConsultProductBacklogController "1" *-- "1" UserStoryService
+UserStoryService "1" *-left- "1" ProjectRepository
+UserStoryService "1" *-- "1" UserStoryMapper
+Project "1" o-- "1" ProductBacklog
+UserStoryService "1" *-- "1" Project
 UserStoryMapper ..> UserStoryDTO
-UserStoryMapper .left.> UserStoryRepository
-UserStoryRepository ..> UserStoryDTO
-ProjectCode .up.> ProjectRepository
-ProjectCode .up.> UserStoryServices
-ProjectCode .right.> UserStoryRepository
-
+UserStoryService "1" .right.> "1" UserStoryRepository
 UserStoryRepository -..|> Repository
+ProjectCode .up.> ProjectRepository
+ProjectCode .up.> UserStoryService
 ProjectRepository -..|> Repository
 ProjectCode -.down.|> DomainID
-
+Project -..|> AggregateRoot
 DomainID --|> ValueObject
-
+ProductBacklog ..|> DomainEntity
 Repository --|> DomainID
 Repository --|> AggregateRoot
-
 AggregateRoot --|> DomainID
 AggregateRoot --|> DomainEntity
 
