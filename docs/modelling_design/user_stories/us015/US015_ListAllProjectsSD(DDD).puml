@@ -22,7 +22,7 @@ activate Controller #FFBBBB
 Controller -> Services: listProjects()
 
 activate Services #FFBBBB
-Services -> ProjectRepository : getProjectList()
+Services -> ProjectRepository : listProjects()
 activate ProjectRepository #FFBBBB
 ProjectRepository -> projectData: projectData.values()
 activate projectData #FFBBBB
