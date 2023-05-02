@@ -7,11 +7,16 @@ title "US018 - As Product Owner/Scrum Master/Team Member, I want to consult the 
 actor "Product Owner/\n/Scrum Master/\n/Team Member" as user
 participant ": ConsultProductBacklogUI" as UI
 participant ": ConsultProductBacklogController" as Controller
-participant ": UserStoryServices" as Services
+participant ": UserStoryService" as Service
 participant ": ProjectRepository" as ProjRepository
+participant "project : Project" as Project
+participant "productBacklog : ProductBacklog" as backlog
+participant ": UserStoryRepository" as USRepository
+participant "openUserStoryList :\n List<UserStory>" as USList
+participant "DATA : HashMap" as hashmap
 participant ": UserStoryMapper" as Mapper
-participant ": UserStoryRepository" as Repository
-participant "lsUserStory :\n List<UserStoryDTO>" as DTOList
+participant "productBacklog :\n List<UserStoryDTO>" as DTOList
+participant "openUserStories: List<UserStoryID>"
 
 activate user #FFBBBB
 user -> UI: Requests product backlog(projectCode)
@@ -20,37 +25,55 @@ activate UI #FFBBBB
 UI-> Controller:getProductBacklog(projectCode)
 
 activate Controller #FFBBBB
+Controller -> Service: getProductBacklog(projectCode)
+activate Service #FFBBBB
 
-Controller -> Services: getProductBacklog(projectCode)
-activate Services #FFBBBB
-
-Services -> ProjRepository: containsID(projectCode)
+Service --> "projectCodeVO : ProjectCode" **: create(projectCode)
+Service -> ProjRepository: getByID(projectCodeVO)
 activate ProjRepository #FFBBBB
-ProjRepository --> Services: true
+ProjRepository --> Service: project
 deactivate ProjRepository
-Services -> Repository: getProductBacklog(projectCode)
-activate Repository #FFBBBB
-Repository --> Services: productBacklog
-deactivate
-Services -> Mapper: toDTO(userStoryList)
+Service -> Project : getProductBacklog()
+
+activate Project #FFBBBB
+Project -> backlog : getOpenUserStoryIDs()
+activate backlog #FFBBBB
+backlog -> Project: openUserStoryIDs
+deactivate backlog
+
+Project --> Service: openUserStoryIDs
+deactivate Project
+Service -> USRepository: getOpenUserStories(openUserStoryIDs)
+activate USRepository #FFBBBB
+USRepository --> USList ** : create
+
+loop for each userStoryID in hashmap
+USRepository -> hashmap : get(id)
+hashmap --> USRepository: (userStory)
+USRepository -> USList : add(userStory)
+activate USList #FFBBBB
+deactivate USList
+
+end
+USRepository --> Service: openUserStoryList
+deactivate USRepository
+Service -> Mapper: toDTO(openUserStoryList)
 activate Mapper #FFBBBB
 
 Mapper --> DTOList ** : create
 
-loop for each userStory in UserStoryRepository
-Repository --> Mapper : userStory
-deactivate Repository
+loop for each userStory in openUserStoryList
 Mapper -> Mapper : toDTO(userStory)
 Mapper -> DTOList: add(userStoryDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
 end
 
-Mapper --> Services : productBacklog
+Mapper --> Service : productBacklog
 deactivate Mapper
 
-Services --> Controller : productBacklog
-deactivate Services
+Service --> Controller : productBacklog
+deactivate Service
 
 Controller --> UI: productBacklog
 deactivate Controller
