@@ -39,7 +39,7 @@ const CreateSprint = () => {
                     dispatch={dispatch}
                     value={number}
                 />
-
+                <div className="date">
                 <Date
                     mandatory={true}
                     dispatch={dispatch}
@@ -47,7 +47,9 @@ const CreateSprint = () => {
                     dateFormat="dd/MM/yyyy"
                     label='Start Date'
                 />
+                </div>
 
+                <div className="date">
                 <Date
                     mandatory={false}
                     dispatch={dispatch}
@@ -55,6 +57,7 @@ const CreateSprint = () => {
                     dateFormat="dd/MM/yyyy"
                     label='End Date'
                 />
+                </div>
                 
                 <Button className= 'button-form-createSprint-save'name="Save"/>
                 <Link to="/listSprints">
