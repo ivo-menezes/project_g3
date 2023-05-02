@@ -1,7 +1,9 @@
 package org.switch2022.project.model.userStory;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.model.valueobject.*;
 
+@Component
 public class UserStoryFactoryImpl implements IUserStoryFactory {
 
     @Override

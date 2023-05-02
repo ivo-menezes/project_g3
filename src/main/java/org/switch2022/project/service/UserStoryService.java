@@ -1,5 +1,7 @@
 package org.switch2022.project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -9,9 +11,16 @@ import org.switch2022.project.model.valueobject.*;
 
 import java.util.Optional;
 
+@Service
 public class UserStoryService {
+
+    @Autowired
     private final IUserStoryFactory userStoryFactory;
+
+    @Autowired
     private final Repository<UserStoryID, UserStoryDDD> userStoryRepository;
+
+    @Autowired
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
     /**

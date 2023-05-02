@@ -1,10 +1,12 @@
 package org.switch2022.project.controller;
 
+import org.springframework.stereotype.Controller;
 import org.switch2022.project.mapper.UserStoryDTO;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
 import org.switch2022.project.service.UserStoryService;
 
+@Controller
 public class CreateUserStoryController {
     private final UserStoryService service;
 
