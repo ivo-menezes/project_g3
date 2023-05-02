@@ -67,42 +67,149 @@ code {
   text-align: center
 }
 
-/* Form page style */
-.form-container {
+/* Create User Story page style */
+
+.form-create-userStory {
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
-  margin-left: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
+  max-width: 700px;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-}
-
-.form-input {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  max-width: 300px;
-}
-
-.form-input label {
+.header-create-userStory {
+  font-size: 2rem;
   font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #4a4a4a;
+  text-transform: uppercase;
+}
+
+.form-create-userStory form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-create-userStory form > * {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.form-create-userStory .button-form-createUserStory-save {
+  background-color: #1abc9c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-userStory .button-form-createUserStory-save:hover {
+  background-color: #148f77;
+}
+
+.form-create-userStory .button-form-createUserStory-cancel {
+  background-color: #95a5a6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-create-userStory .button-form-createUserStory-cancel:hover {
+  background-color: #7f8c8d;
+}
+
+.form-create-userStory label {
+  display: block;
+  font-size: 1.2rem;
   margin-bottom: 5px;
 }
 
-.form-input input {
-  width: 100%;
+.form-create-userStory input,
+.form-create-userStory textArea,
+.form-create-userStory select {
+  font-size: 1.2rem;
   padding: 10px;
-  font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: none;
+  width: 100%;
 }
 
-.form-input input:focus {
-  border: 1px solid #1e90ff;
+.form-create-userStory input:required:invalid:focus,
+.form-create-userStory textArea:required:invalid:focus,
+.form-create-userStory select:required:invalid:focus {
+  border: 2px solid #e74c3c;
+}
+
+.form-create-userStory input:required:valid,
+.form-create-userStory textArea:required:valid,
+.form-create-userStory select:required:valid {
+  border: 2px solid #2ecc71;
+}
+
+.form-create-userStory .mandatory {
+  color: #e74c3c;
+}
+
+.textField {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.textField label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.textField input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.textField input:focus {
+  outline: none;
+  border-color: #4b9cdb;
+}
+
+.textArea {
+  margin-bottom: 20px;
+  overflow: auto;
+  resize: none;
+}
+
+.textArea label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.textArea textarea {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.textArea textArea:focus {
+  outline: none;
+  border-color: #4b9cdb;
 }
 
 .table-sprint{
