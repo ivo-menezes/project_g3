@@ -9,6 +9,7 @@ participant ": ListProjectUI" as UI
 participant ": ListProjectController" as Controller
 participant ": Services" as Services
 participant ": ProjectRepository" as ProjectRepository
+participant " projectData: HashMap" as projectData
 participant ": ProjectMapper" as Mapper
 participant "lsProject : List<ProjectDTO>" as DTOList
 
@@ -23,23 +24,26 @@ Controller -> Services: listProjects()
 activate Services #FFBBBB
 Services -> ProjectRepository : getProjectList()
 activate ProjectRepository #FFBBBB
-
-ProjectRepository -> Services : ": ProjectRepository"
+ProjectRepository -> projectData: projectData.values()
+activate projectData #FFBBBB
+projectData --> ProjectRepository: projectCollection
+deactivate projectData
+ProjectRepository --> Services : projectCollection
 deactivate ProjectRepository
 
-Services -> Mapper : toDTOList(projectList)
+Services -> Mapper : toDTOList(projectCollection)
 activate Mapper #FFBBBB
 
 Mapper -> DTOList ** : create
 
-loop for each project in ProjectList
+loop for each project in projectCollection
 Mapper -> Mapper : toDTO(project)
 Mapper -> DTOList : add(projectDTO)
 activate DTOList #FFBBBB
 deactivate DTOList
 end
 
-Mapper -> Services : lsProject
+Mapper --> Services : lsProject
 deactivate Mapper
 
 Services --> Controller : lsProject
