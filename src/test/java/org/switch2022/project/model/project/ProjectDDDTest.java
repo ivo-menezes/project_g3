@@ -2,9 +2,7 @@ package org.switch2022.project.model.project;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.model.valueobject.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -19,9 +17,28 @@ class ProjectDDDTest {
     @Test
     @DisplayName("Test for a successful creation of ProjectDDD")
     public void checkIfTheProjectDDDIsSuccessfulCreated(){
-        ProjectCode projectCodeMock = mock(ProjectCode.class);
+        // arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
 
-        ProjectDDD projectOne = new ProjectDDD(projectCodeMock);
+        // act
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
+
+        // assert
+        assertInstanceOf(ProjectDDD.class, project);
     }
 
     /***
@@ -30,14 +47,30 @@ class ProjectDDDTest {
     @Test
     @DisplayName("Test for a successful addition to Backlog")
     public void checkIfTheProjectDDDAddsToBacklog(){
-
-        ProjectCode projectCodeMock = mock(ProjectCode.class);
-        ProjectDDD project = new ProjectDDD(projectCodeMock);
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
 
+        //Act
         boolean result = project.addToProductBacklog(userStoryID, priority);
 
+        //Assert
         assertTrue(result);
     }
 
@@ -47,14 +80,30 @@ class ProjectDDDTest {
     @Test
     @DisplayName("Test for a successful call of List")
     public void checkIfTheProjectDDDReturnsProductBacklog(){
-
-        ProjectCode projectCodeMock = mock(ProjectCode.class);
-        ProjectDDD project = new ProjectDDD(projectCodeMock);
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
 
+        //Act
         project.addToProductBacklog(userStoryID, priority);
 
+        //Assert
         assertEquals(userStoryID, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
 
@@ -64,9 +113,23 @@ class ProjectDDDTest {
     @Test
     @DisplayName("Test for the list returning more than one UserStory")
     public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithNegativeValueSize(){
-
-        ProjectCode projectCodeMock = mock(ProjectCode.class);
-        ProjectDDD project = new ProjectDDD(projectCodeMock);
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(0);
@@ -74,17 +137,34 @@ class ProjectDDDTest {
         UserStoryPriority priorityTwo = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(1);
 
+        //Assert
         project.addToProductBacklog(userStoryID, priority);
         project.addToProductBacklog(userStoryIDTwo, priorityTwo);
 
+        //Act
         assertNotEquals(-2, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
     @Test
     @DisplayName("Test for the list returning more than one UserStory")
     public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithValuesAboveTheTrueSize(){
 
-        ProjectCode projectCodeMock = mock(ProjectCode.class);
-        ProjectDDD project = new ProjectDDD(projectCodeMock);
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(0);
@@ -92,9 +172,11 @@ class ProjectDDDTest {
         UserStoryPriority priorityTwo = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(1);
 
+        //Assert
         project.addToProductBacklog(userStoryID, priority);
         project.addToProductBacklog(userStoryIDTwo, priorityTwo);
 
+        //Act
         assertNotEquals(3, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
 }

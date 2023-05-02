@@ -8,10 +8,7 @@ import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.userStory.UserStoryFactoryImpl;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryNumber;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.repository.ProjectRepository;
 import org.switch2022.project.repository.UserStoryRepository;
 import org.switch2022.project.service.UserStoryService;
@@ -138,7 +135,21 @@ class CreateUserStoryControllerTest {
         // Arrange
         // create new project and save it a projectRepository
         ProjectCode projectCode = new ProjectCode("XPTO");
-        ProjectDDD project = new ProjectDDD(projectCode);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCode,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         ProjectRepository projectRepository = new ProjectRepository();
         projectRepository.save(project);
 
@@ -172,7 +183,21 @@ class CreateUserStoryControllerTest {
         // Arrange
         // create new project and save it a projectRepository
         ProjectCode projectCode = new ProjectCode("XPTO");
-        ProjectDDD project = new ProjectDDD(projectCode);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCode,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         ProjectRepository projectRepository = new ProjectRepository();
         projectRepository.save(project);
 
@@ -216,7 +241,21 @@ class CreateUserStoryControllerTest {
         // Arrange
         // create new project and save it a projectRepository
         ProjectCode projectCode = new ProjectCode("XPTO");
-        ProjectDDD project = new ProjectDDD(projectCode);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCode,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         ProjectRepository projectRepository = new ProjectRepository();
         projectRepository.save(project);
 
@@ -259,7 +298,21 @@ class CreateUserStoryControllerTest {
         // Arrange
         // create new project and save it a projectRepository
         ProjectCode projectCode = new ProjectCode("XPTO");
-        ProjectDDD project = new ProjectDDD(projectCode);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCode,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         ProjectRepository projectRepository = new ProjectRepository();
         projectRepository.save(project);
 
@@ -318,7 +371,21 @@ class CreateUserStoryControllerTest {
         // Arrange
         // create new project and save it a projectRepository
         ProjectCode projectCode = new ProjectCode("XPTO");
-        ProjectDDD project = new ProjectDDD(projectCode);
+        ProjectName projectNameDouble = mock(ProjectName.class);
+        Description descriptionDouble = mock(Description.class);
+        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
+        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        ProjectDDD project = new ProjectDDD(projectCode,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectBudgetDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble);
         ProjectRepository projectRepository = new ProjectRepository();
         projectRepository.save(project);
 
