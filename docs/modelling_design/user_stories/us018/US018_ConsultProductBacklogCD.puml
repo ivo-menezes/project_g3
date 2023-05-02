@@ -12,6 +12,7 @@ create(projectCode)
 
 class UserStoryRepository {
 getOpenUserStories(openUserStoryIDs)
+get(userStoryID)
 }
 
 class ProjectRepository {
