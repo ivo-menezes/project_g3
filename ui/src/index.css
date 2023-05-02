@@ -483,3 +483,21 @@ code {
   border-color: #4b9cdb;
 }
 
+/* date format */
+.date {
+  margin-bottom: 10px;
+}
+
+.date label {
+  font-weight: bold;
+}
+
+.date input {
+  border: 2px solid #ccc;
+}
+
+/* DropDownList format */
+
+.dropDownList label {
+  font-weight: bold;
+}
