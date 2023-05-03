@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const TableHeader = ({ headers }) => {
     return (
         <thead>
         <tr>
-            {Object.values(headers).map((header, index) =>
-                (<th key={index}>{header.label}</th>
-                ))}
+            {headers.map((header) => (
+                <th key={header.key}>{header.label}</th>
+            ))}
         </tr>
         </thead>
     );

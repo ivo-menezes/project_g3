@@ -17,7 +17,7 @@ code {
 .header-welcome {
   color: #243757;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;;
+  monospace;
   font-size: 70px;
 }
 .button-welcome {
@@ -61,6 +61,8 @@ code {
   cursor: pointer;
   border-radius: 4px;
   background-color: #1abc9c;
+  color: #fff;
+  font-weight: bold;
 }
 
 .bt-container {
@@ -216,6 +218,8 @@ code {
   width: 75%;
   border-collapse: collapse;
   margin: 0 auto;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .table-sprint th,
@@ -226,6 +230,7 @@ code {
 }
 .table-sprint th:first-child,
 .table-sprint td:first-child {
+  font-weight: bold;
   width: 30px;
 }
 .table-sprint th:not(:first-child),
@@ -233,7 +238,8 @@ code {
   width: 100px;
 }
 .table-sprint td:last-child {
-  width: 0%;
+  width: 1px;
+  text-align: right;
   border-bottom: 3px solid #ABB2B9;
 }
 .table-sprint th:last-child {

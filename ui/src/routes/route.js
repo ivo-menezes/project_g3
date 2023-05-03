@@ -5,7 +5,7 @@ import {
 import App from "../App";
 import ListProjects from "../pages/listProjects";
 import CreateProject from "../pages/createProject";
-import TestPage from "../pages/testPage";
+import ViewProject from "../pages/viewProject";
 import CreateUserStory from '../pages/createUserStory';
 import ListSprints from '../pages/listSprint';
 import ConsultBacklog from '../pages/consultBacklog';
@@ -28,10 +28,6 @@ const Router= createBrowserRouter([
         element: <CreateProject/>
     },
     {
-        path: "/testPage",
-        element: <TestPage />
-    },
-    {
         path: "/createUserStory",
         element: <CreateUserStory/>
     },
@@ -50,6 +46,10 @@ const Router= createBrowserRouter([
     {
         path: "/viewSprintPage",
         element: <ViewSprint />
+    },
+    {
+        path: "/viewProject/:id",
+        element: <ViewProject />
     }
 ]);
 export default Router;

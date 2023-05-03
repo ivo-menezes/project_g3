@@ -1,17 +1,40 @@
-import React from "react";
+import React, {useContext} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import Table from "../components/table";
-import {Link} from "react-router-dom";
-import projects from "../store/projects";
+import {Link, useNavigate } from "react-router-dom";
+import AppContext from "../context/AppContext";
 
-const headers = {
-    header1: {label: "Code"},
-    header2: {label: "Name"},
-    header3: {label: ""},
-}
+const headers = [
+    { label: "Code", key: "id" },
+    { label: "Name", key: "title" },
+    { label: "", key: "view" },
+];
 
 const ListProjects = () => {
+
+    const navigate = useNavigate();
+    const { state } = useContext(AppContext);
+
+    const project = state.projectList;
+
+    const handleRowClick = (id) => {
+        console.log("Clicked row with ID:", id);
+        navigate(`/viewProject/${id}`);
+    };
+
+    const projects = project.map((project) => ({
+        id: project.id,
+        title: project.title,
+        view: (
+            <Button
+                className="sprint-button-view"
+                name={"View"}
+                onClick={() => handleRowClick(project.id)}
+            ></Button>
+        ),
+    }));
+
     return (
         <div>
             <Header className= 'header-listProjects' text='Project List' style={{marginLeft: "65px"}}/>
@@ -19,9 +42,6 @@ const ListProjects = () => {
             <div className='bt-container '>
                 <Link to='/createProject'>
                     <Button className='button-ListProjects' name='Create Project'/>
-                </Link>
-                <Link to='/testPage'>
-                    <Button className='button-ListProjects' name='Test Page'/>
                 </Link>
             </div>
 
