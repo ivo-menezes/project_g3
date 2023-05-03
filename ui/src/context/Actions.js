@@ -43,9 +43,9 @@ export const setEndDate = (endDate) => {
     }
 }
 
-export const addSprint = (sprint) => {
-    return {
+export const addSprint = (dispatch, sprint) => {
+    dispatch ({
         type: ADD_SPRINT,
         payload: sprint,
-    }
+    })
 }

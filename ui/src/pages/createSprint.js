@@ -24,10 +24,10 @@ const CreateSprint = () => {
             endDate
         }
 
-        const action = addSprint(sprint);
-        dispatch(action);
+        addSprint(dispatch, sprint);
         alert('Sprint Created')
     };
+
     return (
         <section className='form-create-sprint'>
             <Header className= 'header-create-sprint' text="CREATE SPRINT"/>
@@ -59,7 +59,7 @@ const CreateSprint = () => {
                 />
                 </div>
                 
-                <Button className= 'button-form-createSprint-save'name="Save"/>
+                <Button className= 'button-form-createSprint-save' name="Save"/>
                 <Link to="/listSprints">
                     <Button className= 'button-form-createSprint-cancel' name="Cancel"/>
                 </Link>
