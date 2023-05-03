@@ -15,11 +15,11 @@ export function changeText(value) {
     }
 };
 
-export const addUserStory = (userStory) => {
-    return {
+export const addUserStory = (dispatch, userStory) => {
+    dispatch ({
         type: ADD_USER_STORY,
         payload: userStory,
-    }
+    })
 };
 
 export const addProject = (project) => {

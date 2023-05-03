@@ -20,8 +20,7 @@ const CreateUserStory = () => {
             priority,
             ac
         }
-        const action = addUserStory(userStory);
-        dispatch(action);
+        addUserStory(dispatch, userStory);
         alert('User Story Created')
     };
 
