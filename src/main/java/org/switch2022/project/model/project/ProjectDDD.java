@@ -3,7 +3,6 @@ package org.switch2022.project.model.project;
 import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDDD implements AggregateRoot<ProjectCode> {
@@ -16,7 +15,7 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
     private final ProjectBudget projectBudget;
     private final ProjectSprintDuration projectSprintDuration;
     private final ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints;
-    private final List<UserStoryID> productBacklog = new ArrayList<>();
+    private final ProductBacklogDDD productBacklog;
 
     public ProjectDDD(ProjectCode projectCode,
                       ProjectName projectName,
@@ -25,7 +24,8 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
                       TimePeriod timePeriod,
                       ProjectBudget projectBudget,
                       ProjectSprintDuration projectSprintDuration,
-                      ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints) {
+                      ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints
+    ) {
 
         if (projectCode == null) {
             throw new IllegalArgumentException("projectCode cannot be null");
@@ -62,6 +62,7 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
         this.projectSprintDuration = projectSprintDuration;
         this.projectNumberOfPlannedSprints = projectNumberOfPlannedSprints;
 
+        this.productBacklog = new ProductBacklogDDD();
     }
 
     @Override
@@ -69,23 +70,24 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
         return this.projectCode;
     }
 
+    /**
+     * Returns the IDs of the open user stories of the project (i.e. the product backlog).
+     *
+     * @return list of UserStoryIDs
+     */
     public List<UserStoryID> getProductBacklog() {
-        return List.copyOf(this.productBacklog);
+        return this.productBacklog.getOpenUserStories();
     }
 
+    /**
+     * Adds the ID of a user story to the product backlog.
+     *
+     * @param userStoryID of the user story to be added to the backlog
+     * @param priority    of the user story; index at which it will be added to the list
+     * @return true if ID was added, false otherwise
+     */
     public boolean addToProductBacklog(UserStoryID userStoryID, UserStoryPriority priority) {
-        int position = priority.getValue();
-
-        if (position < 0 || position > this.productBacklog.size()) {
-            position = this.productBacklog.size();
-        }
-
-        if (productBacklog.contains(userStoryID)) {
-            return false;
-        } else {
-            this.productBacklog.add(position, userStoryID);
-            return true;
-        }
+        return this.productBacklog.add(userStoryID, priority);
     }
 
     public ProjectCode getProjectCode() {

@@ -1,25 +1,47 @@
 package org.switch2022.project.model.valueobject;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
+
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TimePeriodTest {
 
+    private Date startDate;
+    private Date endDate;
+    private Date startDateTwo;
+
+    @BeforeEach
+    public void initDates() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2023);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 4);
+        startDate = calendar.getTime();
+
+        calendar.set(Calendar.YEAR, 2023);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 2);
+        startDateTwo = calendar.getTime();
+
+        calendar.set(Calendar.YEAR, 2023);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 5);
+        endDate = calendar.getTime();
+    }
+
+
+
     @Test
     @DisplayName(("Test for creation of Time Period"))
     public void checkIfClassCreatesValidTimePeriod() {
 
-        //Arrange
-
-        Date startDate = new Date(2023 , Calendar.JANUARY,5);
-        Date endDate = new Date(2023 , Calendar.JANUARY ,5);
-
-        //act
+         //act
         new TimePeriod(startDate, endDate);
 
     }
@@ -31,8 +53,7 @@ class TimePeriodTest {
         //Arrange
 
         Date startDate = (null);
-        Date endDate = new Date(2023 , Calendar.JANUARY ,5);
-        String expectedMessage = "Start date must not be null" ;
+        String expectedMessage = "Start date must not be null";
 
         //act
 
@@ -52,9 +73,8 @@ class TimePeriodTest {
 
         //Arrange
 
-        Date startDate = new Date(2023 , Calendar.JANUARY ,5);
         Date endDate = null;
-        String expectedMessage = "End date must not be null" ;
+        String expectedMessage = "End date must not be null";
 
         //act
 
@@ -67,20 +87,22 @@ class TimePeriodTest {
         assertEquals(expectedMessage, resultMessage);
 
     }
+
     @Test
     @DisplayName(("Ensure start date is sooner end date"))
     public void ensureStartDateIsSoonerEndDate() {
 
         //Arrange
 
-        Date startDate = new Date(2023 , Calendar.JANUARY ,5 );
-        Date endDate = new Date(2023 , Calendar.JANUARY ,4);
-        String expectedMessage = "Start date must be sooner than end date" ;
+        Date endDateSwitched = startDate;
+        startDate = endDate;
+
+        String expectedMessage = "Start date must be sooner than end date";
 
         //act
 
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new TimePeriod(startDate, endDate);
+            new TimePeriod(startDate, endDateSwitched);
         });
         String resultMessage = result.getMessage();
 
@@ -90,15 +112,43 @@ class TimePeriodTest {
     }
 
     @Test
-    @DisplayName("Test to ensure the two equals object are equal")
-    public void checkIfUserStoryPriorityEqualsItselfWillNotReturnFalse() {
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
         //Arrange
-        Date startDate = new Date(2023, Calendar.JANUARY, 4);
-        Date endDate = new Date(2023, Calendar.JANUARY, 5);
-        TimePeriod timePeriodOne = new TimePeriod(startDate,endDate);
-        TimePeriod timePeriodTwo = new TimePeriod(startDate,endDate);
 
+        TimePeriod timePeriodOne = new TimePeriod(startDate, endDate);
 
+        //act
+
+        boolean isEqual = timePeriodOne.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that two Sprint with same number are equal")
+    public void checkIfTimePeriodEqualsWithSameDatesAreEqual() {
+
+        //Arrange
+        TimePeriod timePeriodOne = new TimePeriod(startDate, endDate);
+        TimePeriod timePeriodTwo = timePeriodOne;
+
+        //Act
+
+        boolean isEqual = timePeriodOne.equals(timePeriodTwo);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure the two equals object are equal")
+    public void checkIfTimePeriodEqualsItselfWillNotReturnFalse() {
+        //Arrange
+
+        TimePeriod timePeriodOne = new TimePeriod(startDate, endDate);
+        TimePeriod timePeriodTwo = new TimePeriod(startDate, endDate);
 
 
         //act
@@ -106,18 +156,16 @@ class TimePeriodTest {
         boolean isEqual = timePeriodOne.equals(timePeriodTwo);
 
         // Assert
-        assertTrue( isEqual);
+        assertTrue(isEqual);
     }
 
     @Test
     @DisplayName("Test to ensure the return won't be true for different objects")
     public void checkIfWillNoReturnEquals() {
         //Arrange
-        Date startDate = new Date(2023, Calendar.JANUARY, 3);
-        Date endDate = new Date(2023, Calendar.JANUARY, 4);
-        Date startDateTwo = new Date(2023, Calendar.JANUARY, 2);
-        TimePeriod timePeriodOne = new TimePeriod(startDate,endDate);
-        TimePeriod timePeriodTwo = new TimePeriod(startDateTwo,endDate);
+
+        TimePeriod timePeriodOne = new TimePeriod(startDate, endDate);
+        TimePeriod timePeriodTwo = new TimePeriod(startDateTwo, endDate);
 
         //act
         boolean isNotEqual = timePeriodOne.equals(timePeriodTwo);
@@ -125,8 +173,6 @@ class TimePeriodTest {
         // Assert
         assertNotEquals(true, isNotEqual);
     }
-
-
 
 
 }

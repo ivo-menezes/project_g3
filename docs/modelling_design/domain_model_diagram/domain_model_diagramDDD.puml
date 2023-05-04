@@ -46,6 +46,7 @@ Object Designation <<VO>>
 ' -- DomainID VOs
 Object ProjectCode <<VO>> <<ID>>
 Object UserStoryID <<VO>> <<ID>>
+Object UserStoryInSprintID <<VO>> <<ID>>
 Object SprintID <<VO>> <<ID>>
 Object Email <<VO>> <<ID>>
 Object ProfileName <<VO>> <<ID>>
@@ -84,6 +85,9 @@ Sprint --> "1" TimePeriod
 
 UserStoryInSprint --> "1" UserStoryID
 UserStoryInSprint --> "1" UserStoryEffortEstimate
+UserStoryInSprint --> "1" UserStoryInSprintID
+UserStoryInSprintID --> "1" UserStoryID
+UserStoryInSprintID --> "1" SprintID
 
 package "UserStory" as US {
     Object UserStory <<Entity>> <<Root>>
