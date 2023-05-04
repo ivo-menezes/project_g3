@@ -3,10 +3,15 @@ package org.switch2022.project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
+import org.switch2022.project.mapper.ProjectDTO;
+import org.switch2022.project.mapper.ProjectDTOForListDDD;
 import org.switch2022.project.mapper.ProjectDTO_DDD;
+import org.switch2022.project.mapper.ProjectMapperDDD;
 import org.switch2022.project.model.project.IProjectFactory;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.valueobject.*;
+
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -20,6 +25,9 @@ public class ProjectService {
      * @param projectFactory a factory that implements IProjectFactory
      * @param projectRepository repository that implements Repository<ProjectCode, Project>
      */
+    private ProjectMapperDDD projectMapperDDD;
+
+
     public ProjectService(IProjectFactory projectFactory, Repository<ProjectCode, ProjectDDD> projectRepository) {
 
         if (projectFactory == null) {
@@ -32,6 +40,14 @@ public class ProjectService {
         this.projectFactory = projectFactory;
         this.projectRepository = projectRepository;
     }
+
+    @Autowired
+    public void setProjectMapper(ProjectMapperDDD projectMapperDDD) {
+        this.projectMapperDDD = projectMapperDDD;
+    }
+
+
+
 
     /**
      * Creates a Project and adds it to the projectRepository.
@@ -59,5 +75,12 @@ public class ProjectService {
                                                                projectSprintDuration,
                                                                projectNumberOfPlannedSprints);
         return this.projectRepository.save(project);
+    }
+
+    public List<ProjectDTOForListDDD> listProjects() {
+
+        Iterable<ProjectDDD> projectCollection = projectRepository.findAll();
+
+        return projectMapperDDD.toDTOList(projectCollection);
     }
 }
