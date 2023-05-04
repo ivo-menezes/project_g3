@@ -32,8 +32,23 @@ class SprintNumberTest {
     }
 
     @Test
-    @DisplayName("Test to ensure the two equals object are equal")
-    public void checkIfUserStoryPriorityEqualsItselfWillNotReturnFalse() {
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        SprintNumber sprintNumberOne = new SprintNumber(1);
+
+        //Act
+
+        boolean isEqual = sprintNumberOne.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that two equals object are equal")
+    public void checkIfUserPrintNumberEqualsItselfWillNotReturnFalse() {
 
         //Arrange
         SprintNumber sprintNumberOne = new SprintNumber(1);
@@ -46,6 +61,24 @@ class SprintNumberTest {
         // Assert
         assertTrue(isEqual);
     }
+
+    @Test
+    @DisplayName("Test to ensure that two Sprint with same number are equal")
+    public void checkIfSprintNumberEqualsWithSameNumberAreEqual() {
+
+        //Arrange
+        SprintNumber sprintNumberOne = new SprintNumber(1);
+        SprintNumber sprintNumberTwo = new SprintNumber(1);
+
+        //Act
+
+        boolean isEqual = sprintNumberOne.equals(sprintNumberTwo);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
+
 
     @Test
     @DisplayName("Test to ensure the return won't be true for different objects")
