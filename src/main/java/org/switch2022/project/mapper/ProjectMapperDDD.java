@@ -1,10 +1,12 @@
 package org.switch2022.project.mapper;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.model.project.ProjectDDD;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProjectMapperDDD {
 
     /**
@@ -32,7 +34,7 @@ public class ProjectMapperDDD {
      * @param lsProject list of projects
      * @return a list of projects DTOs
      */
-    public List<ProjectDTOForListDDD> toDTOList(List<ProjectDDD> lsProject) {
+    public List<ProjectDTOForListDDD> toDTOList(Iterable<ProjectDDD> lsProject) {
 
         List<ProjectDTOForListDDD> DTOList = new ArrayList<>();
         for (ProjectDDD projectDDD : lsProject) {
