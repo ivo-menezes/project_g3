@@ -8,7 +8,10 @@ import java.util.List;
 
 public class ProjectDDD implements AggregateRoot<ProjectCode> {
 
+
     private final ProjectCode projectCode;
+
+
     private final ProjectName projectName;
     private final Description description;
     private final ProjectStatus projectStatus;
@@ -86,5 +89,37 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
             this.productBacklog.add(position, userStoryID);
             return true;
         }
+    }
+
+    public ProjectCode getProjectCode() {
+        return projectCode;
+    }
+
+    public ProjectName getProjectName() {
+        return projectName;
+    }
+
+    public Description getDescription() {
+        return description;
+    }
+
+    public ProjectStatus getProjectStatus() {
+        return projectStatus;
+    }
+
+    public TimePeriod getTimePeriod() {
+        return timePeriod;
+    }
+
+    public ProjectBudget getProjectBudget() {
+        return projectBudget;
+    }
+
+    public ProjectSprintDuration getProjectSprintDuration() {
+        return projectSprintDuration;
+    }
+
+    public ProjectNumberOfPlannedSprints getProjectNumberOfPlannedSprints() {
+        return projectNumberOfPlannedSprints;
     }
 }

@@ -2,8 +2,12 @@ package org.switch2022.project.model.project;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
+
+import java.sql.Time;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -434,6 +438,118 @@ class ProjectDDDTest {
 
         //Assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the project code")
+    void ensureThatWeGetProjectCode () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        Mockito.when(projectDDD.getProjectCode()).thenReturn(projectCode);
+
+        //Act
+        ProjectCode result = projectDDD.getProjectCode();
+
+        //Assert
+        assertEquals(projectCode, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the description")
+    void ensureThatWeGetDescription () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        Description description = mock(Description.class);
+        Mockito.when(projectDDD.getDescription()).thenReturn(description);
+
+        //Act
+        Description result = projectDDD.getDescription();
+
+        //Assert
+        assertEquals(description, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the project status")
+    void ensureThatWeGetProjectStatus () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        ProjectStatus projectStatus = mock(ProjectStatus.class);
+        Mockito.when(projectDDD.getProjectStatus()).thenReturn(projectStatus);
+
+        //Act
+        ProjectStatus result = projectDDD.getProjectStatus();
+
+        //Assert
+        assertEquals(projectStatus, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the time period of project")
+    void ensureThatWeGetTimePeriod () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        TimePeriod timePeriod = mock(TimePeriod.class);
+        Mockito.when(projectDDD.getTimePeriod()).thenReturn(timePeriod);
+
+        //Act
+        TimePeriod result = projectDDD.getTimePeriod();
+
+        //Assert
+        assertEquals(timePeriod, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the project budget")
+    void ensureThatWeGetProjectBudget () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        ProjectBudget projectBudget = mock(ProjectBudget.class);
+        Mockito.when(projectDDD.getProjectBudget()).thenReturn(projectBudget);
+
+        //Act
+        ProjectBudget result = projectDDD.getProjectBudget();
+
+        //Assert
+        assertEquals(projectBudget, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the project sprint duration")
+    void ensureThatWeGetProjectSprintDuration () {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        ProjectSprintDuration projectSprintDuration = mock(ProjectSprintDuration.class);
+        Mockito.when(projectDDD.getProjectSprintDuration()).thenReturn(projectSprintDuration);
+
+        //Act
+        ProjectSprintDuration result = projectDDD.getProjectSprintDuration();
+
+        //Assert
+        assertEquals(projectSprintDuration, result);
+    }
+
+    @Test
+    @DisplayName("ensure that we get the project number of planned sprints")
+    void ensureThatWeGetProjectNumberOfPlannedSprints() {
+
+        //Arrange
+        ProjectDDD projectDDD = mock(ProjectDDD.class);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = mock(ProjectNumberOfPlannedSprints.class);
+        Mockito.when(projectDDD.getProjectNumberOfPlannedSprints()).thenReturn(projectNumberOfPlannedSprints);
+
+        //Act
+        ProjectNumberOfPlannedSprints result = projectDDD.getProjectNumberOfPlannedSprints();
+
+        //Assert
+        assertEquals(projectNumberOfPlannedSprints, result);
     }
 
 }
