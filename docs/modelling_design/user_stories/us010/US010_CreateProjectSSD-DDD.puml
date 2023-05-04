@@ -1,0 +1,5 @@
+@startuml
+
+Manager -> System: Create Project (code, name, description, start date, end date,\n budget, sprint duration, number of planned sprints)
+Manager <-- System: Confirms project creation.
+@enduml
