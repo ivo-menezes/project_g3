@@ -4,13 +4,13 @@ import { Provider } from "./AppContext";
 import reducer from './Reducer';
 import projects from "../store/projects";
 import backlogs from "../store/productBacklogs";
-import listSprint from "../store/sprints";
+import sprints from "../store/sprints";
 
 const AppProvider = (props) =>{
     const initialState = {
         projectList: projects,
         backlogs : backlogs,
-        listSprint : listSprint,
+        listSprint : sprints,
         textValue:'',
         startDate: null,
         endDate: null,

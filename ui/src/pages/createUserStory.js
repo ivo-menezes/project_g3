@@ -70,7 +70,7 @@ const CreateUserStory = () => {
                 />
 
                 <Button className="button-form-createUserStory-save" name="Save" />
-                <Link to="/testPage">
+                <Link to="/listProjects">
                     <Button className="button-form-createUserStory-cancel" name="Cancel" />
                 </Link>
             </form>

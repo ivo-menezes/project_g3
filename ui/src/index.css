@@ -507,3 +507,20 @@ code {
 .dropDownList label {
   font-weight: bold;
 }
+
+.string-format {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: darkblue;
+  text-align: center;
+}
+
+.project-info {
+  padding: 15px;
+  background: #cce5ff;
+  color: darkblue;
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 5%;
+}

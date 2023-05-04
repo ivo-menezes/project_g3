@@ -32,7 +32,7 @@ const Router= createBrowserRouter([
         element: <CreateUserStory/>
     },
     {
-        path: "/listSprints",
+        path: "/listSprints/:projectCode",
         element: <ListSprints/>
     },
     {

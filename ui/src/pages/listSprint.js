@@ -1,30 +1,37 @@
-import React from "react";
+import React, {useContext} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import Table from "../components/table";
-import { Link, useNavigate } from "react-router-dom";
-import sprints from "../store/sprints";
+import {Link, useParams} from "react-router-dom";
+import AppContext from "../context/AppContext";
 
-
-const headers = {
-    header1: { label: "ID" },
-    header2: { label: "Start Date" },
-    header3: { label: "End Date" },
-    header4: { label: "" },
-};
+const headers = [
+    { label: "ID", key: "id"},
+    { label: "Start Date", key: "startDate"},
+    { label: "End Date", key: "endDate" },
+];
 
 const ListSprints = () => {
 
-    const navigate = useNavigate();
+    const {projectCode} = useParams();
+    const {state} = useContext(AppContext);
 
-    const handleViewClick = () => {
-        navigate(`/viewSprintPage`);
-    };
+    const sprintInProject = state.listSprint.find(project => project.projectCode === projectCode);
+    const sprint = sprintInProject ? sprintInProject.sprint : undefined;
 
     return (
         <div>
-            <Header text="Sprint List" className= 'header-listProjects' style={{ marginLeft: "65px" }} />
-                <Table data={sprints} headers={headers} onViewClick={handleViewClick} />
+            <Header text="Sprint List" className= 'header-listProjects' text={`Sprint list`}
+                    style={{ marginLeft: "65px" }} />
+            {sprint ? (
+                <>
+                    <Table data={sprint} headers={headers} />
+                </>
+            ) : (
+                <div className="string-format">
+                <h2>This project has an empty sprint list!</h2>
+                </div>
+            )}
             <div className='bt-container '>
                 <Link to="/createSprint">
                 <Button
@@ -33,8 +40,8 @@ const ListSprints = () => {
                     name="Create Sprint"
                 />
                 </Link>
-                <Link to='/testPage'>
-                    <Button className='button-ListProjects' name='Back'/>
+                <Link to='/listProjects'>
+                    <Button className='button-ListProjects' name= "Back to Project List"/>
                 </Link>
             </div>
         </div>

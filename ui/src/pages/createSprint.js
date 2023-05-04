@@ -60,7 +60,7 @@ const CreateSprint = () => {
                 </div>
                 
                 <Button className= 'button-form-createSprint-save' name="Save"/>
-                <Link to="/listSprints">
+                <Link to="/listProjects">
                     <Button className= 'button-form-createSprint-cancel' name="Cancel"/>
                 </Link>
             </form>

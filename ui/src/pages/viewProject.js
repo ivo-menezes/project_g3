@@ -1,36 +1,29 @@
 import React, { useContext } from "react";
 import Button from "../components/button";
-import { Link, useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Header from "../components/header";
 import AppContext from "../context/AppContext";
 
 const ViewProject = () => {
     const { id } = useParams();
-    const { state } = useContext(AppContext);
-
-    console.log("projectList in ViewProject:", state.projectList);
+    const {state} = useContext(AppContext);
 
     const project = state.projectList.find(
         (project) => project.id === parseInt(id)
     );
 
-    console.log("projectId in ViewProject:", id);
-    console.log("project in ViewProject:", project);
-
     return (
         <div>
             <Header
-                text="PROJECT VIEW"
+                text={`Detailed information`}
                 className="header-listProjects"
                 style={{ marginLeft: "65px" }}
             />
             {project ? (
                 <>
                     <ul>
-                        <li style={{ marginLeft: "65px" }}>
-                            <h2>{project.title}</h2>
-                        </li>
-                        <li style={{ marginLeft: "65px" }}>Code: {project.id}</li>
+                        <li className="project-info">NAME: {project.title} </li>
+                        <li className="project-info">CODE: {project.id} </li>
                     </ul>
                 </>
             ) : (
@@ -40,8 +33,11 @@ const ViewProject = () => {
                 <Link to="/createUserStory">
                     <Button className="button-ListProjects" name="Create User Story" />
                 </Link>
-                <Link to={`/listSprints`}>
+                <Link to={`/listSprints/${id}`}>
                     <Button className="button-ListProjects" name="Sprint List" />
+                </Link>
+                <Link to={`/backlog/${id}`}>
+                    <Button className="button-ListProjects" name="Product Backlog" />
                 </Link>
                 <Link to={`/listProjects`}>
                     <Button className="button-ListProjects" name="Back to Project List" />
