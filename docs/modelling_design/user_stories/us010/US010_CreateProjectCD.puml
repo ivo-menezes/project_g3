@@ -7,11 +7,11 @@ createProject(projectDTO_ddd)
 
 class ProjectService {
 createProject (projectDTO)
-save (project)
 }
 
 class ProjectRepository {
 containsID(projectCode)
+save (project)
 }
 
 interface IProjectFactory {
@@ -92,8 +92,6 @@ CreateProjectController "1" o--"1" ProjectService
 ProjectDTO ..> Project
 CreateProjectController ..> ProjectDTO
 ProjectService ..> IProjectFactory
-ProjectService ..> ProjectService
-
 
 FactoryProjectImpl -..> ProjectDTO
 ProjectService ..> ProjectRepository
