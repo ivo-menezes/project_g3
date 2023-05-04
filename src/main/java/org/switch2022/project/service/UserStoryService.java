@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.mapper.UserStoryDTOForListDDD;
+import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +26,11 @@ public class UserStoryService {
 
     @Autowired
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
+
+
+    private UserStoryMapperDDD userStoryMapper;
+
+
 
     /**
      * Public constructor for UserStoryService.
@@ -83,4 +92,49 @@ public class UserStoryService {
         return this.userStoryRepository.save(userStory) && project.addToProductBacklog(userStory.identity(), priority);
 
     }
+
+    /**
+     * Sets the UserStoryMapperDDD for this UserStoryServer instance
+     * @param userStoryMapper the UserStoryMapperDDD implementation to set
+     */
+
+    @Autowired
+    public void setUserStoryMapper(UserStoryMapperDDD userStoryMapper) {
+        this.userStoryMapper = userStoryMapper;
+    }
+
+
+    /**
+     * Retrieves the productBacklog of a project
+     * @param projectCode the code of the project to retrieve the productBacklog for
+     * @return an Optional containing the product backlog as a list of UserStoryDTOs (named "UserStoryDTOForListDDD")
+     */
+    public Optional<List<UserStoryDTOForListDDD>> getProductBacklog(ProjectCode projectCode) {
+
+        Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
+
+        if (projectOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        ProjectDDD project = projectOptional.get();
+
+        List<UserStoryID> openUserStoryIDs = project.getProductBacklog();
+
+        List<UserStoryDDD> openUserStoryList = new ArrayList<>();
+        for (UserStoryID id : openUserStoryIDs) {
+            if (this.userStoryRepository.containsID(id)) {
+                Optional<UserStoryDDD> userStoryOptional = this.userStoryRepository.getByID(id);
+                if (userStoryOptional.isEmpty()) {
+                    return Optional.empty();
+                }
+                UserStoryDDD userStory = userStoryOptional.get();
+                openUserStoryList.add(userStory);
+            }
+        }
+        List<UserStoryDTOForListDDD> productBacklog = this.userStoryMapper.toDTOList(openUserStoryList);
+
+        return Optional.of(productBacklog);
+    }
 }
+

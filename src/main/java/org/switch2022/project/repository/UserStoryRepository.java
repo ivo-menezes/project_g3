@@ -59,21 +59,4 @@ public class UserStoryRepository implements Repository<UserStoryID, UserStoryDDD
             return Optional.of( DATA.get(id) );
     }
 
-    /**
-     * This method receives a list of UserStoryIDs (user Stories not done nor cancelled). Then it iterates over the input IDs and checks whether the DATA map contains a UserStoryDDD object for each ID. If true, then it adds the UserStoryDDD to the newly created openUserStoryList.
-     * @param openUserStoryIDs which is a list of User Story IDs
-     * @return a list of open User Stories
-     */
-
-    public List<UserStoryDDD> getOpenUserStories(List<UserStoryID> openUserStoryIDs) {
-
-        List<UserStoryDDD> openUserStoryList = new ArrayList<>();
-        for (UserStoryID id : openUserStoryIDs) {
-            if (containsID(id)) {
-                openUserStoryList.add(DATA.get(id));
-            }
-        }
-        return openUserStoryList;
-    }
-
 }
