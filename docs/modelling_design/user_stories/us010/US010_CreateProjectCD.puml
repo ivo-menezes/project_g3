@@ -1,35 +1,132 @@
 @startuml
-
-class CreateProjectUI {
-}
+skinparam linetype ortho
 
 class CreateProjectController {
-projectList : ProjectList
-createProject(code, name, description)
+createProject(projectDTO_ddd)
 }
 
-
-class ProjectList {
-projectList : List<Project>
-createProject(code, name, description)
-validateProjectCode(code)
-addProject(newProject)
+class ProjectService {
+createProject (projectDTO)
+save (project)
 }
 
-'class AccountList {
-'AccountList : List<Account>
-'checkPermissionsToCreateAProject(accountEmail)
-'}
+class ProjectRepository {
+containsID(projectCode)
+}
+
+interface IProjectFactory {
+createProject(projectCode, projectName, description, projectStatus, timePeriod,
+ projectBudget, projectSprintDuration, projectNumberOfPlannedSprints)
+}
+
+class FactoryProjectImpl {
+createProject(projectCode, projectName, description, projectStatus, timePeriod,
+ projectBudget, projectSprintDuration, projectNumberOfPlannedSprints)
+}
 
 class Project {
-code : integer
-name : String
-description : String
 }
 
-CreateProjectUI "1" o--   "1" CreateProjectController
-'CreateProjectController "1" o--   "1" AccountList
-CreateProjectController "1" o-- "1" ProjectList
-ProjectList "1 " *-- "*" Project
+
+class projectCode {
+projectCode: String
+}
+
+class projectName {
+projectName: String
+}
+
+class description {
+description: String
+}
+
+class projectStatus {
+projectStatus: enum
+}
+
+class timePeriod {
+startDate: Date
+endDate: Date
+}
+
+class projectBudget {
+projectBudget: float
+}
+
+class projectSprintDuration {
+projectSprintDuration: int
+}
+
+class projectNumberOfPlannedSprints {
+projectNumberOfPlannedSprints: int
+}
+
+class ProjectDTO {
+projectCode: String
+name: String
+description: String
+status: int
+startDate: Date
+endDate: Date
+budget: float
+sprintDuration: int
+numberOfPlannedSprint: int
+}
+
+interface ValueObject {
+}
+
+interface DomainID {
+}
+
+interface Repository {
+}
+
+interface AggregateRoot {
+}
+
+interface DomainEntity {
+}
+
+CreateProjectController "1" o--"1" ProjectService
+ProjectDTO ..> Project
+CreateProjectController ..> ProjectDTO
+ProjectService ..> IProjectFactory
+ProjectService ..> ProjectService
+
+
+FactoryProjectImpl -..> ProjectDTO
+ProjectService ..> ProjectRepository
+FactoryProjectImpl -..|> IProjectFactory
+
+projectCode -..> FactoryProjectImpl
+projectName -..> FactoryProjectImpl
+description -..> FactoryProjectImpl
+projectStatus -..> FactoryProjectImpl
+timePeriod -..> FactoryProjectImpl
+projectBudget -..> FactoryProjectImpl
+projectSprintDuration -..> FactoryProjectImpl
+projectNumberOfPlannedSprints -..> FactoryProjectImpl
+
+DomainID --|> ValueObject
+Repository --|> DomainID
+Repository --|> AggregateRoot
+AggregateRoot --|> DomainID
+AggregateRoot --|> DomainEntity
+
+projectCode -..|> DomainID
+projectName ..|> ValueObject
+description -..|> ValueObject
+projectStatus -..|> ValueObject
+timePeriod -..|> ValueObject
+projectBudget -..|> ValueObject
+projectSprintDuration -..|> ValueObject
+projectNumberOfPlannedSprints -..|> ValueObject
+
+Project -..|> AggregateRoot
+ProjectRepository -..|> Repository
+
+
+
 
 @enduml
