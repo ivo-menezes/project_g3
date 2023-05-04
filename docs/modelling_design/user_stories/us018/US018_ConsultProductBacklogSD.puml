@@ -16,7 +16,7 @@ participant "openUserStoryList :\n List<UserStory>" as USList
 participant "DATA : HashMap" as hashmap
 participant ": UserStoryMapper" as Mapper
 participant "productBacklog :\n List<UserStoryDTO>" as DTOList
-participant "openUserStories: List<UserStoryID>"
+participant "openUserStoryIDs: List<UserStoryID>"
 
 activate user #FFBBBB
 user -> UI: Requests product backlog(projectCode)
@@ -47,9 +47,13 @@ Service -> USRepository: getOpenUserStories(openUserStoryIDs)
 activate USRepository #FFBBBB
 USRepository --> USList ** : create
 
-loop for each userStoryID in hashmap
+loop for each userStoryID in openUserStoryIDs
+USRepository -> hashmap : containsID(id)
+activate hashmap #FFBBBB
+hashmap --> USRepository: true
 USRepository -> hashmap : get(id)
-hashmap --> USRepository: (userStory)
+hashmap --> USRepository: userStory
+deactivate hashmap
 USRepository -> USList : add(userStory)
 activate USList #FFBBBB
 deactivate USList
@@ -57,7 +61,7 @@ deactivate USList
 end
 USRepository --> Service: openUserStoryList
 deactivate USRepository
-Service -> Mapper: toDTO(openUserStoryList)
+Service -> Mapper: toDTOList(openUserStoryList)
 activate Mapper #FFBBBB
 
 Mapper --> DTOList ** : create
