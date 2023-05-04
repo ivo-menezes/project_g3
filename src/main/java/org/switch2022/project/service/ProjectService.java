@@ -15,6 +15,11 @@ public class ProjectService {
     @Autowired
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
+    /**
+     * Public constructor for ProjectService.
+     * @param projectFactory a factory that implements IProjectFactory
+     * @param projectRepository repository that implements Repository<ProjectCode, Project>
+     */
     public ProjectService(IProjectFactory projectFactory, Repository<ProjectCode, ProjectDDD> projectRepository) {
 
         if (projectFactory == null) {
@@ -27,6 +32,12 @@ public class ProjectService {
         this.projectFactory = projectFactory;
         this.projectRepository = projectRepository;
     }
+
+    /**
+     * Creates a Project and adds it to the projectRepository.
+     * @param projectDTO_ddd a DTO with the information for the Project.
+     * @return true if Project was successfully created and saved, false otherwise.
+     */
 
     public boolean createProject (ProjectDTO_DDD projectDTO_ddd) {
 
