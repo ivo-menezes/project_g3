@@ -9,7 +9,7 @@ participant ": ListProjectUI" as UI
 participant ": ListProjectController" as Controller
 participant ": Services" as Services
 participant ": ProjectRepository" as ProjectRepository
-participant " projectData: HashMap" as projectData
+participant "Data: HashMap" as projectData
 participant ": ProjectMapper" as Mapper
 participant "lsProject : List<ProjectDTO>" as DTOList
 
@@ -22,9 +22,9 @@ activate Controller #FFBBBB
 Controller -> Services: listProjects()
 
 activate Services #FFBBBB
-Services -> ProjectRepository : listProjects()
+Services -> ProjectRepository : findAll()
 activate ProjectRepository #FFBBBB
-ProjectRepository -> projectData: projectData.values()
+ProjectRepository -> projectData: values()
 activate projectData #FFBBBB
 projectData --> ProjectRepository: projectCollection
 deactivate projectData
