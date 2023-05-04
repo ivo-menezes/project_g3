@@ -9,42 +9,53 @@ participant ":CreateProjectUI" as UI
 participant "projectDTO :ProjectDTO" as dto
 participant ":CreateProjectController" as Controller
 participant ":ProjectService" as Services
+participant "projectFactory:ProjectFactoryImpl" as Factory
 participant ":ProjectRepository" as Repository
-participant "factoryProject :FactoryProjectImpl" as Factory
+participant "Data : HashMap" as hashmap
 
 activate user #FFBBBB
-user ->  UI: Request to create a project (projectCode, name, description)
+user ->  UI: Request to create a project (projectCode, name, description, startDate,\n endDate, budget, sprintDuration, numberOfPlannedSprints)
 
 activate UI #FFBBBB
-UI --> dto ** : create(projectCode, name, description)
+UI --> dto ** : create(projectCode, name, description, startDate,\n endDate, budget, sprintDuration, numberOfPlannedSprints)
 UI -> Controller: createProject(projectDTO)
 
 activate Controller #FFBBBB
 Controller -> Services: createProject(projectDTO)
 
-activate Services #FFBBBB
-Services -> Repository: containsID(projectCode)
-
-activate Repository #FFBBBB
-Repository -->Services: false
-deactivate
-Services -> Factory:createProject(projectDTO)
+Services --> "projectCode:ProjectCode" ** :create (projectCodeDTO.projectCode)
+Services --> "projectName:ProjectName" ** :create (projectCodeDTO.projectName)
+Services --> "description:Description" ** :create (projectCodeDTO.description)
+Services --> "timePeriod:TimePeriod" ** :create (projectCodeDTO.startDate, projectCodeDTO.endDate)
+Services --> "projectBudget : ProjectBudget" ** :create (projectCodeDTO.projectBudget)
+Services --> "projectSprintDuration : ProjectSprintDuration" ** :create (projectCodeDTO.projectSprintDuration)
+Services --> "projectNumberOfPlannedSprints : ProjectNumberOfPlannedSprints" ** :create (projectCodeDTO.projectNumberOfPlannedSprints)
+Services -> Factory:createProject\n (projectCode, name, description, timePeriod, budget,\n sprintDuration, numberOfPlannedSprints)
 
 activate Factory #FFBBBB
-Factory --> "projectCode:ProjectCode" ** :create (projectCodeDTO.projectCode)
-Factory --> "projectName:ProjectName" ** :create (projectCodeDTO.name)
-Factory --> "description:Description" ** :create (projectCodeDTO.description)
-Factory --> "project:Project" ** :create (projectCode, \n projectName,\n description )
+Factory --> "project:Project" ** :create (projectCode,name, description,timePeriod,\n budget, sprintDuration, numberOfPlannedSprints)
 Factory --> Services :project
 deactivate
+
 Services -> Repository :save(project)
 activate Repository #FFBBBB
-Repository -->Services : true
+
+Repository -> hashmap :contains(projectCode)
+activate hashmap #FFBBBB
+hashmap --> Repository : false
+deactivate
+Repository -> hashmap :put(projectCode, project)
+activate hashmap #FFBBBB
+hashmap --> Repository : null
+deactivate
+Repository --> Services: true
 deactivate
 Services --> Controller: true
-deactivate
 Controller --> UI: true
 deactivate
 UI --> user: Confirms project creation.
+deactivate
+
+
 
 @enduml
