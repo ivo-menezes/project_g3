@@ -8,10 +8,7 @@ import java.util.List;
 
 public class ProjectDDD implements AggregateRoot<ProjectCode> {
 
-
     private final ProjectCode projectCode;
-
-
     private final ProjectName projectName;
     private final Description description;
     private final ProjectStatus projectStatus;
