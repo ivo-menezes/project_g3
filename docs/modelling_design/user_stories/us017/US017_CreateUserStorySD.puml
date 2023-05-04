@@ -13,8 +13,8 @@ participant ":ProjectRepository" as Repository
 participant "factoryUserStory :FactoryUserStoryImpl" as Factory
 participant "userStory :UserStory" as UserStory
 participant "userStoryRepository :UserStoryRepository" as UsRepository
-participant "project : Project" as Project
 participant "DATA : HashMap" as hashmap
+participant "project : Project" as Project
 participant "productBacklog : ProductBacklog" as pb
 participant "openUserStories : List<UserStoryID>" as uslist
 
@@ -51,7 +51,7 @@ deactivate
 Services -> UsRepository :save(userStory)
 
 activate UsRepository #FFBBBB
-UsRepository -> hashmap :containsID(userStoryID)
+UsRepository -> hashmap :contains(userStoryID)
 hashmap --> UsRepository : false
 UsRepository -> hashmap :put(userStoryID, userStory)
 hashmap --> UsRepository : null
