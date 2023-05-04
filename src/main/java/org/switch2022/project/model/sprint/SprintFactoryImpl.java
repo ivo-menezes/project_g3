@@ -1,8 +1,11 @@
 package org.switch2022.project.model.sprint;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
 
+
+@Component
 public class SprintFactoryImpl implements ISprintFactory {
 
     @Override
@@ -10,8 +13,7 @@ public class SprintFactoryImpl implements ISprintFactory {
         if (sprintID == null || timePeriod == null) {
             throw new IllegalArgumentException("Missing value, please try again.");
         }
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
 
-        return sprint;
+        return new SprintDDD(sprintID, timePeriod);
     }
 }
