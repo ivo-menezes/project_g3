@@ -1,41 +1,48 @@
 @startuml
+skinparam linetype ortho
 
-class ListProjectUI {}
-
-class ListProjectController{
-ListProjectDTO()
+class ListProjectController {
+listProject()
 }
 
-
-class Project {
-code : Integer
-name : String
-customer : String
-startDate : Date
-endDate : Date
-projectStatus : String
-getCode()
-getName()
-getCustomer()
-getStartDate()
-getEndDate()
-getStatusProject()
+class ProjectService {
+listProject()
 }
 
-class ProjectList {
-listSize()
-getProjectIndex(i)
-create(projectDTO)
+class ProjectRepository {
+findAll()
 }
 
-class ProjectDTO {
-
+class ProjectMapper {
+toDTO (projectDDD)
+toDTOList (lsProject)
 }
 
-ProjectList "1" *-- "*" Project : has
-ListProjectController "1" o-- "1" ProjectList
-ListProjectUI "1" o-- "1" ListProjectController
-ProjectList ..> ProjectDTO
-ProjectDTO ..> Project
+interface DomainID {
+}
+
+interface Repository {
+}
+
+interface AggregateRoot {
+}
+
+interface DomainEntity {
+}
+
+ListProjectController "1" o--"1" ProjectService
+ProjectService ..> ProjectMapper
+ProjectMapper ..> Project
+
+ProjectService ..> ProjectRepository
+
+ProjectRepository -..|> Repository
+Project -..|> AggregateRoot
+
+Repository --|> DomainID
+Repository --|> AggregateRoot
+AggregateRoot --|> DomainID
+AggregateRoot --|> DomainEntity
+
 
 @enduml
