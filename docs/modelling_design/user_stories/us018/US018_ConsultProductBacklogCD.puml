@@ -7,12 +7,14 @@ getProductBacklog(projectCode)
 
 class UserStoryService {
 getProductBacklog(projectCode)
+getOpenUserStories(List<UserStoryID>)
 create(projectCode)
 }
 
 class UserStoryRepository {
-getOpenUserStories(openUserStoryIDs)
-get(userStoryID)
+containsID(id)
+containsKey(id)
+getByID(id)
 }
 
 class ProjectRepository {
@@ -34,6 +36,7 @@ id : String
 
 class UserStoryMapper{
 toDTO(openUserStoryList)
+add(userStoryDTO)
 }
 
 class UserStoryDTO {
