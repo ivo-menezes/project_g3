@@ -11,8 +11,8 @@ participant ": UserStoryService" as Service
 participant ": ProjectRepository" as ProjRepository
 participant "project : Project" as Project
 participant "productBacklog : ProductBacklog" as backlog
-participant ": UserStoryRepository" as USRepository
 participant "openUserStoryList :\n List<UserStory>" as USList
+participant ": UserStoryRepository" as USRepository
 participant "DATA : HashMap" as hashmap
 participant ": UserStoryMapper" as Mapper
 participant "productBacklog :\n List<UserStoryDTO>" as DTOList
@@ -43,24 +43,27 @@ deactivate backlog
 
 Project --> Service: openUserStoryIDs
 deactivate Project
-Service -> USRepository: getOpenUserStories(openUserStoryIDs)
-activate USRepository #FFBBBB
-USRepository --> USList ** : create
+Service --> USList ** : create
 
 loop for each userStoryID in openUserStoryIDs
-USRepository -> hashmap : containsID(id)
+Service -> USRepository: containsID(id)
+activate USRepository #FFBBBB
+USRepository -> hashmap: containsKey(id)
 activate hashmap #FFBBBB
 hashmap --> USRepository: true
-USRepository -> hashmap : get(id)
+USRepository--> Service: true
+Service -> USRepository: getByID(id)
+USRepository -> hashmap: get(id)
 hashmap --> USRepository: userStory
 deactivate hashmap
-USRepository -> USList : add(userStory)
+USRepository --> Service: userStory
+deactivate USRepository
+Service -> USList: add(userStory)
 activate USList #FFBBBB
 deactivate USList
-
 end
-USRepository --> Service: openUserStoryList
-deactivate USRepository
+
+
 Service -> Mapper: toDTOList(openUserStoryList)
 activate Mapper #FFBBBB
 
