@@ -2,17 +2,19 @@
 
 [UserStoryContainer] as CRContainer
 [CreateUSForm] as USForm
-[InputForm] as Form
+[FormText] as Form
 [FormButton] as Button
 [SaveButton] as Save
 [CancelButton] as Cancel
-
+[InputForm] as IForm
+[TextAreaForm] as TArea
 
 CRContainer -- USForm
 USForm -- Form
 USForm -- Button
 Button -- Save
 Button -- Cancel
-
+Form -- IForm
+Form -- TArea
 
 @enduml
