@@ -3,13 +3,13 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.service.UserStoryService;
 
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,12 +32,26 @@ public class ConsultProductBacklogControllerDDDTest {
         UserStoryService service = null;
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ConsultProductBacklogControllerDDD(service);
+            new ConsultProductBacklogControllerDDD(null);
         });
         String resultMessage = result.getMessage();
         // Assert
         assertEquals(expectedMessage, resultMessage);
     }
+    @Test
+    @DisplayName("getProjectBacklog() with null project code throws IllegalArgumentException")
+    void testGetProjectBacklogWithNullProjectCodeThrowsIllegalArgumentException() {
+        // Arrange
+        UserStoryService service = Mockito.mock(UserStoryService.class);
+        ConsultProductBacklogControllerDDD controller = new ConsultProductBacklogControllerDDD(service);
+
+        // Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            controller.getProjectBacklog(null);
+        });
+        assertEquals("projectCode must not be null.", exception.getMessage());
+    }
+
     @DisplayName("test GetProjectBacklog with non existent ProjectCode")
     @Test
     void testGetProjectBacklogWithNonexistentProjectCode() {
