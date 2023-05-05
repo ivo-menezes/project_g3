@@ -1,6 +1,7 @@
 package org.switch2022.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.SprintDTO_DDD;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -13,6 +14,7 @@ import org.switch2022.project.model.valueobject.TimePeriod;
 
 import java.util.Optional;
 
+@Service
 public class SprintService {
 
     @Autowired
@@ -49,7 +51,7 @@ public class SprintService {
     }
 
     /**
-     * Creates a sprint and adds it to the sprintDepository.
+     * Creates a sprint and adds it to the sprintRepository.
      * @param sprintDTO a DTO with info to create the sprint;
      * @return true if sprint was successfully created and saved, false otherwise.
      */
@@ -59,13 +61,9 @@ public class SprintService {
 
         Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
 
-        //System.out.println("projectOptional = " + projectOptional);
-
         if (projectOptional.isEmpty()) {
             return false;
         }
-
-        //ProjectDDD project = projectOptional.get();
 
         SprintNumber sprintNumber = new SprintNumber(sprintDTO.sprintNumber);
         SprintID sprintID = new SprintID(projectCode, sprintNumber);

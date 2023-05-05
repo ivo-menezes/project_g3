@@ -1,99 +1,97 @@
 package org.switch2022.project.controller;
 
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.switch2022.project.model.project.Project;
-import org.switch2022.project.model.ProjectList;
-import org.switch2022.project.mapper.SprintDTO;
-import org.switch2022.project.model.SprintList;
+import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.Repository;
+import org.switch2022.project.mapper.SprintDTO_DDD;
+import org.switch2022.project.model.project.ProjectDDD;
+import org.switch2022.project.model.sprint.ISprintFactory;
+import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.service.SprintService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CreateSprintControllerTest {
 
     @Test
-    @DisplayName("creating Sprint with success")
-    void createSprintWithSuccess() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        int projectCode = 1;
-        Project projectMock = mock(Project.class);
-        ProjectList projectList = mock(ProjectList.class);
-        when(projectList.getProject(projectCode)).thenReturn(projectMock);
-        SprintList sprintList = mock(SprintList.class);
-        when(projectMock.getSprintList()).thenReturn(sprintList);
-        SprintDTO sprintDTO = new SprintDTO();
-        sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = formatter.parse("01/02/2022");
-        sprintDTO.endDate = formatter.parse("15/02/2022");
-        when(sprintList.createSprint(sprintDTO)).thenReturn(true);
+    @DisplayName("ensure creating a controller succeeds")
+    void createControllerSucceeds() {
+        // Arrange
+        SprintService sprintService = mock(SprintService.class);
+        // Act
+        CreateSprintController sprintController = new CreateSprintController(sprintService);
+        // Assert
+        assertInstanceOf(CreateSprintController.class, sprintController);
+    }
 
-        CreateSprintController controller = new CreateSprintController(projectList);
-        boolean result = controller.createSprint(projectCode,sprintDTO);
+    @Test
+    @DisplayName("create sprint with success")
+    void createSprint() {
+        // Arrange
+        SprintService sprintService = mock(SprintService.class);
+        ISprintFactory factory = mock(ISprintFactory.class);
+        Repository<ProjectCode, ProjectDDD> projectRepository = mock(Repository.class);
+        Repository<SprintID, SprintDDD> sprintRepository = mock(Repository.class);
 
+        SprintDTO_DDD sprintDto = mock(SprintDTO_DDD.class);
+
+        when(sprintService.createSprint(sprintDto)).thenReturn(true);
+        sprintDto.projectCode = "AAA";
+        sprintDto.sprintNumber = 1;
+        sprintDto.startDate = new Date(10/ 3 /2023);
+        sprintDto.endDate = new Date(25/ 3 /2023);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        ProjectDDD project = mock(ProjectDDD.class);
+        when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
+        SprintID sprintID = mock(SprintID.class);
+        TimePeriod timePeriod = mock(TimePeriod.class);
+        SprintDDD sprint = mock(SprintDDD.class);
+        when(factory.createSprint(sprintID,timePeriod)).thenReturn(sprint);
+        when(sprintRepository.save(sprint)).thenReturn(true);
+
+        CreateSprintController sprintController = new CreateSprintController(sprintService);
+
+        //Act
+        boolean result = sprintController.createSprint(sprintDto);
+        //Assert
         assertTrue(result);
     }
-    @Test
-    @DisplayName("Check if the provided projectList is null")
-    void checkTheProjectListIsNull(){
-        ProjectList projectListMock = null;
 
+    @Test
+    @DisplayName("Check if the provided sprintService is null")
+    void checkIfSprintServiceIsNull(){
+        // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            CreateSprintController controller = new CreateSprintController(projectListMock);
+            CreateSprintController controller = new CreateSprintController(null);
         });
-        Assertions.assertEquals("ProjectList must not be null.", exception.getMessage());
+        // Arrange
+        Assertions.assertEquals("SprintService must not be null.", exception.getMessage());
     }
 
     @Test
     @DisplayName("Check if the provided DTO is null")
     void checkIfDTOIsNull(){
-        int projectCode = 1;
-        SprintDTO sprintDTOMock = null;
-        Project projectMock = mock(Project.class);
-        ProjectList projectListMock = mock(ProjectList.class);
-        when(projectListMock.getProject(projectCode)).thenReturn(projectMock);
-        CreateSprintController controller = new CreateSprintController(projectListMock);
+        // Arrange
+        SprintService sprintService = mock(SprintService.class);
 
+        CreateSprintController controller = new CreateSprintController(sprintService);
+        // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            controller.createSprint(projectCode, sprintDTOMock);
+            controller.createSprint(null);
         });
+        // Assert
         Assertions.assertEquals("SprintDTO must not be null.", exception.getMessage());
     }
 
-    @Test
-    @DisplayName("Check if the second DTO is not inserted.")
-    void checkIfTheMethodComesFalse() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        int projectCode = 1;
-        Project projectMock = mock(Project.class);
-        ProjectList projectListMock = mock(ProjectList.class);
-        when(projectListMock.getProject(projectCode)).thenReturn(projectMock);
-        SprintList sprintList = mock(SprintList.class);
-        when(projectMock.getSprintList()).thenReturn(sprintList);
-        SprintDTO sprintDTO = new SprintDTO();
-        sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = formatter.parse("01/02/2022");
-        sprintDTO.endDate = formatter.parse("15/02/2022");
-
-        SprintDTO sprintDTOTwo = new SprintDTO();
-        sprintDTO.sprintNumber = 1;
-        sprintDTO.startDate = formatter.parse("01/02/2022");
-        sprintDTO.endDate = formatter.parse("15/02/2022");
-
-        when(sprintList.createSprint(sprintDTO)).thenReturn(true);
-        when(sprintList.createSprint(sprintDTOTwo)).thenReturn(false);
-
-        CreateSprintController controller = new CreateSprintController(projectListMock);
-        controller.createSprint(projectCode,sprintDTO);
-        boolean result = controller.createSprint(projectCode,sprintDTOTwo);
-
-        assertFalse(result);
-    }
 }

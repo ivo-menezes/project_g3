@@ -71,4 +71,5 @@ class SprintServiceTest {
         //Assert
         assertEquals(expectedMessage, resultMessage);
     }
+
 }
