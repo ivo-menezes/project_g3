@@ -2,60 +2,131 @@
 
 skinparam linetype ortho
 
+class CreateSprintController {
+createSprint(sprintDTO)
+}
+
+class SprintService {
+createSprint(sprintDTO)
+}
+
+class ProjectRepository {
+containsID(projectCode)
+}
+
+class SprintRepository {
+save(sprint)
+containsID(sprintID)
+}
+
+
+class ProjectCode {
+projectCode:String
+}
+
+class SprintFactoryImpl {
+createSprint(sprintID,timePeriod)
+}
+
+class TimePeriod {
+startDate: Date
+endDate: Date
+}
+
+class Sprint{
+}
+
+class SprintNumber{
+sprintNumber:int
+}
+
+class SprintID{
+projectCode
+sprintNumber
+}
+
+
 class sprintDTO {
 sprintNumber: int
 startDate: Date
 endDate: Date
+projectCode : String
 }
 
-class CreateSprintController {
-projectList: ProjectList
-createSprint(projectCode, sprintDTO)
+
+
+interface ISprintFactory {
+createSprint(printID,timePeriod)
 }
 
-class ProjectList {
-projectList: List<Project>
-getProject(projectCode)
+interface ValueObject {
 }
 
-class Project {
-code: int
-name: String
-description: String
-startDate: Date
-endDate: Date
-customer: String
-sprintDuration: int
-numberOfPlannedSprints: int
-projectStatus: String
-budget: double
-resourceList: ResourceList
-sprintList: SprintList
-getSprintList()
+interface DomainID {
 }
 
-class SprintList {
-sprintList: List<Sprint>
-isValidDate(sprintDTO)
-createSprint(sprintDTO)
-hasSprint(sprint)
-add(sprint)
+interface Repository {
 }
 
-class Sprint{
-sprintNumber: int
-startDate: Date
-endDate: Date
+interface AggregateRoot {
 }
 
-CreateSprintController "1" o-- "1" ProjectList
-ProjectList "1" *-- "*" Project
-CreateSprintController ..> Project
-CreateSprintController ..> SprintList
-Project "1" o-- "1" SprintList
-SprintList "1" *-- "*" Sprint
+interface DomainEntity {
+}
+
+
+
+CreateSprintController "1" o-- "1" SprintService
 CreateSprintController ..> sprintDTO
-Project ..> sprintDTO
-SprintList ..> sprintDTO
+
+
+SprintService "1" o-- "1" ProjectCode
+SprintService "1" o-- "1" SprintNumber
+SprintService "1" o-- "1" TimePeriod
+SprintService "1" o-- "1" SprintRepository
+SprintService ..>  ProjectRepository
+SprintService ..> ISprintFactory
+
+SprintRepository "1" *-- "*" Sprint
+
+SprintFactoryImpl ..|> ISprintFactory
+
+Sprint -..> SprintFactoryImpl
+
+TimePeriod -..> SprintFactoryImpl
+
+SprintID  -..> SprintFactoryImpl
+
+SprintNumber -..> SprintID
+
+ProjectCode -..> SprintID
+
+
+
+
+ProjectRepository -..|> Repository
+SprintRepository -..|> Repository
+
+
+Repository --|> DomainID
+AggregateRoot --|> DomainID
+SprintID -..|> DomainID
+
+Repository --|> AggregateRoot
+
+AggregateRoot --|> DomainEntity
+
+
+DomainID --|> ValueObject
+TimePeriod -..|> ValueObject
+SprintNumber -..|> ValueObject
+SprintID -..|> ValueObject
+ProjectCode -..|> ValueObject
+
+
+
+
+
+
 
 @enduml
