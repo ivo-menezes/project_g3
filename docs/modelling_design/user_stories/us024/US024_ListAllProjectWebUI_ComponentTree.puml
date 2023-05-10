@@ -1,0 +1,21 @@
+@startuml
+
+[ListProjectHeader] as Header
+[ListProjectsContainer] as Container
+[ListProjectsTable] as Table
+[TableBody] as TBody
+[TableHeader] as THeader
+[Button] as Button
+[CreateProject]
+[View]
+
+Container -- Header
+Container -- Table
+Table -- TBody
+Table -- THeader
+Container -- Button
+Button -- CreateProject
+Button -- View
+
+
+@enduml
