@@ -1,6 +1,6 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate} from "react-router-dom";
@@ -13,10 +13,10 @@ const CreateProject = () => {
     const navigate = useNavigate();
 
     // getting the global state to which the new project will be submitted
-    const {globalState, dispatch} = useContext(AppContext);
+    const {dispatch} = useContext(AppContext);
 
-    // using local state to save user input before submitting
-    const emptyProject = {
+    // using a local variable to save user input before submitting
+    const newProject = {
         id : '',
         title : '',
         description : '',
@@ -29,14 +29,13 @@ const CreateProject = () => {
         selectedSprintDuration : '',
         numberOfPlannedSprints : ''
     }
-    const [project, changeProject] = useState(emptyProject);
 
+    // updates the corresponding field in newProject when a TextField or DropDownList is changed
+    // has to be passed to the component that generates the event
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        changeProject((project) => {
-            return {...project, [name] : value}
-        })
+        newProject[name] = value
     }
 
     const handleStartDateChange = (newDate, event) => {
@@ -49,8 +48,9 @@ const CreateProject = () => {
         handleChange(event)
     }
 
+    // submits the newProject to the global context via the addProject action
     const handleSubmission = () => {
-        addProject(dispatch, project)
+        addProject(dispatch, newProject)
         navigate('/listProjects')
     }
 
@@ -116,7 +116,7 @@ const CreateProject = () => {
                         dateFormat="dd/MM/yyyy"
                         label='Start Date'
                         name={'startDate'}
-                        selectedDate={project.startDate}
+                        selectedDate={newProject.startDate}
                         onChange={handleStartDateChange}
                     />
                 </div>
@@ -127,7 +127,7 @@ const CreateProject = () => {
                         dateFormat="dd/MM/yyyy"
                         label='End Date'
                         name={'endDate'}
-                        selectedDate={project.endDate}
+                        selectedDate={newProject.endDate}
                         onChange={handleEndDateChange}
                     />
                 </div>
