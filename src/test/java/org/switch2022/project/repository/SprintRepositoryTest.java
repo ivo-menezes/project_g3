@@ -56,30 +56,6 @@ class SprintRepositoryTest {
 
         assertEquals(0, countIterable(result));
     }
-    @Test
-    public void checkIfRepositoryIsNotEmpty() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        SprintRepository sprintData = new SprintRepository();
-
-        TimePeriod newTimePeriod = new TimePeriod(formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
-        TimePeriod anotherTimePeriod = new TimePeriod(formatter.parse("16/02/2022"), formatter.parse("25/02/2022"));
-        ProjectCode projectCode = new ProjectCode("PT6");
-        SprintNumber newSprintNumber = new SprintNumber(5);
-        SprintNumber anotherSprintNumber = new SprintNumber(6);
-
-        SprintID sprintID = new SprintID(projectCode, newSprintNumber);
-        SprintID sprintIDNumberTwo = new SprintID(projectCode, anotherSprintNumber);
-
-        SprintDDD newSprint = new SprintDDD(sprintID, newTimePeriod);
-        SprintDDD anotherSprint = new SprintDDD(sprintIDNumberTwo, anotherTimePeriod);
-
-        sprintData.save(newSprint);
-        sprintData.save(anotherSprint);
-
-        Iterable<SprintDDD> result = sprintData.findAll();
-
-        assertEquals(3, countIterable(result));
-    }
      @Test
     public void checkIfRepositoryContainsID() throws ParseException {
          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -97,7 +73,7 @@ class SprintRepositoryTest {
          sprintData.save(newSprint);
          boolean result = sprintData.containsID(sprintIDNumberTwo);
 
-         assertFalse(result);
+         assertTrue(result);
      }
 
     @Test

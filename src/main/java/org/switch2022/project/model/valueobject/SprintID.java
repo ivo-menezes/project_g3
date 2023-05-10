@@ -2,6 +2,8 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
+import java.util.Objects;
+
 public class SprintID implements DomainId {
 
     private ProjectCode projectCode;
@@ -40,4 +42,8 @@ public class SprintID implements DomainId {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode, sprintNumber);
+    }
 }
