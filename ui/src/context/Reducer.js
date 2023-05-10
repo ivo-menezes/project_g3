@@ -5,7 +5,6 @@ import {SET_START_DATE} from "./Actions";
 import {SET_END_DATE} from "./Actions";
 
 const reducer = (state, action) => {
-    debugger
     switch (action.type) {
 
         case CHANGE_TEXT:
@@ -21,6 +20,7 @@ const reducer = (state, action) => {
         case ADD_PROJECT:
             return {
                 ...state,
+                //projectList: action.payload
                 projectList: [...state.projectList, action.payload],
             };
         case SET_START_DATE:

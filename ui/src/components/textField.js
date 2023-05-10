@@ -1,11 +1,4 @@
-import {changeText} from "../context/Actions";
-
-const TextField = ({label, value, mandatory, placeholder, dispatch, className, readOnly }) => {
-
-    const whenTyped =(event)=>{
-        const action = changeText(event.target.value);
-        dispatch(action);
-    }
+const TextField = ({label, value, mandatory, placeholder, dispatch, className, readOnly, whenTyped , name}) => {
 
     return (
         <div className={className}>
@@ -19,6 +12,7 @@ const TextField = ({label, value, mandatory, placeholder, dispatch, className, r
                    required={mandatory}
                    placeholder={placeholder}
                    readOnly={readOnly}
+                   name={name}
             />
         </div>
     )

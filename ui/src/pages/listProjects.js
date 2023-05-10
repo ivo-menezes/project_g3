@@ -12,18 +12,17 @@ const headers = [
 ];
 
 const ListProjects = () => {
+    const { state } = useContext(AppContext)
+    const { projectList } = state;
 
     const navigate = useNavigate();
-    const { state } = useContext(AppContext);
-
-    const project = state.projectList;
 
     const handleRowClick = (id) => {
         console.log("Clicked row with ID:", id);
         navigate(`/viewProject/${id}`);
     };
 
-    const projects = project.map((project) => ({
+    const projects = projectList.map((project) => ({
         id: project.id,
         title: project.title,
         view: (

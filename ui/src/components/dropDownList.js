@@ -1,17 +1,11 @@
 import React from "react";
-import {changeText} from "../context/Actions";
 
-const DropDownList = ({label, mandatory, dispatch, value, items}) => {
-
-    const whenTyped = (event) => {
-        const action = changeText(event.target.value);
-        dispatch(action);
-    }
+const DropDownList = ({name, label, mandatory, value, items, onChange}) => {
 
     return (
         <div>
             <label>{label}</label>
-            <select onChange={whenTyped} required={mandatory} value={value}>
+            <select name={name} onChange={onChange} required={mandatory} value={value}>
                 {items.map((item) => {
                     return <option key={item}>{item}</option>;
                 })}

@@ -22,11 +22,13 @@ export const addUserStory = (dispatch, userStory) => {
     })
 };
 
-export const addProject = (project) => {
-    return {
-        type: ADD_PROJECT,
-        payload: project,
-    }
+export const addProject = (dispatch, project) => {
+    dispatch(
+        {
+            type: ADD_PROJECT,
+            payload: project,
+        }
+    )
 }
 
 export const setStartDate = (startDate) => {

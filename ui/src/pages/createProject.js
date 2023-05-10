@@ -1,28 +1,58 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {addProject} from "../context/Actions";
 import DropDownList from "../components/dropDownList";
-import Date from "../components/date";
+import PickDate from "../components/date";
 
 const CreateProject = () => {
-    const {state, dispatch} = useContext(AppContext);
-    const {
-        code,
-        name,
-        description,
-        customer,
-        startDate,
-        endDate,
-        budget,
-        selectedStatus,
-        selectedTypology,
-        selectedSprintDuration,
-        NumberOfPlannedSprints
-    } = state;
+
+    const navigate = useNavigate();
+
+    // getting the global state to which the new project will be submitted
+    const {globalState, dispatch} = useContext(AppContext);
+
+    // using local state to save user input before submitting
+    const emptyProject = {
+        id : '',
+        title : '',
+        description : '',
+        customer : '',
+        startDate : new Date(),
+        endDate : new Date(),
+        budget : '',
+        selectedStatus : '',
+        selectedTypology : '',
+        selectedSprintDuration : '',
+        numberOfPlannedSprints : ''
+    }
+    const [project, changeProject] = useState(emptyProject);
+
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        changeProject((project) => {
+            return {...project, [name] : value}
+        })
+    }
+
+    const handleStartDateChange = (newDate, event) => {
+        event.target = {type:"text", value:newDate, name:'startDate'}
+        handleChange(event)
+    }
+
+    const handleEndDateChange = (newDate, event) => {
+        event.target = {type:"text", value:newDate, name:'endDate'}
+        handleChange(event)
+    }
+
+    const handleSubmission = () => {
+        addProject(dispatch, project)
+        navigate('/listProjects')
+    }
 
     const status = [
         "Planned ",
@@ -46,120 +76,105 @@ const CreateProject = () => {
         '4 - Weeks',
     ]
 
-    const save = () => {
-        const project = {
-            code,
-            name,
-            description,
-            customer,
-            startDate,
-            endDate,
-            budget,
-            selectedStatus,
-            selectedTypology,
-            selectedSprintDuration
-        }
 
-        const action = addProject(project);
-        dispatch(action);
-        alert('Project Created')
-    };
     return (
         <section className='form-create-project'>
             <Header className='header-create-project' text="CREATE PROJECT"/>
-            <form onSubmit={save}>
+            <form onSubmit={handleSubmission}>
 
                 <TextField className="textField"
                            mandatory={true}
                            label='Code'
-                           dispatch={dispatch}
-                           value={code}
+                           name={'id'}
+                           whenTyped={handleChange}
                 />
 
                 <TextField className="textField"
                            mandatory={true}
                            label='Name'
-                           dispatch={dispatch}
-                           value={name}
+                           name={'title'}
+                           whenTyped={handleChange}
                 />
 
                 <TextField className="textField"
-                           mandatory={true}
+                           mandatory={false}
                            label='Description'
-                           dispatch={dispatch}
-                           value={description}
+                           name={'description'}
+                           whenTyped={handleChange}
                 />
 
                 <TextField className="textField"
-                           mandatory={true}
+                           mandatory={false}
                            label='Customer'
-                           dispatch={dispatch}
-                           value={customer}
+                           name={'customer'}
+                           whenTyped={handleChange}
                 />
 
                 <div className="date">
-                    <Date
-                        mandatory={true}
-                        dispatch={dispatch}
-                        selectedDate={startDate}
+                    <PickDate
+                        mandatory={false}
                         dateFormat="dd/MM/yyyy"
                         label='Start Date'
+                        name={'startDate'}
+                        selectedDate={project.startDate}
+                        onChange={handleStartDateChange}
                     />
                 </div>
 
                 <div className="date">
-                    <Date
+                    <PickDate
                         mandatory={false}
-                        dispatch={dispatch}
-                        selectedDate={endDate}
                         dateFormat="dd/MM/yyyy"
                         label='End Date'
+                        name={'endDate'}
+                        selectedDate={project.endDate}
+                        onChange={handleEndDateChange}
                     />
                 </div>
 
                 <div className="dropDownList">
                     <DropDownList
-                        mandatory={true}
+                        mandatory={false}
                         label='Status'
-                        dispatch={dispatch}
+                        name={'status'}
                         items={status}
-                        value={selectedStatus}
+                        onChange={handleChange}
                     />
                 </div>
 
                 <div className="dropDownList">
                     <DropDownList
-                        mandatory={true}
+                        mandatory={false}
                         label='Typology'
-                        dispatch={dispatch}
+                        name={'typology'}
                         items={typology}
-                        value={selectedTypology}
+                        onChange={handleChange}
                     />
                 </div>
 
                 <div className="dropDownList">
                     <DropDownList
-                        mandatory={true}
+                        mandatory={false}
                         label='Sprint Duration'
-                        dispatch={dispatch}
+                        name={'sprintDuration'}
                         items={sprintDuration}
-                        value={selectedSprintDuration}
+                        onChange={handleChange}
                     />
                 </div>
 
 
                 <TextField className="textField"
-                           mandatory={true}
+                           mandatory={false}
                            label='Number Of Planned Sprints'
-                           dispatch={dispatch}
-                           value={NumberOfPlannedSprints}
+                           name={'numberOfPlannedSprints'}
+                           whenTyped={handleChange}
                 />
 
                 <TextField className="textField"
-                           mandatory={true}
+                           mandatory={false}
                            label='Budget'
-                           dispatch={dispatch}
-                           value={budget}
+                           name={'budget'}
+                           whenTyped={handleChange}
                 />
                 <Button className='button-form-createProject-save' name="Save"/>
                 <Link to="/listProjects">
