@@ -7,46 +7,45 @@ Code
    .
    "                         "
 }
+.
 Name
 {+
    .
    "                         "
 }
+.
 Description
 {+
    .
    "                         "
 }
-Start Date
-{+
-   .
-   "                         "
-}
-End Date
-{+
-   .
-   "                         "
-}
+.
 Customer
 {+
    .
    "                         "
 }
+.
+{ ^Start date <&calendar>^}
+
+.
+{ ^End date <&calendar>^}
+.
+Project Status
+^           ^
+.
+Typology
+^           ^
+.
 Sprint Duration
-{+
-   .
-   "                         "
-}
+^           ^
+.
 Number of Planned Sprints
 {+
    .
    "                         "
 }
-Project Status
-{+
-   .
-   "                         "
-}
+.
 Budget
 {+
    .
