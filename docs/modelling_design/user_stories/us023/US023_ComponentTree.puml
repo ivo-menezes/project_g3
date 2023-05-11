@@ -1,6 +1,7 @@
 @startuml
 
 [CreateProjectContainer] as Project
+[CreateProjectHeader] as Header
 [Button] as Button
 [DateInput] as Date
 [DropList] as DropList
@@ -19,7 +20,7 @@
 [TypologyInput] as Typology
 [SprintDurationInput] as SprintDuration
 
-
+Project -- Header
 Project -- InputForm
 Project -- Button
 Project -- Date
