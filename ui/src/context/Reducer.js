@@ -1,4 +1,4 @@
-import {CHANGE_TEXT} from "./Actions";
+import {ADD_SPRINT, CHANGE_TEXT} from "./Actions";
 import { ADD_USER_STORY } from "./Actions";
 import {ADD_PROJECT} from "./Actions";
 import {SET_START_DATE} from "./Actions";
@@ -20,7 +20,6 @@ const reducer = (state, action) => {
         case ADD_PROJECT:
             return {
                 ...state,
-                //projectList: action.payload
                 projectList: [...state.projectList, action.payload],
             };
         case SET_START_DATE:
@@ -33,6 +32,11 @@ const reducer = (state, action) => {
                 ...state,
                 endDate: action.payload,
             };
+        case ADD_SPRINT:
+            return {
+                ...state,
+                sprints: [...state.sprints, action.payload]
+            }
         default:
             return state;
     }
