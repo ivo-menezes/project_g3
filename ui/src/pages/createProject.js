@@ -1,6 +1,6 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate} from "react-router-dom";
@@ -10,19 +10,14 @@ import PickDate from "../components/date";
 
 const CreateProject = () => {
 
-    const navigate = useNavigate();
-
-    // getting the global state to which the new project will be submitted
-    const {dispatch} = useContext(AppContext);
-
-    // using a local variable to save user input before submitting
-    const newProject = {
+    // using a local state to save user input before submitting
+    const emptyProject = {
         id : '',
         title : '',
         description : '',
         customer : '',
-        startDate : new Date(),
-        endDate : new Date(),
+        startDate : '',
+        endDate : '',
         budget : '',
         selectedStatus : '',
         selectedTypology : '',
@@ -30,12 +25,16 @@ const CreateProject = () => {
         numberOfPlannedSprints : ''
     }
 
+    const [newProject, setNewProject] = useState(emptyProject)
+
     // updates the corresponding field in newProject when a TextField or DropDownList is changed
     // has to be passed to the component that generates the event
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        newProject[name] = value
+        setNewProject((project) => {
+            return {...project, [name] : value}
+        })
     }
 
     const handleStartDateChange = (newDate, event) => {
@@ -49,6 +48,8 @@ const CreateProject = () => {
     }
 
     // submits the newProject to the global context via the addProject action
+    const {dispatch} = useContext(AppContext);
+    const navigate = useNavigate();
     const handleSubmission = () => {
         addProject(dispatch, newProject)
         navigate('/listProjects')
