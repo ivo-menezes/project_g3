@@ -1,0 +1,50 @@
+@startuml
+
+package "Project App" {
+package "Components" {
+[header]
+[textField]
+[Date]
+[button]
+[TableBody]
+[TableHeader]
+[Table]
+[textArea]
+[dropDownList]
+}
+package "Context" {
+[AppContext]
+[Actions]
+[AppProvider]
+[Reducer]
+}
+package "Pages" {
+[listProjects]
+[viewProject]
+[listSprints]
+[createSprint]
+[consultBacklog]
+[createUserStory]
+[viewSprintPage]
+[welcome]
+[createProject]
+}
+
+package "routes" {
+[route]
+}
+
+package "store" {
+[productBacklog]
+[projects]
+[sprints]
+}
+}
+
+
+routes <.. Pages : use
+Pages --> Components : Composed by
+Pages --> store
+
+
+@enduml
