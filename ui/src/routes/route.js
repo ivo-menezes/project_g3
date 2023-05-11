@@ -50,6 +50,10 @@ const Router= createBrowserRouter([
     {
         path: "/viewProject/:id",
         element: <ViewProject />
+    },
+    {
+        path: "/createSprint/:projectCode",
+        element: <CreateSprint />,
     }
 ]);
 export default Router;

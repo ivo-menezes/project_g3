@@ -237,15 +237,10 @@ code {
 .table-sprint td:not(:first-child) {
   width: 100px;
 }
-.table-sprint td:last-child {
-  width: 1px;
-  text-align: right;
-  border-bottom: 3px solid #ABB2B9;
-}
-.table-sprint th:last-child {
-  width: 1px;
-}
 .sprint-button-view {
+  width: 60%;
+  display: table;
+  margin: 0 auto;
   background-color: #007bff;
   color: #fff;
   border: none;

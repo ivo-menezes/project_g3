@@ -1,80 +1,78 @@
 const sprints = [
     {
-        projectCode: "1",
-        sprint: [
-            {
+                projectCode: "1",
                 id: 1,
                 startDate: '2022-05-01',
                 endDate: '2022-05-14',
             },
             {
+                    projectCode: "1",
                     id : 2,
                     startDate: '2022-03-08',
                     endDate: '2022-03-23',
             },
-            {
+            {       projectCode: "1",
                     id : 3,
                     startDate: '2022-03-23',
                     endDate: '2022-04-08',
-            },
-        ]
     },
 
-    {
-        projectCode: "2",
-        sprint: [
             {
+                projectCode: "2",
                 id: 1,
                 startDate: '2022-03-08',
                 endDate: '2022-03-23',
             },
             {
+                projectCode: "2",
                 id: 2,
                 startDate: '2022-03-24',
                 endDate: '2022-04-08',
             },
             {
+                projectCode: "2",
                 id: 3,
                 startDate: '2022-04-09',
                 endDate: '2022-04-24',
             },
             {
+                projectCode: "2",
                 id: 4,
                 startDate: '2022-04-25',
                 endDate: '2022-05-10',
-            },]
+
     },
     {
-        projectCode: "3",
-        sprint:
-            [{
+                projectCode: "3",
                 id: 1,
                 startDate: '2022-05-11',
                 endDate: '2022-05-27',
             },
                 {
+                    projectCode: "3",
                     id: 2,
                     startDate: '2022-05-28',
                     endDate: '2022-06-13',
                 },
                 {
+                    projectCode: "3",
                     id: 3,
                     startDate: '2022-06-14',
                     endDate: '2022-06-29',
-                },]
+
     },
-    {projectCode: "4",
-        sprint: [
+
             {
+                projectCode: "4",
                 id: 1,
                 startDate: '2022-06-30',
                 endDate: '2022-07-15',
             },
             {
+                projectCode: "4",
                 id: 2,
                 startDate: '2022-07-16',
                 endDate: '2022-07-31',
-            }]
     }
 ]
 export default sprints;

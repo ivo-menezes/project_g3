@@ -10,7 +10,7 @@ const AppProvider = (props) =>{
     const initialState = {
         projectList: projects,
         backlogs : backlogs,
-        listSprint : sprints,
+        sprints : sprints,
         textValue:'',
         startDate: null,
         endDate: null,
