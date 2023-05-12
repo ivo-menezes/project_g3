@@ -28,7 +28,7 @@ const Router= createBrowserRouter([
         element: <CreateProject/>
     },
     {
-        path: "/createUserStory",
+        path: "/createUserStory/:projectCode",
         element: <CreateUserStory/>
     },
     {

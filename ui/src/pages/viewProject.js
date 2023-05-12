@@ -30,9 +30,6 @@ const ViewProject = () => {
                 <p>No project found with code</p>
             )}
             <div className="bt-container ">
-                <Link to="/createUserStory">
-                    <Button className="button-ListProjects" name="Create User Story" />
-                </Link>
                 <Link to={`/listSprints/${id}`}>
                     <Button className="button-ListProjects" name="Sprint List" />
                 </Link>
