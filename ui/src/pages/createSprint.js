@@ -11,11 +11,19 @@ import sprints from "../store/sprints";
 const CreateSprint = () => {
     // Extracts projectCode from the URL parameter using the useParams hook
     const {projectCode} = useParams();
+
+    const projectSprints = sprints.filter(
+        (sprint) => sprint.projectCode === projectCode
+    );
+
+    const newID = projectSprints.length + 1
+
     // Initializes the sprintNumber state variable using the useState hook
-    const [sprintNumber, setSprintNumber] = useState(null);
+    const [sprintNumber, setSprintNumber] = useState(0);
     // Initializes the newSprint state variable using the useState hook
     const emptySprint = {
         projectCode : projectCode,
+        id : newID,
         startDate: '',
         endDate: ''
     }
@@ -23,10 +31,6 @@ const CreateSprint = () => {
 
     // Calculates the next available sprint number for a given project using the useEffect hook
     useEffect(() => {
-        // Filters sprints by projectCode
-        const projectSprints = sprints.filter(
-            (sprint) => sprint.projectCode === projectCode
-        );
         // Calculates the highest existing sprint number and adds 1
         const highestSprintNumber =
             projectSprints.reduce((max, sprint) => Math.max(max, sprint.id), 0) + 1;
@@ -58,7 +62,8 @@ const CreateSprint = () => {
     // Provides navigation functionality using the useNavigate hook from React Router
     const navigate = useNavigate();
     // Handles form submission by converting dates to strings and dispatching an addSprint action
-    const handleSubmission = () => {
+    const handleSubmission = (e) => {
+        e.preventDefault();
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newSprint) {
             if (typeof newSprint[key] === 'object' && newSprint[key] instanceof Date) {
@@ -86,7 +91,7 @@ const CreateSprint = () => {
                 <TextField  className="textField"
                     mandatory={true}
                     label='Number'
-                    name="number"
+                    name="id"
                     value={sprintNumber}
                     readOnly
                 />
