@@ -15,15 +15,10 @@ const CreateUserStory = () => {
         number: "",
         actor: "",
         description: "",
-        status: "",
+        status: "To Do",
         priority: "",
         ac: "",
     }
-
-    const status = [
-        "To Do",
-        "Planned",
-    ];
 
     const [newUserStory, setNewUserStory] = useState(emptyUserStory)
 
@@ -68,15 +63,6 @@ const CreateUserStory = () => {
                     name={"description"}
                     whenTyped={handleChange}
                 />
-                <div className="dropDownList">
-                    <DropDownList
-                        mandatory={true}
-                        label="Status"
-                        name={"status"}
-                        items={status}
-                        onChange={handleChange}
-                    />
-                </div>
                 <TextField
                     className="textField"
                     mandatory={false}
