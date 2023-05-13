@@ -477,6 +477,9 @@ code {
   border: 2px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: bold;
+  color: #829697;
+  background: #f1f3f3;
 }
 
 .textField input:focus {

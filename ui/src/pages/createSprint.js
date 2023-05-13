@@ -1,24 +1,40 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {addSprint} from "../context/Actions";
 import PickDate from "../components/date";
+import sprints from "../store/sprints";
 
 const CreateSprint = () => {
-
+    // Extracts projectCode from the URL parameter using the useParams hook
     const {projectCode} = useParams();
+    // Initializes the sprintNumber state variable using the useState hook
+    const [sprintNumber, setSprintNumber] = useState(null);
+    // Initializes the newSprint state variable using the useState hook
     const emptySprint = {
         projectCode : projectCode,
-        number: '',
         startDate: '',
         endDate: ''
     }
-
     const [newSprint, setNewSprint] = useState(emptySprint)
 
+    // Calculates the next available sprint number for a given project using the useEffect hook
+    useEffect(() => {
+        // Filters sprints by projectCode
+        const projectSprints = sprints.filter(
+            (sprint) => sprint.projectCode === projectCode
+        );
+        // Calculates the highest existing sprint number and adds 1
+        const highestSprintNumber =
+            projectSprints.reduce((max, sprint) => Math.max(max, sprint.id), 0) + 1;
+        // Updates the sprintNumber state variable with the calculated number
+        setSprintNumber(highestSprintNumber);
+    }, [projectCode]);
+
+    // Updates the newSprint state variable when a user types into an input field.
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -27,6 +43,7 @@ const CreateSprint = () => {
         })
     }
 
+    // Updates the newSprint state variable when a user selects a date using the PickDate component.
     const handleStartDateChange = (newDate, event) => {
         event.target = {type:"text", value:newDate, name:'startDate'}
         handleChange(event)
@@ -36,9 +53,11 @@ const CreateSprint = () => {
         event.target = {type:"text", value:newDate, name:'endDate'}
         handleChange(event)
     }
-
+    // Extracts the dispatch function from the AppContext using the useContext hook
     const {dispatch} = useContext(AppContext);
+    // Provides navigation functionality using the useNavigate hook from React Router
     const navigate = useNavigate();
+    // Handles form submission by converting dates to strings and dispatching an addSprint action
     const handleSubmission = () => {
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newSprint) {
@@ -48,11 +67,17 @@ const CreateSprint = () => {
                 newSprint[key] = newSprint[key].toISOString().split('T')[0];
             }
         }
+        // Allows to view in the console the newly created sprint
         console.log(newSprint)
+
+        //Dispatches an addSprint action with the newSprint data
         addSprint(dispatch, newSprint);
+
+        //Navigates to the sprint list for the current project
         navigate(`/listSprints/${projectCode}`)
     };
 
+    // Renders the form for creating a new sprint
     return (
         <section className='form-create-sprint'>
             <Header className= 'header-create-sprint' text="CREATE SPRINT"/>
@@ -62,7 +87,8 @@ const CreateSprint = () => {
                     mandatory={true}
                     label='Number'
                     name="number"
-                    whenTyped={handleChange}
+                    value={sprintNumber}
+                    readOnly
                 />
                 <div className="date">
                 <PickDate
