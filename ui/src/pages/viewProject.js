@@ -15,7 +15,7 @@ const ViewProject = () => {
     return (
         <div>
             <Header
-                text={`Detailed information`}
+                text={`Information about project ${id}`}
                 className="header-listProjects"
                 style={{ marginLeft: "65px" }}
             />

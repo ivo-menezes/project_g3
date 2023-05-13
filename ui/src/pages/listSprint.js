@@ -34,7 +34,7 @@ const ListSprints = () => {
 
     return (
         <div>
-            <Header text={`Sprint List for Project ${projectCode}`}
+            <Header text={`Sprint list for project ${projectCode}`}
                 className="header-listProjects"
                 style={{ marginLeft: "65px" }}
             />

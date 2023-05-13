@@ -11,12 +11,17 @@ import ListSprints from '../pages/listSprint';
 import ConsultBacklog from '../pages/consultBacklog';
 import CreateSprint from '../pages/createSprint';
 import ViewSprint from "../pages/viewSprintPage";
+import PageUnderConstruction from "../pages/pageUnderConstruction";
 
 
 const Router= createBrowserRouter([
     {
         path:"/",
         element: <App/>,
+    },
+    {
+        path:"/pageUnderConstruction",
+        element: <PageUnderConstruction/>,
     },
     {
         path:"/listProjects",

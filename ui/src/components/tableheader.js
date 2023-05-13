@@ -2,7 +2,7 @@ import React from "react";
 
 const TableHeader = ({ headers }) => {
     return (
-        <thead>
+        <thead className="table-header">
         <tr>
             {headers.map((header) => (
                 <th key={header.key}>{header.label}</th>
