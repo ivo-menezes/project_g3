@@ -60,6 +60,7 @@ const CreateProject = () => {
             }
         }
         addProject(dispatch, newProject)
+        alert("New project created!")
         navigate('/listProjects')
     }
 
