@@ -9,7 +9,7 @@ const ViewProject = () => {
     const {state} = useContext(AppContext);
 
     const project = state.projectList.find(
-        (project) => project.id === parseInt(id)
+        (project) => project.id === id
     );
 
     return (

@@ -1,6 +1,6 @@
 const projects = [
     {
-        id: 1,
+        id: "1",
         title: 'Project Switch',
         description: 'Project management tool: A software that enables teams to collaborate, plan, and manage their projects and tasks',
         customer: 'NovaTech Solutions',
@@ -14,7 +14,7 @@ const projects = [
     },
 
     {
-        id: 2,
+        id: "2",
         title: 'Project B6',
         description: 'Customer relationship management (CRM) system: A software that helps businesses manage interactions with customers, including sales, marketing, and customer support',
         customer: 'BluePeak Industries',
@@ -28,7 +28,7 @@ const projects = [
     },
 
     {
-        id: 3,
+        id: "3",
         title: 'Project Critical Tech Work',
         description: 'Personal finance management application: A software that helps users track their income, expenses, and investments',
         customer: 'StellarSoft',
@@ -42,7 +42,7 @@ const projects = [
     },
 
     {
-        id: 4,
+        id: "4",
         title: 'Project Natixis',
         description:'Inventory management system: A software that helps businesses track and manage their inventory levels, orders, and sales',
         customer: 'Horizon Ventures',
@@ -56,7 +56,7 @@ const projects = [
     },
 
     {
-        id: 5,
+        id: "5",
         title: 'Project Present Technologies',
         description: 'Content management system (CMS): A software that allows users to create, manage, and publish digital content, such as articles, videos, and images',
         customer: 'OptimaTech',
@@ -70,7 +70,7 @@ const projects = [
     },
 
     {
-        id: 6,
+        id: "6",
         title: 'Project Emergen',
         description: 'Social networking application: A software that enables users to connect with each other, share content, and communicate online',
         customer: 'QuantumSoft',
@@ -84,7 +84,7 @@ const projects = [
     },
 
     {
-        id: 7,
+        id: "7",
         title: 'Project Blip',
         description: 'Game matchmaking service: A software that matches players with compatible opponents based on their skill level, location, and other criteria. It helps players find opponents quickly and efficiently and improves their overall gaming experience',
         customer: 'Phoenix Solutions',
@@ -98,7 +98,7 @@ const projects = [
     },
 
     {
-        id: 8,
+        id: "8",
         title: 'Project FMQ',
         description: 'Multiplayer game server: A software that allows players to connect and play games with each other online. It manages game sessions, player authentication, and communication between players',
         customer: 'Nexus Innovations',
@@ -112,7 +112,7 @@ const projects = [
     },
 
     {
-        id: 9,
+        id: "9",
         title: 'Project Devexpert',
         description: 'Language learning application: A software that provides users with tools and resources to learn a new language',
         customer: 'Summit Enterprises',
@@ -126,7 +126,7 @@ const projects = [
     },
 
     {
-        id: 10,
+        id: "10",
         title: 'Critical Software',
         description: 'Electronic health record (EHR) system: A software that stores and manages patient health information for healthcare providers',
         customer: 'FusionTech Inc',

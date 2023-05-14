@@ -51,6 +51,14 @@ const CreateProject = () => {
     const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
     const handleSubmission = () => {
+        // Date objects need to be converted to strings because the table component can't handle displaying objects
+        for (const key in newProject) {
+            if (typeof newProject[key] === 'object' && newProject[key] instanceof Date) {
+                // toISOString generates a string in the format '2022-11-14T00:55:31.820Z'
+                // we just want the date part: split at the 'T' and only use the first part
+                newProject[key] = newProject[key].toISOString().split('T')[0];
+            }
+        }
         addProject(dispatch, newProject)
         navigate('/listProjects')
     }
