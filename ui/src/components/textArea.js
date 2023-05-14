@@ -1,25 +1,22 @@
-import React from "react";
-import { changeText } from "../context/Actions";
-
-const TextArea = ({ label, value, mandatory, placeholder, dispatch, className }) => {
-    const whenTyped = (event) => {
-        const action = changeText(event.target.value);
-        dispatch(action);
-    };
+const TextArea = ({label, value, mandatory, placeholder, dispatch, className, readOnly, whenTyped , name}) => {
 
     return (
         <div className={className}>
             <div className="label-wrapper">
-                <label>{label}</label>
+                <label>
+                    {label}
+                </label>
             </div>
-            <textarea
-                value={value}
-                onChange={whenTyped}
-                required={mandatory}
-                placeholder={placeholder}
-            ></textarea>
+            <textarea value={value}
+                   onChange={whenTyped}
+                   required={mandatory}
+                   placeholder={placeholder}
+                   readOnly={readOnly}
+                   name={name}
+            />
         </div>
-    );
-};
+    )
+
+}
 
 export default TextArea;

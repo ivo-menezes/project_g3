@@ -5,7 +5,7 @@ import Button from '../components/button';
 import Header from '../components/header';
 import TextField from '../components/textField';
 import {Link, useNavigate, useParams} from 'react-router-dom';
-import DropDownList from "../components/dropDownList";
+import TextArea from "../components/textArea";
 
 const CreateUserStory = () => {
 
@@ -70,9 +70,9 @@ const CreateUserStory = () => {
                     name={"priority"}
                     whenTyped={handleChange}
                 />
-                <TextField
-                    className="textField"
-                    mandatory={false}
+                <TextArea
+                    className="textArea"
+                    mandatory={true}
                     label="Acceptance Criteria"
                     name={"ac"}
                     whenTyped={handleChange}
