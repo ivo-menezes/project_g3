@@ -18,13 +18,10 @@ import java.util.Optional;
 @Service
 public class UserStoryService {
 
-    @Autowired
     private final IUserStoryFactory userStoryFactory;
 
-    @Autowired
     private final Repository<UserStoryID, UserStoryDDD> userStoryRepository;
 
-    @Autowired
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
 
