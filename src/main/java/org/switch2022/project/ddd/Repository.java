@@ -11,4 +11,6 @@ public interface Repository <ID extends DomainId, T extends AggregateRoot<ID> > 
     public Optional<T> getByID(ID id);
 
     public boolean containsID(ID id);
+
+    public void clearRepository();
 }

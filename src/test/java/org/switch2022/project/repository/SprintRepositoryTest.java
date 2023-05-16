@@ -2,45 +2,73 @@ package org.switch2022.project.repository;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.sprint.SprintDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
-import org.switch2022.project.model.valueobject.SprintNumber;
-import org.switch2022.project.model.valueobject.TimePeriod;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SprintRepositoryTest {
 
 
     @Test
-    public void checkIfRepositoryIsCorrectlyCalled(){
+    public void ensureThatRepositoryIsInstantiated(){
         new SprintRepository();
     }
 
     @Test
-    public void checkIfRepositoryAddsSprintCorrectly(){
+    public void ensureThatRepositoryAddsSpringCorrectly(){
+        //arrange
         SprintRepository sprintData = new SprintRepository();
         SprintDDD sprintMock = mock(SprintDDD.class);
 
+        //act
         boolean result = sprintData.save(sprintMock);
+        sprintData.clearRepository();
 
+        //assert
         assertTrue(result);
     }
 
     @Test
-    public void checkIfRepositoryDoesNotContainID(){
+    public void checkRepositoryDoesNotContainID(){
+        //arrange
         SprintRepository sprintData = new SprintRepository();
         SprintID sprintIDMock = mock(SprintID.class);
 
+        //act
         boolean result = sprintData.containsID(sprintIDMock);
 
+        //assert
         assertFalse(result);
     }
+    @Test
+    public void checkIfRepositoryContainsID(){
+        //arrange
+        SprintRepository sprintData = new SprintRepository();
+
+        SprintID mockID = mock(SprintID.class);
+
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        when(mockSprint.identity()).thenReturn(mockID);
+
+        //act
+        sprintData.save(mockSprint);
+        boolean result = sprintData.containsID(mockID);
+        sprintData.clearRepository();
+
+        //assert
+        assertTrue(result);
+    }
+
+    /***
+     * Method necessary to test the findAll repository method, since it creates
+     * an iterable collection
+     * @param iterable Object
+     * @return int
+     */
     private int countIterable(Iterable<?> iterable) {
         int count = 0;
         for (Object item : iterable) {
@@ -49,82 +77,99 @@ class SprintRepositoryTest {
         return count;
     }
     @Test
-    public void checkIfRepositoryHasAnythingInIt(){
-        SprintRepository sprintDataNew = new SprintRepository();
+    public void checkIfRepositoryIsEmpty(){
+        //arrange
+        SprintRepository sprintData = new SprintRepository();
 
-        Iterable<SprintDDD> result = sprintDataNew.findAll();
+        //act
+        Iterable<SprintDDD> result = sprintData.findAll();
 
+        //assert
         assertEquals(0, countIterable(result));
     }
-     @Test
-    public void checkIfRepositoryContainsID() throws ParseException {
-         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-         SprintRepository sprintData = new SprintRepository();
-
-         TimePeriod newTimePeriod = new TimePeriod(formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
-         ProjectCode projectCode = new ProjectCode("PT6");
-         SprintNumber newSprintNumber = new SprintNumber(5);
-
-         SprintID sprintID = new SprintID(projectCode, newSprintNumber);
-         SprintID sprintIDNumberTwo = new SprintID(projectCode, newSprintNumber);
-
-         SprintDDD newSprint = new SprintDDD(sprintID, newTimePeriod);
-
-         sprintData.save(newSprint);
-         boolean result = sprintData.containsID(sprintIDNumberTwo);
-
-         assertTrue(result);
-     }
-
     @Test
-    public void checkIfRepositoryHasSprintWithID() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        SprintRepository sprintData = new SprintRepository();
+    public void ensureRepositoryIsReturningANonEmptyIterableCollection() {
+        //arrange
 
-        TimePeriod newTimePeriod = new TimePeriod(formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
-        TimePeriod anotherTimePeriod = new TimePeriod(formatter.parse("16/02/2022"), formatter.parse("25/02/2022"));
-        ProjectCode projectCode = new ProjectCode("PT6");
-        SprintNumber newSprintNumber = new SprintNumber(5);
-        SprintNumber anotherSprintNumber = new SprintNumber(6);
+        SprintRepository sprintDataNew = new SprintRepository();
 
-        SprintID sprintID = new SprintID(projectCode, newSprintNumber);
-        SprintID sprintIDNumberTwo = new SprintID(projectCode, anotherSprintNumber);
+        //created three mock SprintIDs
+        SprintID mockID = mock(SprintID.class);
+        SprintID mockIDTwo = mock(SprintID.class);
+        SprintID mockIDThree = mock(SprintID.class);
 
-        SprintDDD newSprint = new SprintDDD(sprintID, newTimePeriod);
-        SprintDDD anotherSprint = new SprintDDD(sprintIDNumberTwo, anotherTimePeriod);
+        //created three SprintDDD mocks and trained them
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        when(mockSprint.identity()).thenReturn(mockID);
+        SprintDDD mockSprintTwo = mock(SprintDDD.class);
+        when(mockSprintTwo.identity()).thenReturn(mockIDTwo);
+        SprintDDD mockSprintThree = mock(SprintDDD.class);
+        when(mockSprintThree.identity()).thenReturn(mockIDThree);
 
-        sprintData.save(newSprint);
-        sprintData.save(anotherSprint);
+        //saved the SprintDDD mocks to the repository
+        sprintDataNew.save(mockSprint);
+        sprintDataNew.save(mockSprintTwo);
+        sprintDataNew.save(mockSprintThree);
 
-        Optional result = sprintData.getByID(sprintIDNumberTwo);
+        //act
+        Iterable<SprintDDD> result = sprintDataNew.findAll();
 
-        assertTrue(result.isPresent());
+        //assert
+        assertEquals(3, countIterable(result));
     }
 
     @Test
-    public void checkIfRepositoryObtainsSprintWithID() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    public void ensureRepositoryHasSprintWithID() {
+        //arrange
         SprintRepository sprintData = new SprintRepository();
 
-        TimePeriod newTimePeriod = new TimePeriod(formatter.parse("01/02/2022"), formatter.parse("15/02/2022"));
-        TimePeriod anotherTimePeriod = new TimePeriod(formatter.parse("16/02/2022"), formatter.parse("25/02/2022"));
-        ProjectCode projectCode = new ProjectCode("PT6");
-        SprintNumber newSprintNumber = new SprintNumber(5);
-        SprintNumber anotherSprintNumber = new SprintNumber(6);
-        SprintNumber thirdSprintNumber = new SprintNumber(7);
+        //created two mock SprintIDs
+        SprintID mockID = mock(SprintID.class);
+        SprintID mockIDTwo = mock(SprintID.class);
 
-        SprintID sprintID = new SprintID(projectCode, newSprintNumber);
-        SprintID sprintIDNumberTwo = new SprintID(projectCode, anotherSprintNumber);
-        SprintID sprintIDNumberThree = new SprintID(projectCode, thirdSprintNumber);
+        //created two SprintDDD mocks and trained them
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        when(mockSprint.identity()).thenReturn(mockID);
+        SprintDDD mockSprintTwo = mock(SprintDDD.class);
+        when(mockSprintTwo.identity()).thenReturn(mockIDTwo);
 
-        SprintDDD newSprint = new SprintDDD(sprintID, newTimePeriod);
-        SprintDDD anotherSprint = new SprintDDD(sprintIDNumberTwo, anotherTimePeriod);
+        //act
+        sprintData.save(mockSprint);
+        sprintData.save(mockSprintTwo);
 
-        sprintData.save(newSprint);
-        sprintData.save(anotherSprint);
+        Optional expected = Optional.of(mockSprint);
+        Optional result = sprintData.getByID(mockID);
+        sprintData.clearRepository();
 
-        Optional result = sprintData.getByID(sprintIDNumberThree);
+        //assert
+        assertEquals(expected, result);
+    }
 
-        assertTrue(result.isEmpty());
+    @Test
+    public void ensureRepositoryDoesNotHaveSprintWithID() {
+        //arrange
+        SprintRepository sprintData = new SprintRepository();
+
+        //created two mock SprintIDs
+        SprintID mockID = mock(SprintID.class);
+        SprintID mockIDTwo = mock(SprintID.class);
+        SprintID mockIDThree = mock(SprintID.class);
+
+        //created two SprintDDD mocks and trained them
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        when(mockSprint.identity()).thenReturn(mockID);
+        SprintDDD mockSprintTwo = mock(SprintDDD.class);
+        when(mockSprintTwo.identity()).thenReturn(mockIDTwo);
+
+        //act
+        sprintData.save(mockSprint);
+        sprintData.save(mockSprintTwo);
+
+        Optional expected = Optional.empty();
+        Optional result = sprintData.getByID(mockIDThree);
+        sprintData.clearRepository();
+
+        //assert
+        assertEquals(expected, result);
     }
 }

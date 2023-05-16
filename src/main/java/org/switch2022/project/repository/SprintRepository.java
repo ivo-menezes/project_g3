@@ -62,4 +62,7 @@ public class SprintRepository implements Repository<SprintID, SprintDDD> {
             return Optional.of(sprintData.get(id));
         }
     }
+    public void clearRepository(){
+        sprintData.clear();
+    }
 }

@@ -59,4 +59,9 @@ public class UserStoryRepository implements Repository<UserStoryID, UserStoryDDD
             return Optional.of( DATA.get(id) );
     }
 
+    @Override
+    public void clearRepository() {
+        DATA.clear();
+    }
+
 }

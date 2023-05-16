@@ -55,4 +55,9 @@ public class ProjectRepository implements Repository<ProjectCode, ProjectDDD> {
     public boolean containsID(ProjectCode id) {
         return DATA.containsKey(id);
     }
+
+    @Override
+    public void clearRepository() {
+        DATA.clear();
+    }
 }
