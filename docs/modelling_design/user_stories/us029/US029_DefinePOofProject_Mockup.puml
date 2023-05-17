@@ -1,0 +1,36 @@
+@startsalt
+{
+
+title Project Resource
+Role
+{ ^Product Owner^}
+.
+Email
+{+
+   .
+   "                         "
+}
+.
+{ ^Start date <&calendar>^}
+
+.
+{ ^End date <&calendar>^}
+.
+Cost Per Hour
+{+
+   .
+   "                         "
+}
+.
+Percentage of Allocation
+{+
+   .
+   "                         "
+}
+.
+{  [<&circle-check>Save ] |
+[<&circle-x>Cancel]}
+
+}
+
+@endsalt
