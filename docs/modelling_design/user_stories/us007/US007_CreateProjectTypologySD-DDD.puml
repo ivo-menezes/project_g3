@@ -1,0 +1,65 @@
+@startuml
+!theme plain
+autonumber
+hide footbox
+title "US007 - As Administrator, I want to create a new project typology"
+
+actor Administrator
+participant ": CreateTypologyUI" as UI
+participant ": CreateTypologyController" as Controller
+participant ": TypologyService" as Service
+participant "typologyFactory : ITypologyFactory" as Factory
+participant "typologyRepository : TypologyRepository" as Repository
+participant "typologyDATA : Hashmap" as Hashmap
+participant ": AssemblerData" as Assembler
+participant "typologyRepositoryJPA: TypologyRepositoryJPA" as RepositoryJPA
+
+activate Administrator #FFBBBB
+Administrator -> UI : Create typology (designation)
+
+activate UI #FFBBBB
+UI -> Controller : createTypology(designation)
+
+activate Controller #FFBBBB
+Controller -> Service : createTypology(designation)
+
+activate Service #FFBBBB
+Service --> "typologyDesignation : TypologyDesignation" ** : create(designation)
+
+Service -> Factory : createTypology(typologyDesignation)
+activate Factory #FFBBBB
+Factory --> "typology : Typology" ** : create(typologyDesignation)
+Factory --> Service : typology
+deactivate Factory
+
+Service -> Repository : save(typology)
+activate Repository #FFBBBB
+Repository -> Hashmap : contains(typology)
+activate Hashmap #FFBBBB
+Hashmap --> Repository : false
+Repository -> Hashmap : put(typology)
+Hashmap --> Repository : null
+deactivate Hashmap
+Repository --> Service : true
+deactivate Repository
+
+Service -> Assembler : toJPA(typology)
+activate Assembler #FFBBBB
+Assembler --> Service: typologyJPA
+deactivate Assembler
+
+Service -> RepositoryJPA : save(id, typologyJPA)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Service : true
+deactivate RepositoryJPA
+
+deactivate Repository
+Service --> Controller : true
+deactivate Service
+Controller --> UI : Confirms typology creation
+deactivate Controller
+
+UI --> Administrator : Confirms typology creation
+deactivate UI
+
+@enduml
