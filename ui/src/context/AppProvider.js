@@ -5,12 +5,14 @@ import reducer from './Reducer';
 import projects from "../store/projects";
 import backlogs from "../store/productBacklogs";
 import sprints from "../store/sprints";
+import resources from "../store/resources";
 
 const AppProvider = (props) =>{
     const initialState = {
         projectList: projects,
         backlogs : backlogs,
         sprints : sprints,
+        resources : resources,
         textValue:'',
         startDate: null,
         endDate: null,

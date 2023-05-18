@@ -45,6 +45,9 @@ const ViewProject = () => {
                 <Link to={`/backlog/${id}`}>
                     <Button className="button-ListProjects" name="Product Backlog" />
                 </Link>
+                <Link to={`/listResources/${id}`}>
+                    <Button className="button-ListProjects" name="Resource list" />
+                </Link>
                 <Link to={`/listProjects`}>
                     <Button className="button-ListProjects" name="Back to Project List" />
                 </Link>

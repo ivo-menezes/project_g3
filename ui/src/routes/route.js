@@ -12,6 +12,8 @@ import ConsultBacklog from '../pages/consultBacklog';
 import CreateSprint from '../pages/createSprint';
 import ViewSprint from "../pages/viewSprintPage";
 import PageUnderConstruction from "../pages/pageUnderConstruction";
+import ListResources from "../pages/listResources";
+import AssociateResource from "../pages/associateResource";
 
 
 const Router= createBrowserRouter([
@@ -59,6 +61,14 @@ const Router= createBrowserRouter([
     {
         path: "/createSprint/:projectCode",
         element: <CreateSprint />,
+    },
+    {
+        path: "/listResources/:projectCode",
+        element: <ListResources />,
+    },
+    {
+        path: "/associateResource/:projectCode",
+        element: <AssociateResource />,
     }
 ]);
 export default Router;
