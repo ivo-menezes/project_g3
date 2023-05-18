@@ -4,6 +4,7 @@ export const  ADD_PROJECT = 'ADD_PROJECT';
 export const SET_START_DATE = 'SET_START_DATE'
 export const SET_END_DATE = 'SET_END_DATE'
 export const ADD_SPRINT = 'ADD_SPRINT'
+export const ADD_RESOURCE = 'ADD_RESOURCE'
 
 
 export function changeText(value) {
@@ -13,7 +14,7 @@ export function changeText(value) {
             value: value
         },
     }
-};
+}
 
 export const addUserStory = (dispatch, userStory) => {
     dispatch ({
@@ -49,5 +50,12 @@ export const addSprint = (dispatch, sprint) => {
     dispatch ({
         type: ADD_SPRINT,
         payload: sprint,
+    })
+}
+
+export const addResource = (dispatch, resource) => {
+    dispatch({
+        type: ADD_RESOURCE,
+        payload: resource,
     })
 }

@@ -1,4 +1,4 @@
-import {ADD_SPRINT, CHANGE_TEXT} from "./Actions";
+import {ADD_RESOURCE, ADD_SPRINT, CHANGE_TEXT} from "./Actions";
 import { ADD_USER_STORY } from "./Actions";
 import {ADD_PROJECT} from "./Actions";
 import {SET_START_DATE} from "./Actions";
@@ -36,6 +36,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 sprints: [...state.sprints, action.payload]
+            }
+        case ADD_RESOURCE:
+            return{
+                ...state,
+                resources: [...state.resources, action.payload]
+
             }
         default:
             return state;
