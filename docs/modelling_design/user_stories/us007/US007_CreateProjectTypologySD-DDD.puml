@@ -10,9 +10,8 @@ participant ": CreateTypologyController" as Controller
 participant ": TypologyService" as Service
 participant "typologyFactory : ITypologyFactory" as Factory
 participant "typologyRepository : TypologyRepository" as Repository
-participant "typologyDATA : Hashmap" as Hashmap
 participant ": AssemblerData" as Assembler
-participant "typologyRepositoryJPA: TypologyRepositoryJPA" as RepositoryJPA
+participant "typologyRepositoryJPA: ITypologyRepositoryJPA" as RepositoryJPA
 
 activate Administrator #FFBBBB
 Administrator -> UI : Create typology (designation)
@@ -34,24 +33,23 @@ deactivate Factory
 
 Service -> Repository : save(typology)
 activate Repository #FFBBBB
-Repository -> Hashmap : contains(typology)
-activate Hashmap #FFBBBB
-Hashmap --> Repository : false
-Repository -> Hashmap : put(typology)
-Hashmap --> Repository : null
-deactivate Hashmap
-Repository --> Service : true
-deactivate Repository
 
-Service -> Assembler : toJPA(typology)
+
+Repository -> Assembler : toData(typology)
 activate Assembler #FFBBBB
-Assembler --> Service: typologyJPA
+Assembler --> Repository: typologyJPA
 deactivate Assembler
 
-Service -> RepositoryJPA : save(id, typologyJPA)
+Repository -> RepositoryJPA : save(typologyJPA)
 activate RepositoryJPA #FFBBBB
-RepositoryJPA --> Service : true
+RepositoryJPA --> Repository : savedTypologyJPA
 deactivate RepositoryJPA
+Repository -> Assembler : toDomain(savedTypologyJPA)
+activate Assembler #FFBBBB
+Assembler --> Repository : savedTypology
+deactivate Assembler
+Repository -->Service: savedTypology
+
 
 deactivate Repository
 Service --> Controller : true
