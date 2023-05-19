@@ -1,0 +1,88 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+title "US013 - As Manager, I want to define the SM of a project."
+
+Actor Manager
+participant ": AssociateResourceUI" as UI
+participant "resourceDTO:ResourceDTO" as dto
+participant ": ResourceController" as Controller
+participant ": ResourceService" as Services
+participant ": AccountRepository" as AccountRepository
+participant "account : Account" as account
+participant ": ProjectRepository" as ProjectRepository
+participant ": ResourceRepository" as ResourceRepository
+participant "DATA : HashMap" as hashmap
+participant ": factoryResource : FactoryResourceImpl" as Factory
+participant "resource : Resource" as resource
+
+activate Manager #FFBBBB
+Manager -> UI : Defines user as SM of project\n (email, role, projectCode, startDate, endDate,\n percentAllocation, costPerHour)
+
+activate UI #FFBBBB
+UI --> dto ** : create(email, role, projectCode,startDate,\n endDate, percentAllocation, costPerHour)
+UI -> Controller : createResource(resourceDTO)
+activate Controller #FFBBBB
+Controller -> Services : createResource(resourceDTO)
+
+activate Services #FFBBBB
+
+Services --> "resourceID : ResourceID" **: createID()
+Services --> "email : Email" **: create(resourceDTO.email)
+Services --> "role : Role" **: create(resourceDTO.role)
+Services --> "projectCode : ProjectCode" **: create(resourceDTO.projectCode)
+Services --> "timePeriod : TimePeriod" **: create(resourceDTO.timePeriod)
+Services --> "percentageAllocation : PercentageAllocation" **: create(resourceDTO.percentageAllocation)
+Services --> "costPerHour : CostPerHour" **: create(resourceDTO.costPerHour)
+
+Services -> AccountRepository : getByID(email)
+activate AccountRepository #FFBBBB
+AccountRepository --> Services : account
+deactivate AccountRepository
+
+Services -> account : isUser()
+activate account #FFBBBB
+account --> Services : true
+deactivate account
+
+Services -> ProjectRepository : contains(projectCode)
+activate ProjectRepository #FFBBBB
+ProjectRepository --> Services : true
+deactivate ProjectRepository
+
+Services -> ResourceRepository: existsActiveResourceWithAccount(email, projectCode, startDate, endDate)
+activate ResourceRepository #FFBBBB
+ResourceRepository --> Services: false
+Services -> ResourceRepository: isRoleOccupied(projectCode, role, startDate, endDate)
+ResourceRepository --> Services: false
+deactivate ResourceRepository
+
+
+Services -> Factory: createResource(resourceID, email, role, projectCode, timePeriod, percentAllocation, costPerHour)
+activate Factory #FFBBBB
+Factory --> resource ** : createResource(resourceID, email, roleName,\n projectCode, timePeriod, percentAllocation, costPerHour)
+Factory --> Services: resource
+deactivate Factory
+
+Services -> ResourceRepository : save(resource)
+
+activate ResourceRepository #FFBBBB
+ResourceRepository -> hashmap :contains(resourceID)
+hashmap --> ResourceRepository : false
+ResourceRepository -> hashmap :put(resourceID, resource)
+hashmap --> ResourceRepository : null
+ResourceRepository --> Services: true
+deactivate
+
+Services --> Controller : true
+deactivate Services
+Controller --> UI: true
+deactivate Controller
+
+UI --> Manager : confirm
+deactivate UI
+
+deactivate Manager
+
+@enduml
