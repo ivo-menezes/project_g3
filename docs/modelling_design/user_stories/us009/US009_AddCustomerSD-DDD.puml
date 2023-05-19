@@ -1,0 +1,64 @@
+@startuml
+!theme plain
+autonumber
+hide footbox
+title "US009 - As Administrator, I want to add a customer"
+
+actor Administrator
+participant ":CreateCustomerUI" as UI
+participant ":CreateCustomerController" as Controller
+participant ":CustomerService" as Service
+participant "customerFactory :ICustomerFactory" as Factory
+participant "customerRepository :CustomerRepository" as Repository
+participant ":AssemblerData" as Assembler
+participant "customerRepositoryJPA :ICustomerRepositoryJPA" as RepositoryJPA
+
+activate Administrator #FFBBBB
+Administrator -> UI :Create customer (customerNIF, customerDesignation)
+
+activate UI #FFBBBB
+UI -> Controller :createCustomer(customerNIF, customerDesignation)
+
+activate Controller #FFBBBB
+Controller -> Service :createCustomer(customerNIF, customerDesignation)
+
+activate Service #FFBBBB
+Service --> "customerNIF :CustomerNIF" ** : create(customerNIF)
+Service --> "customerDesignation :CustomerDesignation" ** :create(customerDesignation)
+
+Service -> Factory :createCustomer(customerNIF, customerDesignation)
+activate Factory #FFBBBB
+Factory --> "customer :Customer" ** :create(customerNIF, customerDesignation)
+Factory --> Service :customer
+deactivate Factory
+
+Service -> Repository :save(customer)
+activate Repository #FFBBBB
+
+
+Repository -> Assembler :toDate(customer)
+activate Assembler #FFBBBB
+Assembler --> Repository: customerJPA
+deactivate Assembler
+
+Repository -> RepositoryJPA : save(customerJPA)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository : savedCustomerJPA
+deactivate RepositoryJPA
+Repository -> Assembler : toDomain(savedCustomerJPA)
+activate Assembler #FFBBBB
+Assembler --> Repository : savedCustomer
+deactivate Assembler
+Repository -->Service: savedCustomer
+
+
+deactivate Repository
+Service --> Controller : true
+deactivate Service
+Controller --> UI : Confirms customer creation
+deactivate Controller
+
+UI --> Administrator : Confirms customer creation
+deactivate UI
+
+@enduml
