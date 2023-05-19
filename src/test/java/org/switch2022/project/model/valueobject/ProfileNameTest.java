@@ -2,6 +2,10 @@ package org.switch2022.project.model.valueobject;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.project.Project;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,6 +94,16 @@ class ProfileNameTest {
         boolean isEquals = profileName1.equals(profileName2);
 
         assertFalse(isEquals);
+    }
+
+    @Test
+    @DisplayName("test hash code")
+    void testHashCode() {
+        ProfileName profileName = new ProfileName("Test");
+        ProfileName profileNameTest = new ProfileName("Test");
+
+        assertEquals(profileNameTest.hashCode(), profileName.hashCode());
+        assertNotEquals(0, profileName.hashCode());
     }
 
 
