@@ -91,4 +91,14 @@ class PhotoTest {
 
         assertFalse(isEquals);
     }
+
+    @Test
+    @DisplayName("test hash code")
+    void testHashCode() {
+        Photo photo1 = new Photo("Test");
+        Photo photo2 = new Photo("Test");
+
+        assertEquals(photo1.hashCode(), photo2.hashCode());
+        assertNotEquals(0, photo1.hashCode());
+    }
 }
