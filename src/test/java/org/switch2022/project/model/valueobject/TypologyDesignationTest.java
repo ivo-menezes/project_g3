@@ -20,7 +20,20 @@ class TypologyDesignationTest {
         TypologyDesignation designation = new TypologyDesignation(expectedDesignation);
 
         //Assert
-        assertTrue(designation instanceof TypologyDesignation);
+        assertInstanceOf(TypologyDesignation.class, designation);
+    }
+
+    @Test
+    @DisplayName("Ensure typology designation is correctly created by default constructor")
+    void ensureTypologyDesignationIsCreatedByDefaultConstructor() {
+        // Arrange
+        TypologyDesignation designation;
+
+        // Act
+        designation = new TypologyDesignation();
+
+        // Assert
+        assertInstanceOf(TypologyDesignation.class, designation);
     }
 
     @ParameterizedTest
@@ -122,6 +135,20 @@ class TypologyDesignationTest {
 
         //Assert
         assertNotEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    @DisplayName("Ensure designation is returned")
+    void EnsureDesignationIsReturned(){
+        //Arrange
+        String expectedString = "Fixed cost";
+        TypologyDesignation designation1 = new TypologyDesignation(expectedString);
+
+        //Act
+        String actualString = designation1.toString();
+
+        //Assert
+        assertEquals(expectedString, actualString);
     }
 
 }
