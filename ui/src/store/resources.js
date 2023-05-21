@@ -2,7 +2,7 @@ const resources = [
     {
         projectCode: "1",
         role: 'Team Member',
-        email: 'zeca@mems.com',
+        email: 'zeca@goscrum.com',
         startDate: '15/02/2022',
         endDate: '15/03/2022',
         costPerHour: 25,
@@ -11,7 +11,7 @@ const resources = [
     {
         projectCode: "2",
         role: 'Team Member',
-        email: 'ruca@mems.com',
+        email: 'ruca@goscrum.com',
         startDate: '15/04/2023',
         endDate: '15/05/2023',
         costPerHour: 10,
@@ -20,7 +20,7 @@ const resources = [
     {
         projectCode: "3",
         role: 'Product Owner',
-        email: 'zeca@mems.com',
+        email: 'zeca@goscrum.com',
         startDate: '17/06/2022',
         endDate: '25/08/2022',
         costPerHour: 50,
@@ -29,7 +29,7 @@ const resources = [
     {
         projectCode: "2",
         role: 'Product Owner',
-        email: 'maria@mems.com',
+        email: 'maria@goscrum.com',
         startDate: '15/02/2022',
         endDate: '15/03/2022',
         costPerHour: 45,
@@ -38,7 +38,7 @@ const resources = [
     {
         projectCode: "2",
         role: 'Team Member',
-        email: 'maria@mems.com',
+        email: 'maria@goscrum.com',
         startDate: '25/03/2022',
         endDate: '15/04/2022',
         costPerHour: 45,
@@ -47,7 +47,7 @@ const resources = [
     {
         projectCode: "3",
         role: 'Scrum Master',
-        email: 'rui@mems.com',
+        email: 'rui@goscrum.com',
         startDate: '15/02/2022',
         endDate: '15/03/2022',
         costPerHour: 45,
@@ -56,7 +56,7 @@ const resources = [
     {
         projectCode: "1",
         role: 'Project Manager',
-        email: 'toni@mems.com',
+        email: 'toni@goscrum.com',
         startDate: '26/09/2022',
         endDate: '05/10/2022',
         costPerHour: 15,
@@ -65,7 +65,7 @@ const resources = [
     {
         projectCode: "1",
         role: 'Scrum Master',
-        email: 'diogo@mems.com',
+        email: 'diogo@goscrum.com',
         startDate: '15/02/2023',
         endDate: '15/03/2023',
         costPerHour: 25,

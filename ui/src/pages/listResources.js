@@ -6,13 +6,12 @@ import AppContext from "../context/AppContext";
 import {useNavigate, useParams} from "react-router-dom";
 
 const headers =  [
-    {label: "Project Code", key: "projectCode"},
     {label: "Role", key: "role"},
     {label: "Email", key: "email"},
     {label: "Start Date", key: "startDate"},
     {label: "End Date", key: "endDate"},
-    {label: "Cost Per Hour", key: "costPerHour"},
-    {label: "Percentage of Allocation", key: "allocationPercentage"},
+    {label: "Cost/Hour", key: "costPerHour"},
+    {label: "% Allocation", key: "allocationPercentage"}
 ]
 
 const ResourceList = () => {
@@ -23,6 +22,15 @@ const ResourceList = () => {
     const resourcesInProject = state.resources.filter((resource) =>
     resource.projectCode === projectCode);
     console.log(resourcesInProject);
+
+    const resource = resourcesInProject.map((resource) => ({
+        role: resource.role,
+        email: resource.email,
+        startDate: resource.startDate,
+        endDate: resource.endDate,
+        costPerHour: resource.costPerHour,
+        allocationPercentage: resource.allocationPercentage
+    }));
 
     const handleAssociateResource = () => {
         console.log(projectCode);
@@ -40,7 +48,7 @@ const ResourceList = () => {
                     style={{marginLeft: "65px"}}
             />
             {resourcesInProject.length > 0 ? (
-                <Table data={resourcesInProject} headers={headers} />
+                <Table data={resource} headers={headers} />
             ) : (
                 <div className="string-format">
                     <h2>This project has no resources!</h2>

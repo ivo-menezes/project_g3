@@ -17,9 +17,11 @@ const AssociateResource = () => {
 
     const navigate = useNavigate();
 
+    //the role has a default value of 'Team Member', otherwise, if we leave it empty, if we don't actively choose (or
+    //change the role to another role and back to 'Team Member', it will save the role as being empty.
     const emptyResource = {
         projectCode : projectCode,
-        role : '',
+        role : "Team Member",
         email : '',
         startDate : '',
         endDate : '',
@@ -27,7 +29,7 @@ const AssociateResource = () => {
         allocationPercentage : ''
     }
 
-    const [newResource, setNewResource] = useState(emptyResource)
+    const [newResource, setNewResource] = useState(emptyResource);
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -51,9 +53,14 @@ const AssociateResource = () => {
                 newResource[key] = newResource[key].toISOString().split('T')[0];
             }
         }
-        addResource(dispatch, newResource)
-        alert('New resource created')
-        navigate(`/listResources/${projectCode}`)
+        addResource(dispatch, newResource);
+        //creates an array of strings representing each key-value pair in the newResource object, values are stringified
+        //individually and joined with the '\n' character.
+        const formattedResource = Object.entries(newResource).map(([key, value]) => {
+            return `${key}: ${JSON.stringify(value)}`;
+        });
+        alert(formattedResource.join("\n"));
+        navigate(`/listResources/${projectCode}`);
     }
     const role = [
         'Team Member',
@@ -67,7 +74,7 @@ const AssociateResource = () => {
             <Header className='header-create-project' text="Associate new resource to project"/>
             <form onSubmit={handleSubmission}>
 
-                <div className={"dropDownList"}>
+                <div className="dropDownList">
                     <DropDownList
                         mandatory={true}
                         label='Role'

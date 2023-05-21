@@ -218,7 +218,7 @@ code {
 }
 
 .table-sprint{
-  width: 75%;
+  width: 80%;
   border-collapse: collapse;
   margin: 0 auto;
   font-size: 1.5rem;
@@ -234,7 +234,7 @@ code {
 .table-sprint th:first-child,
 .table-sprint td:first-child {
   font-weight: bold;
-  width: 30px;
+  width: 20px;
 }
 .table-sprint th:not(:first-child),
 .table-sprint td:not(:first-child) {
