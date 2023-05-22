@@ -1,11 +1,12 @@
 package org.switch2022.project.model.valueobject;
 
+import org.switch2022.project.ddd.DomainId;
 import org.switch2022.project.ddd.ValueObject;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class AccountID implements ValueObject {
+public class AccountID implements ValueObject, DomainId {
 
     final UUID accountID;
 
