@@ -1,0 +1,32 @@
+package org.switch2022.project.model.valueobject;
+
+import org.switch2022.project.ddd.ValueObject;
+
+import java.util.Objects;
+import java.util.UUID;
+
+public class AccountID implements ValueObject {
+
+    final UUID accountID;
+
+    public AccountID(UUID accountID) {
+        this.accountID = accountID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountID)) return false;
+        AccountID accountID1 = (AccountID) o;
+        return accountID.equals(accountID1.accountID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountID);
+    }
+
+    public UUID getAccountID() {
+        return this.accountID;
+    }
+}
