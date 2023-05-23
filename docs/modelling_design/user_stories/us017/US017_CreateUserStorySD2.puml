@@ -1,0 +1,122 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog
+
+
+participant ": UserStoryService" as service
+participant ": ProjectRepository" as projectRepository
+participant "factoryUserStory : IUserStoryFactory" as factory
+participant "userStory :UserStory" as userStory
+participant "userStoryRepository :UserStoryRepository" as usRepository
+participant "userStoryJpaRepository : UserStoryJpaRepository" as jpa
+participant "assembler : UserStoryDataDomainAssembler" as assembler
+participant "userStoryJpa : UserStoryJpa" as userStoryJpa
+'participant "savedUserStoryJpa : UserStoryJpa" as savedUserStoryJpa
+participant "savedUserStory : UserStory" as savedUserStory
+participant "project : Project" as project
+participant "productBacklog : ProductBacklog" as backlog
+participant "openUserStories : List<UserStoryID>" as uslist
+
+
+ref over service : US017_CreateUserStorySD1\n(request handling at Controller)
+
+activate service
+-> service : createUserStory(newUserStoryDTO)
+ref over service : US017_CreateUserStorySD3\n(creation of value objects)
+
+
+service -> projectRepository: getByID(projectCode)
+
+activate projectRepository
+ref over projectRepository : US017_CreateUserStorySD4\n(retrieve project from projectRepository)
+projectRepository --> service: project
+deactivate
+
+
+
+service -> factory:createUserStory\n (userStoryID, actor, description, acceptanceCriteria)
+
+activate factory
+factory --> userStory ** :create (userStoryID,\n userStoryActor,\n description, \n userStoryAcceptanceCriteria)
+factory --> service :userStory
+deactivate
+
+service -> usRepository :save(userStory)
+
+activate usRepository
+usRepository -> userStory : identity()
+
+activate userStory
+userStory --> usRepository: userStoryID
+deactivate
+
+usRepository -> usRepository : containsID(userStoryID)
+activate usRepository #DarkSalmon
+
+usRepository -> jpa :existsById(userStoryID)
+
+activate jpa
+jpa --> usRepository : false
+deactivate
+deactivate
+
+usRepository -> assembler : toData(userStory)
+
+activate assembler
+assembler --> userStoryJpa ** : create
+assembler --> usRepository : userStoryJpa
+deactivate
+
+usRepository -> jpa : save(userStoryJpa)
+
+activate jpa
+'jpa --> savedUserStoryJpa ** : create
+jpa --> usRepository : savedUserStoryJpa
+deactivate
+
+usRepository -> assembler : toDomain(savedUserStoryJpa)
+activate assembler
+assembler --> savedUserStory ** : create
+assembler --> usRepository : savedUserStory
+deactivate
+
+usRepository --> service: savedUserStory
+deactivate
+
+service -> project :addToProductBacklog(userStoryID, priority)
+
+activate project
+project -> backlog: addUserStory(userStoryID, priority)
+
+activate backlog
+backlog -> uslist : contains(userStoryID)
+
+activate uslist
+uslist --> backlog : false
+deactivate
+
+backlog -> uslist : add(priority, userStoryID)
+activate uslist
+deactivate
+
+backlog --> project : true
+deactivate
+
+project --> service : true
+deactivate
+
+service -> projectRepository : save(project)
+activate projectRepository
+ref over projectRepository : US017_CreateUserStorySD5\n(save project in projectRepository)
+projectRepository --> service : savedProject
+deactivate
+
+[<-- service : savedUserStory
+@enduml

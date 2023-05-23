@@ -1,0 +1,35 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(retrieve project from projectRepository)
+
+participant ": ProjectRepository" as projectRepository
+participant ": ProjectJpaRepository" as jpa
+participant ": ProjectDataDomainAssembler" as assembler
+
+-> projectRepository : getByID(projectCode)
+
+activate projectRepository
+projectRepository -> jpa : findById(projectCode)
+
+activate jpa
+jpa --> projectRepository : projectJpa
+deactivate
+
+projectRepository -> assembler : toDomain(projectJpa)
+
+activate assembler
+assembler --> projectRepository: project
+deactivate
+
+[<-- projectRepository : project
+
+
+
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(request handling at controller)
+
+participant Client
+participant SpringBoot
+participant "infoDTO : NewUserStoryInfoDTO" as infoDTO
+participant ": UserStoryController" as controller
+participant ": UserStoryMapper" as mapper
+participant "newUserStoryDTO : NewUserStoryDTO" as newUserStoryDTO
+participant " : UserStoryService" as service
+participant "response : ResponseEntity<>" as response
+
+Client -> SpringBoot : POST /userstories {"project": "code",\n                         "usNumber": "number",\n                         "actor":"actor", "text":"text",\n                         "acceptanceCriteria":"criteria",\n                         "priority":"priority"}
+activate Client
+
+activate SpringBoot
+SpringBoot --> infoDTO ** : create(project, usNumber,\n         actor, text,\n         acceptanceCriteria,\n         priority)
+SpringBoot -> controller : createUserStory(infoDTO)
+deactivate
+
+activate controller
+controller --> mapper : create(infoDTO)
+
+activate mapper
+mapper --> newUserStoryDTO : create
+mapper --> controller : newUserStoryDTO
+deactivate
+
+controller -> service : createUserStory(newUserStoryDTO)
+deactivate
+
+activate service
+ref over service : US017_CreateUserStorySD2
+
+service --> controller : savedUserStory
+deactivate
+
+controller --> response ** : create(savedUserStory, HttpStatus.CREATED)
+controller --> Client : response
+@enduml

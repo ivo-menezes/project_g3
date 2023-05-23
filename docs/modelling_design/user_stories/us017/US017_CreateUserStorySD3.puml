@@ -1,0 +1,21 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(creation of value objects)
+
+participant ": UserStoryService" as service
+
+service --> projectCodeVO **: create(projectCode)
+service --> "userStoryNumber : UserStoryNumber" ** : create(userStoryNumber)
+service --> "userStoryID : UserStoryID" ** : create(userStoryNumber, projectCodeVO)
+service --> "actor : UserStoryActor" ** :create(actor)
+service --> "description : Description" ** :create(description)
+service --> "acceptanceCriteria : UserStoryAcceptanceCriteria" ** :create(acceptanceCriteria)
+service --> "priority : UserStoryPriority" ** : create(priority)
+@enduml
