@@ -10,15 +10,17 @@ participant "sprintDTO : SprintDTO" as DTO
 participant ": CreateSprintController" as Controller
 participant ": SprintService" as Services
 participant "projectCodeVO : ProjectCode" as ProjecCode
-participant ": ProjectRepository" as Repository
+participant ": ProjectRepository" as ProjectRepository
 participant "sprintNumberVO : SprintNumber" as SprintNumber
 participant "sprintID : SprintID" as SprintID
 participant "timePeriod : TimePeriod" as TimePeriod
 participant "factorySprint :FactorySprintImpl" as Factory
 participant "sprint : Sprint" as Sprint
 participant "sprint : Sprint" as Sprint
-participant ": SprintRepository" as SprintRepository
-participant "sprintData : HashMap" as HashMap
+participant ": SprintRepository" as Repository
+participant ": AssemblerData" as Assembler
+participant "sprintRepositoryJPA: ISprintRepositoryJPA" as RepositoryJPA
+
 
 
 activate User #FFBBBB
@@ -33,10 +35,10 @@ Controller -> Services: createSprint(sprintDTO)
 
 activate Services #FFBBBB
 Services --> ProjecCode ** : create(sprintDTO.projectCode)
-Services -> Repository: containsID(projectCodeVO)
+Services -> ProjectRepository: containsID(projectCodeVO)
 
-activate Repository #FFBBBB
-Repository -->Services: true
+activate ProjectRepository #FFBBBB
+ProjectRepository -->Services: true
 deactivate
 
 Services --> SprintNumber ** : create(sprintDTO.sprintNumber)
@@ -49,18 +51,24 @@ Factory --> Sprint ** : create (sprintID, \n timePeriod)
 Factory --> Services : sprint
 deactivate
 
-Services -> SprintRepository :save(sprint)
+Services -> Repository :save(sprint)
 
-activate SprintRepository #FFBBBB
-SprintRepository -> HashMap : contains(sprintID)
+activate Repository #FFBBBB
+Repository -> Assembler : toData(sprint)
+activate Assembler #FFBBBB
+Assembler --> Repository: sprintJPA
+deactivate Assembler
 
-activate HashMap #FFBBBB
-HashMap --> SprintRepository : false
-SprintRepository -> HashMap : put(sprintID, sprint)
-HashMap --> SprintRepository: null
-deactivate HashMap #FFBBBB
+Repository -> RepositoryJPA : save(sprintJPA)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository : savedSprintJPA
+deactivate RepositoryJPA
+Repository -> Assembler : toDomain(savedSprintJPA)
+activate Assembler #FFBBBB
+Assembler --> Repository : savedSprint
+deactivate Assembler
 
-SprintRepository --> Services: true
+Repository --> Services: true
 deactivate
 
 Services --> Controller: true
