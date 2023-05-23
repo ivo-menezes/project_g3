@@ -1,12 +1,13 @@
 package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
+import org.switch2022.project.ddd.ValueObject;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Email implements DomainId {
+public class Email implements ValueObject {
 
     private final String email;
 
