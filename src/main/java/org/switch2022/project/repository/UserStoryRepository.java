@@ -1,67 +1,92 @@
 package org.switch2022.project.repository;
 
+import org.switch2022.project.datamodel.JPA.UserStoryJpa;
+import org.switch2022.project.datamodel.JPA.assemblers.UserStoryDomainDataAssembler;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.repository.JPA.UserStoryJpaRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @org.springframework.stereotype.Repository
 public class UserStoryRepository implements Repository<UserStoryID, UserStoryDDD> {
 
-    /**
-     * Create DATA hashmap to link UserStoryID and UserStory.
-     */
-    private static final Map<UserStoryID, UserStoryDDD> DATA = new HashMap<>();
+    private final UserStoryJpaRepository userStoryJpaRepository;
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public boolean containsID(UserStoryID id) {
-        return DATA.containsKey(id);
+    private final UserStoryDomainDataAssembler userStoryDomainDataAssembler;
+
+
+    public UserStoryRepository(UserStoryJpaRepository userStoryJpaRepository, UserStoryDomainDataAssembler userStoryDomainDataAssembler) {
+        this.userStoryJpaRepository = userStoryJpaRepository;
+        this.userStoryDomainDataAssembler = userStoryDomainDataAssembler;
     }
 
     /**
-     * Saves userStory if userStoryID is not yet in the DATA hashmap.
-     * @param userStory
+     * Checks if a UserStoryID exists in the repository.
+     *
+     * @param id the ID of the user story
+     * @return true if user story with given ID exists, false otherwise
+     */
+    public boolean containsID(UserStoryID id) {
+        return userStoryJpaRepository.existsById(id);
+    }
+
+    /**
+     * Saves a UserStory if one with the same UserStoryID does not exist in the repository.
+     *
+     * @param userStory to be saved
      * @return true if operation is successful, otherwise return false.
      */
     public boolean save(UserStoryDDD userStory) {
         UserStoryID userStoryID = userStory.identity();
 
         if (!containsID(userStoryID)) {
-            DATA.put(userStoryID, userStory);
-            return true;
+            UserStoryJpa userStoryJpa = userStoryDomainDataAssembler.toData(userStory);
+            UserStoryJpa savedUserStoryJpa = userStoryJpaRepository.save(userStoryJpa);
+            UserStoryDDD savedUserStory = userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
+            return true; // TODO: should return savedUserStory
         }
-       return false;
+        return false;
     }
 
     /**
-     * Creats an iterable with all values contained in the DATA hashmap.
-     * @return
+     * Creates an iterable with all user stories contained in the repository.
+     *
+     * @return Iterable of all UserStory in the repository
      */
     public Iterable<UserStoryDDD> findAll() {
-        return DATA.values();
+        Iterable<UserStoryJpa> allUserStoriesJpa = userStoryJpaRepository.findAll();
+
+        List<UserStoryDDD> allUserStories = new ArrayList<>();
+        for (UserStoryJpa userStoryJpa : allUserStoriesJpa) {
+            allUserStories.add(userStoryDomainDataAssembler.toDomain(userStoryJpa));
+        }
+
+        return allUserStories;
     }
 
     /**
-     * Returns userStory if UserStoryID specified by user is contained in the DATA
-     * hashmap. Else, return optional.
-     * @param id
-     * @return userStory or optional.
+     * Returns UserStory with specified UserStoryID if it is contained in the repository.
+     *
+     * @param id the UserStoryID to be found
+     * @return Optional with UserStory if found, empty otherwise
      */
     public Optional<UserStoryDDD> getByID(UserStoryID id) {
-        if( !containsID(id) )
+        Optional<UserStoryJpa> userStoryJpaOptional = userStoryJpaRepository.findById(id);
+
+        if (userStoryJpaOptional.isEmpty()) {
             return Optional.empty();
-        else
-            return Optional.of( DATA.get(id) );
+        } else {
+            return Optional.of(userStoryDomainDataAssembler.toDomain(userStoryJpaOptional.get()));
+        }
     }
 
     @Override
     public void clearRepository() {
-        DATA.clear();
+        userStoryJpaRepository.deleteAll();
     }
 
 }
