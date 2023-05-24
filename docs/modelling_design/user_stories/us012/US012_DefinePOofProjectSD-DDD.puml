@@ -4,11 +4,12 @@ hide footbox
 autonumber
 title "US012 -As Manager, I want to define the PO of a project"
 
-Actor Manager
+participant Manager
 participant ": AssociateResourceUI" as UI
 participant "resourceDTO:ResourceDTO" as dto
 participant ": ResourceController" as Controller
 participant ": ResourceService" as Services
+participant ": factoryResource : FactoryResourceImpl" as Factory
 participant ": AccountRepository" as AccountRepository
 participant ": AccountRepositoryJPA" as AccountRepositoryJPA
 participant "account : Account" as account
@@ -16,7 +17,6 @@ participant ": ProjectRepository" as ProjectRepository
 participant ": ProjectRepositoryJPA" as ProjectRepositoryJPA
 participant ": ResourceRepository" as ResourceRepository
 participant ": ResourceRepositoryJPA" as ResourceRepositoryJPA
-participant ": factoryResource : FactoryResourceImpl" as Factory
 participant "resource : Resource" as resource
 participant ": AssemblerData" as AssemblerData
 
@@ -28,17 +28,19 @@ UI --> dto ** : create(email, role, projectCode,startDate,\n endDate, percentAll
 UI -> Controller : createResource(resourceDTO)
 activate Controller #FFBBBB
 Controller -> Services : createResource(resourceDTO)
-
 activate Services #FFBBBB
+Services -> Factory : createResource(resourceDTO)
+activate Factory #FFBBBB
 
-Services --> "resourceID : ResourceID" **: createID()
-Services --> "email : Email" **: create(resourceDTO.email)
-Services --> "role : Role" **: create(resourceDTO.role)
-Services --> "projectCode : ProjectCode" **: create(resourceDTO.projectCode)
-Services --> "timePeriod : TimePeriod" **: create(resourceDTO.timePeriod)
-Services --> "percentageAllocation : PercentageAllocation" **: create(resourceDTO.percentageAllocation)
-Services --> "costPerHour : CostPerHour" **: create(resourceDTO.costPerHour)
-
+Factory --> "resourceID : ResourceID" **: createID()
+Factory --> "email : Email" **: create(resourceDTO.email)
+Factory --> "role : Role" **: create(resourceDTO.role)
+Factory --> "projectCode : ProjectCode" **: create(resourceDTO.projectCode)
+Factory --> "timePeriod : TimePeriod" **: create(resourceDTO.timePeriod)
+Factory --> "percentageAllocation : PercentageAllocation" **: create(resourceDTO.percentageAllocation)
+Factory --> "costPerHour : CostPerHour" **: create(resourceDTO.costPerHour)
+Factory --> Services : resource
+deactivate Factory
 
 Services -> AccountRepository : getByID(email)
 activate AccountRepository #FFBBBB
@@ -80,6 +82,7 @@ Services -> ResourceRepository : save(resource)
 activate ResourceRepository #FFBBBB
 ResourceRepository -> ResourceRepositoryJPA : toData(resource)
 activate ResourceRepositoryJPA #FFBBBB
+ResourceRepositoryJPA --> "resourceJPA : ResourceJPA" **: create
 ResourceRepositoryJPA --> ResourceRepository : resourceJPA
 deactivate ResourceRepositoryJPA
 ResourceRepository -> AssemblerData : save(resourceJPA)
@@ -88,6 +91,7 @@ AssemblerData --> ResourceRepository : savedResourceJPA
 deactivate AssemblerData
 ResourceRepository -> ResourceRepositoryJPA: toDomain(savedResourceJPA)
 activate ResourceRepositoryJPA #FFBBBB
+ResourceRepositoryJPA --> "savedResource" **: create
 ResourceRepositoryJPA --> ResourceRepository : savedResource
 deactivate ResourceRepositoryJPA
 ResourceRepository -> Services : true
