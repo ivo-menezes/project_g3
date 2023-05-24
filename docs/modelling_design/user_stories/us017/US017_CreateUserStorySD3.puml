@@ -7,15 +7,21 @@ skinparam sequence{
 LifeLineBackgroundColor #FFBBBB
 }
 
-title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(creation of value objects)
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(creation of user story)
 
-participant ": UserStoryService" as service
+participant ": IUserStoryFactory" as factory
 
-service --> projectCodeVO **: create(projectCode)
-service --> "userStoryNumber : UserStoryNumber" ** : create(userStoryNumber)
-service --> "userStoryID : UserStoryID" ** : create(userStoryNumber, projectCodeVO)
-service --> "actor : UserStoryActor" ** :create(actor)
-service --> "description : Description" ** :create(description)
-service --> "acceptanceCriteria : UserStoryAcceptanceCriteria" ** :create(acceptanceCriteria)
-service --> "priority : UserStoryPriority" ** : create(priority)
+-> factory : createUserStory(newUserStoryDTO)
+activate factory
+factory --> "projectCodeVO : projectCode" **: create(projectCode)
+factory --> "userStoryNumber : UserStoryNumber" ** : create(userStoryNumber)
+factory --> "userStoryID : UserStoryID" ** : create(userStoryNumber, projectCodeVO)
+factory --> "actor : UserStoryActor" ** :create(actor)
+factory --> "description : Description" ** :create(description)
+factory --> "acceptanceCriteria : UserStoryAcceptanceCriteria" ** :create(acceptanceCriteria)
+factory --> "priority : UserStoryPriority" ** : create(priority)
+
+factory --> userStory ** :create (userStoryID,\n actor,\n description, \n acceptanceCriteria)
+
+[<-- factory: userStory
 @enduml

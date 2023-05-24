@@ -11,26 +11,31 @@ title US017 - As Product Owner, I want to create a user story and add it to the 
 
 
 participant ": UserStoryService" as service
+participant " : IUserStoryFactory" as factory
+participant "userStory : UserStory" as userStory
 participant ": ProjectRepository" as projectRepository
-participant "factoryUserStory : IUserStoryFactory" as factory
-participant "userStory :UserStory" as userStory
-participant "userStoryRepository :UserStoryRepository" as usRepository
-participant "userStoryJpaRepository : UserStoryJpaRepository" as jpa
-participant "assembler : UserStoryDataDomainAssembler" as assembler
+participant " :UserStoryRepository" as usRepository
+participant " : UserStoryJpaRepository" as jpa
+participant " : UserStoryDataDomainAssembler" as assembler
 participant "userStoryJpa : UserStoryJpa" as userStoryJpa
-'participant "savedUserStoryJpa : UserStoryJpa" as savedUserStoryJpa
 participant "savedUserStory : UserStory" as savedUserStory
 participant "project : Project" as project
 participant "productBacklog : ProductBacklog" as backlog
 participant "openUserStories : List<UserStoryID>" as uslist
 
-
-ref over service : US017_CreateUserStorySD1\n(request handling at Controller)
-
 activate service
 -> service : createUserStory(newUserStoryDTO)
-ref over service : US017_CreateUserStorySD3\n(creation of value objects)
 
+service -> factory : createUserStory(newUserStoryDTO)
+activate factory
+ref over factory: US017_CreateUserStorySD3\n(creation of user story)
+factory --> service :userStory
+deactivate
+
+service -> userStory : getProjectCode();
+activate userStory
+userStory --> service : projectCode
+deactivate
 
 service -> projectRepository: getByID(projectCode)
 
@@ -41,12 +46,6 @@ deactivate
 
 
 
-service -> factory:createUserStory\n (userStoryID, actor, description, acceptanceCriteria)
-
-activate factory
-factory --> userStory ** :create (userStoryID,\n userStoryActor,\n description, \n userStoryAcceptanceCriteria)
-factory --> service :userStory
-deactivate
 
 service -> usRepository :save(userStory)
 
