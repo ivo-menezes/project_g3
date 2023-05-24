@@ -15,7 +15,6 @@ participant ": ProjectRepository" as ProjectRepository
 participant ": ProjectRepositoryJPA" as ProjectRepositoryJPA
 participant ": ResourceRepository" as ResourceRepository
 participant ": ResourceRepositoryJPA" as ResourceRepositoryJPA
-participant "DATA : HashMap" as hashmap
 participant ": factoryResource : FactoryResourceImpl" as Factory
 participant "resource : Resource" as resource
 participant ": AssemblerData" as AssemblerData
@@ -42,14 +41,7 @@ Services --> "costPerHour : CostPerHour" **: create(resourceDTO.costPerHour)
 
 Services -> AccountRepository : getByID(email)
 activate AccountRepository #FFBBBB
-AccountRepository -> AccountRepositoryJPA : getByID(email)
-activate AccountRepositoryJPA #FFBBBB
-AccountRepositoryJPA --> AccountRepository : accountJPA
-deactivate AccountRepositoryJPA
-AccountRepository -> AssemblerData :toDomain(accountJPA)
-activate AssemblerData #FFBBBB
-AssemblerData --> AccountRepository : Account
-deactivate AssemblerData
+
 AccountRepository --> Services : Account
 deactivate AccountRepository
 
@@ -61,39 +53,16 @@ deactivate account
 
 Services -> ProjectRepository : Contains(projectCode)
 activate ProjectRepository #FFBBBB
-ProjectRepository -> AssemblerData : toData(projectCode)
-activate AssemblerData #FFBBBB
-AssemblerData --> ProjectRepository : projectCodeJPA
-deactivate AssemblerData
-ProjectRepository -> ProjectRepositoryJPA : contains(projectCodeJPA)
-activate ProjectRepositoryJPA #FFBBBB
-ProjectRepositoryJPA --> ProjectRepository : true
-deactivate ProjectRepositoryJPA
 ProjectRepository --> Services : true
 deactivate ProjectRepository
 
 Services -> ResourceRepository: existsActiveResourceWithAccount(email, projectCode, timePeriod)
 activate ResourceRepository #FFBBBB
-ResourceRepository -> AssemblerData : toData(email, projectCode, timePeriod)
-activate AssemblerData #FFBBBB
-AssemblerData --> ResourceRepository : resourceJPA
-deactivate AssemblerData
-ResourceRepository -> ResourceRepositoryJPA : contains(resourceJPA)
-activate ResourceRepositoryJPA #FFBBBB
-ResourceRepositoryJPA --> ResourceRepository : false
-deactivate ResourceRepositoryJPA
 ResourceRepository --> Services: false
 deactivate ResourceRepository
 
 Services -> ResourceRepository: isRoleOccupied(projectCode, role, timePeriod)
 activate ResourceRepository #FFBBBB
-ResourceRepository -> AssemblerData : toData(role)
-activate AssemblerData #FFBBBB
-AssemblerData --> ResourceRepository : roleJPA
-deactivate AssemblerData
-ResourceRepository -> ResourceRepositoryJPA : contains(roleJPA)
-activate ResourceRepositoryJPA #FFBBBB
-ResourceRepositoryJPA --> ResourceRepository : false
 deactivate ResourceRepositoryJPA
 
 ResourceRepository --> Services: false
