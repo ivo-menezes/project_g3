@@ -2,7 +2,12 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
-public class Description implements ValueObject {
+import javax.persistence.Embeddable;
+import java.io.Serializable;
+import java.util.Objects;
+
+@Embeddable
+public class Description implements ValueObject, Serializable {
 
     private String description;
 
@@ -31,5 +36,10 @@ public class Description implements ValueObject {
     @Override
     public String toString() {
         return this.description;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description);
     }
 }

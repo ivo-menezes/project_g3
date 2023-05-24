@@ -2,7 +2,12 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
-public class ProjectCode implements DomainId {
+import javax.persistence.Embeddable;
+import java.io.Serializable;
+import java.util.Objects;
+
+@Embeddable
+public class ProjectCode implements DomainId, Serializable {
 
     private String projectCode;
 
@@ -31,5 +36,10 @@ public class ProjectCode implements DomainId {
     @Override
     public String toString() {
         return projectCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode);
     }
 }

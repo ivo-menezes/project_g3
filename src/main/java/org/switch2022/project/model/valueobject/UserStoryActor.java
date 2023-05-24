@@ -2,7 +2,12 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
-public class UserStoryActor implements ValueObject {
+import javax.persistence.Embeddable;
+import java.io.Serializable;
+import java.util.Objects;
+
+@Embeddable
+public class UserStoryActor implements ValueObject, Serializable {
 
     private String userStoryActor;
 
@@ -30,5 +35,10 @@ public class UserStoryActor implements ValueObject {
     @Override
     public String toString() {
         return this.userStoryActor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userStoryActor);
     }
 }
