@@ -6,13 +6,9 @@ import org.switch2022.project.ddd.ValueObject;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AccountID implements ValueObject, DomainId {
+public class AccountID implements DomainId {
 
-    final UUID accountID;
-
-    public AccountID(UUID accountID) {
-        this.accountID = accountID;
-    }
+    final UUID accountID = UUID.randomUUID();
 
     @Override
     public boolean equals(Object o) {
