@@ -2,9 +2,10 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class SprintID implements DomainId {
+public class SprintID implements DomainId, Serializable {
 
     private ProjectCode projectCode;
     private SprintNumber sprintNumber;
