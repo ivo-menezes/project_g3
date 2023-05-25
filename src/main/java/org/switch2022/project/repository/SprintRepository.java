@@ -53,7 +53,7 @@ public class SprintRepository implements Repository<SprintID, SprintDDD> {
      * This method will return a sprint if there is one in the hashmap
      * with the SprintID passed by the user. Otherwise, it will return optional
      * @param id of the SprintID Object Type
-     * @return sprint or optional
+     * @return sprint optional object or empty optional object
      */
     public Optional<SprintDDD> getByID(SprintID id) {
         if (!containsID(id)) {
@@ -62,6 +62,9 @@ public class SprintRepository implements Repository<SprintID, SprintDDD> {
             return Optional.of(sprintData.get(id));
         }
     }
+    /**
+     * Used to clear the memory store
+     */
     public void clearRepository(){
         sprintData.clear();
     }
