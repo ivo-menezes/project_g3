@@ -18,7 +18,7 @@ participant "factorySprint :FactorySprintImpl" as Factory
 participant "sprint : Sprint" as Sprint
 participant "sprint : Sprint" as Sprint
 participant ": SprintRepository" as Repository
-participant ": AssemblerData" as Assembler
+participant ": SprintAssemblerData" as Assembler
 participant "sprintRepositoryJPA: ISprintRepositoryJPA" as RepositoryJPA
 
 
