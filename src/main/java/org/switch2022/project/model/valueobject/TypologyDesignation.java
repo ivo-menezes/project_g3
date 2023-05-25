@@ -2,16 +2,17 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
-import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class TypologyDesignation implements DomainId {
 
-    private String designation;
+public class TypologyDesignation implements DomainId, Serializable {
+
+    private final String designation;
 
     /**
      * Constructor for TypologyDesignation with specified designation
+     *
      * @param designation to be set
      */
     public TypologyDesignation(String designation) {
@@ -23,22 +24,17 @@ public class TypologyDesignation implements DomainId {
         }
     }
 
-    /**
-     * Default constructor used by the persistence framework
-     */
-    protected TypologyDesignation() {
-    }
-
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-
-        if (object instanceof TypologyDesignation) {
-            TypologyDesignation designation = (TypologyDesignation) object;
-            if (this.designation.equals(designation.designation))
-                return true;
+        if (this == object) {
+            return true;
         }
-        return false;
+
+        if (!(object instanceof TypologyDesignation)) {
+            return false;
+        }
+        TypologyDesignation that = (TypologyDesignation) object;
+        return designation.equals(that.designation);
     }
 
     @Override
@@ -48,7 +44,7 @@ public class TypologyDesignation implements DomainId {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.designation;
     }
 }

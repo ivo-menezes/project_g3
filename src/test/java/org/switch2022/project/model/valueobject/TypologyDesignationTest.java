@@ -23,19 +23,6 @@ class TypologyDesignationTest {
         assertInstanceOf(TypologyDesignation.class, designation);
     }
 
-    @Test
-    @DisplayName("Ensure typology designation is correctly created by default constructor")
-    void ensureTypologyDesignationIsCreatedByDefaultConstructor() {
-        // Arrange
-        TypologyDesignation designation;
-
-        // Act
-        designation = new TypologyDesignation();
-
-        // Assert
-        assertInstanceOf(TypologyDesignation.class, designation);
-    }
-
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n"})
