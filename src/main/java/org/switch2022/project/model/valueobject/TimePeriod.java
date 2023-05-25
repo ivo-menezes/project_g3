@@ -3,15 +3,22 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class TimePeriod implements ValueObject {
+public class TimePeriod implements ValueObject, Serializable {
 
     final private Date startDate;
 
     final private Date endDate;
+    public Date getEndDate() {
+        return endDate;
+    }
 
+       public Date getStartDate() {
+        return startDate;
+    }
 
     public TimePeriod(Date startDate, Date endDate) {
         if (startDate == null) {
