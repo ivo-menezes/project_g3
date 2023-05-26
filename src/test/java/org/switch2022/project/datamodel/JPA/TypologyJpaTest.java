@@ -64,5 +64,97 @@ class TypologyJpaTest {
         assertEquals(expectedDesignation, resultDesignation);
     }
 
+
+    @Test
+    @DisplayName("Ensure object does not equal null")
+    void ensureObjectNotEqualNull(){
+        //Arrange
+        String typologyDesignation = "Fixed cost";
+        TypologyJpa typologyJpa = new TypologyJpa(typologyDesignation);
+
+        //Act
+        boolean result = typologyJpa.equals(null);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object equals same object")
+    void objectEqualsSameObject(){
+        //Arrange
+        String typologyDesignation = "Fixed cost";
+        TypologyJpa typologyJpa = new TypologyJpa(typologyDesignation);
+
+        //Act
+        boolean result = typologyJpa.equals(typologyJpa);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object equals object with same TypologyDesignation")
+    void objectEqualsSameTypologyDesignation(){
+        //Arrange
+        String typologyDesignation = "Fixed cost";
+        TypologyJpa typologyJpa1 = new TypologyJpa(typologyDesignation);
+        TypologyJpa typologyJpa2 = new TypologyJpa(typologyDesignation);
+
+        //Act
+        boolean result = typologyJpa1.equals(typologyJpa2);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object does not equal object with different TypologyDesignation")
+    void objectNotEqualToObjectWithDifferentTypologyDesignation(){
+        //Arrange
+        String typologyDesignation1 = "Fixed cost";
+        String typologyDesignation2 = "Time and materials";
+        TypologyJpa typologyJpa1 = new TypologyJpa(typologyDesignation1);
+        TypologyJpa typologyJpa2 = new TypologyJpa(typologyDesignation2);
+
+        //Act
+        boolean result = typologyJpa1.equals(typologyJpa2);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure equal objects have same hashcode")
+    void ensureEqualObjectsHaveSameHashcode(){
+        //Arrange
+        String typologyDesignation = "Fixed cost";
+        TypologyJpa typologyJpa1 = new TypologyJpa(typologyDesignation);
+        TypologyJpa typologyJpa2 = new TypologyJpa(typologyDesignation);
+
+        //Act
+        int hashCode1 = typologyJpa1.hashCode();
+        int hashCode2 = typologyJpa2.hashCode();
+
+        //Assert
+        assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode(){
+        //Arrange
+        String typologyDesignation1 = "Fixed cost";
+        String typologyDesignation2 = "Time and materials";
+        TypologyJpa typologyJpa1 = new TypologyJpa(typologyDesignation1);
+        TypologyJpa typologyJpa2 = new TypologyJpa(typologyDesignation2);
+
+        //Act
+        int hashCode1 = typologyJpa1.hashCode();
+        int hashCode2 = typologyJpa2.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
 }
 
