@@ -1,7 +1,6 @@
 package org.switch2022.project.datamodel.JPA;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name="typologies")
@@ -37,16 +36,4 @@ public class TypologyJpa {
         return typologyDesignation;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TypologyJpa that = (TypologyJpa) o;
-        return typologyDesignation.equals(that.typologyDesignation);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(typologyDesignation);
-    }
 }

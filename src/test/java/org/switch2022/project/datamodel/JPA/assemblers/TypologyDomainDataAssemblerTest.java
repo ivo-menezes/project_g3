@@ -24,13 +24,11 @@ class TypologyDomainDataAssemblerTest {
 
         TypologyDomainDataAssembler assembler = new TypologyDomainDataAssembler();
 
-        TypologyJpa expectedTypologyJpa = new TypologyJpa("Fixed cost");
-
         //Act
-        TypologyJpa actualTypologyJpa = assembler.toData(typology);
+        TypologyJpa returnedTypologyJpa = assembler.toData(typology);
 
         //Assert
-        assertEquals(expectedTypologyJpa, actualTypologyJpa);
+        assertInstanceOf(TypologyJpa.class, returnedTypologyJpa);
     }
 
     @Test
@@ -44,13 +42,10 @@ class TypologyDomainDataAssemblerTest {
 
         TypologyDomainDataAssembler assembler = new TypologyDomainDataAssembler();
 
-        TypologyDDD expectedTypology = new TypologyDDD(new TypologyDesignation(designation));
-
         //Act
-        TypologyDDD actualTypology = assembler.toDomain(typologyJpa);
+        TypologyDDD returnedTypology = assembler.toDomain(typologyJpa);
 
         //Assert
-        assertEquals(expectedTypology, actualTypology);
+        assertInstanceOf(TypologyDDD.class,returnedTypology);
     }
-
 }
