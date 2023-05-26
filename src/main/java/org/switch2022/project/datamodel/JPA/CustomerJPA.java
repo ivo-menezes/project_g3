@@ -3,7 +3,7 @@ package org.switch2022.project.datamodel.JPA;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Costumer")
+@Table(name = "Customer")
 public class CustomerJPA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

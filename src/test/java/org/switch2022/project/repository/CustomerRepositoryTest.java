@@ -63,7 +63,7 @@ class CustomerRepositoryTest {
         //Assert
         assertEquals(customer,result);
     }
-    @DisplayName("Ensure that the same customer cannot saved - throws exception") //confirmar
+    @DisplayName("Ensure that the same customer cannot saved - throws exception")
     @Test
     void saveTwoCustomerFails() {
         //Arrange
