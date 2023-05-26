@@ -44,13 +44,12 @@ class TypologyDDDTest {
         //Arrange
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
         TypologyDDD typology = new TypologyDDD(typologyDesignation);
-        TypologyDesignation expectedId = typologyDesignation;
 
         //Act
         TypologyDesignation resultId = typology.identity();
 
         //Assert
-        assertEquals(expectedId, resultId);
+        assertEquals(typologyDesignation, resultId);
     }
 
     @Test
@@ -59,13 +58,12 @@ class TypologyDDDTest {
         //Arrange
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
         TypologyDDD typology = new TypologyDDD(typologyDesignation);
-        TypologyDesignation expectedDesignation = typologyDesignation;
 
         //Act
-        TypologyDesignation resultDesignation = typology.identity();
+        TypologyDesignation resultDesignation = typology.getTypologyDesignation();
 
         //Assert
-        assertEquals(expectedDesignation, resultDesignation);
+        assertEquals(typologyDesignation, resultDesignation);
     }
 
     @Test
