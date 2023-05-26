@@ -3,6 +3,7 @@ package org.switch2022.project.model.customer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.valueobject.CustomerDesignation;
+import org.switch2022.project.model.valueobject.CustomerID;
 import org.switch2022.project.model.valueobject.CustomerNIF;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,13 +15,15 @@ class CostumerFactoryImplTest {
     @Test
     void createCustomerSucceeds() {
         //Arrange
+        CustomerID customerIDDouble = mock(CustomerID.class);
         CustomerNIF customerNIFDouble = mock(CustomerNIF.class);
         CustomerDesignation customerDesignationDouble = mock(CustomerDesignation.class);
 
-        CostumerFactoryImpl factory = new CostumerFactoryImpl();
+
+        CustomerFactoryImpl factory = new CustomerFactoryImpl();
 
         //Act
-        CustomerDDD customer = factory.createCustomer(customerNIFDouble,customerDesignationDouble);
+        CustomerDDD customer = factory.createCustomer(customerIDDouble,customerNIFDouble,customerDesignationDouble);
 
         // assert
         assertInstanceOf(CustomerDDD.class, customer);
@@ -30,16 +33,17 @@ class CostumerFactoryImplTest {
     @Test
     void createCustomerNullCustomerNIFThrowsException() {
         //Arrange
+        CustomerID customerIDDouble = mock(CustomerID.class);
         CustomerNIF customerNIF = null;
         CustomerDesignation customerDesignationDouble = mock(CustomerDesignation.class);
 
-        CostumerFactoryImpl factory = new CostumerFactoryImpl();
+        CustomerFactoryImpl factory = new CustomerFactoryImpl();
 
         String expectedMessage = "customerNIF, cannot be null";
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createCustomer(customerNIF,customerDesignationDouble);
+            factory.createCustomer(customerIDDouble,customerNIF,customerDesignationDouble);
         });
 
         String resultMessage = result.getMessage();
@@ -52,16 +56,17 @@ class CostumerFactoryImplTest {
     @Test
     void createCustomerNullCustomerDesignationThrowsException() {
         //Arrange
+        CustomerID customerIDDouble = mock(CustomerID.class);
         CustomerNIF customerNIFDouble = mock(CustomerNIF.class);
         CustomerDesignation customerDesignationDouble = null;
 
-        CostumerFactoryImpl factory = new CostumerFactoryImpl();
+        CustomerFactoryImpl factory = new CustomerFactoryImpl();
 
         String expectedMessage = "customerDesignation cannot be null";
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createCustomer(customerNIFDouble,customerDesignationDouble);
+            factory.createCustomer(customerIDDouble,customerNIFDouble,customerDesignationDouble);
         });
 
         String resultMessage = result.getMessage();

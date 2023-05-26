@@ -1,12 +1,11 @@
 package org.switch2022.project.model.valueobject;
-
-import org.switch2022.project.ddd.DomainId;
+import org.switch2022.project.ddd.ValueObject;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class CustomerNIF implements DomainId {
+public class CustomerNIF implements ValueObject {
 
     private String customerNIF;
 

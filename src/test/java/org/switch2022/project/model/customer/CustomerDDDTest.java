@@ -17,7 +17,7 @@ class CustomerDDDTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    new CustomerDDD(null,
+                    new CustomerDDD(null,null,
                             customerDesignation);
                 }
         );
@@ -38,7 +38,7 @@ class CustomerDDDTest {
 
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class, () -> {
-                        new CustomerDDD(customerNIF,
+                        new CustomerDDD(null,customerNIF,
                                 null);
                     }
             );
@@ -54,11 +54,12 @@ class CustomerDDDTest {
     @DisplayName("Test for a successful creation of CustomerDDD")
     public void checkIfTheCostumerDDDIsSuccessfulCreated(){
         //Arrange
+        CustomerID customerIDDouble = mock(CustomerID.class);
         CustomerNIF customerNIF = mock(CustomerNIF.class);
         CustomerDesignation customerDesignation = mock(CustomerDesignation.class);
 
         //Act
-        CustomerDDD customer = new CustomerDDD(customerNIF,customerDesignation);
+        CustomerDDD customer = new CustomerDDD(customerIDDouble,customerNIF,customerDesignation);
 
         //Assert
         assertInstanceOf(CustomerDDD.class, customer);
