@@ -2,12 +2,9 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class UserStoryAcceptanceCriteria implements ValueObject, Serializable {
+public class UserStoryAcceptanceCriteria implements ValueObject {
 
     private String acceptanceCriteria;
 

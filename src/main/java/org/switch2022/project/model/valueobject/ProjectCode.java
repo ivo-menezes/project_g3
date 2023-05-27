@@ -2,12 +2,9 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class ProjectCode implements DomainId, Serializable {
+public class ProjectCode implements DomainId {
 
     private String projectCode;
 

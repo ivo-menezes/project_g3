@@ -1,5 +1,6 @@
 package org.switch2022.project.model.valueobject;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -124,6 +125,28 @@ class ProjectCodeTest {
         ProjectCode projectCode = new ProjectCode(code1);
 
         assertEquals(projectCode.toString(), code1);
+    }
+
+    @DisplayName("similar projectCode have same hash code")
+    @Test
+    void projectCodeHasSameHashCode() {
+        // Arrange
+        ProjectCode aProjectCode = new ProjectCode("XPTO");
+        ProjectCode anotherProjectCode = new ProjectCode("XPTO");
+
+        // Act & Assert
+        assertEquals(aProjectCode.hashCode(), anotherProjectCode.hashCode());
+    }
+
+    @DisplayName("different projectCode have different hash code")
+    @Test
+    void projectCodeHasDifferentHashCode() {
+        // Arrange
+        ProjectCode aProjectCode = new ProjectCode("XPTO");
+        ProjectCode anotherProjectCode = new ProjectCode("XYZ");
+
+        // Act & Assert
+        assertNotEquals(aProjectCode.hashCode(), anotherProjectCode.hashCode());
     }
 
 }

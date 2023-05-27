@@ -2,17 +2,11 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.DomainId;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
-public class UserStoryID implements DomainId, Serializable {
+public class UserStoryID implements DomainId {
 
-    @Embedded
     private UserStoryNumber userStoryNumber;
-    @Embedded
     private ProjectCode projectCode;
 
     public UserStoryID (UserStoryNumber userStoryNumber, ProjectCode projectCode) {
@@ -46,5 +40,13 @@ public class UserStoryID implements DomainId, Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(userStoryNumber, projectCode);
+    }
+
+    public UserStoryNumber getUserStoryNumber() {
+        return userStoryNumber;
+    }
+
+    public ProjectCode getProjectCode() {
+        return projectCode;
     }
 }

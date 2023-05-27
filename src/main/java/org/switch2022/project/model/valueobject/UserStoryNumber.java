@@ -2,8 +2,6 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -11,8 +9,7 @@ import java.util.Objects;
  * It is NOT an ID because to uniquely identify a UserStory
  * we also need the ProjectCode of the Project it belongs to (see UserStoryID).
  */
-@Embeddable
-public class UserStoryNumber implements ValueObject, Serializable {
+public class UserStoryNumber implements ValueObject {
 
     private final String userStoryNumber;
 
@@ -39,5 +36,10 @@ public class UserStoryNumber implements ValueObject, Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(userStoryNumber);
+    }
+
+    @Override
+    public String toString() {
+        return userStoryNumber;
     }
 }

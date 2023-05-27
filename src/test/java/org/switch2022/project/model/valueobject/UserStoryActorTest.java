@@ -1,5 +1,6 @@
 package org.switch2022.project.model.valueobject;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -102,5 +103,26 @@ public class UserStoryActorTest {
         assertEquals(userStoryActor.toString(), userStoryActor1);
     }
 
+    @DisplayName("similar UserStoryActor have same hash code")
+    @Test
+    void userStoryActorHasSameHashCode() {
+        // Arrange
+        UserStoryActor aUserStoryActor = new UserStoryActor("Administrator");
+        UserStoryActor anotherUserStoryActor = new UserStoryActor("Administrator");
+
+        // Act & Assert
+        assertEquals(aUserStoryActor.hashCode(), anotherUserStoryActor.hashCode());
+    }
+
+    @DisplayName("different UserStoryActor have different hash code")
+    @Test
+    void userStoryActorHasDifferentHashCode() {
+        // Arrange
+        UserStoryActor aUserStoryActor = new UserStoryActor("Administrator");
+        UserStoryActor anotherUserStoryActor = new UserStoryActor("Manager");
+
+        // Act & Assert
+        assertNotEquals(aUserStoryActor.hashCode(), anotherUserStoryActor.hashCode());
+    }
 
 }

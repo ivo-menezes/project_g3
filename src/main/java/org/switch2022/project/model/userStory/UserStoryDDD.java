@@ -28,6 +28,12 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
      */
     public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
 
+        this(userStoryID, userStoryActor, userStoryDescription, userStoryAcceptanceCriteria, UserStoryStatus.TO_DO);
+
+    }
+
+    public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria, UserStoryStatus status) {
+
         if (userStoryID == null) {
             throw new IllegalArgumentException("User Story ID must not be null");
         }
@@ -48,7 +54,7 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
         this.userStoryActor = userStoryActor;
         this.userStoryDescription = userStoryDescription;
         this.userStoryAcceptanceCriteria = userStoryAcceptanceCriteria;
-        this.userStoryStatus = userStoryStatus.TO_DO;
+        this.userStoryStatus = status;
     }
 
 

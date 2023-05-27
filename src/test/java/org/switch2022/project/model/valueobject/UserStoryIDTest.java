@@ -1,5 +1,6 @@
 package org.switch2022.project.model.valueobject;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,4 +85,65 @@ class UserStoryIDTest {
         assertFalse(isEquals);
     }
 
+    @DisplayName("similar UserStoryIDs have same hash code")
+    @Test
+    void userStoryIDHasSameHashCode() {
+        // Arrange
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        UserStoryID userStoryID1 = new UserStoryID(userStoryNumber, projectCode);
+        UserStoryID userStoryID2 = new UserStoryID(userStoryNumber, projectCode);
+
+        // Act & Assert
+        assertEquals(userStoryID1.hashCode(), userStoryID2.hashCode());
+    }
+
+    @DisplayName("different UserStoryIDs have different hash code")
+    @Test
+    void userStoryIDsHasDifferentHashCode() {
+        // Arrange
+        UserStoryNumber userStoryNumber1 = mock(UserStoryNumber.class);
+        UserStoryNumber userStoryNumber2 = mock(UserStoryNumber.class);
+
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        UserStoryID userStoryID1 = new UserStoryID(userStoryNumber1, projectCode);
+        UserStoryID userStoryID2 = new UserStoryID(userStoryNumber2, projectCode);
+
+        // Act & Assert
+        assertNotEquals(userStoryID1.hashCode(), userStoryID2.hashCode());
+    }
+
+    @DisplayName("getUserStoryNumber works DUH!")
+    @Test
+    void getUserStoryNumberWorks() {
+        // Arrange
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+
+        // Act
+        UserStoryNumber result = userStoryID.getUserStoryNumber();
+
+        // Assert
+        assertEquals(userStoryNumber, result);
+    }
+
+    @DisplayName("getProjectCode works DUH!")
+    @Test
+    void getProjectCodeWorks() {
+        // Arrange
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+
+        // Act
+        ProjectCode result = userStoryID.getProjectCode();
+
+        // assert
+        assertEquals(projectCode, result);
+    }
 }

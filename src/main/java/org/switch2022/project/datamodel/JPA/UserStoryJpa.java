@@ -1,8 +1,7 @@
 package org.switch2022.project.datamodel.JPA;
 
-import org.switch2022.project.model.valueobject.*;
+import org.springframework.lang.NonNull;
 
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,62 +12,61 @@ import java.util.Objects;
 public class UserStoryJpa {
 
     @EmbeddedId
-    private final UserStoryID userStoryID;
+    private final UserStoryJpaId id;
 
-    @Embedded
-    private final UserStoryActor userStoryActor;
+    private final String actor;
 
-    @Embedded
-    private final Description userStoryDescription;
+    private final String description;
 
-    @Embedded
-    private final UserStoryAcceptanceCriteria userStoryAcceptanceCriteria;
+    private final String acceptanceCriteria;
 
-    @Embedded
-    private final UserStoryStatus userStoryStatus;
+    private final String status;
 
-    public UserStoryJpa(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria, UserStoryStatus userStoryStatus) {
-        this.userStoryID = userStoryID;
-        this.userStoryActor = userStoryActor;
-        this.userStoryDescription = userStoryDescription;
-        this.userStoryAcceptanceCriteria = userStoryAcceptanceCriteria;
-        this.userStoryStatus = userStoryStatus;
+    public UserStoryJpa(@NonNull UserStoryJpaId id,
+                        @NonNull String actor,
+                        @NonNull String description,
+                        @NonNull String acceptanceCriteria,
+                        @NonNull String status) {
+
+        this.id = id;
+        this.actor = actor;
+        this.description = description;
+        this.acceptanceCriteria = acceptanceCriteria;
+        this.status = status;
     }
 
-    public UserStoryID getUserStoryID() {
-        return userStoryID;
+
+    public UserStoryJpaId getId() {
+        return id;
     }
 
-    public UserStoryActor getUserStoryActor() {
-        return userStoryActor;
+    public String getActor() {
+        return actor;
     }
 
-    public Description getUserStoryDescription() {
-        return userStoryDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public UserStoryAcceptanceCriteria getUserStoryAcceptanceCriteria() {
-        return userStoryAcceptanceCriteria;
+    public String getAcceptanceCriteria() {
+        return acceptanceCriteria;
     }
 
-    public UserStoryStatus getUserStoryStatus() {
-        return userStoryStatus;
+    public String getStatus() {
+        return status;
     }
+
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         UserStoryJpa that = (UserStoryJpa) o;
-        return Objects.equals(userStoryID, that.userStoryID) && Objects.equals(userStoryActor, that.userStoryActor) && Objects.equals(userStoryDescription, that.userStoryDescription) && Objects.equals(userStoryAcceptanceCriteria, that.userStoryAcceptanceCriteria) && userStoryStatus == that.userStoryStatus;
+        return Objects.equals(id, that.id) && Objects.equals(actor, that.actor) && Objects.equals(description, that.description) && Objects.equals(acceptanceCriteria, that.acceptanceCriteria) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userStoryID, userStoryActor, userStoryDescription, userStoryAcceptanceCriteria, userStoryStatus);
+        return Objects.hash(id, actor, description, acceptanceCriteria, status);
     }
 }
