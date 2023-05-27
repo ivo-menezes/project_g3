@@ -26,7 +26,7 @@ public class CustomerController {
     /**
      * Post method responsible for creating a customer.
      * @param customer (dto)
-     * @return the http status 201 (created) and the customer object created.
+     * @return when successful, the status http 201 (created) is returned, or otherwise 400 (bad request)
      */
     @PostMapping("")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customer) {

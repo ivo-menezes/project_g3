@@ -14,8 +14,6 @@ import org.switch2022.project.model.valueobject.CustomerDesignation;
 import org.switch2022.project.model.valueobject.CustomerNIF;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -52,7 +50,7 @@ class CustomerRepositoryTest {
         CustomerJPA customerJPA = new CustomerJPA(customerNIF.toString(), customerDesignation.toString());
         CustomerJPA savedCustomerJPA = new CustomerJPA(customerNIF.toString(), customerDesignation.toString());
 
-        when(customerRepositoryJPA.findById(customer.getCustomerNIF().toString())).thenReturn(Optional.empty()); // pq vazio?
+        when(customerRepositoryJPA.existsByCustomerNIF(customer.getCustomerNIF().toString())).thenReturn(false);
         when(customerDomainDataAssembler.toData(customer)).thenReturn(customerJPA);
         when(customerRepositoryJPA.save(customerJPA)).thenReturn(savedCustomerJPA);
         when(customerDomainDataAssembler.toDomain(savedCustomerJPA)).thenReturn(customer);
@@ -76,7 +74,7 @@ class CustomerRepositoryTest {
         CustomerJPA customerJPA = new CustomerJPA(customerNIF.toString(), customerDesignation.toString());
         CustomerJPA savedCustomerJPA = new CustomerJPA(customerNIF.toString(), customerDesignation.toString());
 
-        when(customerRepositoryJPA.findById(customer.getCustomerNIF().toString())).thenReturn(Optional.of(customerJPA));
+        when(customerRepositoryJPA.existsByCustomerNIF(customer.getCustomerNIF().toString())).thenReturn(true);
         when(customerDomainDataAssembler.toData(customer)).thenReturn(customerJPA);
         when(customerRepositoryJPA.save(customerJPA)).thenReturn(savedCustomerJPA);
         when(customerDomainDataAssembler.toDomain(savedCustomerJPA)).thenReturn(customer);

@@ -8,8 +8,6 @@ import org.switch2022.project.model.customer.CustomerDDD;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 
-import java.util.Optional;
-
 @Repository
 public class CustomerRepository implements ICustomerRepository {
 
@@ -19,11 +17,16 @@ public class CustomerRepository implements ICustomerRepository {
     @Autowired
     CustomerDomainDataAssembler customerDomainDataAssembler;
 
-
+    /**
+     * Method responsible for saving the client in the database.
+     * @param customer
+     * @return customerDDD
+     */
     public CustomerDDD save(CustomerDDD customer) {
-        Optional<CustomerJPA> existCustomer = customerRepositoryJPA.findById(customer.getCustomerNIF().toString());
 
-        if (existCustomer.isPresent()) {
+         boolean existCustomer = customerRepositoryJPA.existsByCustomerNIF(customer.getCustomerNIF().toString());
+
+        if (existCustomer) {
             throw new IllegalArgumentException("There is a customer with this ID.");
         }
 
