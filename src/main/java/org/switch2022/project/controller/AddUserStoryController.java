@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.project.Project;
 import org.switch2022.project.model.sprint.Sprint;
-import org.switch2022.project.model.userStory.UserStory;
+import org.switch2022.project.model.userStory.old.UserStory;
 
 public class AddUserStoryController {
 

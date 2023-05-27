@@ -1,5 +1,6 @@
 package org.switch2022.project.model.userStory;
 
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.model.valueobject.*;
 
 public interface IUserStoryFactory {
@@ -8,4 +9,6 @@ public interface IUserStoryFactory {
                                  UserStoryActor actor,
                                  Description description,
                                  UserStoryAcceptanceCriteria acceptanceCriteria);
+
+    UserStoryDDD createUserStory(NewUserStoryInfoDTO dto);
 }

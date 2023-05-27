@@ -1,7 +1,11 @@
 package org.switch2022.project.model.userStory;
 
 import org.springframework.stereotype.Component;
-import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.model.valueobject.Description;
+import org.switch2022.project.model.valueobject.UserStoryAcceptanceCriteria;
+import org.switch2022.project.model.valueobject.UserStoryActor;
+import org.switch2022.project.model.valueobject.UserStoryID;
 
 @Component
 public class UserStoryFactoryImpl implements IUserStoryFactory {
@@ -29,6 +33,19 @@ public class UserStoryFactoryImpl implements IUserStoryFactory {
         }
 
         UserStoryDDD userStory = new UserStoryDDD(userStoryID, actor, description, acceptanceCriteria);
+
+        return userStory;
+    }
+
+    @Override
+    public UserStoryDDD createUserStory(NewUserStoryInfoDTO dto) {
+
+        if (dto == null) {
+            throw new IllegalArgumentException("dto must not be null");
+        }
+
+        UserStoryID id = new UserStoryID(dto.userStoryNumber, dto.projectCode);
+        UserStoryDDD userStory = new UserStoryDDD(id, dto.actor, dto.description, dto.acceptanceCriteria);
 
         return userStory;
     }

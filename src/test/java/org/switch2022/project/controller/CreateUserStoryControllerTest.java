@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.mapper.old.UserStoryDTO;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;

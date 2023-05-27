@@ -8,7 +8,7 @@ import org.switch2022.project.model.ResourceList;
 import org.switch2022.project.model.role.Role;
 import org.switch2022.project.model.SprintList;
 import org.switch2022.project.model.account.Account;
-import org.switch2022.project.model.userStory.FactoryUserStoryImpl;
+import org.switch2022.project.model.userStory.old.FactoryUserStoryImpl;
 
 import java.util.Date;
 import java.util.List;

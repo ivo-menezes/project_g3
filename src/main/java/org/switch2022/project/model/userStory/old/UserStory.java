@@ -1,4 +1,4 @@
-package org.switch2022.project.model.userStory;
+package org.switch2022.project.model.userStory.old;
 
 import java.util.Objects;
 

@@ -1,9 +1,9 @@
 package org.switch2022.project.model.sprint;
 
 
-import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.mapper.old.UserStoryDTO;
 import org.switch2022.project.mapper.UserStoryScrumBoardMapper;
-import org.switch2022.project.model.userStory.UserStory;
+import org.switch2022.project.model.userStory.old.UserStory;
 
 import java.util.*;
 

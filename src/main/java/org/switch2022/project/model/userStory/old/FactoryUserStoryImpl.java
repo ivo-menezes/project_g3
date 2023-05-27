@@ -1,7 +1,4 @@
-package org.switch2022.project.model.userStory;
-
-import org.switch2022.project.model.userStory.IFactoryUserStory;
-import org.switch2022.project.model.userStory.UserStory;
+package org.switch2022.project.model.userStory.old;
 
 public class FactoryUserStoryImpl implements IFactoryUserStory {
     @Override

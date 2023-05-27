@@ -2,7 +2,7 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.mapper.old.UserStoryDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

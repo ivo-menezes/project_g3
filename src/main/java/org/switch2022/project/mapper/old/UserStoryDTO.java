@@ -1,6 +1,6 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.mapper.old;
 
-import org.switch2022.project.model.userStory.UserStory;
+import org.switch2022.project.model.userStory.old.UserStory;
 
 import java.util.Objects;
 

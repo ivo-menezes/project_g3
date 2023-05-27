@@ -1,10 +1,10 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.mapper.UserStoryDTO;
+import org.switch2022.project.mapper.old.UserStoryDTO;
 import org.switch2022.project.mapper.UserStoryMapper;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.project.Project;
-import org.switch2022.project.model.userStory.UserStory;
+import org.switch2022.project.model.userStory.old.UserStory;
 
 import java.util.List;
 
