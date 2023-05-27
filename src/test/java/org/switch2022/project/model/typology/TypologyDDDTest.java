@@ -3,6 +3,7 @@ package org.switch2022.project.model.typology;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.valueobject.TypologyDesignation;
+import org.switch2022.project.model.valueobject.TypologyID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -14,10 +15,11 @@ class TypologyDDDTest {
     @DisplayName("Ensure Typology is successfully created")
     void ensureTypologyIsSuccessfullyCreated(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
 
         //Act
-        TypologyDDD typology = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
 
         //Assert
         assertInstanceOf(TypologyDDD.class, typology);
@@ -27,8 +29,9 @@ class TypologyDDDTest {
     @DisplayName("Ensure exception is thrown when TypologyDesignation is null")
     void ensureExceptionIsThrownWhenNullTypologyDesignation(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = null;
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyDDD(typologyDesignation));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyDDD(typologyID, typologyDesignation));
         String expectedMessage = "Typology designation must not be null";
 
         //Act
@@ -42,22 +45,24 @@ class TypologyDDDTest {
     @DisplayName("Ensure typology Id is returned")
     void ensureTypologyIdIsReturned(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
-        TypologyDesignation resultId = typology.identity();
+        TypologyID resultId = typology.identity();
 
         //Assert
-        assertEquals(typologyDesignation, resultId);
+        assertEquals(typologyID, resultId);
     }
 
     @Test
     @DisplayName("Ensure typology designation is returned")
     void ensureTypologyDesignationIsReturned(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
         TypologyDesignation resultDesignation = typology.getTypologyDesignation();
@@ -70,8 +75,9 @@ class TypologyDDDTest {
     @DisplayName("Ensure object does not equal null")
     void ensureObjectNotEqualNull(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
         boolean result = typology.equals(null);
@@ -84,8 +90,9 @@ class TypologyDDDTest {
     @DisplayName("Ensure object equals same object")
     void objectEqualsSameObject(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
         boolean result = typology.equals(typology);
@@ -98,9 +105,10 @@ class TypologyDDDTest {
     @DisplayName("Ensure object equals object with same TypologyDesignation")
     void objectEqualsSameTypologyDesignation(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology1 = new TypologyDDD(typologyDesignation);
-        TypologyDDD typology2 = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology1 = new TypologyDDD(typologyID, typologyDesignation);
+        TypologyDDD typology2 = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
         boolean result = typology1.equals(typology2);
@@ -113,10 +121,11 @@ class TypologyDDDTest {
     @DisplayName("Ensure object does not equal object with different TypologyDesignation")
     void objectNotEqualToObjectWithDifferentTypologyDesignation(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation1 = mock(TypologyDesignation.class);
         TypologyDesignation typologyDesignation2 = mock(TypologyDesignation.class);
-        TypologyDDD typology1 = new TypologyDDD(typologyDesignation1);
-        TypologyDDD typology2 = new TypologyDDD(typologyDesignation2);
+        TypologyDDD typology1 = new TypologyDDD(typologyID, typologyDesignation1);
+        TypologyDDD typology2 = new TypologyDDD(typologyID, typologyDesignation2);
 
         //Act
         boolean result = typology1.equals(typology2);
@@ -129,9 +138,10 @@ class TypologyDDDTest {
     @DisplayName("Ensure equal objects have same hashcode")
     void ensureEqualObjectsHaveSameHashcode(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-        TypologyDDD typology1 = new TypologyDDD(typologyDesignation);
-        TypologyDDD typology2 = new TypologyDDD(typologyDesignation);
+        TypologyDDD typology1 = new TypologyDDD(typologyID, typologyDesignation);
+        TypologyDDD typology2 = new TypologyDDD(typologyID, typologyDesignation);
 
         //Act
         int hashCode1 = typology1.hashCode();
@@ -145,10 +155,11 @@ class TypologyDDDTest {
     @DisplayName("Ensure different objects have different hashcode")
     void ensureDifferentObjectsHaveDifferentHashcode(){
         //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation1 = mock(TypologyDesignation.class);
         TypologyDesignation typologyDesignation2 = mock(TypologyDesignation.class);
-        TypologyDDD typology1 = new TypologyDDD(typologyDesignation1);
-        TypologyDDD typology2 = new TypologyDDD(typologyDesignation2);
+        TypologyDDD typology1 = new TypologyDDD(typologyID, typologyDesignation1);
+        TypologyDDD typology2 = new TypologyDDD(typologyID, typologyDesignation2);
 
         //Act
         int hashCode1 = typology1.hashCode();
@@ -163,9 +174,10 @@ class TypologyDDDTest {
     void ensureTypologyIsConvertedToString(){
         //Arrange
         String expectedString = "Fixed cost";
+        TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation1 = mock(TypologyDesignation.class);
         when(typologyDesignation1.toString()).thenReturn(expectedString);
-        TypologyDDD typology1 = new TypologyDDD(typologyDesignation1);
+        TypologyDDD typology1 = new TypologyDDD(typologyID, typologyDesignation1);
 
         //Act
         String actualString = typology1.toString();

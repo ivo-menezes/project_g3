@@ -32,6 +32,10 @@ public class TypologyJpa {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTypologyDesignation() {
         return typologyDesignation;
     }

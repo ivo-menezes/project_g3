@@ -46,6 +46,6 @@ class TypologyDomainDataAssemblerTest {
         TypologyDDD returnedTypology = assembler.toDomain(typologyJpa);
 
         //Assert
-        assertInstanceOf(TypologyDDD.class,returnedTypology);
+        assertInstanceOf(TypologyDDD.class, returnedTypology);
     }
 }

@@ -1,12 +1,12 @@
 package org.switch2022.project.model.valueobject;
 
-import org.switch2022.project.ddd.DomainId;
+import org.switch2022.project.ddd.ValueObject;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 
-public class TypologyDesignation implements DomainId, Serializable {
+public class TypologyDesignation implements ValueObject, Serializable {
 
     private final String designation;
 

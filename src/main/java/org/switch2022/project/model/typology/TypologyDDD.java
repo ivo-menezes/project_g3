@@ -3,33 +3,37 @@ package org.switch2022.project.model.typology;
 
 import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.TypologyDesignation;
+import org.switch2022.project.model.valueobject.TypologyID;
 
 import java.util.Objects;
 
 
-public class TypologyDDD implements AggregateRoot<TypologyDesignation> {
+public class TypologyDDD implements AggregateRoot<TypologyID> {
 
+    private final TypologyID typologyID;
     private final TypologyDesignation typologyDesignation;
 
     /**
-     * Constructor for TypologyDDD with specified TypologyDesignation
-     * @param typologyDesignation to construct the entity
+     * Constructor for TypologyDDD
+     * @param typologyID the entity id
+     * @param typologyDesignation the entity designation
      */
-    public TypologyDDD(TypologyDesignation typologyDesignation) {
+    public TypologyDDD(TypologyID typologyID, TypologyDesignation typologyDesignation) {
 
         if(typologyDesignation == null) {
             throw new IllegalArgumentException("Typology designation must not be null");
         }
+        this.typologyID = typologyID;
         this.typologyDesignation = typologyDesignation;
     }
 
     /**
      * Returns the identity of the TypologyDDD object
-     * @return the TypologyDesignation representing the identity of TypologyDDD
+     * @return the TypologyID representing the identity of TypologyDDD
      */
     @Override
-    public TypologyDesignation identity() {
-        return this.typologyDesignation;
+    public TypologyID identity() {
+        return this.typologyID;
     }
 
     /**
