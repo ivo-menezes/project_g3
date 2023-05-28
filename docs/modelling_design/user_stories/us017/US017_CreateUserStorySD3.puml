@@ -10,16 +10,38 @@ LifeLineBackgroundColor #FFBBBB
 title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(creation of user story)
 
 participant ": IUserStoryFactory" as factory
+participant "infoDTO : NewUserStoryInfoDTO" as dto
 
--> factory : createUserStory(newUserStoryDTO)
+-> factory : createUserStory(infoDTO)
 activate factory
-factory --> "projectCodeVO : projectCode" **: create(projectCode)
-factory --> "userStoryNumber : UserStoryNumber" ** : create(userStoryNumber)
-factory --> "userStoryID : UserStoryID" ** : create(userStoryNumber, projectCodeVO)
-factory --> "actor : UserStoryActor" ** :create(actor)
-factory --> "description : Description" ** :create(description)
-factory --> "acceptanceCriteria : UserStoryAcceptanceCriteria" ** :create(acceptanceCriteria)
-factory --> "priority : UserStoryPriority" ** : create(priority)
+
+factory -> dto : .userStoryNumber
+activate dto
+dto --> factory : userStoryNumber
+deactivate
+
+factory -> dto : .projectCode
+activate dto
+dto --> factory : projectCode
+deactivate
+
+factory --> "userStoryID : UserStoryID" ** : create(userStoryNumber, projectCode)
+
+factory -> dto : .actor
+activate dto
+dto --> factory: actor
+deactivate
+
+factory -> dto : .description
+activate dto
+dto --> factory: description
+deactivate
+
+factory -> dto : .acceptanceCriteria
+activate dto
+dto --> factory: acceptanceCriteria
+deactivate
+
 
 factory --> userStory ** :create (userStoryID,\n actor,\n description, \n acceptanceCriteria)
 

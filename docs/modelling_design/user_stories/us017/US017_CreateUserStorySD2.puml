@@ -12,7 +12,7 @@ title US017 - As Product Owner, I want to create a user story and add it to the 
 
 participant ": UserStoryService" as service
 participant " : IUserStoryFactory" as factory
-participant "userStory : UserStory" as userStory
+participant "newUserStory : UserStory" as newUserStory
 participant ": ProjectRepository" as projectRepository
 participant " :UserStoryRepository" as usRepository
 participant " : UserStoryJpaRepository" as jpa
@@ -24,17 +24,17 @@ participant "productBacklog : ProductBacklog" as backlog
 participant "openUserStories : List<UserStoryID>" as uslist
 
 activate service
--> service : createUserStory(newUserStoryDTO)
+-> service : createUserStory(infoDTO)
 
-service -> factory : createUserStory(newUserStoryDTO)
+service -> factory : createUserStory(infoDTO)
 activate factory
 ref over factory: US017_CreateUserStorySD3\n(creation of user story)
-factory --> service :userStory
+factory --> service :newUserStory
 deactivate
 
-service -> userStory : getProjectCode();
-activate userStory
-userStory --> service : projectCode
+service -> newUserStory : identity().getProjectCode();
+activate newUserStory
+newUserStory --> service : projectCode
 deactivate
 
 service -> projectRepository: getByID(projectCode)
@@ -47,13 +47,13 @@ deactivate
 
 
 
-service -> usRepository :save(userStory)
+service -> usRepository :save(newUserStory)
 
 activate usRepository
-usRepository -> userStory : identity()
+usRepository -> newUserStory : identity()
 
-activate userStory
-userStory --> usRepository: userStoryID
+activate newUserStory
+newUserStory --> usRepository: userStoryID
 deactivate
 
 usRepository -> usRepository : containsID(userStoryID)
@@ -89,7 +89,12 @@ deactivate
 usRepository --> service: savedUserStory
 deactivate
 
-service -> project :addToProductBacklog(userStoryID, priority)
+service -> newUserStory : identity()
+activate newUserStory
+newUserStory --> service : userStoryID
+deactivate
+
+service -> project :addToProductBacklog(userStoryID, infoDTO.priority)
 
 activate project
 project -> backlog: addUserStory(userStoryID, priority)

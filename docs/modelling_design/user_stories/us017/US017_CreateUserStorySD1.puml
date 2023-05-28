@@ -13,28 +13,18 @@ participant Client
 participant SpringBoot
 participant "infoDTO : NewUserStoryInfoDTO" as infoDTO
 participant ": UserStoryController" as controller
-participant ": UserStoryMapper" as mapper
-participant "newUserStoryDTO : NewUserStoryDTO" as newUserStoryDTO
 participant " : UserStoryService" as service
 participant "response : ResponseEntity<>" as response
 
-Client -> SpringBoot : POST /userstories {"project": "code",\n                         "usNumber": "number",\n                         "actor":"actor", "text":"text",\n                         "acceptanceCriteria":"criteria",\n                         "priority":"priority"}
+Client -> SpringBoot : POST /projects/${projectCode}/productbacklog\n{"projectCode": "code",\n"userStoryNumber": "usNumber",\n"userStoryActor":"actor", "description":"description",\n"userStoryAcceptanceCriteria":"criteria",\n"userStoryPriority":"priority"}
 activate Client
 
 activate SpringBoot
-SpringBoot --> infoDTO ** : create(project, usNumber,\n         actor, text,\n         acceptanceCriteria,\n         priority)
+SpringBoot --> infoDTO ** : create(projectCode, userStoryNumber,\n         userStoryActor, description,\n         userStoryAcceptanceCriteria,\n         userStoryPriority)
 SpringBoot -> controller : createUserStory(infoDTO)
 deactivate
 
-activate controller
-controller --> mapper : create(infoDTO)
-
-activate mapper
-mapper --> newUserStoryDTO : create
-mapper --> controller : newUserStoryDTO
-deactivate
-
-controller -> service : createUserStory(newUserStoryDTO)
+controller -> service : createUserStory(infoDTO)
 deactivate
 
 activate service
