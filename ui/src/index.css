@@ -13,7 +13,7 @@ code {
 }
 
 
-/* TABLE FORMATTING FOR LISTPROJECTS AND ALL!*/
+/* TABLE FORMATTING FOR LISTPROJECTS*/
 
 .table{
   width: 75%;
@@ -22,7 +22,6 @@ code {
   font-size: 1.5rem;
   text-align: center;
 }
-
 
 .table-header {
   background: #2F3DA9;
@@ -231,7 +230,7 @@ a:link {
 }
 
 .bt-container {
-  text-align: center
+  text-align: center;
 }
 
 
@@ -330,13 +329,13 @@ a:link {
 
 .form-create-project label {
   display: block;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 5px;
 }
 
 .form-create-project input,
 .form-create-project select {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   padding: 10px;
   border-radius: 5px;
   border: none;
@@ -381,12 +380,58 @@ a:link {
   border-color: #4b9cdb;
 }
 
+/* View project page style */
 
+.project-info-container {
+  margin-top: 100px;
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.table-view-projects{
+  width: 75%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 1.3rem;
+  text-align: center;
+}
 
+.table-view-projects td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #2F3DA9;
+  height: 50px; /* Set the desired height for th and td rows */
+}
 
+.table-view-projects td:first-child {
+  font-weight: bold;
+  width: 20%;
+}
+.table-view-projects td:not(:first-child) {
+  width: 60%;
+}
 
-
+.button-edit-stuff{
+  border: 0;
+  padding: 10px;
+  width: 180px;
+  height: 55px;
+  display: inline-block;
+  margin-top: 30px;
+  margin-left: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+  border-radius: 60px;
+  background-color: #2F3DA9;
+  color: #fff;
+  font-weight: normal;
+  font-family: "Open Sans", sans-serif;
+  font-size: 95%;
+  text-decoration: none;
+}
 
 
 /* Create User Story page style */
@@ -685,12 +730,5 @@ a:link {
   text-align: center;
 }
 
-.project-info {
-  padding: 15px;
-  background: lightsteelblue;
-  color: black;
-  margin: 5px;
-  margin-left: 10px;
-  margin-right: 5%;
-}
+
 
