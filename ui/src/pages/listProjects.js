@@ -51,7 +51,7 @@ const ListProjects = () => {
             </div>
             <div className="bt-container">
                 <Link to="/createProject">
-                    <Button className="button-ListProjects" name="Create Project" />
+                    <Button className="button-create" name="Create Project" />
                 </Link>
             </div>
         </div>
