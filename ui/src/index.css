@@ -433,6 +433,10 @@ a:link {
   text-decoration: none;
 }
 
+.button-edit-stuff:hover {
+  background-color: #243BF3;
+}
+
 
 /* Create User Story page style */
 
