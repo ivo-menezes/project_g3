@@ -9,4 +9,5 @@ public class NewUserStoryInfoDTO {
     public Description description;
     public UserStoryAcceptanceCriteria acceptanceCriteria;
     public UserStoryStatus status;
+    public UserStoryPriority priority;
 }
