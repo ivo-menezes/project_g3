@@ -3,13 +3,14 @@ package org.switch2022.project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.old.UserStoryDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
 import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
@@ -29,12 +30,11 @@ public class UserStoryService {
     private UserStoryMapperDDD userStoryMapper;
 
 
-
     /**
      * Public constructor for UserStoryService.
      *
      * @param userStoryFactory    a factory that implements IUserStoryFactory
-     * @param userStoryRepository a repository that implements Repository<UserStoryID, UserStory>
+     * @param userStoryRepository a repository that implements IUserStoryRepository
      * @param projectRepository   a repository that implements Repository<ProjectCode, Project>
      */
     public UserStoryService(IUserStoryFactory userStoryFactory,
@@ -59,43 +59,44 @@ public class UserStoryService {
     }
 
     /**
-     * Creates a UserStory and adds it to the userStoryRepository.
+     * Creates a UserStory and adds it to the userStoryRepository and the ProductBacklog of the respective Project.
      *
-     * @param projectCode  of the Project to which the user story belongs
-     * @param userStoryDTO a DTO with the information for the UserStory
-     * @param priority     the priority of the UserStory (position in the product backlog of Project)
-     * @return true if UserStory was successfully created and saved, false otherwise
+     * @param infoDTO a NewUserStoryInfoDTO with the information for the new UserStory
+     * @return the saved UserStory entity
      */
-    public boolean createUserStory(ProjectCode projectCode,
-                                   UserStoryDTO userStoryDTO,
-                                   UserStoryPriority priority) {
+    public UserStoryDDD createUserStory(NewUserStoryInfoDTO infoDTO) {
 
+        // create the new UserStory
+        UserStoryDDD newUserStory = userStoryFactory.createUserStory(infoDTO);
+
+        // get corresponding project, throw exception if it does not exist
+        ProjectCode projectCode = newUserStory.identity().getProjectCode();
         Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
 
         if (projectOptional.isEmpty()) {
-            return false;
+            throw new RuntimeException("project with given projectCode does not exist");
         }
 
         ProjectDDD project = projectOptional.get();
 
-        UserStoryNumber userStoryNumber = new UserStoryNumber(userStoryDTO.id);
-        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+        // save UserStory to repository and its ID to the product backlog of project
+        UserStoryDDD savedUserStory = this.userStoryRepository.save(newUserStory);
+        boolean backlogSaveSuccess = project.addToProductBacklog(newUserStory.identity(), infoDTO.priority);
 
-        UserStoryActor actor = new UserStoryActor(userStoryDTO.actor);
-        Description description = new Description(userStoryDTO.text);
-        UserStoryAcceptanceCriteria criteria = new UserStoryAcceptanceCriteria(userStoryDTO.acceptanceCriteria);
+        if (!backlogSaveSuccess) {
+            // TODO: delete saved UserStory from repository? (no method to delete exists yet)
+            throw new RuntimeException("UserStoryID not added to ProductBacklog");
+        }
 
-        UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryID, actor, description, criteria);
+        // save the updated project
+        projectRepository.save(project);
 
-        UserStoryDDD savedUserStory = this.userStoryRepository.save(userStory);
-        boolean savedUserStoryIsNotNull = savedUserStory != null;
-
-        return savedUserStoryIsNotNull && project.addToProductBacklog(userStory.identity(), priority); // TODO: should return savedUserStory
-
+        return savedUserStory;
     }
 
     /**
      * Sets the UserStoryMapperDDD for this UserStoryServer instance
+     *
      * @param userStoryMapper the UserStoryMapperDDD implementation to set
      */
 
@@ -107,6 +108,7 @@ public class UserStoryService {
 
     /**
      * Retrieves the productBacklog of a project
+     *
      * @param projectCode the code of the project to retrieve the productBacklog for
      * @return an Optional containing the product backlog as a list of UserStoryDTOs (named "UserStoryDTOForListDDD")
      */

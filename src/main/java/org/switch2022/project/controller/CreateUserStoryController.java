@@ -1,9 +1,8 @@
 package org.switch2022.project.controller;
 
 import org.springframework.stereotype.Controller;
-import org.switch2022.project.mapper.old.UserStoryDTO;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.service.UserStoryService;
 
 @Controller
@@ -17,20 +16,12 @@ public class CreateUserStoryController {
         this.service = service;
     }
 
-    public boolean createUserStory(ProjectCode projectCode, UserStoryDTO userStoryDTO, UserStoryPriority priority) {
-        if (projectCode == null) {
-            throw new IllegalArgumentException("projectCode must not be null.");
+    public UserStoryDDD createUserStory(NewUserStoryInfoDTO infoDTO) throws Exception {
+
+        if (infoDTO == null) {
+            throw new IllegalArgumentException("NewUserStoryDTO must not be null.");
         }
 
-        if (userStoryDTO == null) {
-            throw new IllegalArgumentException("userStoryDTO must not be null.");
-        }
-
-        if (priority == null) {
-            throw new IllegalArgumentException("priority must not be null.");
-        }
-
-
-        return service.createUserStory(projectCode, userStoryDTO, priority);
+        return service.createUserStory(infoDTO);
     }
 }

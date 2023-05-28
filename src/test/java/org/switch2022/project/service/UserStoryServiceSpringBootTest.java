@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.old.UserStoryDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
@@ -17,9 +17,8 @@ import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,122 +41,84 @@ public class UserStoryServiceSpringBootTest {
     @Test
     void createUserStorySucceedsWithTotalIsolation() {
         // Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-
-        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
-        userStoryDTODouble.id = "US017";
-        userStoryDTODouble.actor = "Administrator";
-        userStoryDTODouble.text = "blah blah";
-        userStoryDTODouble.acceptanceCriteria = "none";
-
-        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble = mock(UserStoryID.class);
 
+        when(userStoryFactoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
-        when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
         when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
-        when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
-        when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
+        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(true);
+        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
 
-        // Act
-        boolean result = userStoryService.createUserStory(projectCodeDouble, userStoryDTODouble, priorityDouble);
+        // act
+        UserStoryDDD result = userStoryService.createUserStory(dtoDouble);
 
-        // Assert
-        assertTrue(result);
+        // assert
+        assertEquals(userStoryDouble, result);
+
     }
 
     @DisplayName("assert that creating a user story fails with total isolation when project code doesn't exist")
     @Test
     void createUserStorySucceeds() {
         // Arrange
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
+        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
 
-        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
-        userStoryDTODouble.id = "US017";
-        userStoryDTODouble.actor = "Administrator";
-        userStoryDTODouble.text = "blah blah";
-        userStoryDTODouble.acceptanceCriteria = "none";
-
-        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
-        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
-        ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble = mock(UserStoryID.class);
-
-        // when project code doesn't exist, projectRepository returns empty optional
+        when(userStoryFactoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.empty());
-        when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
-        when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
-        when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
+
+        String expectedMessage = "project with given projectCode does not exist";
 
         // Act
-        boolean result = userStoryService.createUserStory(projectCodeDouble, userStoryDTODouble, priorityDouble);
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            userStoryService.createUserStory(dtoDouble);
+        });
+        String resultMessage = result.getMessage();
 
         // Assert
-        assertFalse(result);
+        assertEquals(expectedMessage, resultMessage);
     }
 
-    @DisplayName("assert that creating a user story fails with total isolation when saving in repository fails")
+    @DisplayName("assert that creating a user story throws exception if saving to backlog fails")
     @Test
-    void createUserStoryFailsWhenSavingInRepoFails() {
+    void createUserStoryFailsIfSavingToBacklogFails() {
         // Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-
-        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
-        userStoryDTODouble.id = "US017";
-        userStoryDTODouble.actor = "Administrator";
-        userStoryDTODouble.text = "blah blah";
-        userStoryDTODouble.acceptanceCriteria = "none";
-
-        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
-        ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble = mock(UserStoryID.class);
-
-        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
-        when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-        // when saving user story fails, userStoryRepository returns false
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(null);
-        when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
-        when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
-
-        // Act
-        boolean result = userStoryService.createUserStory(projectCodeDouble, userStoryDTODouble, priorityDouble);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @DisplayName("assert that creating a user story fails with total isolation when saving in product backlog fails")
-    @Test
-    void createUserStoryFailsWhenSavingInBacklogFails() {
-        // Arrange
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
-
-        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
-        userStoryDTODouble.id = "US017";
-        userStoryDTODouble.actor = "Administrator";
-        userStoryDTODouble.text = "blah blah";
-        userStoryDTODouble.acceptanceCriteria = "none";
-
-        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
-        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble = mock(UserStoryID.class);
 
+        when(userStoryFactoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
-        when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
         when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
-        when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
-        // when saving to backlog fails, project.addToProductBacklog returns false
-        when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(false);
+        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(false);
+        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+
+        String expectedMessage = "UserStoryID not added to ProductBacklog";
 
         // Act
-        boolean result = userStoryService.createUserStory(projectCodeDouble, userStoryDTODouble, priorityDouble);
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            userStoryService.createUserStory(dtoDouble);
+        });
+        String resultMessage = result.getMessage();
 
         // Assert
-        assertFalse(result);
+        assertEquals(expectedMessage, resultMessage);
     }
 }

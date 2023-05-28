@@ -3,13 +3,15 @@ package org.switch2022.project.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.old.UserStoryDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
 import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.model.valueobject.UserStoryPriority;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
@@ -17,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -89,44 +90,103 @@ class UserStoryServiceTest {
     @DisplayName("assert that creating a user story succeeds with total isolation")
     @Test
     void createUserStorySuccessWithTotalIsolation() {
-        // arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryDTO userStoryDTODouble = mock(UserStoryDTO.class);
-        userStoryDTODouble.id = "US017";
-        userStoryDTODouble.actor = "Administrator";
-        userStoryDTODouble.text = "blah blah";
-        userStoryDTODouble.acceptanceCriteria = "none";
-        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
-        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
-        ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble = mock(UserStoryID.class);
-
-        // projectRepository has to be trained to return a projectDouble
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
-        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.ofNullable(projectDouble));
-
-        // factoryDouble has to be trained to return a userStoryDouble
+        // Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
-        when(factoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-
-        // usRepositoryDouble has to be trained to respond with true when asked to save a UserStory
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        when(usRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
+        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
 
-        // userStoryDouble has to be trained to return userStoryIDDouble when asked with identity()
-        when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
-
-        // projectDouble has to be trained to return true when asked to add a userStoryID to the backlog
-        when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
-
-        // a real UserStoryService
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
 
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
+        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectDDD projectDouble = mock(ProjectDDD.class);
+
+        when(factoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
+        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
+        when(usRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
+        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(true);
+        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+
         // act
-        boolean result = service.createUserStory(projectCodeDouble, userStoryDTODouble, priorityDouble);
+        UserStoryDDD result = service.createUserStory(dtoDouble);
 
         // assert
-        assertTrue(result);
+        assertEquals(userStoryDouble, result);
+    }
+
+    @DisplayName("assert that creating a user story with a non existing project throws exception")
+    @Test
+    void createUserStoryFailsEmptyProjectWithIsolation() {
+        // Arrange
+        IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
+        IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
+        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
+        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+
+        when(factoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
+        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.empty());
+
+        String expectedMessage = "project with given projectCode does not exist";
+
+        // Act
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            service.createUserStory(dtoDouble);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("assert that creating a user story throws exception if saving to backlog fails")
+    @Test
+    void createUserStoryFailsIfSavingToBacklogFails() {
+        // Arrange
+        IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
+        IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
+        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        dtoDouble.priority = mock(UserStoryPriority.class);
+        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectDDD projectDouble = mock(ProjectDDD.class);
+
+        when(factoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
+        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
+        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
+        when(usRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
+        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(false);
+        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+
+        String expectedMessage = "UserStoryID not added to ProductBacklog";
+
+        // Act
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            service.createUserStory(dtoDouble);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
     }
 
     @Test
