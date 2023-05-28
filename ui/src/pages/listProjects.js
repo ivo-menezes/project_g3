@@ -1,9 +1,11 @@
 import React, {useContext} from "react";
 import Header from "../components/header";
+import HeaderBackground from "../components/headerBackground";
 import Button from "../components/button";
 import Table from "../components/table";
 import {Link, useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
+
 
 const headers = [
     { label: "Code", key: "id" },
@@ -36,15 +38,22 @@ const ListProjects = () => {
 
     return (
         <div>
-            <Header className= 'header-listProjects' text='Project List' style={{marginLeft: "65px"}}/>
-            <Table data={projects} headers={headers}/>
-            <div className='bt-container '>
-                <Link to='/createProject'>
-                    <Button className='button-ListProjects' name='Create Project'/>
+            <Header />
+            <div className="header-background-container" />
+            <Header
+                className="header-listProjects"
+                text="Project List"
+                style={{ marginLeft: "65px" }}
+            />
+            <div className="table-container">
+                <Table data={projects} headers={headers} />
+            </div>
+            <div className="bt-container">
+                <Link to="/createProject">
+                    <Button className="button-ListProjects" name="Create Project" />
                 </Link>
             </div>
-
         </div>
-    )
-}
+    );
+};
 export default ListProjects;

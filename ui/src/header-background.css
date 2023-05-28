@@ -1,0 +1,11 @@
+.header-background-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background: radial-gradient(circle at 5% 50%, #0F0FF5 0%, rgba(15, 15, 245, 0) 50%),
+    radial-gradient(circle at 100% 25%, #53F3F0 0%, rgba(83, 243, 240, 0) 90%),
+    radial-gradient(circle at 10% 10%, #0F0FF5 0%, rgba(15, 15, 245, 0) 20%),
+    #3B48B0;
+    transform: rotate(180deg); /* Add this line to rotate the gradient */
+    z-index: -1; /* Ensure the header background is below the header with logo and menu icons */
+}

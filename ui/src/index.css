@@ -14,45 +14,142 @@ code {
 
 /* Welcome page style */
 
-.header-welcome {
-  color: white;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
-  font-size: 80px;
-  text-align: center;
-  margin-bottom: 10%;
-  margin-top: 30%;
-}
-.button-welcome {
-  background-color: #b3daff;
-  border-radius: 10px;
-  font-family: "Times New Roman";
-  font-weight: 700;
-  font-size: 18px;
-  padding: 32px;
-  border: none;
-  cursor: pointer;
-  color: #003566;
-  margin: 32px 0;
+.welcome-page .header {
+  background-color: transparent; /* Ensure that the gradient background is visible */
 }
 
-.container{
+.welcome-page {
+  min-height: 100vh;
+  min-width: 100vw;
+  background: radial-gradient(circle at 5% 50%, #0F0FF5 0%, rgba(15, 15, 245, 0) 50%),
+  radial-gradient(circle at 90% 25%, #53F3F0 0%, rgba(83, 243, 240, 0) 90%),
+  radial-gradient(circle at 10% 10%, #0F0FF5 0%, rgba(15, 15, 245, 0) 20%),
+  #3B48B0;
+}
+
+.nav-link-home img {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 2px;
+  right: 0;
+}
+
+.nav-link-account img {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 4px;
+  right: 0;
+}
+
+.nav-link-help img {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 4px;
+  right: 0;
+}
+
+.nav-link-contact img {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 4px;
+  right: 0;
+}
+
+.title-welcome-container{
   text-align: center;
-  width: 300px;
+  width: 100vw;
+  height: 50vh;
   margin: auto;
-  height: 300px;
+}
+
+.title-welcome {
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: 550;
+  font-size: 90px;
+  transform: scaleY(0.9);
+  line-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #FFFFFF;
+  position: relative;
+  top: 40vh;
+}
+
+.subtitle-welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw; /* Set the maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+
+.subtitle-welcome {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: normal;
+  font-size: 200%;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  position: relative;
+  top: 43vh;
+}
+
+.button-welcome {
+  height: 66px;
+  width: 150px;
+  background: #000000;
+  border: 5px solid black;
+  border-radius: 60px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 25px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #FFFFFF;
+  position: relative;
+  top: 47vh;
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+a:link {
+  text-decoration: none; /*make sure that links are not underlined in buttons */
 }
 
 /* List Projects page style */
 
+
 .header-listProjects {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: white;
-  text-transform: uppercase;
+  position: relative;
+  width: 253px;
+  height: 47px;
+  left: 5.5vw;
+  top: 8vh;
+  color: #2F3DA9;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 47px;
 }
+
+.table-container {
+  margin-top: 100px;
+
+}
+
 
 .button-ListProjects{
   border: 0;
