@@ -4,7 +4,7 @@ import TableBody from './tablebody';
 
 const Table = ({ headers, data}) => {
     return (
-        <table className={'table-sprint'}>
+        <table className={'table'}>
             <TableHeader headers={headers} />
             <TableBody data={data}/>
         </table>

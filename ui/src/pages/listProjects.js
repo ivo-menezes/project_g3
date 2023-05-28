@@ -27,12 +27,14 @@ const ListProjects = () => {
     const projects = projectList.map((project) => ({
         id: project.id,
         title: project.title,
-        view: (
-            <Button
-                className="sprint-button-view"
-                name={"View"}
-                onClick={() => handleRowClick(project.id)}
-            ></Button>
+        view: ( <>
+                <img
+                    className="button-view"
+                    src="Eye icon.svg"
+                    alt="View"
+                    onClick={() => handleRowClick(project.id)}
+                />
+            </>
         ),
     }));
 
@@ -43,7 +45,6 @@ const ListProjects = () => {
             <Header
                 className="header-listProjects"
                 text="Project List"
-                style={{ marginLeft: "65px" }}
             />
             <div className="table-container">
                 <Table data={projects} headers={headers} />
