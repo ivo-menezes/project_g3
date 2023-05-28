@@ -1,10 +1,11 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/header";
+import HeaderBackground from "../components/headerBackground";
 import Button from "../components/button";
-import {Link, useNavigate} from "react-router-dom";
-import {addProject} from "../context/Actions";
+import { Link, useNavigate } from "react-router-dom";
+import { addProject } from "../context/Actions";
 import DropDownList from "../components/dropDownList";
 import PickDate from "../components/date";
 
@@ -12,17 +13,17 @@ const CreateProject = () => {
 
     // using a local state to save user input before submitting
     const emptyProject = {
-        id : '',
-        title : '',
-        description : '',
-        customer : '',
-        startDate : '',
-        endDate : '',
-        budget : '',
-        selectedStatus : '',
-        selectedTypology : '',
-        selectedSprintDuration : '',
-        numberOfPlannedSprints : ''
+        id: '',
+        title: '',
+        description: '',
+        customer: '',
+        startDate: '',
+        endDate: '',
+        budget: '',
+        selectedStatus: '',
+        selectedTypology: '',
+        selectedSprintDuration: '',
+        numberOfPlannedSprints: ''
     }
 
     const [newProject, setNewProject] = useState(emptyProject)
@@ -33,22 +34,22 @@ const CreateProject = () => {
         const name = event.target.name;
         const value = event.target.value;
         setNewProject((project) => {
-            return {...project, [name] : value}
+            return { ...project, [name]: value }
         })
     }
 
     const handleStartDateChange = (newDate, event) => {
-        event.target = {type:"text", value:newDate, name:'startDate'}
+        event.target = { type: "text", value: newDate, name: 'startDate' }
         handleChange(event)
     }
 
     const handleEndDateChange = (newDate, event) => {
-        event.target = {type:"text", value:newDate, name:'endDate'}
+        event.target = { type: "text", value: newDate, name: 'endDate' }
         handleChange(event)
     }
 
     // submits the newProject to the global context via the addProject action
-    const {dispatch} = useContext(AppContext);
+    const { dispatch } = useContext(AppContext);
     const navigate = useNavigate();
     const handleSubmission = () => {
         // Date objects need to be converted to strings because the table component can't handle displaying objects
@@ -86,11 +87,15 @@ const CreateProject = () => {
         '4 - Weeks',
     ]
 
-
     return (
-        <section className='form-create-project'>
-            <Header className='header-create-project' text="CREATE PROJECT"/>
-            <form onSubmit={handleSubmission}>
+        <div>
+            <Header />
+            <div className="header-background-container" />
+            <Header />
+            <section className='form-create-project'>
+                <Header className='header-create-project' text="Create project" />
+
+                <form onSubmit={handleSubmission}>
 
                 <TextField className="textField"
                            mandatory={true}
@@ -186,12 +191,16 @@ const CreateProject = () => {
                            name={'budget'}
                            whenTyped={handleChange}
                 />
-                <Button className='button-form-createProject-save' name="Save"/>
-                <Link to="/listProjects">
-                    <Button className='button-form-createProject-cancel' name="Cancel"/>
-                </Link>
-            </form>
-        </section>
+                    <div className="button-container">
+                        <Button className='button-form-createProject-save' name="Save" />
+                        <Link to="/listProjects">
+                            <Button className='button-form-createProject-cancel' name="Cancel" />
+                        </Link>
+                    </div>
+                </form>
+            </section>
+        </div>
     );
 }
+
 export default CreateProject;
