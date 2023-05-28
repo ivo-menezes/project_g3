@@ -2,17 +2,17 @@ package org.switch2022.project.repository;
 
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.repository.JPA.SprintJPARepository;
+import org.switch2022.project.service.irepositories.ISprintRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class SprintRepositoryJPA implements Repository<SprintID, SprintDDD> {
+public class SprintRepositoryJPA implements ISprintRepository {
 
     /***
      * Injection of the SprintJPARepository in the Sprint Repository, for persistence
@@ -43,21 +43,21 @@ public class SprintRepositoryJPA implements Repository<SprintID, SprintDDD> {
 
     /***
      * This method will get the identity of the sprint object and save it in the
-     * repository
+     * repository, will throw exception if the ID already exists
      * @param sprint Object to save into the Repository
-     * @return boolean values for now, will return a saved sprint object in the future
+     * @return the saved SprintDDD
      */
     @Override
-    public boolean save(SprintDDD sprint) {
+    public SprintDDD save(SprintDDD sprint) {
         SprintID sprintID = sprint.identity();
 
-        if(!containsID(sprintID)){
+        if(containsID(sprintID)){
+            throw new IllegalArgumentException("Sprint already exists with this ID");
+        }else{
             SprintJPA sprintJpa = sprintAssemblerData.toData(sprint);
             SprintJPA savedSprintJPA = sprintJpaRepository.save(sprintJpa);
-            SprintDDD savedSprint = sprintAssemblerData.toDomain(savedSprintJPA);
-            return true;
+            return sprintAssemblerData.toDomain(savedSprintJPA);
         }
-        return false;
     }
     /***
      * This method returns the collection of values of the hashmap,
@@ -79,7 +79,7 @@ public class SprintRepositoryJPA implements Repository<SprintID, SprintDDD> {
      * This method will return a sprint if there is one in the repository
      * with the SprintID passed by the user. Otherwise, it will return optional
      * @param id of the SprintID Object Type
-     * @return sprint optional object or empty optional object
+     * @return optional sprint object or empty optional object
      */
     @Override
     public Optional<SprintDDD> getByID(SprintID id) {

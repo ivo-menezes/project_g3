@@ -32,12 +32,38 @@ class SprintRepositoryJPATest {
     public void ensureThatRepositoryIsInstantiated(){
         //arrange
         SprintDDD mockSprint = mock(SprintDDD.class);
+        SprintDDD mockSavedSprint = mock(SprintDDD.class);
+        SprintJPA mockJPA = mock(SprintJPA.class);
+        SprintJPA mockSavedJPA = mock(SprintJPA.class);
+
+        when(sprintAssemblerData.toData(mockSprint)).thenReturn(mockJPA);
+        when(sprintJPARepository.save(mockJPA)).thenReturn(mockSavedJPA);
+        when(sprintAssemblerData.toDomain(mockSavedJPA)).thenReturn(mockSavedSprint);
 
         //act
-        boolean result = sprintRepositoryJPA.save(mockSprint);
+        SprintDDD result = sprintRepositoryJPA.save(mockSprint);
 
         //assert
-        assertTrue(result);
+        assertEquals(mockSavedSprint, result);
+    }
+    @Test
+    public void ensureRepositoryDoesNotSaveDueToExistingID(){
+        //arrange
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        SprintID mockID = mock(SprintID.class);
+
+        when(mockSprint.identity()).thenReturn(mockID);
+        when(sprintJPARepository.existsById(mockID)).thenReturn(true);
+
+        String expected = "Sprint already exists with this ID";
+
+        //act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                sprintRepositoryJPA.save(mockSprint));
+        String result = exception.getMessage();
+
+        //assert
+        assertEquals(expected, result);
     }
     @Test
     public void ensureThatRepositoryDoesNotContainID(){
