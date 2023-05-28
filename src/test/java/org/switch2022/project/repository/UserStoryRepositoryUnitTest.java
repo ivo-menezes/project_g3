@@ -12,6 +12,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.repository.JPA.UserStoryJpaRepository;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ class UserStoryRepositoryUnitTest {
         assertTrue(result);
     }
 
-    @DisplayName("ensure saving a UserStory returns true when JPA returns the saved object")
+    @DisplayName("ensure saving a UserStory returns the saved object when JPA returns the saved object")
     @Test
     void shouldSaveAUserStory() {
         // Arrange
@@ -75,13 +76,13 @@ class UserStoryRepositoryUnitTest {
         when(userStoryDomainDataAssemblerDouble.toDomain(savedUserStoryJpaDouble)).thenReturn(savedUserStoryDouble);
 
         // Act
-        boolean result = userStoryRepository.save(userStoryDouble);
+        UserStoryDDD result = userStoryRepository.save(userStoryDouble);
 
         // Assert
-        assertTrue(result);
+        assertEquals(savedUserStoryDouble, result);
     }
 
-    @DisplayName("ensure saving a UserStory returns false if JPA detects ID already exists")
+    @DisplayName("ensure saving a UserStory throws exception if JPA detects ID already exists")
     @Test
     void shouldNotSaveUserStoryBecauseIdExists() {
         // Arrange
@@ -91,11 +92,16 @@ class UserStoryRepositoryUnitTest {
         when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
         when(userStoryJpaRepositoryDouble.existsById(userStoryIdDouble)).thenReturn(true);
 
+        String expectedMessage = "UserStoryID already exists";
+
         // Act
-        boolean result = userStoryRepository.save(userStoryDouble);
+        KeyAlreadyExistsException result = assertThrows(KeyAlreadyExistsException.class, () -> {
+            userStoryRepository.save(userStoryDouble);
+        });
+        String resultMessage = result.getMessage();
 
         // Assert
-        assertFalse(result);
+        assertEquals(expectedMessage, resultMessage);
     }
 
     @DisplayName("ensure findAll user stories returns a collection of user stories")

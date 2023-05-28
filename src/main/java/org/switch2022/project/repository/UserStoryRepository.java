@@ -2,17 +2,18 @@ package org.switch2022.project.repository;
 
 import org.switch2022.project.datamodel.JPA.UserStoryJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.UserStoryDomainDataAssembler;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.repository.JPA.UserStoryJpaRepository;
+import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class UserStoryRepository implements Repository<UserStoryID, UserStoryDDD> {
+public class UserStoryRepository implements IUserStoryRepository {
 
     private final UserStoryJpaRepository userStoryJpaRepository;
 
@@ -38,18 +39,19 @@ public class UserStoryRepository implements Repository<UserStoryID, UserStoryDDD
      * Saves a UserStory if one with the same UserStoryID does not exist in the repository.
      *
      * @param userStory to be saved
-     * @return true if operation is successful, otherwise return false.
+     * @return saved UserStory entity
      */
-    public boolean save(UserStoryDDD userStory) {
+    public UserStoryDDD save(UserStoryDDD userStory) {
         UserStoryID userStoryID = userStory.identity();
 
-        if (!containsID(userStoryID)) {
-            UserStoryJpa userStoryJpa = userStoryDomainDataAssembler.toData(userStory);
-            UserStoryJpa savedUserStoryJpa = userStoryJpaRepository.save(userStoryJpa);
-            UserStoryDDD savedUserStory = userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
-            return true; // TODO: should return savedUserStory
+        if (containsID(userStoryID)) {
+            throw new KeyAlreadyExistsException("UserStoryID already exists");
         }
-        return false;
+
+        UserStoryJpa userStoryJpa = userStoryDomainDataAssembler.toData(userStory);
+        UserStoryJpa savedUserStoryJpa = userStoryJpaRepository.save(userStoryJpa);
+        UserStoryDDD savedUserStory = userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
+        return savedUserStory;
     }
 
     /**

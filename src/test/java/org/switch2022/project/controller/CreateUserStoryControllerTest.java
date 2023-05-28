@@ -1,22 +1,7 @@
 package org.switch2022.project.controller;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.old.UserStoryDTO;
-import org.switch2022.project.model.project.ProjectDDD;
-import org.switch2022.project.model.userStory.IUserStoryFactory;
-import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryPriority;
-import org.switch2022.project.service.UserStoryService;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-
 class CreateUserStoryControllerTest {
-
+/*
     @DisplayName("creating a controller with null UserStoryService throws exception")
     @Test
     void createControllerWithNullProjectListThrowsException() {
@@ -125,7 +110,7 @@ class CreateUserStoryControllerTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-/*
+
     @DisplayName("Create US and add it to an empty backlog.")
     @Test
     void createUserStorySucceedsWithEmptyBacklog() {

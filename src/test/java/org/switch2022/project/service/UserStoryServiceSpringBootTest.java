@@ -13,6 +13,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class UserStoryServiceSpringBootTest {
     IUserStoryFactory userStoryFactoryDouble;
 
     @MockBean
-    Repository<UserStoryID, UserStoryDDD> userStoryRepositoryDouble;
+    IUserStoryRepository userStoryRepositoryDouble;
 
     @MockBean
     Repository<ProjectCode, ProjectDDD> projectRepositoryDouble;
@@ -56,7 +57,7 @@ public class UserStoryServiceSpringBootTest {
 
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(true);
+        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
         when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
 
@@ -87,7 +88,7 @@ public class UserStoryServiceSpringBootTest {
         // when project code doesn't exist, projectRepository returns empty optional
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.empty());
         when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(true);
+        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
         when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
 
@@ -118,7 +119,7 @@ public class UserStoryServiceSpringBootTest {
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
         // when saving user story fails, userStoryRepository returns false
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(false);
+        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(null);
         when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
         when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(true);
 
@@ -148,7 +149,7 @@ public class UserStoryServiceSpringBootTest {
 
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(userStoryFactoryDouble.createUserStory(any(), any(), any(), any())).thenReturn(userStoryDouble);
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(true);
+        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(userStoryDouble.identity()).thenReturn(userStoryIDDouble);
         // when saving to backlog fails, project.addToProductBacklog returns false
         when(projectDouble.addToProductBacklog(userStoryIDDouble, priorityDouble)).thenReturn(false);

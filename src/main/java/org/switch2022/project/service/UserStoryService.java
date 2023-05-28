@@ -10,6 +10,7 @@ import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class UserStoryService {
 
     private final IUserStoryFactory userStoryFactory;
 
-    private final Repository<UserStoryID, UserStoryDDD> userStoryRepository;
+    private final IUserStoryRepository userStoryRepository;
 
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
@@ -37,7 +38,7 @@ public class UserStoryService {
      * @param projectRepository   a repository that implements Repository<ProjectCode, Project>
      */
     public UserStoryService(IUserStoryFactory userStoryFactory,
-                            Repository<UserStoryID, UserStoryDDD> userStoryRepository,
+                            IUserStoryRepository userStoryRepository,
                             Repository<ProjectCode, ProjectDDD> projectRepository) {
 
         if (userStoryFactory == null) {
@@ -86,7 +87,10 @@ public class UserStoryService {
 
         UserStoryDDD userStory = this.userStoryFactory.createUserStory(userStoryID, actor, description, criteria);
 
-        return this.userStoryRepository.save(userStory) && project.addToProductBacklog(userStory.identity(), priority);
+        UserStoryDDD savedUserStory = this.userStoryRepository.save(userStory);
+        boolean savedUserStoryIsNotNull = savedUserStory != null;
+
+        return savedUserStoryIsNotNull && project.addToProductBacklog(userStory.identity(), priority); // TODO: should return savedUserStory
 
     }
 
