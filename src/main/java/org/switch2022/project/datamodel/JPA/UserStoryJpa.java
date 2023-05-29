@@ -12,15 +12,17 @@ import java.util.Objects;
 public class UserStoryJpa {
 
     @EmbeddedId
-    private final UserStoryJpaId id;
+    private UserStoryJpaId id;
 
-    private final String actor;
+    private String actor;
 
-    private final String description;
+    private String description;
 
-    private final String acceptanceCriteria;
+    private String acceptanceCriteria;
 
-    private final String status;
+    private String status;
+
+    public UserStoryJpa() {}
 
     public UserStoryJpa(@NonNull UserStoryJpaId id,
                         @NonNull String actor,

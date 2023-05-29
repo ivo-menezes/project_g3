@@ -9,9 +9,11 @@ import java.util.Objects;
 @Embeddable
 public class UserStoryJpaId implements Serializable {
 
-    private final String projectCode;
+    private String projectCode;
 
-    private final String userStoryNumber;
+    private String userStoryNumber;
+
+    public UserStoryJpaId() {}
 
     public UserStoryJpaId(@NonNull String projectCode, @NonNull String userStoryNumber) {
         this.projectCode = projectCode;
