@@ -2,9 +2,10 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Name implements ValueObject {
+public class Name implements ValueObject, Serializable {
 
     private final String name;
 
