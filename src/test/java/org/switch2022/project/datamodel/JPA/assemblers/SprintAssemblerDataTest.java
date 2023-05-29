@@ -3,65 +3,84 @@ package org.switch2022.project.datamodel.JPA.assemblers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
+import org.switch2022.project.datamodel.JPA.SprintJpaID;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.*;
-import java.text.ParseException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SprintAssemblerDataTest {
 
-    @DisplayName("ensure toData method returns a correct SprintJpa - using doubles")
+
+    @DisplayName("ensure toData method returns a correct SprintJPA")
     @Test
-    void shouldReturnCorrectSprintJPA() {
+    void shouldReturnCorrectSprintJPA() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         // Arrange
-        SprintID sprintIdDouble = mock(SprintID.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
         SprintDDD sprintDouble = mock(SprintDDD.class);
+        SprintID sprintIdDouble = mock(SprintID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
+        TimePeriod timePeriodDouble = mock(TimePeriod.class);
 
         when(sprintDouble.identity()).thenReturn(sprintIdDouble);
+        when(sprintIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
+        when(projectCodeDouble.toString()).thenReturn("PJ1");
+        when(sprintIdDouble.getSprintNumber()).thenReturn(sprintNumberDouble);
+        when(sprintNumberDouble.toString()).thenReturn("1");
         when(sprintDouble.getTimePeriod()).thenReturn(timePeriodDouble);
+        when(timePeriodDouble.getStartDate()).thenReturn(formatter.parse("01/01/2023"));
+        when(timePeriodDouble.getEndDate()).thenReturn(formatter.parse("31/01/2023"));
 
-        SprintJPA expectedSprintJPA = new SprintJPA(sprintIdDouble, timePeriodDouble);
+        SprintJpaID expectedSprintJpaId = new SprintJpaID("PJ1", 1);
+        SprintJPA expectedSprintJpa = new SprintJPA(expectedSprintJpaId, formatter.parse("01/01/2023"), formatter.parse("31/01/2023"));
+
         SprintAssemblerData assembler = new SprintAssemblerData();
 
         // Act
-        SprintJPA resultingSprintJPA = assembler.toData(sprintDouble);
+        SprintJPA resultingSprintJpa = assembler.toData(sprintDouble);
 
         // Assert
-        assertEquals(expectedSprintJPA, resultingSprintJPA);
+        assertThat(resultingSprintJpa).usingRecursiveComparison().isEqualTo(expectedSprintJpa);
     }
 
-    @DisplayName("ensure toDomain method returns a correct SprintDDD - using doubles")
+    @DisplayName("ensure toDomain method returns a correct SprintDDD")
     @Test
-    void shouldReturnCorrectSprintDDD() throws ParseException {
+    void shouldReturnCorrectSprintDDD() {
         // Arrange
-        SprintID sprintIdDouble = mock(SprintID.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        SprintJPA sprintJpaDouble = mock(SprintJPA.class);
+        SprintJPA sprintJpaMock = mock(SprintJPA.class);
+        SprintJpaID sprintJpaIdMock = mock(SprintJpaID.class);
+        Date startDateMock = mock(Date.class);
+        Date endDateMock = mock(Date.class);
 
-        when(sprintJpaDouble.getSprintID()).thenReturn(sprintIdDouble);
-        when(sprintJpaDouble.getStartDate()).thenReturn(Date.valueOf("2023-01-01"));
-        when(sprintJpaDouble.getEndDate()).thenReturn(Date.valueOf("2023-01-07"));
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date startDate = dateFormat.parse("2023-01-01");
-        java.util.Date endDate = dateFormat.parse("2023-01-07");
-
-        SprintDDD expectedSprintDDD = new SprintDDD(sprintIdDouble, new TimePeriod(startDate, endDate));
+        when(sprintJpaMock.getSprintID()).thenReturn(sprintJpaIdMock);
+        when(sprintJpaIdMock.getSprintNumber()).thenReturn(1);
+        when(sprintJpaIdMock.getProjectCode()).thenReturn("XPTO");
+        when(sprintJpaMock.getStartDate()).thenReturn(startDateMock);
+        when(sprintJpaMock.getEndDate()).thenReturn(endDateMock);
 
         SprintAssemblerData assembler = new SprintAssemblerData();
 
         // Act
-        SprintDDD resultingSprintDDD = assembler.toDomain(sprintJpaDouble);
+        SprintDDD resultingSprintDdd = assembler.toDomain(sprintJpaMock);
 
         // Assert
-        assertEquals(expectedSprintDDD, resultingSprintDDD);
+        ProjectCode expectedProjectCode = new ProjectCode("XPTO");
+        SprintNumber expectedSprintNumber = new SprintNumber(1);
+        SprintID expectedSprintId = new SprintID(expectedProjectCode, expectedSprintNumber);
+        TimePeriod expectedTimePeriod = new TimePeriod(startDateMock, endDateMock);
+        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod);
+
+        assertEquals(expectedSprintDdd, resultingSprintDdd);
     }
+
 }
 
 

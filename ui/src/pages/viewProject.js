@@ -31,7 +31,7 @@ const ViewProject = () => {
             <div className="header-background-container" />
             <Header
                 text={`${id} - ${project.title}`}
-                className="header-listProjects"
+                className="header-list"
             />
             {project ? (
                 <>

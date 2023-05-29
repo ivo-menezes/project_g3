@@ -24,8 +24,8 @@ const CreateSprint = () => {
 
     // Initializes the newSprint state variable using the useState hook
     const emptySprint = {
-        projectCode : projectCode,
-        id : newID,
+        projectCode: projectCode,
+        id: newID,
         startDate: '',
         endDate: ''
     }
@@ -36,18 +36,18 @@ const CreateSprint = () => {
         const name = event.target.name;
         const value = event.target.value;
         setNewSprint((sprint) => {
-            return {...sprint, [name] : value}
+            return {...sprint, [name]: value}
         })
     }
 
     // Updates the newSprint state variable when a user selects a date using the PickDate component.
     const handleStartDateChange = (newDate, event) => {
-        event.target = {type:"text", value:newDate, name:'startDate'}
+        event.target = {type: "text", value: newDate, name: 'startDate'}
         handleChange(event)
     }
 
     const handleEndDateChange = (newDate, event) => {
-        event.target = {type:"text", value:newDate, name:'endDate'}
+        event.target = {type: "text", value: newDate, name: 'endDate'}
         handleChange(event)
     }
 
@@ -76,45 +76,51 @@ const CreateSprint = () => {
 
     // Renders the form for creating a new sprint
     return (
-        <section className='form-create-sprint'>
-            <Header className= 'header-create-sprint' text="CREATE SPRINT"/>
-            <form onSubmit={handleSubmission}>
+        <div>
+            <Header/>
+            <div className="header-background-container"/>
+            <Header/>
+            <section className='form-create-sprint'>
+                <Header className='header-create' text="Create sprint"/>
+                <form onSubmit={handleSubmission}>
 
-                <TextField  className="textField"
-                    mandatory={true}
-                    label='Number'
-                    name="id"
-                    value={newID}
-                    readOnly
-                />
-                <div className="date">
-                <PickDate
-                    mandatory={true}
-                    onChange={handleStartDateChange}
-                    selectedDate={newSprint.startDate}
-                    dateFormat="dd/MM/yyyy"
-                    label='Start Date'
-                    name="startDate"
-                />
-                </div>
+                    <TextField className="textField"
+                               mandatory={true}
+                               label='Number'
+                               name="id"
+                               value={newID}
+                               readOnly
+                    />
+                    <div className="date">
+                        <PickDate
+                            mandatory={true}
+                            onChange={handleStartDateChange}
+                            selectedDate={newSprint.startDate}
+                            dateFormat="dd/MM/yyyy"
+                            label='Start Date'
+                            name="startDate"
+                        />
+                    </div>
 
-                <div className="date">
-                <PickDate
-                    mandatory={false}
-                    onChange={handleEndDateChange}
-                    selectedDate={newSprint.endDate}
-                    dateFormat="dd/MM/yyyy"
-                    label='End Date'
-                    name="endDate"
-                />
-                </div>
-                
-                <Button className= 'button-form-createSprint-save' name="Save"/>
-                <Link to="/listProjects">
-                    <Button className= 'button-form-createSprint-cancel' name="Cancel"/>
-                </Link>
-            </form>
-        </section>
+                    <div className="date">
+                        <PickDate
+                            mandatory={false}
+                            onChange={handleEndDateChange}
+                            selectedDate={newSprint.endDate}
+                            dateFormat="dd/MM/yyyy"
+                            label='End Date'
+                            name="endDate"
+                        />
+                    </div>
+                    <div className="button-container">
+                        <Button className='button-form-create-save' name="Save"/>
+                        <Link to="/listProjects">
+                            <Button className='button-form-cancel' name="Cancel"/>
+                        </Link>
+                    </div>
+                </form>
+            </section>
+        </div>
     );
 }
 export default CreateSprint;
