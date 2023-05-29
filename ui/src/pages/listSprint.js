@@ -6,7 +6,7 @@ import {useParams, useNavigate, useLocation} from "react-router-dom";
 import AppContext from "../context/AppContext";
 
 const headers = [
-    { label: "Project Code", key: "projectCode"},
+    { label: "Project code", key: "projectCode"},
     { label: "ID", key: "id"},
     { label: "Start Date", key: "startDate"},
     { label: "End Date", key: "endDate" },
@@ -34,25 +34,28 @@ const ListSprints = () => {
 
     return (
         <div>
-            <Header text={`Sprint list for project ${projectCode}`}
-                className="header-listProjects"
-                style={{ marginLeft: "65px" }}
+            <Header />
+            <div className="header-background-container" />
+            <Header text={`Sprint list - Project ${projectCode}`}
+                className="header-list"
             />
+            <div className="table-container-b">
             {sprintInProject.length > 0 ? (
-                <Table data={sprintInProject} headers={headers} />
+                <Table className="table-b" data={sprintInProject} headers={headers} />
             ) : (
-                <div className="string-format">
-                    <h2>This project has an empty sprint list!</h2>
+                <div className="string-notification">
+                    <span className="string-notification"> This project has an empty sprint list!</span>
                 </div>
             )}
-            <div className="bt-container ">
+            </div>
+            <div className="bt-container">
                 <Button
-                    style={{ marginLeft: "50px" }}
-                    className="button-ListProjects"
+
+                    className="button-edit-stuff"
                     name="Create Sprint"
                     onClick={handleCreateSprint}
                 />
-                <Button className='button-ListProjects' name= "Back to Project" onClick={() => handleRowClick(projectCode)}/>
+                <Button className='button-edit-stuff' name= "Back to Project" onClick={() => handleRowClick(projectCode)}/>
             </div>
         </div>
     );

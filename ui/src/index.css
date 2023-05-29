@@ -13,7 +13,7 @@ code {
 }
 
 
-/* TABLE FORMATTING FOR LISTPROJECTS*/
+/* TABLE FORMATTING FOR ALL TABLES*/
 
 .table{
   width: 75%;
@@ -38,15 +38,60 @@ code {
   border-bottom: 1px solid #2F3DA9;
   height: 50px; /* Set the desired height for th and td rows */
 }
-.table th:first-child,
-.table td:first-child {
+
+
+/* Customize column widths for different tables
+
+   table-a*/
+.table.table-a th:first-child,
+.table.table-a td:first-child {
   font-weight: bold;
   width: 20%;
+  padding-left: 20px;
 }
-.table th:not(:first-child),
-.table td:not(:first-child) {
+
+.table.table-a th:not(:first-child),
+.table.table-a td:not(:first-child) {
   width: 60%;
 }
+  /* table-b */
+.table.table-b th:first-child,
+.table.table-b td:first-child {
+  font-weight: bold;
+  width: 25%;
+  padding-left: 20px;
+  box-sizing: border-box;
+
+}
+
+.table.table-b th:not(:first-child),
+.table.table-b td:not(:first-child) {
+  width: 25%;
+  text-align: center;
+}
+/* Customize different width for different tables, using a container */
+.table-container-a {
+  margin-top: 100px;
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table-container-b {
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  margin: 100px auto 20px;
+}
+
+/* Customize font size for table-b */
+.table.table-b {
+  font-size: 1.35rem; /* Set the desired font size for table-b */
+}
+
+
 .button-view {
   width: 30px;
   display: table;
@@ -183,7 +228,7 @@ a:link {
 
 /* List Projects page style*/
 
-.header-listProjects {
+.header-list {
   position: relative;
   width: 100vw;
   height: 47px;
@@ -197,16 +242,6 @@ a:link {
   line-height: 47px;
   text-align: center; /* Add this line to center the text */
 }
-
-.table-container {
-  margin-top: 100px;
-  width: 90vw;
-  display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 
 .button-create{
   border: 0;
@@ -436,6 +471,10 @@ a:link {
 .button-edit-stuff:hover {
   background-color: #243BF3;
 }
+
+
+
+
 
 
 /* Create User Story page style */
@@ -726,13 +765,17 @@ a:link {
   font-weight: bold;
 }
 
-.string-format {
-  font-size: 1.7rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  color: black;
+.string-notification {
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: normal;
+  margin-top: 25px;
+  margin-bottom: 100px;
+  color: #4b9cdb;
   text-align: center;
 }
+
+
 
 
 

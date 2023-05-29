@@ -43,11 +43,11 @@ const ListProjects = () => {
             <Header />
             <div className="header-background-container" />
             <Header
-                className="header-listProjects"
+                className="header-list"
                 text="Project List"
             />
-            <div className="table-container">
-                <Table data={projects} headers={headers} />
+            <div className="table-container-a">
+                <Table className="table-a" data={projects} headers={headers} />
             </div>
             <div className="bt-container">
                 <Link to="/createProject">
