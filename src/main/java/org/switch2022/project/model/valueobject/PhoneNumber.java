@@ -2,11 +2,12 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PhoneNumber implements ValueObject {
+public class PhoneNumber implements ValueObject, Serializable {
 
     private final String phoneNumber;
 
