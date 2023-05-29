@@ -156,7 +156,7 @@ code {
 .title-welcome-container{
   text-align: center;
   width: 100vw;
-  height: 50vh;
+  height: 100vh;
   margin: auto;
 }
 
@@ -713,6 +713,21 @@ a:link {
   margin-bottom: 100px;
   color: #4b9cdb;
   text-align: center;
+}
+.string-under-construction {
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 55px;
+  transform: scaleY(0.9);
+  line-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #FFFFFF;
+  position: relative;
+  top: 40vh;
 }
 
 
