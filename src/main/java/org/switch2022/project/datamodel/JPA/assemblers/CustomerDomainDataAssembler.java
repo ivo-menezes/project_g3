@@ -11,7 +11,7 @@ import org.switch2022.project.model.valueobject.CustomerNIF;
 public class CustomerDomainDataAssembler {
 
     /**
-     * constructor responsible for converting domain objects into JPA.
+     * Method responsible for converting domain objects into JPA.
      * @param customer
      * @return object in JPA format for persistence in the database.
      */
@@ -20,7 +20,7 @@ public class CustomerDomainDataAssembler {
     }
 
     /**
-     * constructor responsible for converting JPA objects into domain objects.
+     * Method responsible for converting JPA objects into domain objects.
      * @param customerJPA
      * @return domain objects
      */

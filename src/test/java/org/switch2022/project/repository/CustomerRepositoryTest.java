@@ -79,7 +79,7 @@ class CustomerRepositoryTest {
         when(customerRepositoryJPA.save(customerJPA)).thenReturn(savedCustomerJPA);
         when(customerDomainDataAssembler.toDomain(savedCustomerJPA)).thenReturn(customer);
 
-        String expectedMessage = "There is a customer with this ID.";
+        String expectedMessage = "There is a customer with this NIF.";
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {

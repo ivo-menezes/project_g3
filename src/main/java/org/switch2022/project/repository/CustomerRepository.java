@@ -27,7 +27,7 @@ public class CustomerRepository implements ICustomerRepository {
          boolean existCustomer = customerRepositoryJPA.existsByCustomerNIF(customer.getCustomerNIF().toString());
 
         if (existCustomer) {
-            throw new IllegalArgumentException("There is a customer with this ID.");
+            throw new IllegalArgumentException("There is a customer with this NIF.");
         }
 
         CustomerJPA customerJPA = customerDomainDataAssembler.toData(customer);

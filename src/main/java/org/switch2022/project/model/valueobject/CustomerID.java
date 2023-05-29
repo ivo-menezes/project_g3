@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Embeddable
 public class CustomerID implements DomainId, Serializable {
 
-    private Long id;
+    private long id;
     public CustomerID(Long id) {
         this.id = id;
     }

@@ -49,7 +49,7 @@ class CustomerJPATest {
     }
 
     @Test
-    @DisplayName("Test for a successful creation of CustomerDDD")
+    @DisplayName("Test for a successful creation of CustomerJPA")
     public void checkIfTheCostumerJPAIsSuccessfulCreated(){
         //Arrange
         String customerNIF = "306756777";
