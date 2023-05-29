@@ -17,6 +17,11 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
     @Autowired
     BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler;
 
+    /**
+     * Method responsible for saving the business Sector in the database.
+     * @param businessSector
+     * @return businessSectorDDD
+     */
     @Override
     public BusinessSectorDDD save(BusinessSectorDDD businessSector) {
         boolean existBusinessSector = businessSectorRepositoryJPA.existsByBusinessSectorDesignation
