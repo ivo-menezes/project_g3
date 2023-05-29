@@ -273,7 +273,7 @@ a:link {
 
 /* Create Project page style */
 
-.header-create-project {
+.header-create {
   position: relative;
   width: 100vw;
   height: 47px;
@@ -288,23 +288,22 @@ a:link {
   text-align: center; /* Add this line to center the text */
 }
 
-
 .form-create-project {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 50px auto;
-  max-width: 700px;
 }
 
 .form-create-project form {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
-  width: 100%;
+
+  width: 46%;
 }
 
 .form-create-project form > * {
@@ -312,60 +311,11 @@ a:link {
   width: 100%;
 }
 
-.form-create-project .button-form-createProject-save {
-  border: 1px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 60px;
-  background-color: #2F3DA9;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.form-create-project .button-form-createProject-save:hover {
-  background-color: #243BF3;
-
-}
-
-.form-create-project .button-form-createProject-cancel {
-  background-color: #737373;
-  border: 1px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 60px;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.form-create-project .button-form-createProject-cancel:hover {
-  background-color: #243BF3;
-}
-
 .button-container {
   display: flex;
   justify-content: center;
   margin-top: 15px; /* Adjust the margin as needed */
   gap: 10px; /* Adjust the gap as needed */
-}
-
-.form-create-project label {
-  display: block;
-  font-size: 1.1rem;
-  margin-bottom: 5px;
 }
 
 .form-create-project input,
@@ -394,12 +344,6 @@ a:link {
 .textField {
   display: block;
   margin-bottom: 20px;
-}
-
-.textField label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
 }
 
 .textField input {
@@ -576,12 +520,6 @@ a:link {
   margin-bottom: 20px;
 }
 
-.textField label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
 .textField input {
   width: 100%;
   padding: 10px;
@@ -629,30 +567,21 @@ a:link {
 
 /* Create Sprint page style */
 
-.header-create-sprint {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: white;
-  text-transform: uppercase;
-}
-
 .form-create-sprint {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 50px auto;
-  max-width: 700px;
 }
 
 .form-create-sprint form {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 46%; /*controlls the width of the form */
 }
 
 .form-create-sprint form > * {
@@ -660,41 +589,48 @@ a:link {
   width: 100%;
 }
 
-.form-create-sprint .button-form-createSprint-save {
-  background-color: #668cff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.2rem;
+.button-form-create-save {
+  background-color: #2F3DA9;
+  border: 1px;
+  width: 180px;
+  height: 55px;
+  display: inline-block;
+  margin: 10px;
   cursor: pointer;
+  border-radius: 60px;
+  color: #fff;
+  font-weight: normal;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  text-decoration: none;
   transition: all 0.3s ease-in-out;
 }
 
-.form-create-sprint .button-form-createSprint-save:hover {
-  background-color: #148f77;
+.button-form-create-save:hover {
+  background-color: #243BF3;
 }
 
-.form-create-sprint .button-form-createSprint-cancel {
+.button-form-cancel {
   background-color: #737373;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.2rem;
+  border: 1px;
+  width: 180px;
+  height: 55px;
+  display: inline-block;
+  margin: 10px;
   cursor: pointer;
+  border-radius: 60px;
+  color: #fff;
+  font-weight: normal;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  text-decoration: none;
   transition: all 0.3s ease-in-out;
 }
 
-.form-create-sprint .button-form-createSprint-cancel:hover {
-  background-color: #7f8c8d;
+.button-form-cancel:hover {
+  background-color: #243BF3;
 }
 
-.form-create-sprint label {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
 
 .form-create-sprint input,
 .form-create-sprint select {
@@ -728,6 +664,7 @@ a:link {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .textField input {
@@ -752,7 +689,10 @@ a:link {
 }
 
 .date label {
+  display: block;
+  margin-bottom: 5px;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .date input {

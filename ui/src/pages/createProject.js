@@ -93,7 +93,7 @@ const CreateProject = () => {
             <div className="header-background-container" />
             <Header />
             <section className='form-create-project'>
-                <Header className='header-create-project' text="Create project" />
+                <Header className='header-create' text="Create project" />
 
                 <form onSubmit={handleSubmission}>
 
@@ -192,9 +192,9 @@ const CreateProject = () => {
                            whenTyped={handleChange}
                 />
                     <div className="button-container">
-                        <Button className='button-form-createProject-save' name="Save" />
+                        <Button className='button-form-create-save' name="Save" />
                         <Link to="/listProjects">
-                            <Button className='button-form-createProject-cancel' name="Cancel" />
+                            <Button className='button-form-cancel' name="Cancel" />
                         </Link>
                     </div>
                 </form>
