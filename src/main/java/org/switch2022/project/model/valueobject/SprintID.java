@@ -7,7 +7,12 @@ import java.util.Objects;
 
 public class SprintID implements DomainId, Serializable {
 
+
+
     private ProjectCode projectCode;
+
+
+
     private SprintNumber sprintNumber;
 
     /**
@@ -42,7 +47,12 @@ public class SprintID implements DomainId, Serializable {
         }
         return false;
     }
-
+    public ProjectCode getProjectCode() {
+        return projectCode;
+    }
+    public SprintNumber getSprintNumber() {
+        return sprintNumber;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(projectCode, sprintNumber);
