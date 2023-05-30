@@ -7,11 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.switch2022.project.mapper.BusinessSectorDTO;
+import org.switch2022.project.mapper.BusinessSectorMapper;
+import org.switch2022.project.mapper.BusinessSectorOutputDTO;
 import org.switch2022.project.service.BusinessSectorService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +24,8 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class BusinessSectorControllerTest {
 
+    @MockBean
+    BusinessSectorMapper businessSectorMapper;
     @MockBean
     BusinessSectorService businessSectorService;
 
@@ -44,7 +49,7 @@ class BusinessSectorControllerTest {
         when(businessSectorService.createBusinessSector(businessSectorDTO)).thenReturn(businessSectorDTO);
 
         //Act
-        ResponseEntity<BusinessSectorDTO> responseEntity = businessSectorController.createBusinessSector(businessSectorDTO);
+        ResponseEntity<BusinessSectorOutputDTO> responseEntity = businessSectorController.createBusinessSector(businessSectorDTO);
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 201);
@@ -57,10 +62,10 @@ class BusinessSectorControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         BusinessSectorDTO businessSectorDTO = mock(BusinessSectorDTO.class);
-        when(businessSectorService.createBusinessSector(businessSectorDTO)).thenThrow(new IllegalArgumentException(""));
+        when(businessSectorService.createBusinessSector(businessSectorDTO)).thenThrow(new InvalidDataAccessApiUsageException(""));
 
         //Act
-        ResponseEntity<BusinessSectorDTO> responseEntity = businessSectorController.createBusinessSector(businessSectorDTO);
+        ResponseEntity<BusinessSectorOutputDTO> responseEntity = businessSectorController.createBusinessSector(businessSectorDTO);
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);

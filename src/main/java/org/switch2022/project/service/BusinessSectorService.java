@@ -39,8 +39,11 @@ public class BusinessSectorService {
      * @return the businessSectorDTO.
      */
     public BusinessSectorDTO createBusinessSector(BusinessSectorDTO businessSectorDTO) {
-        BusinessSectorDDD businessSector = businessSectorFactory.createBusinessSector
-                (businessSectorDTO.businessSectorID, businessSectorDTO.businessSectorDesignation);
+        BusinessSectorDDD businessSector = businessSectorFactory
+                .createBusinessSector(
+                        businessSectorDTO.businessSectorID,
+                        businessSectorDTO.businessSectorDesignation
+                );
         BusinessSectorDDD savedBusinessSector = businessSectorRepository.save(businessSector);
         businessSectorDTO.businessSectorID = savedBusinessSector.identity();
 

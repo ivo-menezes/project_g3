@@ -1,11 +1,9 @@
 package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
-
-import javax.persistence.Embeddable;
 import java.util.Objects;
 
-@Embeddable
+
 public class BusinessSectorDesignation implements ValueObject {
 
     private String businessSectorDesignation;
@@ -30,5 +28,9 @@ public class BusinessSectorDesignation implements ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(businessSectorDesignation);
+    }
+    @Override
+    public String toString() {
+        return this.businessSectorDesignation;
     }
 }
