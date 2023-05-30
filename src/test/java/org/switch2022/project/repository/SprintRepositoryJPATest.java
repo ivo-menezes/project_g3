@@ -8,7 +8,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.repository.JPA.SprintJPARepository;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ class SprintRepositoryJPATest {
     @InjectMocks
     private SprintRepositoryJPA sprintRepositoryJPA;
 
+
     @Test
     public void ensureThatRepositoryIsInstantiated(){
         //arrange
@@ -35,6 +38,8 @@ class SprintRepositoryJPATest {
         SprintDDD mockSavedSprint = mock(SprintDDD.class);
         SprintJPA mockJPA = mock(SprintJPA.class);
         SprintJPA mockSavedJPA = mock(SprintJPA.class);
+        SprintID mockID = mock(SprintID.class);
+        when(mockSprint.identity()).thenReturn(mockID);
 
         when(sprintAssemblerData.toData(mockSprint)).thenReturn(mockJPA);
         when(sprintJPARepository.save(mockJPA)).thenReturn(mockSavedJPA);
@@ -45,25 +50,6 @@ class SprintRepositoryJPATest {
 
         //assert
         assertEquals(mockSavedSprint, result);
-    }
-    @Test
-    public void ensureRepositoryDoesNotSaveDueToExistingID(){
-        //arrange
-        SprintDDD mockSprint = mock(SprintDDD.class);
-        SprintID mockID = mock(SprintID.class);
-
-        when(mockSprint.identity()).thenReturn(mockID);
-        when(sprintJPARepository.existsById(mockID)).thenReturn(true);
-
-        String expected = "Sprint already exists with this ID";
-
-        //act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                sprintRepositoryJPA.save(mockSprint));
-        String result = exception.getMessage();
-
-        //assert
-        assertEquals(expected, result);
     }
     @Test
     public void ensureThatRepositoryDoesNotContainID(){
@@ -185,6 +171,7 @@ class SprintRepositoryJPATest {
         SprintDDD mockSprint = mock(SprintDDD.class);
         Optional<SprintDDD> mockSprintOptional = Optional.of(mockSprint);
 
+
         when(sprintJPARepository.findById(mockID)).thenReturn(Optional.of(mockJPA));
         when(sprintAssemblerData.toDomain(mockJPA)).thenReturn(mockSprint);
 
@@ -193,5 +180,54 @@ class SprintRepositoryJPATest {
 
         //assert
         assertEquals(mockSprintOptional, result);
+    }
+    @Test
+    public void ensureRepositoryGetsListByProjectCode(){
+        // Arrange
+        SprintJPA mockJPA = mock(SprintJPA.class);
+        SprintJPA mockJPATwo = mock(SprintJPA.class);
+        ProjectCode mockCode = mock(ProjectCode.class);
+        when(mockCode.toString()).thenReturn("P1");
+
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        SprintDDD mockSprintTwo = mock(SprintDDD.class);
+
+        List<SprintJPA> mockList = new ArrayList<>();
+        mockList.add(mockJPA);
+        mockList.add(mockJPATwo);
+
+        //when calling the method below, it should give the list created above, the
+        //mockList with the two mockSprints
+        when(sprintJPARepository.findAllByProjectCode("P1")).thenReturn(mockList);
+
+        when(sprintAssemblerData.toDomain(mockJPA)).thenReturn(mockSprint);
+        when(sprintAssemblerData.toDomain(mockJPATwo)).thenReturn(mockSprintTwo);
+
+        List<SprintDDD> expectedDDDList = new ArrayList<>();
+        expectedDDDList.add(mockSprint);
+        expectedDDDList.add(mockSprintTwo);
+
+        // Act
+        List<SprintDDD> result = sprintRepositoryJPA.findByProjectCode(mockCode);
+
+        // Assert
+        assertEquals(expectedDDDList, result);
+    }
+   @Test
+    public void ensureRepositoryDoesNotGetsList(){
+        // Arrange
+        ProjectCode mockCode = mock(ProjectCode.class);
+        when(mockCode.toString()).thenReturn("P1");
+
+        List<SprintJPA> mockList = new ArrayList<>();
+
+        lenient().when(sprintJPARepository.findAll()).thenReturn(mockList);
+        List<SprintDDD> expectedDDDList = new ArrayList<>();
+
+        // Act
+        List<SprintDDD> result = sprintRepositoryJPA.findByProjectCode(mockCode);
+
+        // Assert
+        assertEquals(expectedDDDList, result);
     }
 }

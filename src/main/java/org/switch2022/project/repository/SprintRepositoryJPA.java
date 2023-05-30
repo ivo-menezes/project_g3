@@ -3,6 +3,7 @@ package org.switch2022.project.repository;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.repository.JPA.SprintJPARepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
@@ -25,7 +26,8 @@ public class SprintRepositoryJPA implements ISprintRepository {
      */
     private final SprintAssemblerData sprintAssemblerData;
 
-    public SprintRepositoryJPA(SprintJPARepository sprintJpaRepository, SprintAssemblerData sprintAssemblerData){
+    public SprintRepositoryJPA(SprintJPARepository sprintJpaRepository,
+                               SprintAssemblerData sprintAssemblerData){
         this.sprintJpaRepository = sprintJpaRepository;
         this.sprintAssemblerData = sprintAssemblerData;
     }
@@ -40,6 +42,11 @@ public class SprintRepositoryJPA implements ISprintRepository {
     public boolean containsID(SprintID id) {
         return sprintJpaRepository.existsById(id);
     }
+    public int findLastSprintNumber(ProjectCode projectCode) {
+        String code = projectCode.toString();
+        Integer lastSprintNumber = sprintJpaRepository.findMaxSprintNumberByProjectCode(code);
+        return lastSprintNumber != null ? lastSprintNumber : 0;
+    }
 
     /***
      * This method will get the identity of the sprint object and save it in the
@@ -47,6 +54,7 @@ public class SprintRepositoryJPA implements ISprintRepository {
      * @param sprint Object to save into the Repository
      * @return the saved SprintDDD
      */
+
     @Override
     public SprintDDD save(SprintDDD sprint) {
         SprintID sprintID = sprint.identity();
@@ -60,8 +68,8 @@ public class SprintRepositoryJPA implements ISprintRepository {
         }
     }
     /***
-     * This method returns the collection of values of the hashmap,
-     * by using the values() method, as an iterable object
+     * This method returns the collection of values of the Repository,
+     * by creating an iterable list of Sprint objects
      * @return iterable collection of Sprint values in the repository
      */
     @Override
@@ -97,5 +105,22 @@ public class SprintRepositoryJPA implements ISprintRepository {
     @Override
     public void clearRepository() {
         sprintJpaRepository.deleteAll();
+    }
+
+    /** This method should return a sprint list with the project Code provided.
+     * @param projectCode of the project we want to list
+     * @return list of SprintDDD objects
+     */
+    @Override
+    public List<SprintDDD> findByProjectCode(ProjectCode projectCode) {
+        String code = projectCode.toString();
+
+        Iterable<SprintJPA> listJPA = sprintJpaRepository.findAllByProjectCode(code);
+
+        List<SprintDDD> allSprints = new ArrayList<>();
+        for(SprintJPA sprintJPA : listJPA){
+                allSprints.add(sprintAssemblerData.toDomain(sprintJPA));
+        }
+        return allSprints;
     }
 }
