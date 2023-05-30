@@ -15,6 +15,10 @@ public class ProjectBudget implements ValueObject {
         this.projectBudget = projectBudget;
     }
 
+    public float getValue() {
+        return this.projectBudget;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,4 +31,6 @@ public class ProjectBudget implements ValueObject {
     public int hashCode() {
         return Objects.hash(projectBudget);
     }
+
+
 }

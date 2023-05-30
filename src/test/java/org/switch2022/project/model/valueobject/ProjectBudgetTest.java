@@ -46,6 +46,19 @@ class ProjectBudgetTest {
         //Act and Assert
         assertFalse(projectBudgetOne.equals(projectBudgetTwo));
     }
+    @Test
+    @DisplayName("Ensure value is retrieved")
+    void ensureValueIsRetrieved(){
+        //Arrange
+        float expected = 3000.5f;
+        ProjectBudget projectBudget = new ProjectBudget(expected);
+
+        //Act
+        float result = projectBudget.getValue();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
 
 

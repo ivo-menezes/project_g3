@@ -47,4 +47,18 @@ class ProjectNumberOfPlannedSprintsTest {
         assertFalse(projectNumberOfPlannedSprintsOne.equals(projectNumberOfPlannedSprintsTwo));
     }
 
+    @Test
+    @DisplayName("Ensure value is retrieved")
+    void ensureValueIsRetrieved(){
+        //Arrange
+        int expected = 5;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = new ProjectNumberOfPlannedSprints(expected);
+
+        //Act
+        int result = projectNumberOfPlannedSprints.getValue();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
 }

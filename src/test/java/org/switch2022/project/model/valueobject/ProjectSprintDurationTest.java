@@ -66,5 +66,18 @@ class ProjectSprintDurationTest {
         assertFalse(projectSprintDurationOne.equals(projectSprintDurationTwo));
     }
 
+    @Test
+    @DisplayName("Ensure value is retrieved")
+    void ensureValueIsRetrieved(){
+        //Arrange
+        int expected = 3;
+        ProjectSprintDuration projectSprintDurationOne = new ProjectSprintDuration(expected);
+
+        //Act
+        int result = projectSprintDurationOne.getValue();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
 }

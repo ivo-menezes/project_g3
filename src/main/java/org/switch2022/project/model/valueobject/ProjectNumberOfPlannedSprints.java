@@ -15,6 +15,10 @@ public class ProjectNumberOfPlannedSprints implements ValueObject {
         this.projectNumberOfPlannedSprints = projectNumberOfPlannedSprints;
     }
 
+    public int getValue() {
+        return this.projectNumberOfPlannedSprints;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,4 +31,5 @@ public class ProjectNumberOfPlannedSprints implements ValueObject {
     public int hashCode() {
         return Objects.hash(projectNumberOfPlannedSprints);
     }
+
 }

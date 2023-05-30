@@ -15,6 +15,11 @@ public class ProjectSprintDuration implements ValueObject {
         this.sprintDuration = sprintDuration;
     }
 
+    public int getValue() {
+        return this.sprintDuration;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,4 +32,6 @@ public class ProjectSprintDuration implements ValueObject {
     public int hashCode() {
         return Objects.hash(sprintDuration);
     }
+
+
 }
