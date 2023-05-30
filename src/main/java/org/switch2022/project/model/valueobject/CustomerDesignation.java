@@ -1,12 +1,8 @@
 package org.switch2022.project.model.valueobject;
 
-
 import org.switch2022.project.ddd.ValueObject;
-
-import javax.persistence.Embeddable;
 import java.util.Objects;
 
-@Embeddable
 public class CustomerDesignation implements ValueObject {
 
     private String customerDesignation;
@@ -37,5 +33,10 @@ public class CustomerDesignation implements ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(customerDesignation);
+    }
+
+    @Override
+    public String toString() {
+        return this.customerDesignation;
     }
 }

@@ -12,9 +12,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.switch2022.project.mapper.CustomerDTO;
+import org.switch2022.project.mapper.CustomerMapper;
+import org.switch2022.project.mapper.CustomerOutputDTO;
 import org.switch2022.project.service.CustomerService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +27,9 @@ class CustomerControllerTest {
     @MockBean
     CustomerService customerService;
 
+    @MockBean
+    CustomerMapper customerMapper;
+
     @InjectMocks
     CustomerController customerController;
 
@@ -31,6 +37,7 @@ class CustomerControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
     }
+
     @DisplayName("Ensure that the customer was successfully created.")
     @Test
     void createCustomerSuccess() {
@@ -39,11 +46,12 @@ class CustomerControllerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
         CustomerDTO customerDTO = mock(CustomerDTO.class);
+        CustomerOutputDTO customerOutputDTO = mock(CustomerOutputDTO.class);
 
         when(customerService.createCustomer(customerDTO)).thenReturn(customerDTO);
-
+        when(customerMapper.toOutputDTO(any())).thenReturn(customerOutputDTO);
         //Act
-        ResponseEntity<CustomerDTO> responseEntity = customerController.createCustomer(customerDTO);
+        ResponseEntity<CustomerOutputDTO> responseEntity = customerController.createCustomer(customerDTO);
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 201);
@@ -57,10 +65,12 @@ class CustomerControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         CustomerDTO customerDTO = mock(CustomerDTO.class);
-        when(customerService.createCustomer(customerDTO)).thenThrow(new IllegalArgumentException(""));
+        CustomerOutputDTO customerOutputDTO = mock(CustomerOutputDTO.class);
 
+        when(customerService.createCustomer(customerDTO)).thenThrow(new IllegalArgumentException(""));
+        when(customerMapper.toOutputDTO(any())).thenReturn(customerOutputDTO);
         //Act
-        ResponseEntity<CustomerDTO> responseEntity = customerController.createCustomer(customerDTO);
+        ResponseEntity<CustomerOutputDTO> responseEntity = customerController.createCustomer(customerDTO);
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);
