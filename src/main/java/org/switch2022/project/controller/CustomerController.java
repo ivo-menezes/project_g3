@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,7 @@ public class CustomerController {
             CustomerOutputDTO customerOutputDTO =  customerMapper.toOutputDTO(savedCustomer);
             return new ResponseEntity<>(customerOutputDTO, HttpStatus.CREATED);
         }
-        catch (IllegalArgumentException exception){
+        catch (InvalidDataAccessApiUsageException exception){
             CustomerOutputDTO customerOutputDTO =  customerMapper.toOutputDTO(customer);
             return new ResponseEntity<>(customerOutputDTO, HttpStatus.BAD_REQUEST);
         }

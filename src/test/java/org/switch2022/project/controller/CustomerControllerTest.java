@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -67,7 +68,7 @@ class CustomerControllerTest {
         CustomerDTO customerDTO = mock(CustomerDTO.class);
         CustomerOutputDTO customerOutputDTO = mock(CustomerOutputDTO.class);
 
-        when(customerService.createCustomer(customerDTO)).thenThrow(new IllegalArgumentException(""));
+        when(customerService.createCustomer(customerDTO)).thenThrow(new InvalidDataAccessApiUsageException(""));
         when(customerMapper.toOutputDTO(any())).thenReturn(customerOutputDTO);
         //Act
         ResponseEntity<CustomerOutputDTO> responseEntity = customerController.createCustomer(customerDTO);
