@@ -1,8 +1,9 @@
 package org.switch2022.project.datamodel.JPA;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
-
+@Embeddable
     public class SprintJpaID implements Serializable {
 
         private String projectCode;
@@ -14,7 +15,11 @@ import java.util.Objects;
             this.sprintNumber = sprintNumber;
         }
 
-        public String getProjectCode() {
+    protected SprintJpaID() {
+
+    }
+
+    public String getProjectCode() {
             return projectCode;
         }
 

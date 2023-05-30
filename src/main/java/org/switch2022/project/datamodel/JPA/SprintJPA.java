@@ -9,6 +9,10 @@ import java.util.Objects;
 public class SprintJPA {
 
  @Id
+ @AttributeOverrides({
+         @AttributeOverride(name = "projectCode", column = @Column(name = "ProjectCode")),
+         @AttributeOverride(name = "sprintNumber", column = @Column(name = "SprintNumber")),
+ })
     private SprintJpaID sprintID;
     private Date startDate;
     private Date endDate;
