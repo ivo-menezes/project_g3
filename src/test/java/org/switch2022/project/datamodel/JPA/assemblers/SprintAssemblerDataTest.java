@@ -48,36 +48,36 @@ public class SprintAssemblerDataTest {
         SprintJPA resultingSprintJpa = assembler.toData(sprintDouble);
 
         // Assert
-        assertThat(resultingSprintJpa).usingRecursiveComparison().isEqualTo(expectedSprintJpa);
-    }
+        assertEquals(expectedSprintJpa, resultingSprintJpa);
+         }
 
     @DisplayName("ensure toDomain method returns a correct SprintDDD")
     @Test
     void shouldReturnCorrectSprintDDD() {
         // Arrange
-        SprintJPA sprintJpaMock = mock(SprintJPA.class);
-        SprintJpaID sprintJpaIdMock = mock(SprintJpaID.class);
-        Date startDateMock = mock(Date.class);
-        Date endDateMock = mock(Date.class);
+        SprintJPA sprintJPADouble = mock(SprintJPA.class);
+        SprintJpaID sprintJpaIdDouble = mock(SprintJpaID.class);
+        Date startDateDouble = mock(Date.class);
+        Date endDateDouble = mock(Date.class);
 
-        when(sprintJpaMock.getSprintID()).thenReturn(sprintJpaIdMock);
-        when(sprintJpaIdMock.getSprintNumber()).thenReturn(1);
-        when(sprintJpaIdMock.getProjectCode()).thenReturn("XPTO");
-        when(sprintJpaMock.getStartDate()).thenReturn(startDateMock);
-        when(sprintJpaMock.getEndDate()).thenReturn(endDateMock);
+        when(sprintJPADouble.getSprintID()).thenReturn(sprintJpaIdDouble);
+        when(sprintJpaIdDouble.getSprintNumber()).thenReturn(1);
+        when(sprintJpaIdDouble.getProjectCode()).thenReturn("XPTO");
+        when(sprintJPADouble.getStartDate()).thenReturn(startDateDouble);
+        when(sprintJPADouble.getEndDate()).thenReturn(endDateDouble);
+
+        ProjectCode expectedProjectCode = new ProjectCode("XPTO");
+        SprintNumber expectedSprintNumber = new SprintNumber(1);
+        SprintID expectedSprintId = new SprintID(expectedProjectCode, expectedSprintNumber);
+        TimePeriod expectedTimePeriod = new TimePeriod(startDateDouble, endDateDouble);
+        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod);
 
         SprintAssemblerData assembler = new SprintAssemblerData();
 
         // Act
-        SprintDDD resultingSprintDdd = assembler.toDomain(sprintJpaMock);
+        SprintDDD resultingSprintDdd = assembler.toDomain(sprintJPADouble);
 
         // Assert
-        ProjectCode expectedProjectCode = new ProjectCode("XPTO");
-        SprintNumber expectedSprintNumber = new SprintNumber(1);
-        SprintID expectedSprintId = new SprintID(expectedProjectCode, expectedSprintNumber);
-        TimePeriod expectedTimePeriod = new TimePeriod(startDateMock, endDateMock);
-        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod);
-
         assertEquals(expectedSprintDdd, resultingSprintDdd);
     }
 
