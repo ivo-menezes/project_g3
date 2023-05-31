@@ -10,9 +10,7 @@ import org.switch2022.project.datamodel.JPA.UserStoryJpa;
 import org.switch2022.project.datamodel.JPA.UserStoryJpaId;
 import org.switch2022.project.datamodel.JPA.assemblers.UserStoryDomainDataAssembler;
 import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
-import org.switch2022.project.model.valueobject.UserStoryNumber;
 import org.switch2022.project.repository.JPA.UserStoryJpaRepository;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
@@ -42,14 +40,10 @@ class UserStoryRepositoryUnitTest {
     void shouldNotContainIDEmptyRepo() {
         // Arrange
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
 
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
-
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
+        when(userStoryJpaRepositoryDouble.existsById(userStoryJpaIdDouble)).thenReturn(false);
         // Act
         boolean result = userStoryRepository.containsID(userStoryIdDouble);
 
@@ -62,17 +56,10 @@ class UserStoryRepositoryUnitTest {
     void shouldContainID() {
         // Arrange
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
 
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
-
-        UserStoryJpaId jpaId = new UserStoryJpaId("XPTO", "US001");
-
-        when(userStoryJpaRepositoryDouble.existsById(jpaId)).thenReturn(true);
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
+        when(userStoryJpaRepositoryDouble.existsById(userStoryJpaIdDouble)).thenReturn(true);
 
         // Act
         boolean result = userStoryRepository.containsID(userStoryIdDouble);
@@ -93,16 +80,9 @@ class UserStoryRepositoryUnitTest {
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
 
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
-
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
-        UserStoryJpaId jpaId = new UserStoryJpaId("XPTO", "US001");
-
-        when(userStoryJpaRepositoryDouble.existsById(jpaId)).thenReturn(false);
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
+        when(userStoryJpaRepositoryDouble.existsById(userStoryJpaIdDouble)).thenReturn(false);
 
         when(userStoryDomainDataAssemblerDouble.toData(userStoryDouble)).thenReturn(userStoryJpaDouble);
         when(userStoryJpaRepositoryDouble.save(userStoryJpaDouble)).thenReturn(savedUserStoryJpaDouble);
@@ -119,20 +99,17 @@ class UserStoryRepositoryUnitTest {
     @Test
     void shouldNotSaveUserStoryBecauseIdExists() {
         // Arrange
-        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryJpa savedUserStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryDDD savedUserStoryDouble = mock(UserStoryDDD.class);
 
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
-
-        UserStoryJpaId jpaId = new UserStoryJpaId("XPTO", "US001");
-
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
-        when(userStoryJpaRepositoryDouble.existsById(jpaId)).thenReturn(true);
+
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
+        when(userStoryJpaRepositoryDouble.existsById(userStoryJpaIdDouble)).thenReturn(true);
 
         String expectedMessage = "UserStoryID already exists";
 
@@ -180,25 +157,17 @@ class UserStoryRepositoryUnitTest {
     void shouldReturnOptionalOfUserStory() {
         // Arrange
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
+
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
 
         UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
         Optional<UserStoryJpa> userStoryJpaDoubleOptional = Optional.of(userStoryJpaDouble);
+        when(userStoryJpaRepositoryDouble.findById(userStoryJpaIdDouble)).thenReturn(userStoryJpaDoubleOptional);
 
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
         Optional<UserStoryDDD> userStoryDoubleOptional = Optional.of(userStoryDouble);
-
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
-
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
-
-        UserStoryJpaId jpaId = new UserStoryJpaId("XPTO", "US001");
-
-        when(userStoryJpaRepositoryDouble.findById(jpaId)).thenReturn(userStoryJpaDoubleOptional);
-        when(userStoryDomainDataAssemblerDouble.toDomain(userStoryJpaDouble)).thenReturn(userStoryDouble);
+        when(userStoryDomainDataAssemblerDouble.toDomain(userStoryJpaDoubleOptional.get())).thenReturn(userStoryDouble);
 
         // Act
         Optional<UserStoryDDD> resultOptional = userStoryRepository.getByID(userStoryIdDouble);
@@ -212,17 +181,13 @@ class UserStoryRepositoryUnitTest {
     void shouldReturnEmptyOptional() {
         // Arrange
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        UserStoryJpaId userStoryJpaIdDouble = mock(UserStoryJpaId.class);
 
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
-        when(projectCodeDouble.toString()).thenReturn("XPTO");
-        when(userStoryNumberDouble.toString()).thenReturn("US001");
+        when(userStoryDomainDataAssemblerDouble.convertToJpaId(userStoryIdDouble)).thenReturn(userStoryJpaIdDouble);
 
-        UserStoryJpaId jpaId = new UserStoryJpaId("XPTO", "US001");
+        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
 
-        when(userStoryJpaRepositoryDouble.findById(jpaId)).thenReturn(Optional.empty());
+        when(userStoryJpaRepositoryDouble.findById(userStoryJpaIdDouble)).thenReturn(Optional.empty());
 
         // Act
         Optional<UserStoryDDD> resultOptional = userStoryRepository.getByID(userStoryIdDouble);
