@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 class CustomerMapperTest {
 
     @Test
-    @DisplayName("xx")
+    @DisplayName("Ensure CustomerDTO is converted to CostumerOutputDTO correctly.")
     void toOutputDTOSuccess() {
         //Arrange
         CustomerID customerID = mock(CustomerID.class);
@@ -42,7 +42,7 @@ class CustomerMapperTest {
     }
 
     @Test
-    @DisplayName("xx")
+    @DisplayName("Ensure CustomerDTO is converted to CostumerOutputDTO correctly with customerID equals null")
     void toOutputDTOWithIDNull() {
         //Arrange
 
