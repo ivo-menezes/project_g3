@@ -4,31 +4,34 @@ autonumber
 hide footbox
 title "US009 - As Administrator, I want to add a customer"
 
-actor Administrator
-participant ":CreateCustomerUI" as UI
+participant Client
+participant Springboot
+participant "customerDTO : CustomerDTO" as customerDTO
 participant ":CreateCustomerController" as Controller
 participant ":CustomerService" as Service
 participant "customerFactory :ICustomerFactory" as Factory
 participant "customerRepository :CustomerRepository" as Repository
 participant ":AssemblerData" as Assembler
 participant "customerRepositoryJPA :ICustomerRepositoryJPA" as RepositoryJPA
+participant ":CustomerMapper" as Mapper
+participant "response : ResponseEntity<customerOutputDTO>" as response
 
-activate Administrator #FFBBBB
-Administrator -> UI :Create customer (customerNIF, customerDesignation)
+Client -> Springboot : POST /customers \n{"customerNIF": "customerNIF"\n "ccustomerDesignation": "customerDesignation"}
+activate Client #FFBBBB
 
-activate UI #FFBBBB
-UI -> Controller :createCustomer(customerNIF, customerDesignation)
+activate Springboot #FFBBBB
+Springboot --> customerDTO ** : create(customerNIF, customerDesignation)
+Springboot -> Controller : createCustomer\n(customerDTO)
+deactivate Springboot
 
 activate Controller #FFBBBB
-Controller -> Service :createCustomer(customerNIF, customerDesignation)
+Controller -> Service :createCustomer(customerDTO)
 
 activate Service #FFBBBB
-Service --> "customerNIF :CustomerNIF" ** : create(customerNIF)
-Service --> "customerDesignation :CustomerDesignation" ** :create(customerDesignation)
 
-Service -> Factory :createCustomer(customerNIF, customerDesignation)
+Service -> Factory :createCustomer(customerID, customerNIF, customerDesignation)
 activate Factory #FFBBBB
-Factory --> "customer :Customer" ** :create(customerNIF, customerDesignation)
+Factory --> "customer :Customer" ** :create(customerID, customerNIF, customerDesignation)
 Factory --> Service :customer
 deactivate Factory
 
@@ -36,8 +39,16 @@ Service -> Repository :save(customer)
 activate Repository #FFBBBB
 
 
+Repository -> RepositoryJPA :existsByCustomerNIF(customerNIF)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository :customer
+deactivate RepositoryJPA
+Repository ->Repository :existCustomer(customer)
+
+
 Repository -> Assembler :toDate(customer)
 activate Assembler #FFBBBB
+Assembler --> "customerJPA :CustomerJPA" ** :Create(customer)
 Assembler --> Repository: customerJPA
 deactivate Assembler
 
@@ -47,18 +58,22 @@ RepositoryJPA --> Repository : savedCustomerJPA
 deactivate RepositoryJPA
 Repository -> Assembler : toDomain(savedCustomerJPA)
 activate Assembler #FFBBBB
+Assembler --> "customer :Customer" ** :Create(customerJPA)
 Assembler --> Repository : savedCustomer
 deactivate Assembler
 Repository -->Service: savedCustomer
 
-
 deactivate Repository
-Service --> Controller : true
+Service --> Controller : customerDTO
 deactivate Service
-Controller --> UI : Confirms customer creation
-deactivate Controller
 
-UI --> Administrator : Confirms customer creation
-deactivate UI
+Controller -> Mapper :toOutputDTO(customerDTO)
+activate Mapper #FFBBBB
+Mapper -->"customerOutputDTO:CustomerOutputDTO" ** :Create(customerDTO)
+Mapper --> Controller :customerOutputDTO
+deactivate Mapper
+Controller --> response ** : create(customerOutputDTO, HttpStatus.CREATED)
+Controller --> Client : Confirms customer creation
+deactivate Controller
 
 @enduml
