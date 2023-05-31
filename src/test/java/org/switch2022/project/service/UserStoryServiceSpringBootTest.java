@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
@@ -34,6 +35,9 @@ public class UserStoryServiceSpringBootTest {
     @MockBean
     Repository<ProjectCode, ProjectDDD> projectRepositoryDouble;
 
+    @MockBean
+    NewUserStoryInfoDTOMapper mapperDouble;
+
     @Autowired
     UserStoryService userStoryService;
 
@@ -47,6 +51,7 @@ public class UserStoryServiceSpringBootTest {
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
+        NewUserStoryInfoDTO dtoDouble2 = mock(NewUserStoryInfoDTO.class);
 
         when(userStoryFactoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
         when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
@@ -55,12 +60,13 @@ public class UserStoryServiceSpringBootTest {
         when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(true);
         when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+        when(mapperDouble.toDto(userStoryDouble)).thenReturn(dtoDouble2);
 
         // act
-        UserStoryDDD result = userStoryService.createUserStory(dtoDouble);
+        NewUserStoryInfoDTO result = userStoryService.createUserStory(dtoDouble);
 
         // assert
-        assertEquals(userStoryDouble, result);
+        assertEquals(dtoDouble2, result);
 
     }
 

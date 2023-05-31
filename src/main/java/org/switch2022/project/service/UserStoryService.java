@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
 import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -26,7 +27,7 @@ public class UserStoryService {
 
     private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
-
+    private final NewUserStoryInfoDTOMapper userStoryInfoDTOMapper;
     private UserStoryMapperDDD userStoryMapper;
 
 
@@ -39,7 +40,8 @@ public class UserStoryService {
      */
     public UserStoryService(IUserStoryFactory userStoryFactory,
                             IUserStoryRepository userStoryRepository,
-                            Repository<ProjectCode, ProjectDDD> projectRepository) {
+                            Repository<ProjectCode, ProjectDDD> projectRepository,
+                            NewUserStoryInfoDTOMapper userStoryInfoDTOMapper) {
 
         if (userStoryFactory == null) {
             throw new IllegalArgumentException("userStoryFactory must not be null.");
@@ -56,6 +58,7 @@ public class UserStoryService {
         this.userStoryFactory = userStoryFactory;
         this.userStoryRepository = userStoryRepository;
         this.projectRepository = projectRepository;
+        this.userStoryInfoDTOMapper = userStoryInfoDTOMapper;
     }
 
     /**
@@ -64,7 +67,7 @@ public class UserStoryService {
      * @param infoDTO a NewUserStoryInfoDTO with the information for the new UserStory
      * @return the saved UserStory entity
      */
-    public UserStoryDDD createUserStory(NewUserStoryInfoDTO infoDTO) {
+    public NewUserStoryInfoDTO createUserStory(NewUserStoryInfoDTO infoDTO) {
 
         // create the new UserStory
         UserStoryDDD newUserStory = userStoryFactory.createUserStory(infoDTO);
@@ -91,7 +94,9 @@ public class UserStoryService {
         // save the updated project
         projectRepository.save(project);
 
-        return savedUserStory;
+        NewUserStoryInfoDTO outboundDto = userStoryInfoDTOMapper.toDto(savedUserStory);
+        outboundDto.priority = infoDTO.priority; // TODO: should be actual priority (from backlog) if not defined in infoDTO
+        return outboundDto;
     }
 
     /**

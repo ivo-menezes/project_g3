@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
 import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -31,12 +32,13 @@ class UserStoryServiceTest {
         IUserStoryFactory factory = null;
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "userStoryFactory must not be null.";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new UserStoryService(factory, usRepositoryDouble, projectRepositoryDouble);
+            new UserStoryService(factory, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
         });
 
         String resultMessage = result.getMessage();
@@ -52,12 +54,13 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepository = null;
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "userStoryRepository must not be null.";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new UserStoryService(factoryDouble, usRepository, projectRepositoryDouble);
+            new UserStoryService(factoryDouble, usRepository, projectRepositoryDouble, mapperDouble);
         });
 
         String resultMessage = result.getMessage();
@@ -73,12 +76,13 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepository = null;
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "projectRepository must not be null.";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new UserStoryService(factoryDouble, usRepositoryDouble, projectRepository);
+            new UserStoryService(factoryDouble, usRepositoryDouble, projectRepository, mapperDouble);
         });
 
         String resultMessage = result.getMessage();
@@ -94,8 +98,9 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
 
         NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
         dtoDouble.priority = mock(UserStoryPriority.class);
@@ -103,6 +108,7 @@ class UserStoryServiceTest {
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
+        NewUserStoryInfoDTO dtoDouble2 = mock(NewUserStoryInfoDTO.class);
 
         when(factoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
         when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
@@ -111,12 +117,13 @@ class UserStoryServiceTest {
         when(usRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(true);
         when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+        when(mapperDouble.toDto(userStoryDouble)).thenReturn(dtoDouble2);
 
         // act
-        UserStoryDDD result = service.createUserStory(dtoDouble);
+        NewUserStoryInfoDTO result = service.createUserStory(dtoDouble);
 
         // assert
-        assertEquals(userStoryDouble, result);
+        assertEquals(dtoDouble2, result);
     }
 
     @DisplayName("assert that creating a user story with a non existing project throws exception")
@@ -126,8 +133,9 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
 
         NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
         dtoDouble.priority = mock(UserStoryPriority.class);
@@ -159,8 +167,9 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
 
         NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
         dtoDouble.priority = mock(UserStoryPriority.class);
@@ -198,6 +207,7 @@ class UserStoryServiceTest {
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
+        NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
@@ -224,7 +234,7 @@ class UserStoryServiceTest {
         mockDTOList.add(userStoryDTODouble1);
         when(mapperDouble.toDTOList(openUserStoryList)).thenReturn(mockDTOList);
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
         service.setUserStoryMapper(mapperDouble);
 
         //Act
@@ -244,13 +254,14 @@ class UserStoryServiceTest {
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
+        NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
 
         //defining projectRepositoryDouble behavior to return empty optional
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.empty());
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
         service.setUserStoryMapper(mapperDouble);
 
         //Act
@@ -269,6 +280,7 @@ class UserStoryServiceTest {
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
+        NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
@@ -286,7 +298,7 @@ class UserStoryServiceTest {
         when(usRepositoryDouble.containsID(userStoryIDDouble1)).thenReturn(true);
         when(usRepositoryDouble.getByID(userStoryIDDouble1)).thenReturn(Optional.empty());
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
         service.setUserStoryMapper(mapperDouble);
 
         //Act
@@ -305,6 +317,7 @@ class UserStoryServiceTest {
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
+        NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
@@ -321,7 +334,7 @@ class UserStoryServiceTest {
         //defining usRepositoryDouble behavior to return false for containsID method
         when(usRepositoryDouble.containsID(userStoryIDDouble1)).thenReturn(false);
 
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble);
+        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
         service.setUserStoryMapper(mapperDouble);
 
         //Act
