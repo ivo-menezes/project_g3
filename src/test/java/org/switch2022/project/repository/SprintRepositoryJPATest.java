@@ -10,7 +10,6 @@ import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
-import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.repository.JPA.SprintJPARepository;
 
 import java.util.ArrayList;
