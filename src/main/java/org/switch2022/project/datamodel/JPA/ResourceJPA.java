@@ -3,7 +3,7 @@ package org.switch2022.project.datamodel.JPA;
 import org.switch2022.project.model.valueobject.Email;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "resources")
@@ -13,12 +13,12 @@ public class ResourceJPA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resourceID;
     private String email;
-    private String costPerHour;
+    private double costPerHour;
     private String role;
-    private String percentageOfAllocation;
+    private double percentageOfAllocation;
     private String projectCode;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
 
     /**
      * Default constructor used by the persistence framework
@@ -37,13 +37,13 @@ public class ResourceJPA {
      * @param startDate of the resource in the project
      * @param endDate of the resource in the project
      */
-    public ResourceJPA(String email, String costPerHour, String role, String percentageOfAllocation, String projectCode, String startDate, String endDate) {
+    public ResourceJPA(String email, double costPerHour, String role, double percentageOfAllocation, String projectCode, Date startDate, Date endDate) {
         if (email != null && !email.isBlank() && !email.isEmpty()) {
             this.email = email;
         } else {
             throw new IllegalArgumentException("Email designation must not be null");
         }
-        if (costPerHour != null && !costPerHour.isBlank() && !costPerHour.isEmpty()) {
+        if (costPerHour > 0) {
             this.costPerHour = costPerHour;
         } else {
             throw new IllegalArgumentException("CostPerHour designation must not be null");
@@ -53,7 +53,7 @@ public class ResourceJPA {
         } else {
             throw new IllegalArgumentException("Role designation must not be null");
         }
-        if (percentageOfAllocation != null && !percentageOfAllocation.isBlank() && !percentageOfAllocation.isEmpty()) {
+        if (percentageOfAllocation > 0) {
             this.percentageOfAllocation = percentageOfAllocation;
         } else {
             throw new IllegalArgumentException("PercentageOfAllocation designation must not be null");
@@ -63,12 +63,12 @@ public class ResourceJPA {
         } else {
             throw new IllegalArgumentException("ProjectCode designation must not be null");
         }
-        if (startDate != null && !startDate.isBlank() && !startDate.isEmpty()) {
+        if (startDate != null) {
             this.startDate = startDate;
         } else {
             throw new IllegalArgumentException("StartDate designation must not be null");
         }
-        if (endDate != null && !endDate.isBlank() && !endDate.isEmpty()) {
+        if (endDate != null) {
             this.endDate = endDate;
         } else {
             throw new IllegalArgumentException("EndDate designation must not be null");
@@ -83,7 +83,7 @@ public class ResourceJPA {
         return email;
     }
 
-    public String getCostPerHour() {
+    public double getCostPerHour() {
         return costPerHour;
     }
 
@@ -91,7 +91,7 @@ public class ResourceJPA {
         return role;
     }
 
-    public String getPercentageOfAllocation() {
+    public double getPercentageOfAllocation() {
         return percentageOfAllocation;
     }
 
@@ -99,11 +99,11 @@ public class ResourceJPA {
         return projectCode;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 }

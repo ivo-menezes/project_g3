@@ -1,7 +1,10 @@
 package org.switch2022.project.datamodel.JPA;
 
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,12 +16,12 @@ class ResourceJPATest {
     void ensureResourceJpaIsSuccessfullyCreated() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
 
         //Act
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
@@ -43,12 +46,12 @@ class ResourceJPATest {
         //Arrange
         String emailEmpty = "";
         String emailBlank = "    ";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "Email designation must not be null";
 
         IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(emailEmpty, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);});
@@ -65,29 +68,22 @@ class ResourceJPATest {
     }
 
     @Test
-    @DisplayName("US constructor throws exception with null or blank or empty costPerHour")
+    @DisplayName("US constructor throws exception with negative costPerHour")
     void nullBlankOrEmptyCostPerHourThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHourEmpty = "";
-        String costPerHourBlank = "    ";
+        double costPerHour = -2;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "CostPerHour designation must not be null";
 
-        IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHourEmpty, role, percentageOfAllocation, projectCode, startDate, endDate);});
-        IllegalArgumentException exceptionBlank = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHourBlank, role, percentageOfAllocation, projectCode, startDate, endDate);});
-        IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, null, role, percentageOfAllocation, projectCode, startDate, endDate);});
+        IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);});
         //Act
-        String resultMessageEmpty = exceptionEmpty.getMessage();
-        String resultMessageBlank = exceptionBlank.getMessage();
         String resultMessageNull = exceptionNull.getMessage();
         //Assert
-        assertEquals(expectedMessage, resultMessageEmpty);
-        assertEquals(expectedMessage, resultMessageBlank);
         assertEquals(expectedMessage, resultMessageNull);
     }
 
@@ -96,25 +92,19 @@ class ResourceJPATest {
     void nullBlankOrEmptyPercentageOfAllocationThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocationEmpty = "";
-        String percentageOfAllocationBlank = "    ";
+        double percentageOfAllocation = -10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "PercentageOfAllocation designation must not be null";
 
-        IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocationEmpty, projectCode, startDate, endDate);});
-        IllegalArgumentException exceptionBlank = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocationBlank, projectCode, startDate, endDate);});
-        IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, null, projectCode, startDate, endDate);});
+        IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);});
         //Act
-        String resultMessageEmpty = exceptionEmpty.getMessage();
-        String resultMessageBlank = exceptionBlank.getMessage();
         String resultMessageNull = exceptionNull.getMessage();
         //Assert
-        assertEquals(expectedMessage, resultMessageEmpty);
-        assertEquals(expectedMessage, resultMessageBlank);
+
         assertEquals(expectedMessage, resultMessageNull);
     }
 
@@ -123,13 +113,13 @@ class ResourceJPATest {
     void nullBlankOrEmptyRoleThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String roleEmpty = "";
         String roleBlank = "   ";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "Role designation must not be null";
 
         IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, roleEmpty, percentageOfAllocation, projectCode, startDate, endDate);});
@@ -150,13 +140,13 @@ class ResourceJPATest {
     void nullBlankOrEmptyProjectCodeThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCodeBlank = "   ";
         String projectCodeEmpty = "";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "ProjectCode designation must not be null";
 
         IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCodeEmpty, startDate, endDate);});
@@ -177,25 +167,18 @@ class ResourceJPATest {
     void nullBlankOrEmptyStartDateThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDateEmpty = "";
-        String startDateBlank = "     ";
-        String endDate = "22/2/23";
+        Date endDate = new Date(2023 - 4 - 23);
         String expectedMessage = "StartDate designation must not be null";
 
-        IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDateEmpty, endDate);});
-        IllegalArgumentException exceptionBlank = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDateBlank, endDate);});
+
         IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, null, endDate);});
         //Act
-        String resultMessageEmpty = exceptionEmpty.getMessage();
-        String resultMessageBlank = exceptionBlank.getMessage();
         String resultMessageNull = exceptionNull.getMessage();
         //Assert
-        assertEquals(expectedMessage, resultMessageEmpty);
-        assertEquals(expectedMessage, resultMessageBlank);
         assertEquals(expectedMessage, resultMessageNull);
     }
 
@@ -204,25 +187,17 @@ class ResourceJPATest {
     void nullBlankOrEmptyEndDateThrowsException() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "23/2/23";
-        String endDateEmpty = "";
-        String endDateBlank = "    ";
+        Date startDate = new Date(2023 - 3 - 23);
         String expectedMessage = "EndDate designation must not be null";
 
-        IllegalArgumentException exceptionEmpty = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDateEmpty);});
-        IllegalArgumentException exceptionBlank = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDateBlank);});
         IllegalArgumentException exceptionNull = assertThrows(IllegalArgumentException.class, () -> {new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, null);});
         //Act
-        String resultMessageEmpty = exceptionEmpty.getMessage();
-        String resultMessageBlank = exceptionBlank.getMessage();
         String resultMessageNull = exceptionNull.getMessage();
         //Assert
-        assertEquals(expectedMessage, resultMessageEmpty);
-        assertEquals(expectedMessage, resultMessageBlank);
         assertEquals(expectedMessage, resultMessageNull);
     }
 
@@ -231,12 +206,12 @@ class ResourceJPATest {
     void ensureResourceEmailIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
@@ -251,16 +226,16 @@ class ResourceJPATest {
     void ensureResourceCostPerHourIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
-        String resultCostPerHour = resourceJPA.getCostPerHour();
+        double resultCostPerHour = resourceJPA.getCostPerHour();
 
         //Assert
         assertEquals(costPerHour, resultCostPerHour);
@@ -271,12 +246,12 @@ class ResourceJPATest {
     void ensureResourceRoleIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
@@ -291,16 +266,16 @@ class ResourceJPATest {
     void ensureResourcePercentageOfAllocationIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
-        String resultPercentageOfAllocation = resourceJPA.getPercentageOfAllocation();
+        double resultPercentageOfAllocation = resourceJPA.getPercentageOfAllocation();
 
         //Assert
         assertEquals(percentageOfAllocation, resultPercentageOfAllocation);
@@ -311,12 +286,12 @@ class ResourceJPATest {
     void ensureResourceProjectCodeIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
@@ -331,16 +306,16 @@ class ResourceJPATest {
     void ensureResourceStartDateIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
-        String resultStartDate = resourceJPA.getStartDate();
+        Date resultStartDate = resourceJPA.getStartDate();
 
         //Assert
         assertEquals(startDate, resultStartDate);
@@ -351,16 +326,16 @@ class ResourceJPATest {
     void ensureResourceEndDateIsReturned() {
         //Arrange
         String email = "test@gmail.com";
-        String costPerHour = "3";
+        double costPerHour = 3;
         String role = "PO";
-        String percentageOfAllocation = "10%";
+        double percentageOfAllocation = 10;
         String projectCode = "P26";
-        String startDate = "21/2/23";
-        String endDate = "22/2/23";
+        Date startDate = new Date(2023 - 3 - 23);
+        Date endDate = new Date(2023 - 4 - 23);
         ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
-        String resultEndDAte = resourceJPA.getEndDate();
+        Date resultEndDAte = resourceJPA.getEndDate();
 
         //Assert
         assertEquals(endDate, resultEndDAte);
