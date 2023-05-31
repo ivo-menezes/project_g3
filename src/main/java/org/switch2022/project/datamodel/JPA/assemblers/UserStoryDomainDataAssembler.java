@@ -42,4 +42,11 @@ public class UserStoryDomainDataAssembler {
 
         return userStory;
     }
+
+    public UserStoryJpaId convertToJpaId(UserStoryID domainId) {
+        String projectCode = domainId.getProjectCode().toString();
+        String userStoryNumber = domainId.getUserStoryNumber().toString();
+        UserStoryJpaId userStoryJpaId = new UserStoryJpaId(projectCode, userStoryNumber);
+        return userStoryJpaId;
+    }
 }

@@ -26,12 +26,7 @@ public class UserStoryRepository implements IUserStoryRepository {
         this.userStoryDomainDataAssembler = userStoryDomainDataAssembler;
     }
 
-    private UserStoryJpaId convertToJpaId(UserStoryID domainId) {
-        String projectCode = domainId.getProjectCode().toString();
-        String userStoryNumber = domainId.getUserStoryNumber().toString();
-        UserStoryJpaId userStoryJpaId = new UserStoryJpaId(projectCode, userStoryNumber);
-        return userStoryJpaId;
-    }
+
 
     /**
      * Checks if a UserStoryID exists in the repository.
@@ -40,7 +35,7 @@ public class UserStoryRepository implements IUserStoryRepository {
      * @return true if user story with given ID exists, false otherwise
      */
     public boolean containsID(UserStoryID id) {
-        UserStoryJpaId jpaId = convertToJpaId(id);
+        UserStoryJpaId jpaId = userStoryDomainDataAssembler.convertToJpaId(id);
         return userStoryJpaRepository.existsById(jpaId);
     }
 
@@ -86,7 +81,7 @@ public class UserStoryRepository implements IUserStoryRepository {
      * @return Optional with UserStory if found, empty otherwise
      */
     public Optional<UserStoryDDD> getByID(UserStoryID id) {
-        UserStoryJpaId jpaId = convertToJpaId(id);
+        UserStoryJpaId jpaId = userStoryDomainDataAssembler.convertToJpaId(id);
         Optional<UserStoryJpa> userStoryJpaOptional = userStoryJpaRepository.findById(jpaId);
 
         if (userStoryJpaOptional.isEmpty()) {
