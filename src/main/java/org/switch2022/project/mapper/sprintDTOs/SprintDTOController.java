@@ -1,4 +1,4 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.mapper.sprintDTOs;
 
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.TimePeriod;

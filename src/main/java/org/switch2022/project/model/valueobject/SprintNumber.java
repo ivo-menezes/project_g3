@@ -24,4 +24,7 @@ public class SprintNumber implements ValueObject {
         return sprintNumber == that.sprintNumber;
     }
 
+    public int getSprintNumber() {
+        return sprintNumber;
+    }
 }

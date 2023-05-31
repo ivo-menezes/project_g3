@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.mapper.SprintDTOController;
+import org.switch2022.project.mapper.sprintDTOs.SprintDTOController;
+import org.switch2022.project.mapper.sprintDTOs.SprintDTOToController;
+import org.switch2022.project.mapper.sprintDTOs.SprintDTOToControllerMapper;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
@@ -28,12 +30,14 @@ public class SprintServiceDDDTest {
     ISprintFactory sprintFactory;
     @MockBean
     ISprintRepository sprintRepository;
+    @MockBean
+    SprintDTOToControllerMapper toControllerMapper;
     @Autowired
     SprintServiceDDD sprintService;
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository);
+        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper);
     }
     @Test
     public void ensureServiceThrowsException(){
@@ -42,7 +46,7 @@ public class SprintServiceDDDTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(null, sprintRepository);
+            new SprintServiceDDD(null, sprintRepository, toControllerMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -53,6 +57,7 @@ public class SprintServiceDDDTest {
         //Arrange
         //Create sprintDTO:
         SprintDTOController sprintDTO = new SprintDTOController();
+        SprintDTOToController toControllerDTO = new SprintDTOToController();
         //Create VO from sprintDTO:
         ProjectCode projectCode = new ProjectCode("AAA");
         sprintDTO.projectCode = projectCode;
@@ -60,6 +65,8 @@ public class SprintServiceDDDTest {
         SprintID sprintID = new SprintID(projectCode, sprintNumber);
         TimePeriod timePeriod = new TimePeriod(new Date(10 / 3 / 2023),
                 new Date(25 / 3 / 2023));
+        toControllerDTO.sprintID = sprintID;
+        toControllerDTO.timePeriod = timePeriod;
         sprintDTO.timePeriod = timePeriod;
         when(sprintRepository.findLastSprintNumber(projectCode)).thenReturn(0);
         //Create a mock sprint:
@@ -68,12 +75,14 @@ public class SprintServiceDDDTest {
         when(sprintFactory.createSprint(sprintID, timePeriod)).thenReturn(sprint);
         //Mock and train repository of sprints:
         when(sprintRepository.save(sprint)).thenReturn(sprint);
+        //Mock and train mapper:
+        when(toControllerMapper.convertToDTO(sprint)).thenReturn(toControllerDTO);
 
         //Act
-        SprintDDD result = sprintService.createSprint(sprintDTO);
+        SprintDTOToController result = sprintService.createSprint(sprintDTO);
 
         //Assert
-        assertEquals(sprint, result);
+        assertEquals(toControllerDTO, result);
     }
     @Test
     public void ensureServiceCreatesList(){
@@ -82,19 +91,23 @@ public class SprintServiceDDDTest {
         SprintDDD mockSprintTwo = mock(SprintDDD.class);
         ProjectCode mockCode = mock(ProjectCode.class);
         when(mockCode.toString()).thenReturn("P1");
+        SprintDTOToController mockToController = mock(SprintDTOToController.class);
+        SprintDTOToController mockToControllerTwo = mock(SprintDTOToController.class);
 
         List<SprintDDD> mockList = new ArrayList<>();
         mockList.add(mockSprint);
         mockList.add(mockSprintTwo);
 
         when(sprintRepository.findByProjectCode(mockCode)).thenReturn(mockList);
+        when(toControllerMapper.convertToDTO(mockSprint)).thenReturn(mockToController);
+        when(toControllerMapper.convertToDTO(mockSprintTwo)).thenReturn(mockToControllerTwo);
 
-        List<SprintDDD> expectedDDDList = new ArrayList<>();
-        expectedDDDList.add(mockSprint);
-        expectedDDDList.add(mockSprintTwo);
+        List<SprintDTOToController> expectedDDDList = new ArrayList<>();
+        expectedDDDList.add(mockToController);
+        expectedDDDList.add(mockToControllerTwo);
 
         // act
-        List<SprintDDD> result = sprintService.sprintList(mockCode);
+        List<SprintDTOToController> result = sprintService.sprintList(mockCode);
 
         // assert
         assertEquals(expectedDDDList, result);
@@ -104,15 +117,18 @@ public class SprintServiceDDDTest {
         // arrange
         ProjectCode mockCode = mock(ProjectCode.class);
         when(mockCode.toString()).thenReturn("P1");
+        SprintDTOToController mockToController = mock(SprintDTOToController.class);
+        SprintDDD mockSprint = mock(SprintDDD.class);
 
         List<SprintDDD> mockList = new ArrayList<>();
 
         when(sprintRepository.findByProjectCode(mockCode)).thenReturn(mockList);
+        when(toControllerMapper.convertToDTO(mockSprint)).thenReturn(mockToController);
 
-        List<SprintDDD> expectedDDDList = new ArrayList<>();
+        List<SprintDTOToController> expectedDDDList = new ArrayList<>();
 
         // act
-        List<SprintDDD> result = sprintService.sprintList(mockCode);
+        List<SprintDTOToController> result = sprintService.sprintList(mockCode);
 
         // assert
         assertEquals(expectedDDDList, result);
