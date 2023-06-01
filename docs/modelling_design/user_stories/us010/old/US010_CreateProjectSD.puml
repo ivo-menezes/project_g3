@@ -1,0 +1,37 @@
+@startuml
+!theme plain
+hide footbox
+
+actor Manager  as Manager
+participant ": CreateProjectUI" as UI
+participant ": CreateProjectController" as Controller
+'participant ": AccountList" as AccountList
+participant ": ProjectList" as ProjectList
+participant "newProject : Project" as Project
+
+activate Manager #FFBBBB
+Manager ->  UI : Request to create a project (code, name, description)
+
+activate UI #FFBBBB
+UI -> Controller : createProject(code, name, description)
+
+activate Controller #FFBBBB
+'Controller -> AccountList : checkPermissionsToCreateAProject(accountEmail)
+'activate AccountList #FFBBBB
+'AccountList --> Controller : Permission granted
+'deactivate AccountList
+Controller -> ProjectList : createProject(code, name, description)
+activate ProjectList #FFBBBB
+
+ProjectList -> ProjectList : validateCode(code)
+ProjectList --> Project ** : create(code, name, description)
+ProjectList -> ProjectList : add(newProject)
+
+ProjectList --> Controller : Confirms new project creation
+deactivate ProjectList
+
+Controller --> UI : Confirms new project creation
+deactivate Controller
+UI --> Manager : Confirms new project creation
+deactivate UI
+@enduml

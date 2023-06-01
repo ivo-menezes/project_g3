@@ -1,37 +1,124 @@
 @startuml
 !theme plain
 hide footbox
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US010 - As Manager, I want to register/create a new project."
 
-actor Manager  as Manager
-participant ": CreateProjectUI" as UI
-participant ": CreateProjectController" as Controller
-'participant ": AccountList" as AccountList
-participant ": ProjectList" as ProjectList
-participant "newProject : Project" as Project
+participant Client
+participant Springboot
+participant "restDto : ProjectRestDto" as DTOin
+participant ": ProjectController" as Controller
+participant ": ProjectRestDtoMapper" as Mapper
+participant ": ProjectService" as Service
+participant ": ICustomerJpaRepository" as CustomerJpaRepository
+participant ": IBusinessSectorJpaRepository" as BusinessSectorJpaRepository
+participant ": ITypologyJpaRepository" as TypologyJpaRepository
+participant ": IProjectFactory" as Factory
 
-activate Manager #FFBBBB
-Manager ->  UI : Request to create a project (code, name, description)
+participant ": IProjectRepository" as ProjRepository
+participant ": ProjectDomainDataAssembler" as Assembler
+participant "IProjectJpaRepository" as ProjectJpaRepository
+participant ": NewProjectDtoMapper" as NewMapper
+participant "project:Project" as project
+participant "projectJpa:ProjectJpa" as projectJpa
+participant "savedProject:Project" as savedProject
+participant "response : ResponseEntity<ProjectDTO>" as response
 
-activate UI #FFBBBB
-UI -> Controller : createProject(code, name, description)
 
-activate Controller #FFBBBB
-'Controller -> AccountList : checkPermissionsToCreateAProject(accountEmail)
-'activate AccountList #FFBBBB
-'AccountList --> Controller : Permission granted
-'deactivate AccountList
-Controller -> ProjectList : createProject(code, name, description)
-activate ProjectList #FFBBBB
+Client ->  Springboot: POST /projects {"projectCode":"projectCode",\n                     "projectName":"projectName",\n                     "description":"description",\n                     "typology":"typologyDesignation",\n                     "businessSector":"businessSectorDesignation",\n                     "customer":"customerNIF"}
+activate Client
 
-ProjectList -> ProjectList : validateCode(code)
-ProjectList --> Project ** : create(code, name, description)
-ProjectList -> ProjectList : add(newProject)
+activate Springboot
+Springboot --> DTOin ** : create(projectCode, name,\n         description,\n         typologyDesignation,\n         businessSectorDesignation,\n         customerDesignation)
+Springboot -> Controller: createProject(projectRestDto)
+deactivate Springboot
+activate Controller
 
-ProjectList --> Controller : Confirms new project creation
-deactivate ProjectList
+Controller -> Mapper: toDomainDto(projectRestDto)
+activate Mapper
 
-Controller --> UI : Confirms new project creation
+Mapper --> Controller: projectDto
+deactivate Mapper
+
+Controller -> Service: createProject(projectDto)
+activate Service
+
+'TODO: add these following three verifications in the implementation
+Service -> CustomerJpaRepository : existsById\n(customerID)
+activate CustomerJpaRepository
+CustomerJpaRepository --> Service : true
+deactivate CustomerJpaRepository
+
+Service -> BusinessSectorJpaRepository : existsById\n(businessSectorID)
+activate BusinessSectorJpaRepository
+BusinessSectorJpaRepository --> Service : true
+deactivate BusinessSectorJpaRepository
+
+Service -> TypologyJpaRepository : existsById\n(typologyID)
+activate TypologyJpaRepository
+TypologyJpaRepository --> Service : true
+deactivate TypologyJpaRepository
+
+Service -> Factory:createProject(projectDto)
+activate Factory
+
+Factory --> project ** :create(projectCode, name,\n          description, customer,\n          businessSector, typology)
+Factory --> Service :project
+deactivate
+
+'Saving in the JpaRepository
+Service -> ProjRepository : save(project)
+activate ProjRepository
+
+ProjRepository -> ProjectJpaRepository : existsById(projectCode)
+activate ProjectJpaRepository
+
+ProjectJpaRepository --> ProjRepository : false
+deactivate ProjectJpaRepository
+
+ProjRepository -> Assembler : toData(project)
+activate Assembler
+
+Assembler -> projectJpa ** : create
+Assembler --> ProjRepository: projectJpa
+deactivate Assembler
+
+ProjRepository -> ProjectJpaRepository : save(projectJpa)
+activate ProjectJpaRepository
+
+ProjectJpaRepository --> ProjRepository : savedProjectJpa
+deactivate ProjectJpaRepository
+
+ProjRepository -> Assembler : toDomain(savedProjectJpa)
+activate Assembler
+
+Assembler -> savedProject ** : create
+Assembler --> ProjRepository : savedProject
+deactivate Assembler
+
+ProjRepository --> Service: savedProject
+deactivate ProjRepository
+
+Service -> NewMapper: toDto(savedProject)
+activate NewMapper
+
+NewMapper --> Service: savedProjectDto
+deactivate NewMapper
+
+Service --> Controller : savedProjectDto
+deactivate Service
+
+Controller -> Mapper: toRestDto(savedProjectDto)
+activate Mapper
+
+Mapper --> Controller: savedProjectRestDto
+deactivate Mapper
+
+Controller --> response ** : create(savedProject, HttpStatus.CREATED)
+Controller --> Client : Confirms project creation
 deactivate Controller
-UI --> Manager : Confirms new project creation
-deactivate UI
+
 @enduml
