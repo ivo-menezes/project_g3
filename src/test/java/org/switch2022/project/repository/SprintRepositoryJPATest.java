@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
+import org.switch2022.project.datamodel.JPA.SprintJpaID;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
@@ -65,7 +66,10 @@ class SprintRepositoryJPATest {
     public void checkIfRepositoryContainsID(){
         //arrange
         SprintID mockID = mock(SprintID.class);
-        when(sprintJPARepository.existsById(mockID)).thenReturn(true);
+        SprintJpaID mockJpaId = mock(SprintJpaID.class);
+
+        when(sprintJPARepository.existsById(mockJpaId)).thenReturn(true);
+        when(sprintAssemblerData.convertToSprintJpaID(mockID)).thenReturn(mockJpaId);
 
         //act
         boolean result = sprintRepositoryJPA.containsID(mockID);
@@ -149,8 +153,10 @@ class SprintRepositoryJPATest {
     public void ensureRepositoryDoesNotHaveSprintWithID(){
         //arrange
         SprintID mockID = mock(SprintID.class);
+        SprintJpaID mockJpaId = mock(SprintJpaID.class);
 
-        when(sprintJPARepository.findById(mockID)).thenReturn(Optional.empty());
+        when(sprintJPARepository.findById(mockJpaId)).thenReturn(Optional.empty());
+        when(sprintAssemblerData.convertToSprintJpaID(mockID)).thenReturn(mockJpaId);
 
         //act
         Optional expected = Optional.empty();
@@ -166,12 +172,13 @@ class SprintRepositoryJPATest {
         SprintID mockID = mock(SprintID.class);
 
         SprintJPA mockJPA = mock(SprintJPA.class);
+        SprintJpaID mockJpaId = mock(SprintJpaID.class);
 
         SprintDDD mockSprint = mock(SprintDDD.class);
         Optional<SprintDDD> mockSprintOptional = Optional.of(mockSprint);
 
-
-        when(sprintJPARepository.findById(mockID)).thenReturn(Optional.of(mockJPA));
+        when(sprintAssemblerData.convertToSprintJpaID(mockID)).thenReturn(mockJpaId);
+        when(sprintJPARepository.findById(mockJpaId)).thenReturn(Optional.of(mockJPA));
         when(sprintAssemblerData.toDomain(mockJPA)).thenReturn(mockSprint);
 
         //act
