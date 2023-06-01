@@ -46,7 +46,8 @@ public class UserStoryServiceSpringBootTest {
     void createUserStorySucceedsWithTotalIsolation() {
         // Arrange
         NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
-        dtoDouble.priority = mock(UserStoryPriority.class);
+        UserStoryPriority priorityDouble = mock(UserStoryPriority.class);
+        dtoDouble.priority = priorityDouble;
         UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
         UserStoryID userStoryIdDouble = mock(UserStoryID.class);
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
@@ -58,7 +59,7 @@ public class UserStoryServiceSpringBootTest {
         when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
-        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(true);
+        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(priorityDouble);
         when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
         when(mapperDouble.toDto(userStoryDouble)).thenReturn(dtoDouble2);
 
@@ -97,34 +98,4 @@ public class UserStoryServiceSpringBootTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-    @DisplayName("assert that creating a user story throws exception if saving to backlog fails")
-    @Test
-    void createUserStoryFailsIfSavingToBacklogFails() {
-        // Arrange
-        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
-        dtoDouble.priority = mock(UserStoryPriority.class);
-        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
-        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectDDD projectDouble = mock(ProjectDDD.class);
-
-        when(userStoryFactoryDouble.createUserStory(dtoDouble)).thenReturn(userStoryDouble);
-        when(userStoryDouble.identity()).thenReturn(userStoryIdDouble);
-        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
-        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
-        when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
-        when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(false);
-        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
-
-        String expectedMessage = "UserStoryID not added to ProductBacklog";
-
-        // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            userStoryService.createUserStory(dtoDouble);
-        });
-        String resultMessage = result.getMessage();
-
-        // Assert
-        assertEquals(expectedMessage, resultMessage);
-    }
 }

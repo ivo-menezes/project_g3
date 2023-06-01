@@ -12,6 +12,7 @@ import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.model.valueobject.UserStoryPriority;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class UserStoryService {
 
         // get corresponding project, throw exception if it does not exist
         ProjectCode projectCode = newUserStory.identity().getProjectCode();
+        System.out.println(projectCode.toString());
         Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
 
         if (projectOptional.isEmpty()) {
@@ -84,18 +86,13 @@ public class UserStoryService {
 
         // save UserStory to repository and its ID to the product backlog of project
         UserStoryDDD savedUserStory = this.userStoryRepository.save(newUserStory);
-        boolean backlogSaveSuccess = project.addToProductBacklog(newUserStory.identity(), infoDTO.priority);
-
-        if (!backlogSaveSuccess) {
-            // TODO: delete saved UserStory from repository? (no method to delete exists yet)
-            throw new RuntimeException("UserStoryID not added to ProductBacklog");
-        }
+        UserStoryPriority attributedPriority = project.addToProductBacklog(newUserStory.identity(), infoDTO.priority);
 
         // save the updated project
         projectRepository.save(project);
 
         NewUserStoryInfoDTO outboundDto = userStoryInfoDTOMapper.toDto(savedUserStory);
-        outboundDto.priority = infoDTO.priority; // TODO: should be actual priority (from backlog) if not defined in infoDTO
+        outboundDto.priority = attributedPriority;
         return outboundDto;
     }
 

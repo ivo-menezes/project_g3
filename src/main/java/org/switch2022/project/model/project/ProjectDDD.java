@@ -103,9 +103,9 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
      *
      * @param userStoryID of the user story to be added to the backlog
      * @param priority    of the user story; index at which it will be added to the list
-     * @return true if ID was added, false otherwise
+     * @return the priority at which it was saved
      */
-    public boolean addToProductBacklog(UserStoryID userStoryID, UserStoryPriority priority) {
+    public UserStoryPriority addToProductBacklog(UserStoryID userStoryID, UserStoryPriority priority) {
         return this.productBacklog.add(userStoryID, priority);
     }
 

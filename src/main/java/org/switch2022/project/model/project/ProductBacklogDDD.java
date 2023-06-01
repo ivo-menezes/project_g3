@@ -26,25 +26,34 @@ class ProductBacklogDDD {
 
     /**
      * Adds a UserStoryID to the list of open user stories with the given priority.
-     * The priority is simply the position (index) in the list.
+     * The priority is simply the position in the list.
      *
      * @param id       UserStoryID to store
      * @param priority UserStoryPriority that defines the position in the list
-     * @return true if UserStoryID successfully added, false otherwise
+     * @return a new UserStoryPriority (position in which it was actually saved)
      */
-    protected boolean add(UserStoryID id, UserStoryPriority priority) {
-        int position = priority.getValue();
+    protected UserStoryPriority add(UserStoryID id, UserStoryPriority priority) {
+        int priorityValue = priority.getValue();
 
-        if (position < 0 || position > this.openUserStories.size()) {
-            position = this.openUserStories.size();
+        // priorityValue (given by user) : final 0-based index (position) in the backlog
+        // 0 : initial size (last position)
+        // 1 : 0 (first position)
+        // n : n-1
+        // initial size : initial size - 1 (penultimate position)
+        // out-of-bounds : initial size (last position)
+
+        int index = this.openUserStories.size(); // last position by default
+        if (priorityValue > 0 && priorityValue <= this.openUserStories.size()) {
+            index = priorityValue - 1;
         }
 
         if (openUserStories.contains(id)) {
-            return false;
-        } else {
-            this.openUserStories.add(position, id);
-            return true;
+            throw new IllegalArgumentException("UserStoryID already in project");
         }
+
+        this.openUserStories.add(index, id);
+
+        return new UserStoryPriority(index + 1);
     }
 
     /**
@@ -52,12 +61,7 @@ class ProductBacklogDDD {
      *
      * @return List<UserStoryID> with IDs of open user stories
      */
-    public List<UserStoryID> getOpenUserStories() {
+    protected List<UserStoryID> getOpenUserStories() {
         return List.copyOf(this.openUserStories);
-    }
-
-
-    public void setOpenUserStories(List<UserStoryID> openUserStories) {
-        this.openUserStories = openUserStories;
     }
 }

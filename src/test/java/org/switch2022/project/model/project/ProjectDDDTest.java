@@ -83,6 +83,8 @@ class ProjectDDDTest {
         //Arrange
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
+        UserStoryPriority resultPriorityDouble = mock(UserStoryPriority.class);
+        when(productBacklogDouble.add(userStoryID, priority)).thenReturn(resultPriorityDouble);
 
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
@@ -95,11 +97,9 @@ class ProjectDDDTest {
                 typologyIDDouble,
                 projectBudgetDouble);
 
-        //Act
-        boolean result = project.addToProductBacklog(userStoryID, priority);
-
-        //Assert
-        assertTrue(result);
+        //Act & Assert
+        assertDoesNotThrow( () -> {project.addToProductBacklog(userStoryID, priority);}
+        );
     }
 
 
