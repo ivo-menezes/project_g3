@@ -13,6 +13,8 @@ import org.switch2022.project.model.valueobject.TypologyDesignation;
 import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,14 +34,14 @@ class TypologyServiceTest {
 
     @Test
     @DisplayName("Ensure Service is correctly instantiated")
-    void ensureServiceIsCreated(){
+    void ensureServiceIsCreated() {
 
         assertInstanceOf(TypologyService.class, service);
     }
 
     @Test
     @DisplayName("Ensure exception is returned when factory is null")
-    void ensureExceptionReturnedWhenFactoryNull(){
+    void ensureExceptionReturnedWhenFactoryNull() {
         //Arrange
         ITypologyFactory factory = null;
 
@@ -55,7 +57,7 @@ class TypologyServiceTest {
 
     @Test
     @DisplayName("Ensure exception is returned when repository is null")
-    void ensureExceptionReturnedWhenRepositoryNull(){
+    void ensureExceptionReturnedWhenRepositoryNull() {
         //Arrange
         ITypologyRepository repository = null;
 
@@ -71,7 +73,7 @@ class TypologyServiceTest {
 
     @Test
     @DisplayName("Ensure typology is successfully created")
-    void ensureTypologyIsCreated(){
+    void ensureTypologyIsCreated() {
         //Arrange
         TypologyID typologyID = mock(TypologyID.class);
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
@@ -90,5 +92,35 @@ class TypologyServiceTest {
 
         //Assert
         assertEquals(typologyDTO, result);
+    }
+
+    @DisplayName("Ensure that getAll method was successfully returned.")
+    @Test
+    void getAllTypologiesSuccess() {
+
+        //Arrange
+        TypologyID id = new TypologyID(Long.valueOf(1));
+        TypologyDesignation designation = new TypologyDesignation("Test");
+        TypologyDTO typology = new TypologyDTO();
+        typology.typologyID = id;
+        typology.typologyDesignation = designation;
+
+        TypologyDDD typologyDDD = mock(TypologyDDD.class);
+
+        ArrayList<TypologyDDD> listDDD = new ArrayList<>();
+        listDDD.add(typologyDDD);
+
+        ArrayList<TypologyDTO> expected = new ArrayList<>();
+        expected.add(typology);
+
+        when(repository.getAll()).thenReturn(listDDD);
+        when(typologyDDD.identity()).thenReturn(id);
+        when(typologyDDD.getTypologyDesignation()).thenReturn(designation);
+
+        //Act
+        ArrayList<TypologyDTO> result = service.getAll();
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

@@ -1,4 +1,4 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.controller.REST;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.switch2022.project.mapper.TypologyDTO;
-import org.switch2022.project.mapper.TypologyMapper;
-import org.switch2022.project.mapper.TypologyOutputDTO;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.service.TypologyService;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +50,7 @@ class TypologyControllerTest {
         TypologyOutputDTO typologyOutputDTO = mock(TypologyOutputDTO.class);
 
         when(service.createTypology(typologyDto)).thenReturn(typologyDto);
-        when(typologyMapper.toOutputDTO(any())).thenReturn(typologyOutputDTO);
+        when(typologyMapper.toOutputDTO(any(TypologyDTO.class))).thenReturn(typologyOutputDTO);
 
         //Act
         ResponseEntity<TypologyOutputDTO> responseEntity = controller.createTypology(typologyDto);
@@ -71,10 +71,44 @@ class TypologyControllerTest {
 
         //trigger to fail
         when(service.createTypology(typologyDto)).thenThrow(new InvalidDataAccessApiUsageException(""));
-        when(typologyMapper.toOutputDTO(any())).thenReturn(typologyOutputDTO);
+        when(typologyMapper.toOutputDTO(any(TypologyDTO.class))).thenReturn(typologyOutputDTO);
 
         //Act
         ResponseEntity<TypologyOutputDTO> responseEntity = controller.createTypology(typologyDto);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 400);
+    }
+    @DisplayName("Ensure the getAll method was successfully returned")
+    @Test
+    void getAllTypologySuccess() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        TypologyDTO typologyDTO = mock(TypologyDTO.class);
+        ArrayList<TypologyDTO> listDTO = new ArrayList<>();
+        listDTO.add(typologyDTO);
+
+        when(service.getAll()).thenReturn(listDTO);
+
+        //Act
+        ResponseEntity<ArrayList<TypologyOutputDTO>> responseEntity = controller.getAll();
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
+    }
+
+    @DisplayName("Ensure the getAll method return http status code 400")
+    @Test
+    void getAllTypologyFails() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+        when(service.getAll()).thenThrow(new InvalidDataAccessApiUsageException(""));
+
+        //Act
+        ResponseEntity<ArrayList<TypologyOutputDTO>> responseEntity = controller.getAll();
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);

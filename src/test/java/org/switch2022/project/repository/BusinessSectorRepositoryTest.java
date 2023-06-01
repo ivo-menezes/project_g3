@@ -14,7 +14,11 @@ import org.switch2022.project.model.businessSector.BusinessSectorDDD;
 import org.switch2022.project.model.valueobject.BusinessSectorDesignation;
 import org.switch2022.project.repository.JPA.BusinessSectorRepositoryJPA;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -90,5 +94,30 @@ class BusinessSectorRepositoryTest {
 
         //Assert
         assertEquals(expectedMessage,resultMessage);
+    }
+
+    @DisplayName("Ensure that getAll method was successfully returned.")
+    @Test
+    void getAllBusinessSectorSuccess() {
+
+        //Arrange
+        BusinessSectorDDD businessSector = mock(BusinessSectorDDD.class);
+        BusinessSectorJPA businessSectorJPA = new BusinessSectorJPA("test");
+
+        List<BusinessSectorJPA> listJPA = new ArrayList<>();
+        listJPA.add(businessSectorJPA);
+
+        ArrayList<BusinessSectorDDD> expected = new ArrayList<>();
+        expected.add(businessSector);
+
+        when(businessSectorRepositoryJPA.findAll()).thenReturn(listJPA);
+
+        when(businessSectorDomainDataAssembler.toDomain(any())).thenReturn(businessSector);
+
+        //Act
+        ArrayList<BusinessSectorDDD> result = businessSectorRepository.getAll();
+
+        //Assert
+        assertEquals(expected,result);
     }
 }

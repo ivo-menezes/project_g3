@@ -1,4 +1,4 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.controller.REST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.switch2022.project.mapper.TypologyDTO;
-import org.switch2022.project.mapper.TypologyMapper;
-import org.switch2022.project.mapper.TypologyOutputDTO;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.service.TypologyService;
+
+import java.util.ArrayList;
 
 @Controller
 @RestController
@@ -45,6 +45,26 @@ public class TypologyController {
 
         } catch (InvalidDataAccessApiUsageException exception) {
             TypologyOutputDTO typologyOutputDTO =  typologyMapper.toOutputDTO(typology);
+            return new ResponseEntity<>(typologyOutputDTO, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Post method responsible for return all Typologies.
+     * @return when successful, the status http 200 (created) and a ArrayList of TypologyOutputDTO is returned, or otherwise 400 (bad request)
+     */
+    @GetMapping("")
+    public ResponseEntity<ArrayList<TypologyOutputDTO>> getAll() {
+
+        ArrayList<TypologyOutputDTO> typologyOutputDTO = new ArrayList();
+
+        try {
+            ArrayList<TypologyDTO> typologiesOutput = typologyService.getAll();
+            typologyOutputDTO =  typologyMapper.toOutputDTO(typologiesOutput);
+
+            return new ResponseEntity<>(typologyOutputDTO, HttpStatus.OK);
+        }
+        catch (InvalidDataAccessApiUsageException exception){
             return new ResponseEntity<>(typologyOutputDTO, HttpStatus.BAD_REQUEST);
         }
     }

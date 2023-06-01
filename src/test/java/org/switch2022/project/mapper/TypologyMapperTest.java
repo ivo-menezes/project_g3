@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.valueobject.*;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -54,5 +56,35 @@ class TypologyMapperTest {
 
         //Assert
         assertEquals(typologyOutputDTO, result);
+    }
+
+    @Test
+    @DisplayName("Ensure ArrayList<TypologyDTO> is converted to ArrayList<TypologyOutputDTO> correctly.")
+    void toOutputDTOListSuccess() {
+        //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
+        when(typologyID.getId()).thenReturn(Long.valueOf(1));
+
+        TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
+        when(typologyDesignation.toString()).thenReturn("Test");
+
+        TypologyDTO typologyDTO = mock(TypologyDTO.class);
+        typologyDTO.typologyID = typologyID;
+        typologyDTO.typologyDesignation = typologyDesignation;
+
+        ArrayList<TypologyDTO> listDTO = new ArrayList<>();
+        listDTO.add(typologyDTO);
+
+        TypologyMapper typologyMapper = new TypologyMapper();
+
+        TypologyOutputDTO typologyOutputDTO = new TypologyOutputDTO(Long.valueOf(1),"Test");
+        ArrayList<TypologyOutputDTO> expected = new ArrayList<>();
+        expected.add(typologyOutputDTO);
+
+        //Act
+        ArrayList<TypologyOutputDTO> result = typologyMapper.toOutputDTO(listDTO);
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

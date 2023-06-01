@@ -7,6 +7,8 @@ import org.switch2022.project.model.businessSector.BusinessSectorDDD;
 import org.switch2022.project.model.businessSector.IBusinessSectorFactory;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class BusinessSectorService {
 
@@ -48,6 +50,26 @@ public class BusinessSectorService {
         businessSectorDTO.businessSectorID = savedBusinessSector.identity();
 
         return businessSectorDTO;
-
     }
+
+    /**
+     * Method responsible for return all BusinessSector.
+     * @return ArrayList<BusinessSectorDTO>.
+     */
+    public ArrayList<BusinessSectorDTO> getAll() {
+        ArrayList<BusinessSectorDTO> businessSectors = new ArrayList();
+        ArrayList<BusinessSectorDDD> businessSectorDDD = businessSectorRepository.getAll();
+
+        for (BusinessSectorDDD businessSector : businessSectorDDD) {
+
+            BusinessSectorDTO businessSectorDTO = new BusinessSectorDTO();
+            businessSectorDTO.businessSectorID = businessSector.identity();
+            businessSectorDTO.businessSectorDesignation = businessSector.getBusinessSectorDesignation();
+
+            businessSectors.add(businessSectorDTO);
+        }
+
+        return businessSectors;
+    }
+
 }

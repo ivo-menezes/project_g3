@@ -8,6 +8,8 @@ import org.switch2022.project.model.businessSector.BusinessSectorDDD;
 import org.switch2022.project.repository.JPA.BusinessSectorRepositoryJPA;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
 
+import java.util.ArrayList;
+
 @Repository
 public class BusinessSectorRepository implements IBusinessSectorRepository {
 
@@ -35,5 +37,21 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
         BusinessSectorJPA savedBusinessSectorJPA = businessSectorRepositoryJPA.save(businessSectorJPA);
 
         return businessSectorDomainDataAssembler.toDomain(savedBusinessSectorJPA);
+    }
+
+    /**
+     * Method responsible for return all BusinessSectors from database.
+     * @return ArrayList<BusinessSectorDDD>
+     */
+    public ArrayList<BusinessSectorDDD> getAll() {
+        ArrayList<BusinessSectorDDD> customers = new ArrayList();
+
+        Iterable<BusinessSectorJPA> businessSectorsJPA = businessSectorRepositoryJPA.findAll();
+
+        for (BusinessSectorJPA businessSector : businessSectorsJPA) {
+            customers.add(businessSectorDomainDataAssembler.toDomain(businessSector));
+        }
+
+        return customers;
     }
 }

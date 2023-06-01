@@ -1,4 +1,4 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.controller.REST;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.switch2022.project.mapper.CustomerDTO;
-import org.switch2022.project.mapper.CustomerMapper;
-import org.switch2022.project.mapper.CustomerOutputDTO;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.service.CustomerService;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +50,7 @@ class CustomerControllerTest {
         CustomerOutputDTO customerOutputDTO = mock(CustomerOutputDTO.class);
 
         when(customerService.createCustomer(customerDTO)).thenReturn(customerDTO);
-        when(customerMapper.toOutputDTO(any())).thenReturn(customerOutputDTO);
+        when(customerMapper.toOutputDTO(any(CustomerDTO.class))).thenReturn(customerOutputDTO);
         //Act
         ResponseEntity<CustomerOutputDTO> responseEntity = customerController.createCustomer(customerDTO);
 
@@ -69,9 +69,43 @@ class CustomerControllerTest {
         CustomerOutputDTO customerOutputDTO = mock(CustomerOutputDTO.class);
 
         when(customerService.createCustomer(customerDTO)).thenThrow(new InvalidDataAccessApiUsageException(""));
-        when(customerMapper.toOutputDTO(any())).thenReturn(customerOutputDTO);
+        when(customerMapper.toOutputDTO(any(CustomerDTO.class))).thenReturn(customerOutputDTO);
         //Act
         ResponseEntity<CustomerOutputDTO> responseEntity = customerController.createCustomer(customerDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 400);
+    }
+    @DisplayName("Ensure the getAll method was successfully returned")
+    @Test
+    void getAllCustomerSuccess() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        CustomerDTO customerDTO = mock(CustomerDTO.class);
+        ArrayList<CustomerDTO> listDTO = new ArrayList<>();
+        listDTO.add(customerDTO);
+
+        when(customerService.getAll()).thenReturn(listDTO);
+
+        //Act
+        ResponseEntity<ArrayList<CustomerOutputDTO>> responseEntity = customerController.getAll();
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
+    }
+
+    @DisplayName("Ensure the getAll method return http status code 400")
+    @Test
+    void getAllCustomerFails() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+        when(customerService.getAll()).thenThrow(new InvalidDataAccessApiUsageException(""));
+
+        //Act
+        ResponseEntity<ArrayList<CustomerOutputDTO>> responseEntity = customerController.getAll();
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);

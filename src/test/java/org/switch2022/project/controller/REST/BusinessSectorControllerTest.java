@@ -1,4 +1,4 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.controller.REST;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +16,8 @@ import org.switch2022.project.mapper.BusinessSectorDTO;
 import org.switch2022.project.mapper.BusinessSectorMapper;
 import org.switch2022.project.mapper.BusinessSectorOutputDTO;
 import org.switch2022.project.service.BusinessSectorService;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -66,6 +68,40 @@ class BusinessSectorControllerTest {
 
         //Act
         ResponseEntity<BusinessSectorOutputDTO> responseEntity = businessSectorController.createBusinessSector(businessSectorDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 400);
+    }
+    @DisplayName("Ensure the getAll method was successfully returned")
+    @Test
+    void getAllBusinessSectorSuccess() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        BusinessSectorDTO businessSectorDTO = mock(BusinessSectorDTO.class);
+        ArrayList<BusinessSectorDTO> listDTO = new ArrayList<>();
+        listDTO.add(businessSectorDTO);
+
+        when(businessSectorService.getAll()).thenReturn(listDTO);
+
+        //Act
+        ResponseEntity<ArrayList<BusinessSectorOutputDTO>> responseEntity = businessSectorController.getAll();
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
+    }
+
+    @DisplayName("Ensure the getAll method return http status code 400")
+    @Test
+    void getAllBusinessSectorFails() {
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+        when(businessSectorService.getAll()).thenThrow(new InvalidDataAccessApiUsageException(""));
+
+        //Act
+        ResponseEntity<ArrayList<BusinessSectorOutputDTO>> responseEntity = businessSectorController.getAll();
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);

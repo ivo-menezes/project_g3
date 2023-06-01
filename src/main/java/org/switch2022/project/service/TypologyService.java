@@ -9,6 +9,8 @@ import org.switch2022.project.model.valueobject.TypologyDesignation;
 import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class TypologyService {
 
@@ -54,5 +56,25 @@ public class TypologyService {
         typologyDTO.typologyID = savedTypology.identity();
 
         return typologyDTO;
+    }
+
+    /**
+     * Method responsible for return all Typologies.
+     * @return ArrayList<TypologyDTO>.
+     */
+    public ArrayList<TypologyDTO> getAll() {
+        ArrayList<TypologyDTO> Typologies = new ArrayList();
+        ArrayList<TypologyDDD> typologiesDDD = typologyRepository.getAll();
+
+        for (TypologyDDD typologyDDD : typologiesDDD) {
+
+            TypologyDTO typologyDTO = new TypologyDTO();
+            typologyDTO.typologyID = typologyDDD.identity();
+            typologyDTO.typologyDesignation = typologyDDD.getTypologyDesignation();
+
+            Typologies.add(typologyDTO);
+        }
+
+        return Typologies;
     }
 }

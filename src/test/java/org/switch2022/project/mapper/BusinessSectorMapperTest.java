@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.valueobject.BusinessSectorDesignation;
 import org.switch2022.project.model.valueobject.BusinessSectorID;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -52,5 +54,33 @@ class BusinessSectorMapperTest {
 
         //Assert
         assertEquals(businessSectorOutputDTO, result);
+    }
+    @Test
+    @DisplayName("Ensure ArrayList<BusinessSectorDTO> is converted to ArrayList<BusinessSectorOutputDTO> correctly.")
+    void toOutputDTOListSuccess() {
+        //Arrange
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+        when(businessSectorID.getId()).thenReturn(Long.valueOf(1));
+
+        BusinessSectorDesignation businessSectorDesignation = mock(BusinessSectorDesignation.class);
+        when(businessSectorDesignation.toString()).thenReturn("Test");
+
+        BusinessSectorDTO businessSectorDTO = mock(BusinessSectorDTO.class);
+        businessSectorDTO.businessSectorID = businessSectorID;
+        businessSectorDTO.businessSectorDesignation = businessSectorDesignation;
+
+        ArrayList<BusinessSectorDTO> listDTO = new ArrayList<>();
+        listDTO.add(businessSectorDTO);
+
+        BusinessSectorMapper businessSectorMapper = new BusinessSectorMapper();
+        BusinessSectorOutputDTO businessSectorOutputDTO = new BusinessSectorOutputDTO(Long.valueOf(1),"Test");
+
+        ArrayList<BusinessSectorOutputDTO> expected = new ArrayList<>();
+        expected.add(businessSectorOutputDTO);
+        //Act
+        ArrayList<BusinessSectorOutputDTO> result = businessSectorMapper.toOutputDTO(listDTO);
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

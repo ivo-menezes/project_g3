@@ -15,8 +15,12 @@ import org.switch2022.project.model.valueobject.CustomerDesignation;
 import org.switch2022.project.model.valueobject.CustomerNIF;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -92,6 +96,31 @@ class CustomerRepositoryTest {
 
         //Assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("Ensure that getAll method was successfully returned.")
+    @Test
+    void getAllCustomersSuccess() {
+
+        //Arrange
+        CustomerDDD customer = mock(CustomerDDD.class);
+        CustomerJPA customerJPA = new CustomerJPA("300123321","test");
+
+        List<CustomerJPA> listJPA = new ArrayList<>();
+        listJPA.add(customerJPA);
+
+        ArrayList<CustomerDDD> expected = new ArrayList<>();
+        expected.add(customer);
+
+        when(customerRepositoryJPA.findAll()).thenReturn(listJPA);
+
+        when(customerDomainDataAssembler.toDomain(any())).thenReturn(customer);
+
+        //Act
+        ArrayList<CustomerDDD> result = customerRepository.getAll();
+
+        //Assert
+        assertEquals(expected,result);
     }
 
 }

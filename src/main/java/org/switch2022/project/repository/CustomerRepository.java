@@ -8,6 +8,8 @@ import org.switch2022.project.model.customer.CustomerDDD;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 
+import java.util.ArrayList;
+
 @Repository
 public class CustomerRepository implements ICustomerRepository {
 
@@ -34,5 +36,21 @@ public class CustomerRepository implements ICustomerRepository {
         CustomerJPA savedCustomerJPA = customerRepositoryJPA.save(customerJPA);
 
         return customerDomainDataAssembler.toDomain(savedCustomerJPA);
+    }
+
+    /**
+     * Method responsible for return all customers from database.
+     * @return ArrayList<customerDDD>
+     */
+    public ArrayList<CustomerDDD> getAll() {
+        ArrayList<CustomerDDD> customers = new ArrayList();
+
+        Iterable<CustomerJPA> customersJPA = customerRepositoryJPA.findAll();
+
+        for (CustomerJPA customer : customersJPA) {
+            customers.add(customerDomainDataAssembler.toDomain(customer));
+        }
+
+        return customers;
     }
 }

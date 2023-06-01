@@ -9,6 +9,7 @@ import org.switch2022.project.model.valueobject.TypologyDesignation;
 import org.switch2022.project.repository.JPA.TypologyJpaRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -16,16 +17,10 @@ import java.util.Optional;
 public class TypologyRepository implements ITypologyRepository {
 
     @Autowired
-    private final TypologyJpaRepository typologyJpaRepository;
+    TypologyJpaRepository typologyJpaRepository;
 
     @Autowired
-    private final TypologyDomainDataAssembler typologyDomainDataAssembler;
-
-    public TypologyRepository(TypologyJpaRepository typologyJpaRepository, TypologyDomainDataAssembler typologyAssembler) {
-        this.typologyJpaRepository = typologyJpaRepository;
-        this.typologyDomainDataAssembler = typologyAssembler;
-    }
-
+    TypologyDomainDataAssembler typologyDomainDataAssembler;
 
     /**
      * Saves a TypologyDDD object in the repository by converting it to a TypologyJpa
@@ -79,6 +74,22 @@ public class TypologyRepository implements ITypologyRepository {
         } else {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Method responsible for return all Typologies from database.
+     * @return ArrayList<TypologyDDD>
+     */
+    public ArrayList<TypologyDDD> getAll() {
+        ArrayList<TypologyDDD> typologies = new ArrayList();
+
+        Iterable<TypologyJpa> TypologiesJPA = typologyJpaRepository.findAll();
+
+        for (TypologyJpa typologyJpa : TypologiesJPA) {
+            typologies.add(typologyDomainDataAssembler.toDomain(typologyJpa));
+        }
+
+        return typologies;
     }
 }
 

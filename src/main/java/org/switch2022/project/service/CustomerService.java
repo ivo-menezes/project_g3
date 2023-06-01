@@ -7,6 +7,8 @@ import org.switch2022.project.model.customer.CustomerDDD;
 import org.switch2022.project.model.customer.ICustomerFactory;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class CustomerService {
 
@@ -46,5 +48,26 @@ public class CustomerService {
         customerDTO.customerID=customerDDDSaved.identity();
 
         return customerDTO;
+    }
+
+    /**
+     * Method responsible for return all customers.
+     * @return ArrayList<CustomerDTO>.
+     */
+    public ArrayList<CustomerDTO> getAll () {
+        ArrayList<CustomerDTO> customers = new ArrayList();
+        ArrayList<CustomerDDD> customersDDD = customerRepository.getAll();
+
+        for (CustomerDDD customer : customersDDD) {
+
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.customerID = customer.identity();
+            customerDTO.customerNIF = customer.getCustomerNIF();
+            customerDTO.customerDesignation = customer.getCustomerDesignation();
+
+            customers.add(customerDTO);
+        }
+
+        return customers;
     }
 }

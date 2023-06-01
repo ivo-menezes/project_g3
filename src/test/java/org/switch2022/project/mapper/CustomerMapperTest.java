@@ -6,6 +6,8 @@ import org.switch2022.project.model.valueobject.CustomerDesignation;
 import org.switch2022.project.model.valueobject.CustomerID;
 import org.switch2022.project.model.valueobject.CustomerNIF;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -65,5 +67,38 @@ class CustomerMapperTest {
 
         //Assert
         assertEquals(customerOutputDTO, result);
+    }
+    @Test
+    @DisplayName("Ensure ArrayList<CustomerDTO> is converted to ArrayList<CostumerOutputDTO> correctly.")
+    void toOutputDTOListSuccess() {
+        //Arrange
+        CustomerID customerID = mock(CustomerID.class);
+        when(customerID.getId()).thenReturn(Long.valueOf(1));
+
+        CustomerNIF customerNIF = mock(CustomerNIF.class);
+        when(customerNIF.toString()).thenReturn("306123987");
+
+        CustomerDesignation customerDesignation = mock(CustomerDesignation.class);
+        when(customerDesignation.toString()).thenReturn("Test");
+
+        CustomerDTO customerDTO = mock(CustomerDTO.class);
+        customerDTO.customerID = customerID;
+        customerDTO.customerNIF = customerNIF;
+        customerDTO.customerDesignation=customerDesignation;
+
+        ArrayList<CustomerDTO> listDTO = new ArrayList<>();
+        listDTO.add(customerDTO);
+
+        CustomerMapper customerMapper = new CustomerMapper();
+
+        CustomerOutputDTO customerOutputDTO = new CustomerOutputDTO(Long.valueOf(1),"306123987","Test");
+
+        ArrayList<CustomerOutputDTO> expected = new ArrayList<>();
+        expected.add(customerOutputDTO);
+        //Act
+        ArrayList<CustomerOutputDTO> result = customerMapper.toOutputDTO(listDTO);
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

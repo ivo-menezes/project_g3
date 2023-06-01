@@ -9,7 +9,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.BusinessSectorDTO;
 import org.switch2022.project.model.businessSector.BusinessSectorDDD;
 import org.switch2022.project.model.businessSector.IBusinessSectorFactory;
+import org.switch2022.project.model.valueobject.BusinessSectorDesignation;
+import org.switch2022.project.model.valueobject.BusinessSectorID;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -86,5 +90,35 @@ class BusinessSectorServiceTest {
 
         //Assert
         assertEquals(businessSector,result);
+    }
+
+    @DisplayName("Ensure that getAll method was successfully returned.")
+    @Test
+    void getAllBusinessSectorsSuccess() {
+
+        //Arrange
+        BusinessSectorID id = new BusinessSectorID(Long.valueOf(1));
+        BusinessSectorDesignation designation = new BusinessSectorDesignation("Test");
+        BusinessSectorDTO businessSector = new BusinessSectorDTO();
+        businessSector.businessSectorID = id;
+        businessSector.businessSectorDesignation = designation;
+
+        BusinessSectorDDD businessSectorDDD = mock(BusinessSectorDDD.class);
+
+        ArrayList<BusinessSectorDDD> listDDD = new ArrayList<>();
+        listDDD.add(businessSectorDDD);
+
+        ArrayList<BusinessSectorDTO> expected = new ArrayList<>();
+        expected.add(businessSector);
+
+        when(businessSectorRepository.getAll()).thenReturn(listDDD);
+        when(businessSectorDDD.identity()).thenReturn(id);
+        when(businessSectorDDD.getBusinessSectorDesignation()).thenReturn(designation);
+
+        //Act
+        ArrayList<BusinessSectorDTO> result = businessSectorService.getAll();
+
+        //Assert
+        assertEquals(expected, result);
     }
 }
