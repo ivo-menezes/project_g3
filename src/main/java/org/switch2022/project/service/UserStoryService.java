@@ -15,6 +15,7 @@ import org.switch2022.project.model.valueobject.UserStoryPriority;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,8 @@ public class UserStoryService {
      * @param infoDTO a NewUserStoryInfoDTO with the information for the new UserStory
      * @return the saved UserStory entity
      */
+
+    @Transactional
     public NewUserStoryInfoDTO createUserStory(NewUserStoryInfoDTO infoDTO) {
 
         // create the new UserStory
