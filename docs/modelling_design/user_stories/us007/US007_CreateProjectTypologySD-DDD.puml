@@ -1,63 +1,89 @@
 @startuml
 !theme plain
 autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
 hide footbox
 title "US007 - As Administrator, I want to create a new project typology"
 
-actor Administrator
-participant ": CreateTypologyUI" as UI
-participant ": CreateTypologyController" as Controller
+participant Client
+participant Springboot
+participant "typologyDTO : TypologyDTO" as typologyDTO
+participant ": TypologyController" as Controller
 participant ": TypologyService" as Service
-participant "typologyFactory : ITypologyFactory" as Factory
-participant "typologyRepository : TypologyRepository" as Repository
-participant ": AssemblerData" as Assembler
-participant "typologyRepositoryJPA: ITypologyRepositoryJPA" as RepositoryJPA
+participant ": ITypologyFactory" as Factory
+participant ": ITypologyRepository" as Repository
+participant ": TypologyDomainDataAssembler" as Assembler
+participant ": ITypologyJpaRepository" as RepositoryJPA
+participant "typology : Typology" as typology
+participant "typologyJPA : TypologyJPA" as typologyJPA
+participant "savedTypology : Typology" as savedTypology
+participant ":TypologyMapper" as Mapper
+participant "response : ResponseEntity<TypologyDTO>" as response
 
-activate Administrator #FFBBBB
-Administrator -> UI : Create typology (designation)
+Client -> Springboot : POST /typologies \n{"typology": "typologyDesignation"}
+activate Client
 
-activate UI #FFBBBB
-UI -> Controller : createTypology(designation)
+activate Springboot
+Springboot --> typologyDTO ** : create(typologyDesignation)
+Springboot -> Controller : createTypology\n(typologyDTO)
+deactivate Springboot
 
-activate Controller #FFBBBB
-Controller -> Service : createTypology(designation)
+activate Controller
+Controller -> Service : createTypology\n(typologyDTO)
 
-activate Service #FFBBBB
-Service --> "typologyDesignation : TypologyDesignation" ** : create(designation)
+activate Service
 
-Service -> Factory : createTypology(typologyDesignation)
-activate Factory #FFBBBB
-Factory --> "typology : Typology" ** : create(typologyDesignation)
+Service -> Factory : createTypology\n(typologyDesignation)
+activate Factory
+
+Factory --> typology ** : create\n(typologyDesignation)
 Factory --> Service : typology
 deactivate Factory
 
 Service -> Repository : save(typology)
-activate Repository #FFBBBB
+activate Repository
 
+Repository -> Repository: containsTypologyDesignation\n(typologyDesignation)
+activate Repository #DarkSalmon
+
+Repository -> RepositoryJPA: existsByTypologyDesignation\n(typologyDesignation)
+activate RepositoryJPA
+RepositoryJPA --> Repository: false
+deactivate Repository
+deactivate RepositoryJPA
 
 Repository -> Assembler : toData(typology)
-activate Assembler #FFBBBB
+activate Assembler
+Assembler -> typologyJPA ** : create
 Assembler --> Repository: typologyJPA
 deactivate Assembler
 
 Repository -> RepositoryJPA : save(typologyJPA)
-activate RepositoryJPA #FFBBBB
+activate RepositoryJPA
 RepositoryJPA --> Repository : savedTypologyJPA
 deactivate RepositoryJPA
 Repository -> Assembler : toDomain(savedTypologyJPA)
-activate Assembler #FFBBBB
+activate Assembler
+Assembler -> savedTypology ** : create
 Assembler --> Repository : savedTypology
 deactivate Assembler
+
 Repository -->Service: savedTypology
-
-
 deactivate Repository
-Service --> Controller : true
-deactivate Service
-Controller --> UI : Confirms typology creation
-deactivate Controller
 
-UI --> Administrator : Confirms typology creation
-deactivate UI
+Service --> Controller : typologyDTO
+deactivate Service
+
+Controller -> Mapper :toOutputDTO(typologyDTO)
+activate Mapper #FFBBBB
+Mapper -->"typologyOutputDTO:TypologyOutputDTO" ** :Create(typologyDTO)
+Mapper --> Controller :typologyOutputDTO
+deactivate Mapper
+
+Controller --> response ** : create(savedTypology, HttpStatus.CREATED)
+Controller --> Client : Confirms typology creation
+deactivate Controller
 
 @enduml
