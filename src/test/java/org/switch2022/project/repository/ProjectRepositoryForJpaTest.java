@@ -12,7 +12,9 @@ import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.repository.JPA.ProjectJpaRepository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -55,4 +57,63 @@ class ProjectRepositoryForJpaTest {
         //Assert
         assertEquals(savedProject, resultingProject);
     }
-}
+
+    @DisplayName("ensure getByID returns optional of project that JPA returns")
+    @Test
+    void shouldReturnOptionalOfProject() {
+        // Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        ProjectJpa projectJpaDouble = mock(ProjectJpa.class);
+        Optional<ProjectJpa> projectJpaDoubleOptional = Optional.of(projectJpaDouble);
+        ProjectDDD projectDouble = mock(ProjectDDD.class);
+        Optional<ProjectDDD> projectDoubleOptional = Optional.of(projectDouble);
+
+        when(projectCodeDouble.toString()).thenReturn("PROJ001");
+        when(projectJpaRepository.findById("PROJ001")).thenReturn(projectJpaDoubleOptional);
+        when(projectAssembler.toDomain(projectJpaDouble)).thenReturn(projectDouble);
+
+        // Act
+        Optional<ProjectDDD> result = projectRepositoryForJpaRepository.getByID(projectCodeDouble);
+
+        // Assert
+        assertEquals(projectDoubleOptional, result);
+    }
+
+    @DisplayName("ensure getByID returns empty optional if JPA returns empty optional")
+    @Test
+    void shouldReturnEmptyOptional() {
+        // Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+
+        when(projectCodeDouble.toString()).thenReturn("PROJ001");
+        when(projectJpaRepository.findById("PROJ001")).thenReturn(Optional.empty());
+
+        // Act
+        Optional<ProjectDDD> result = projectRepositoryForJpaRepository.getByID(projectCodeDouble);
+
+        // Assert
+        assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    @DisplayName("Ensure project is successfully replaced")
+    void ensureProjectIsReplaced(){
+        //Arrange
+        ProjectDDD project = mock(ProjectDDD.class);
+        ProjectDDD savedProject = mock(ProjectDDD.class);
+
+        ProjectJpa projectJpa = mock(ProjectJpa.class);
+        ProjectJpa savedProjectJpa = mock(ProjectJpa.class);
+
+        when(projectAssembler.toData(project)).thenReturn(projectJpa);
+        when(projectJpaRepository.save(projectJpa)).thenReturn(savedProjectJpa);
+        when(projectAssembler.toDomain(savedProjectJpa)).thenReturn(savedProject);
+
+        //Act
+        ProjectDDD resultingProject = projectRepositoryForJpaRepository.replace(project);
+
+        //Assert
+        assertEquals(savedProject, resultingProject);
+    }
+
+    }

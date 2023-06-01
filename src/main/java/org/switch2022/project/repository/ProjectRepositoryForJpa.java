@@ -8,6 +8,8 @@ import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.repository.JPA.ProjectJpaRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 
+import java.util.Optional;
+
 @Repository
 public class ProjectRepositoryForJpa implements IProjectRepository {
 
@@ -29,6 +31,28 @@ public class ProjectRepositoryForJpa implements IProjectRepository {
         if (existsByProjectCode(projectCode.toString())) {
             throw new IllegalArgumentException("A project with that code already exists");
         }
+
+        ProjectJpa projectJpa = projectDomainDataAssembler.toData(project);
+        ProjectJpa savedProjectJpa = projectJpaRepository.save(projectJpa);
+        ProjectDDD savedProject = projectDomainDataAssembler.toDomain(savedProjectJpa);
+
+        return savedProject;
+    }
+
+    @Override
+    public Optional<ProjectDDD> getByID(ProjectCode projectCode) {
+        Optional<ProjectJpa> projectJpaOptional = projectJpaRepository.findById(projectCode.toString());
+
+        if (projectJpaOptional.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(projectDomainDataAssembler.toDomain(projectJpaOptional.get()));
+        }
+
+    }
+
+    @Override
+    public ProjectDDD replace(ProjectDDD project) {
 
         ProjectJpa projectJpa = projectDomainDataAssembler.toData(project);
         ProjectJpa savedProjectJpa = projectJpaRepository.save(projectJpa);
