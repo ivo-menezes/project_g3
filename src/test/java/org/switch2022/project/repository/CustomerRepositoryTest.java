@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.datamodel.JPA.CustomerJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.CustomerDomainDataAssembler;
 import org.switch2022.project.model.customer.CustomerDDD;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class CustomerRepositoryTest {
 

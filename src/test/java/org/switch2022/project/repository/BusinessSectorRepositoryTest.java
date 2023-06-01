@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.datamodel.JPA.BusinessSectorJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.BusinessSectorDomainDataAssembler;
 import org.switch2022.project.model.businessSector.BusinessSectorDDD;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class BusinessSectorRepositoryTest {
 
