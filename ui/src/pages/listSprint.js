@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import Table from "../components/table";
@@ -13,6 +13,12 @@ const headers = [
 ];
 
 const ListSprints = () => {
+
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const {projectCode} = useParams();
     const {state} = useContext(AppContext);
@@ -50,7 +56,6 @@ const ListSprints = () => {
             </div>
             <div className="bt-container">
                 <Button
-
                     className="button-edit-stuff"
                     name="Create Sprint"
                     onClick={handleCreateSprint}

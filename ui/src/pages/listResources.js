@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import Table from "../components/table";
@@ -15,6 +15,12 @@ const headers =  [
 ]
 
 const ResourceList = () => {
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const{projectCode} = useParams();
     const {state} = useContext(AppContext);
     const navigate = useNavigate();
@@ -43,25 +49,27 @@ const ResourceList = () => {
 
     return(
         <div>
-            <Header text={`Resource list for project ${projectCode}`}
-                    className="header-listProjects"
-                    style={{marginLeft: "65px"}}
+            <Header/>
+            <div className="header-background-container"/>
+            <Header text={`Resource list - Project ${projectCode}`}
+                    className="header-list"
             />
+            <div className="table-container-c">
             {resourcesInProject.length > 0 ? (
-                <Table data={resource} headers={headers} />
+                <Table className="table-c" data={resource} headers={headers} />
             ) : (
-                <div className="string-format">
+                <div className="string-notification">
                     <h2>This project has no resources!</h2>
                 </div>
             )}
+            </div>
             <div className="bt-container">
                 <Button
-                    style={{ marginLeft: "50px"}}
-                    className={"button-ListProjects"}
+                    className={"button-edit-stuff"}
                     name="Associate Resource"
                     onClick={handleAssociateResource}
                     />
-                <Button className="button-ListProjects" name="Back to Project"
+                <Button className="button-edit-stuff" name="Back to Project"
                         onClick={() => handleReturn(projectCode)}/>
             </div>
         </div>

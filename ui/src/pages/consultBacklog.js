@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, {useContext, useEffect} from "react";
 import AppContext from '../context/AppContext';
-import {Link, useNavigate, useParams, useLocation} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
@@ -9,29 +9,34 @@ const headers = [
     {label: "Project Code", key: "projectCode"},
     {label: "Number", key: "number"},
     {label: "Actor", key: "actor"},
-    {label: "Description", key: "description" },
+    {label: "Description", key: "description"},
     {label: "Status", key: "status"},
     {label: "Priority", key: "priority"},
     {label: "Acceptance Criteria", key: "ac"},
 ]
 
 const ConsultBacklog = () => {
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     // getting the projectCode from the URL match (this is a function of react-router-dom)
-    const { projectCode } = useParams();
+    const {projectCode} = useParams();
     const navigate = useNavigate();
     const location = useLocation();
 
     // finding backlog for project from context
     // in the future this will be an API call with useEffect
 
-    const { state } = useContext(AppContext);
+    const {state} = useContext(AppContext);
 
     const backlogForProject = state.backlogs.filter((backlog) => backlog.projectCode === projectCode);
 
     const handleCreateUS = () => {
         const from = location.pathname;
-        navigate(`/createUserStory/${projectCode}`, { state: { from } });
+        navigate(`/createUserStory/${projectCode}`, {state: {from}});
     }
 
     const handleRowClick = (id) => {
@@ -44,42 +49,39 @@ const ConsultBacklog = () => {
 
     return (
         <div>
+            <Header/>
+            <div className="header-background-container"/>
             <Header
-                className='header-listProjects'
-                text={`Backlog for Project ${projectCode}`}
+                className='header-list'
+                text={`Backlog - Project ${projectCode}`}
             />
-            {backlogForProject.length > 0 ? (
-                <Table data={backlogForProject} headers={headers}/>
-            ) : (
-                <div className="string-format">
-                    <h2>This project has an empty backlog!</h2>
-                </div>
-            )}
-            <div className='bt-container '>
+            <div className="table-container-a">
+                {backlogForProject.length > 0 ? (
+                    <Table className="table-b" data={backlogForProject} headers={headers}/>
+                ) : (
+                    <div className="string-notification">
+                        <span className="string-notification">This project has an empty backlog!</span>
+                    </div>
+                )}
+            </div>
+            <div className="bt-container">
                 <Button
-                        className='button-ListProjects'
-                        name='Create UserStory'
-                        onClick={handleCreateUS}
+                    className='button-edit-stuff'
+                    name='Create UserStory'
+                    onClick={handleCreateUS}
                 />
                 <Button
-                    className='button-ListProjects'
-                    name= "Back to Project"
-                    onClick={() => handleRowClick(projectCode)}/>
+                    className='button-edit-stuff'
+                    name="Back to Project"
+                    onClick={() => handleRowClick(projectCode)}
+                />
             </div>
         </div>
+
     )
 }
 
 export default ConsultBacklog;
-
-
-
-
-
-
-
-
-
 
 
 // getting headers for table

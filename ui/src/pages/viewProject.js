@@ -1,10 +1,15 @@
-import React, { useContext } from "react";
+import React, {useContext, useEffect} from "react";
 import Button from "../components/button";
 import { Link, useParams } from "react-router-dom";
 import Header from "../components/header";
 import AppContext from "../context/AppContext";
 
 const ViewProject = () => {
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const { id } = useParams();
     const { state } = useContext(AppContext);
 

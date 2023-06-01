@@ -19,7 +19,7 @@ code {
   width: 75%;
   border-collapse: collapse;
   margin: 0 auto;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
 }
 
@@ -61,7 +61,6 @@ code {
   width: 25%;
   padding-left: 20px;
   box-sizing: border-box;
-
 }
 
 .table.table-b th:not(:first-child),
@@ -69,6 +68,18 @@ code {
   width: 25%;
   text-align: center;
 }
+/* table-c */
+.table-c th,
+.table-c td {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+
+
+
+
+
 /* Customize different width for different tables, using a container */
 .table-container-a {
   margin-top: 100px;
@@ -86,9 +97,17 @@ code {
   margin: 100px auto 20px;
 }
 
+.table-container-c {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin: 100px auto 20px;
+}
+
+
 /* Customize font size for table-b */
 .table.table-b {
-  font-size: 1.35rem; /* Set the desired font size for table-b */
+  font-size: 1.25rem; /* Set the desired font size for table-b */
 }
 
 
@@ -288,7 +307,7 @@ a:link {
   text-align: center; /* Add this line to center the text */
 }
 
-.form-create-project {
+.form-create {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -296,7 +315,7 @@ a:link {
   margin: 50px auto;
 }
 
-.form-create-project form {
+.form-create form {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -306,7 +325,7 @@ a:link {
   width: 46%;
 }
 
-.form-create-project form > * {
+.form-create form > * {
   margin-bottom: 20px;
   width: 100%;
 }
@@ -318,8 +337,8 @@ a:link {
   gap: 10px; /* Adjust the gap as needed */
 }
 
-.form-create-project input,
-.form-create-project select {
+.form-create input,
+.form-create select {
   font-size: 1.1rem;
   padding: 10px;
   border-radius: 5px;
@@ -327,17 +346,17 @@ a:link {
   width: 100%;
 }
 
-.form-create-project input:required:invalid:focus,
-.form-create-project select:required:invalid:focus {
+.form-create input:required:invalid:focus,
+.form-create select:required:invalid:focus {
   border: 2px solid #e74c3c;
 }
 
-.form-create-project input:required:valid,
-.form-create-project select:required:valid {
+.form-create input:required:valid,
+.form-create select:required:valid {
   border: 2px solid #2ecc71;
 }
 
-.form-create-project .mandatory {
+.form-create .mandatory {
   color: #e74c3c;
 }
 
@@ -423,115 +442,7 @@ a:link {
 
 /* Create User Story page style */
 
-.form-create-userStory {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 50px auto;
-  max-width: 700px;
-}
 
-.header-create-userStory {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: white;
-  text-transform: uppercase;
-}
-
-.form-create-userStory form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.form-create-userStory form > * {
-  margin-bottom: 20px;
-  width: 100%;
-}
-.form-create-userStory .button-form-createUserStory-save {
-  background-color: #668cff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.form-create-userStory .button-form-createUserStory-save:hover {
-  background-color: #148f77;
-}
-
-.form-create-userStory .button-form-createUserStory-cancel {
-  background-color: #737373;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.form-create-userStory .button-form-createUserStory-cancel:hover {
-  background-color: #7f8c8d;
-}
-
-.form-create-userStory label {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
-
-.form-create-userStory input,
-.form-create-userStory textArea,
-.form-create-userStory select {
-  font-size: 1.2rem;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-}
-
-.form-create-userStory input:required:invalid:focus,
-.form-create-userStory textArea:required:invalid:focus,
-.form-create-userStory select:required:invalid:focus {
-  border: 2px solid #e74c3c;
-}
-
-.form-create-userStory input:required:valid,
-.form-create-userStory textArea:required:valid,
-.form-create-userStory select:required:valid {
-  border: 2px solid #2ecc71;
-}
-
-.form-create-userStory .mandatory {
-  color: #e74c3c;
-}
-
-.textField {
-  display: block;
-  margin-bottom: 20px;
-}
-
-.textField input {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.textField input:focus {
-  outline: none;
-  border-color: #4b9cdb;
-}
 
 .textArea {
   margin-bottom: 20px;
@@ -543,6 +454,7 @@ a:link {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .textArea textarea {
@@ -561,33 +473,8 @@ a:link {
 }
 
 
-
-
-
-
 /* Create Sprint page style */
 
-.form-create-sprint {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 50px auto;
-}
-
-.form-create-sprint form {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 46%; /*controlls the width of the form */
-}
-
-.form-create-sprint form > * {
-  margin-bottom: 20px;
-  width: 100%;
-}
 
 .button-form-create-save {
   background-color: #2F3DA9;
@@ -629,30 +516,6 @@ a:link {
 
 .button-form-cancel:hover {
   background-color: #243BF3;
-}
-
-
-.form-create-sprint input,
-.form-create-sprint select {
-  font-size: 1.2rem;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-}
-
-.form-create-sprint input:required:invalid:focus,
-.form-create-sprint select:required:invalid:focus {
-  border: 2px solid #e74c3c;
-}
-
-.form-create-sprint input:required:valid,
-.form-create-sprint select:required:valid {
-  border: 2px solid #2ecc71;
-}
-
-.form-create-sprint .mandatory {
-  color: #e74c3c;
 }
 
 .textField {

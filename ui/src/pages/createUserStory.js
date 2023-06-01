@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AppContext from "../context/AppContext";
-import { addUserStory} from '../context/Actions';
+import {addUserStory} from '../context/Actions';
 import Button from '../components/button';
 import Header from '../components/header';
 import TextField from '../components/textField';
@@ -8,7 +8,12 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import TextArea from "../components/textArea";
 
 const CreateUserStory = () => {
-
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    // using a local state to save user input before submitting
     const {projectCode} = useParams();
     const emptyUserStory = {
         projectCode: projectCode,
@@ -26,7 +31,7 @@ const CreateUserStory = () => {
         const name = event.target.name;
         const value = event.target.value;
         setNewUserStory((backlog) => {
-            return {...backlog, [name] : value}
+            return {...backlog, [name]: value}
         })
     }
 
@@ -39,50 +44,58 @@ const CreateUserStory = () => {
     };
 
     return (
-        <section className="form-create-userStory">
-            <Header className="header-create-userStory" text="CREATE USER STORY" />
-            <form onSubmit={handleSubmission}>
-                <TextField
-                    className="textField"
-                    mandatory={true}
-                    label="Number"
-                    name={"number"}
-                    whenTyped={handleChange}
-                />
-                <TextField
-                    className="textField"
-                    mandatory={true}
-                    label="Actor"
-                    name={"actor"}
-                    whenTyped={handleChange}
-                />
-                <TextField
-                    className="textField"
-                    mandatory={true}
-                    label="Description"
-                    name={"description"}
-                    whenTyped={handleChange}
-                />
-                <TextField
-                    className="textField"
-                    mandatory={false}
-                    label="Priority"
-                    name={"priority"}
-                    whenTyped={handleChange}
-                />
-                <TextArea
-                    className="textArea"
-                    mandatory={true}
-                    label="Acceptance Criteria"
-                    name={"ac"}
-                    whenTyped={handleChange}
-                />
-                <Button className="button-form-createUserStory-save" name="Save" />
-                <Link to="/listProjects">
-                    <Button className="button-form-createUserStory-cancel" name="Cancel" />
-                </Link>
-            </form>
-        </section>
+        <div>
+            <Header/>
+            <div className="header-background-container"/>
+            <Header/>
+            <section className="form-create">
+                <Header className="header-create" text="Create user story"/>
+
+                <form onSubmit={handleSubmission}>
+                    <TextField
+                        className="textField"
+                        mandatory={true}
+                        label="Number"
+                        name={"number"}
+                        whenTyped={handleChange}
+                    />
+                    <TextField
+                        className="textField"
+                        mandatory={true}
+                        label="Actor"
+                        name={"actor"}
+                        whenTyped={handleChange}
+                    />
+                    <TextField
+                        className="textField"
+                        mandatory={true}
+                        label="Description"
+                        name={"description"}
+                        whenTyped={handleChange}
+                    />
+                    <TextField
+                        className="textField"
+                        mandatory={false}
+                        label="Priority"
+                        name={"priority"}
+                        whenTyped={handleChange}
+                    />
+                    <TextArea
+                        className="textArea"
+                        mandatory={true}
+                        label="Acceptance Criteria"
+                        name={"ac"}
+                        whenTyped={handleChange}
+                    />
+                    <div className="button-container">
+                        <Button className="button-form-create-save" name="Save"/>
+                        <Link to="/listProjects">
+                            <Button className="button-form-cancel" name="Cancel"/>
+                        </Link>
+                    </div>
+                </form>
+            </section>
+        </div>
     );
 };
 

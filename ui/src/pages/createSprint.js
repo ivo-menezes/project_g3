@@ -1,6 +1,6 @@
 import TextField from "../components/textField";
 import AppContext from "../context/AppContext";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate, useParams} from "react-router-dom";
@@ -8,6 +8,12 @@ import {addSprint} from "../context/Actions";
 import PickDate from "../components/date";
 
 const CreateSprint = () => {
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     // Extracts projectCode from the URL parameter using the useParams hook
     const {projectCode} = useParams();
 
@@ -80,7 +86,7 @@ const CreateSprint = () => {
             <Header/>
             <div className="header-background-container"/>
             <Header/>
-            <section className='form-create-sprint'>
+            <section className='form-create'>
                 <Header className='header-create' text="Create sprint"/>
                 <form onSubmit={handleSubmission}>
 
