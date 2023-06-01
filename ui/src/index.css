@@ -1,597 +1,662 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*
+This css is organized by section, each of these addressing the following aspects by order:
+- Default body formatting for all pages;
+- Header and Menu icons;
+- Table formatting for all pages;
+- Forms;
+- Buttons;
+- Other style rules for specific pages.
+
+ */
+
+
+/* ---- DEFAULT BODY FORMATTING FOR ALL PAGES:----------------------------------------------------------------------- */
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: #2F3DA9;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ---- HEADER AND MENU ICNONS -------------------------------------------------------------------------------------- */
+
+header {
+    position: absolute; /* Make the header position absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    z-index: 999; /* Set a higher z-index value to make the header overlap other elements */
 }
 
+header ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-/* TABLE FORMATTING FOR ALL TABLES*/
+header ul li
+{
+    list-style: none;
+    margin-left: 20px;
+}
 
-.table{
-  width: 75%;
-  border-collapse: collapse;
-  margin: 0 auto;
-  font-size: 1.3rem;
-  text-align: center;
+header ul li a
+{
+    text-decoration: none;
+    padding: 10px;
+    color: #fff;
+    border-radius: 20px;
+}
+
+header ul li .image-box {
+    position: relative; /* Set the container as a positioned element */
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 1px solid transparent;
+    /* Add positioning and alignment properties */
+    text-align: center; /* Center the contents horizontally */
+}
+
+header ul li .image-box img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container size */
+    max-height: 100%; /* Ensure the image doesn't exceed the container size */
+    display: block; /* Remove any additional spacing */
+    margin: auto; /* Center the image */
+}
+
+header ul li .image-box:hover {
+    border: 2px solid white; /* Increase the border width when hovering */
+    /* Add any other desired styles */
+}
+
+header .logo
+{
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+.nav-link-home img {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    top: 2px;
+    right: 0;
+}
+
+.nav-link-account img {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    top: 4px;
+    right: 0;
+}
+
+.nav-link-help img {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    top: 4px;
+    right: 0;
+}
+
+.nav-link-contact img {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    top: 4px;
+    right: 0;
+}
+
+/* Other headers */
+        /* List headers*/
+
+.header-list {
+    position: relative;
+    width: 100vw;
+    height: 47px;
+    top: 8vh;
+    color: #2F3DA9;
+    font-family: 'Optima', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 47px;
+    text-align: center; /* Add this line to center the text */
+}
+
+        /* Create headers */
+
+.header-create {
+    position: relative;
+    width: 100vw;
+    height: 47px;
+    top: 1vh;
+    color: #2F3DA9;
+    font-family: 'Optima', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 47px;
+    text-align: center; /* Add this line to center the text */
+}
+
+/* ----TABLE FORMATTING FOR ALL PAGES (except viewProjects, go to the respective page section)----------------------- */
+
+.table {
+    width: 75%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    text-align: center;
 }
 
 .table-header {
-  background: #2F3DA9;
+    background: #2F3DA9;
 }
 
 .table-header th {
-  color: white; /* Set the font color for the table header */
+    color: white; /* Set the font color for the table header */
 }
 
 .table th,
 .table td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #2F3DA9;
-  height: 50px; /* Set the desired height for th and td rows */
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #2F3DA9;
+    height: 50px; /* Set the desired height for th and td rows */
 }
 
+/* Customize different width for different tables (types a, b and c), using a container: */
 
-/* Customize column widths for different tables
+.table-container-a {
+    margin-top: 100px;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-   table-a*/
+.table-container-b {
+    width: 70vw;
+    display: flex;
+    justify-content: center;
+    margin: 100px auto 20px;
+}
+
+.table-container-c {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin: 100px auto 20px;
+}
+
+/* Customize column widths and a few more properties for different tables (types a, b and c):
+
+   Table-a*/
 .table.table-a th:first-child,
 .table.table-a td:first-child {
-  font-weight: bold;
-  width: 20%;
-  padding-left: 20px;
+    font-weight: bold;
+    width: 20%;
+    padding-left: 20px;
 }
 
 .table.table-a th:not(:first-child),
 .table.table-a td:not(:first-child) {
-  width: 60%;
+    width: 60%;
 }
-  /* table-b */
+
+/* Table-b */
 .table.table-b th:first-child,
 .table.table-b td:first-child {
-  font-weight: bold;
-  width: 25%;
-  padding-left: 20px;
-  box-sizing: border-box;
+    font-weight: bold;
+    width: 25%;
+    padding-left: 20px;
+    box-sizing: border-box;
 }
 
 .table.table-b th:not(:first-child),
 .table.table-b td:not(:first-child) {
-  width: 25%;
-  text-align: center;
+    width: 25%;
+    text-align: center;
 }
-/* table-c */
+
+/* Table-c */
 .table-c th,
 .table-c td {
-  text-align: center;
-  font-size: 1.3rem;
+    text-align: center;
+    font-size: 1.3rem;
 }
-
-
-
-
-
-
-/* Customize different width for different tables, using a container */
-.table-container-a {
-  margin-top: 100px;
-  width: 90vw;
-  display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.table-container-b {
-  width: 70vw;
-  display: flex;
-  justify-content: center;
-  margin: 100px auto 20px;
-}
-
-.table-container-c {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  margin: 100px auto 20px;
-}
-
 
 /* Customize font size for table-b */
 .table.table-b {
-  font-size: 1.25rem; /* Set the desired font size for table-b */
+    font-size: 1.25rem; /* Set the desired font size for table-b */
 }
 
-
-.button-view {
-  width: 30px;
-  display: table;
-  margin-left: 60%;
-  background-color: rgba(73, 176, 215, 0.3);
-  border: none;
-  padding: 4px;
-  border-radius: 60px;
-  cursor: pointer;
+/* Customize effect when hovering over data rows: */
+.table-a > tbody > tr:hover {
+    background-color: lightblue;
 }
 
-.table tr:hover {background-color: lightblue;}
-
-
-/* Welcome page style */
-
-.welcome-page .header {
-  background-color: transparent; /* Ensure that the gradient background is visible */
-}
-
-.welcome-page {
-  min-height: 100vh;
-  min-width: 100vw;
-  background: radial-gradient(circle at 5% 50%, #0F0FF5 0%, rgba(15, 15, 245, 0) 50%),
-  radial-gradient(circle at 90% 25%, #53F3F0 0%, rgba(83, 243, 240, 0) 90%),
-  radial-gradient(circle at 10% 10%, #0F0FF5 0%, rgba(15, 15, 245, 0) 20%),
-  #3B48B0;
-}
-
-.nav-link-home img {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  top: 2px;
-  right: 0;
-}
-
-.nav-link-account img {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  top: 4px;
-  right: 0;
-}
-
-.nav-link-help img {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  top: 4px;
-  right: 0;
-}
-
-.nav-link-contact img {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  top: 4px;
-  right: 0;
-}
-
-.title-welcome-container{
-  text-align: center;
-  width: 100vw;
-  height: 100vh;
-  margin: auto;
-}
-
-.title-welcome {
-  font-family: 'Roboto', sans-serif;
-  font-style: italic;
-  font-weight: 550;
-  font-size: 90px;
-  transform: scaleY(0.9);
-  line-height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #FFFFFF;
-  position: relative;
-  top: 40vh;
-}
-
-.subtitle-welcome-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw; /* Set the maximum width for the container */
-  margin: 0 auto; /* Center the container horizontally */
-}
-
-
-.subtitle-welcome {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: normal;
-  font-size: 200%;
-  line-height: 40px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #FFFFFF;
-  position: relative;
-  top: 43vh;
-}
-
-.subtitle-welcome span {
-  color: #FFFFFF;
-}
-
-.button-welcome {
-  height: 66px;
-  width: 150px;
-  background: #000000;
-  border: 5px solid black;
-  border-radius: 60px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 400;
-  font-size: 25px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #FFFFFF;
-  position: relative;
-  top: 47vh;
-  margin: 0 auto; /* Center the container horizontally */
-}
-
-a:link {
-  text-decoration: none; /*make sure that links are not underlined in buttons */
-}
-
-/* List Projects page style*/
-
-.header-list {
-  position: relative;
-  width: 100vw;
-  height: 47px;
-  top: 8vh;
-  color: #2F3DA9;
-  font-family: 'Optima', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  line-height: 47px;
-  text-align: center; /* Add this line to center the text */
-}
-
-.button-create{
-  border: 0;
-  padding: 10px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin: 30px;
-  cursor: pointer;
-  border-radius: 60px;
-  background-color: #2F3DA9;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-}
-
-.button-create:hover {
-  background-color: #243BF3;
-}
-
-.bt-container {
-  text-align: center;
-}
-
-
-
-
-/* Create Project page style */
-
-.header-create {
-  position: relative;
-  width: 100vw;
-  height: 47px;
-  top: 1vh;
-  color: #2F3DA9;
-  font-family: 'Optima', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  line-height: 47px;
-  text-align: center; /* Add this line to center the text */
-}
+/* ---- FORMS ------------------------------------------------------------------------------------------------------- */
 
 .form-create {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
 }
 
 .form-create form {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  width: 46%;
+    width: 46%;
 }
 
 .form-create form > * {
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px; /* Adjust the margin as needed */
-  gap: 10px; /* Adjust the gap as needed */
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .form-create input,
 .form-create select {
-  font-size: 1.1rem;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  width: 100%;
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
 }
 
 .form-create input:required:invalid:focus,
 .form-create select:required:invalid:focus {
-  border: 2px solid #e74c3c;
+    border: 2px solid #e74c3c;
 }
 
 .form-create input:required:valid,
 .form-create select:required:valid {
-  border: 2px solid #2ecc71;
+    border: 2px solid #2ecc71;
 }
 
 .form-create .mandatory {
-  color: #e74c3c;
+    color: #e74c3c;
 }
 
+/* text */
+
 .textField {
-  display: block;
-  margin-bottom: 20px;
+    display: block;
+    margin-bottom: 20px;
 }
 
 .textField input {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #829697;
+    background: #f1f3f3;
 }
 
 .textField input:focus {
-  outline: none;
-  border-color: #4b9cdb;
-}
-
-/* View project page style */
-
-.project-info-container {
-  margin-top: 100px;
-  width: 90vw;
-  display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.table-view-projects{
-  width: 75%;
-  border-collapse: collapse;
-  margin: 0 auto;
-  font-size: 1.3rem;
-  text-align: center;
-}
-
-.table-view-projects td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #2F3DA9;
-  height: 50px; /* Set the desired height for th and td rows */
-}
-
-.table-view-projects td:first-child {
-  font-weight: bold;
-  width: 20%;
-}
-.table-view-projects td:not(:first-child) {
-  width: 60%;
-}
-
-.button-edit-stuff{
-  border: 0;
-  padding: 10px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin-top: 30px;
-  margin-left: 15px;
-  margin-right: 15px;
-  cursor: pointer;
-  border-radius: 60px;
-  background-color: #2F3DA9;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 95%;
-  text-decoration: none;
-}
-
-.button-edit-stuff:hover {
-  background-color: #243BF3;
-}
-
-
-
-
-
-
-/* Create User Story page style */
-
-
-
-.textArea {
-  margin-bottom: 20px;
-  overflow: auto;
-  resize: none;
-}
-
-.textArea label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.textArea textarea {
-  width: 100%;
-  height: 200px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-.textArea textArea:focus {
-  outline: none;
-  border-color: #4b9cdb;
-}
-
-
-/* Create Sprint page style */
-
-
-.button-form-create-save {
-  background-color: #2F3DA9;
-  border: 1px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 60px;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.button-form-create-save:hover {
-  background-color: #243BF3;
-}
-
-.button-form-cancel {
-  background-color: #737373;
-  border: 1px;
-  width: 180px;
-  height: 55px;
-  display: inline-block;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 60px;
-  color: #fff;
-  font-weight: normal;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.button-form-cancel:hover {
-  background-color: #243BF3;
-}
-
-.textField {
-  display: block;
-  margin-bottom: 20px;
+    outline: none;
+    border-color: #4b9cdb;
 }
 
 .textField label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.textField input {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #829697;
-  background: #f1f3f3;
+.textArea {
+    margin-bottom: 20px;
+    overflow: auto;
+    resize: none;
 }
 
-.textField input:focus {
-  outline: none;
-  border-color: #4b9cdb;
+.textArea label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
-/* date format */
+.textArea textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.textArea textArea:focus {
+    outline: none;
+    border-color: #4b9cdb;
+}
+
+/* Date format */
+
 .date {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .date label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .date input {
-  border: 2px solid #ccc;
+    border: 2px solid #ccc;
 }
 
 /* DropDownList format */
 
 .dropDownList label {
-  font-weight: bold;
+    font-weight: bold;
 }
 
+/* --- BUTTONS ------------------------------------------------------------------------------------------------------ */
+
+/* button in Welcome page */
+.button-welcome {
+    height: 66px;
+    width: 150px;
+    background: #000000;
+    border: 5px solid black;
+    border-radius: 60px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #FFFFFF;
+    position: relative;
+    top: 47vh;
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+a:link {
+    text-decoration: none; /*make sure that links are not underlined in buttons */
+}
+
+/* Container for buttons: */
+.bt-container {
+    text-align: center;
+}
+
+/* All purpose button, used in Sprint List, Product Backlog, etc. */
+
+.button-edit-stuff {
+    border: 0;
+    padding: 10px;
+    width: 180px;
+    height: 55px;
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    cursor: pointer;
+    border-radius: 60px;
+    background-color: #2F3DA9;
+    color: #fff;
+    font-weight: normal;
+    font-family: "Open Sans", sans-serif;
+    font-size: 95%;
+    text-decoration: none;
+}
+
+.button-edit-stuff:hover {
+    background-color: #243BF3;
+}
+
+/* For project view: */
+.button-view {
+    width: 30px;
+    display: table;
+    margin-left: 60%;
+    background-color: rgba(73, 176, 215, 0.3);
+    border: none;
+    padding: 4px;
+    border-radius: 60px;
+    cursor: pointer;
+}
+
+/* For create Project: */
+.button-create {
+    border: 0;
+    padding: 10px;
+    width: 180px;
+    height: 55px;
+    display: inline-block;
+    margin: 30px;
+    cursor: pointer;
+    border-radius: 60px;
+    background-color: #2F3DA9;
+    color: #fff;
+    font-weight: normal;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.button-create:hover {
+    background-color: #243BF3;
+}
+
+/* Button container for Save / Cancel buttons in forms */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* Adjust the margin as needed */
+    gap: 10px; /* Adjust the gap as needed */
+}
+
+/* Button Save in forms */
+.button-form-create-save {
+    background-color: #2F3DA9;
+    border: 1px;
+    width: 180px;
+    height: 55px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 60px;
+    color: #fff;
+    font-weight: normal;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-form-create-save:hover {
+    background-color: #243BF3;
+}
+
+/* Button Cancel in forms */
+
+.button-form-cancel {
+    background-color: #737373;
+    border: 1px;
+    width: 180px;
+    height: 55px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 60px;
+    color: #fff;
+    font-weight: normal;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-form-cancel:hover {
+    background-color: #243BF3;
+}
+
+/* ---- - OTHER STYLE RULES FOR SPECIFIC PAGES ---------------------------------------------------------------------- */
+
+/* Welcome page */
+
+.welcome-page .header {
+    background-color: transparent; /* Ensure that the gradient background is visible */
+}
+
+.welcome-page {
+    min-height: 100vh;
+    min-width: 100vw;
+    background: radial-gradient(circle at 5% 50%, #0F0FF5 0%, rgba(15, 15, 245, 0) 50%),
+    radial-gradient(circle at 90% 25%, #53F3F0 0%, rgba(83, 243, 240, 0) 90%),
+    radial-gradient(circle at 10% 10%, #0F0FF5 0%, rgba(15, 15, 245, 0) 20%),
+    #3B48B0;
+}
+
+.title-welcome-container {
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+}
+
+.title-welcome {
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-weight: 550;
+    font-size: 90px;
+    transform: scaleY(0.9);
+    line-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #FFFFFF;
+    position: relative;
+    top: 40vh;
+}
+
+.subtitle-welcome-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw; /* Set the maximum width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.subtitle-welcome {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 200%;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    position: relative;
+    top: 43vh;
+}
+
+.subtitle-welcome span {
+    color: #FFFFFF;
+}
+
+/* View project page style */
+
+.project-info-container {
+    margin-top: 100px;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-view-projects {
+    width: 75%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.table-view-projects td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #2F3DA9;
+    height: 50px; /* Set the desired height for th and td rows */
+}
+
+.table-view-projects td:first-child {
+    font-weight: bold;
+    width: 20%;
+}
+
+.table-view-projects td:not(:first-child) {
+    width: 60%;
+}
+
+/* String notification for when sprintlist, resourcelist or productbacklog are empty: */
 .string-notification {
-  font-size: 2rem;
-  font-style: italic;
-  font-weight: normal;
-  margin-top: 25px;
-  margin-bottom: 100px;
-  color: #4b9cdb;
-  text-align: center;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 25px;
+    margin-bottom: 100px;
+    color: #4b9cdb;
+    text-align: center;
 }
+
+/* Under construction message :*/
 .string-under-construction {
-  font-family: 'Roboto', sans-serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 55px;
-  transform: scaleY(0.9);
-  line-height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #FFFFFF;
-  position: relative;
-  top: 40vh;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 55px;
+    transform: scaleY(0.9);
+    line-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #FFFFFF;
+    position: relative;
+    top: 40vh;
 }
+
+
 
 
 
