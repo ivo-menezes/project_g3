@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+node "localhost : -" as pc
+node " : " as server
+
+node pc {
+
+    component browser {
+
+        [Client]
+
+    }
+
+}
+
+node server {
+
+    [Server]
+
+}
+
+pc <--> server : http(s)
+
+@enduml

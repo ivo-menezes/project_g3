@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+folder UI
+folder Server
+
+UI ..> Server
+
+@enduml

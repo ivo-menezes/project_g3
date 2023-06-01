@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+[<<System>>\nproject-g3] as system
+() "REST API" as api
+() "UI" as ui
+
+system #-u- api
+system #-u- ui
+
+@enduml

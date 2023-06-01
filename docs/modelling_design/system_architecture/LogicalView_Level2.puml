@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+"<<System>>\nproject-g3" as system
+() "UI" as ui
+() "REST API" as api
+
+component system {
+
+    [Client] as client
+    [Server] as server
+
+    server #-- api
+
+    client #-- ui
+    client #--( api
+
+}
+
+@enduml
