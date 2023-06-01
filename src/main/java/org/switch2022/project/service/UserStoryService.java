@@ -2,7 +2,6 @@ package org.switch2022.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
@@ -13,6 +12,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class UserStoryService {
 
     private final IUserStoryRepository userStoryRepository;
 
-    private final Repository<ProjectCode, ProjectDDD> projectRepository;
+    private final IProjectRepository projectRepository;
 
     private final NewUserStoryInfoDTOMapper userStoryInfoDTOMapper;
     private UserStoryMapperDDD userStoryMapper;
@@ -41,7 +41,7 @@ public class UserStoryService {
      */
     public UserStoryService(IUserStoryFactory userStoryFactory,
                             IUserStoryRepository userStoryRepository,
-                            Repository<ProjectCode, ProjectDDD> projectRepository,
+                            IProjectRepository projectRepository,
                             NewUserStoryInfoDTOMapper userStoryInfoDTOMapper) {
 
         if (userStoryFactory == null) {
@@ -75,7 +75,6 @@ public class UserStoryService {
 
         // get corresponding project, throw exception if it does not exist
         ProjectCode projectCode = newUserStory.identity().getProjectCode();
-        System.out.println(projectCode.toString());
         Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
 
         if (projectOptional.isEmpty()) {
@@ -89,7 +88,7 @@ public class UserStoryService {
         UserStoryPriority attributedPriority = project.addToProductBacklog(newUserStory.identity(), infoDTO.priority);
 
         // save the updated project
-        projectRepository.save(project);
+        projectRepository.replace(project);
 
         NewUserStoryInfoDTO outboundDto = userStoryInfoDTOMapper.toDto(savedUserStory);
         outboundDto.priority = attributedPriority;

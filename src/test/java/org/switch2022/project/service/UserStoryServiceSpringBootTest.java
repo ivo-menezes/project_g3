@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -14,6 +13,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class UserStoryServiceSpringBootTest {
     IUserStoryRepository userStoryRepositoryDouble;
 
     @MockBean
-    Repository<ProjectCode, ProjectDDD> projectRepositoryDouble;
+    IProjectRepository projectRepositoryDouble;
 
     @MockBean
     NewUserStoryInfoDTOMapper mapperDouble;
@@ -60,7 +60,7 @@ public class UserStoryServiceSpringBootTest {
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(userStoryRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(priorityDouble);
-        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+        when(projectRepositoryDouble.save(projectDouble)).thenReturn(projectDouble);
         when(mapperDouble.toDto(userStoryDouble)).thenReturn(dtoDouble2);
 
         // act

@@ -2,7 +2,6 @@ package org.switch2022.project.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
 import org.switch2022.project.mapper.UserStoryDTOForListDDD;
@@ -13,6 +12,7 @@ import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.UserStoryID;
 import org.switch2022.project.model.valueobject.UserStoryPriority;
+import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ class UserStoryServiceTest {
         // arrange
         IUserStoryFactory factory = null;
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "userStoryFactory must not be null.";
@@ -53,7 +53,7 @@ class UserStoryServiceTest {
         // arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepository = null;
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "userStoryRepository must not be null.";
@@ -75,7 +75,7 @@ class UserStoryServiceTest {
         // arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepository = null;
+        IProjectRepository projectRepository = null;
         NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         String expectedMessage = "projectRepository must not be null.";
@@ -97,7 +97,7 @@ class UserStoryServiceTest {
         // Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
@@ -117,7 +117,7 @@ class UserStoryServiceTest {
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
         when(usRepositoryDouble.save(userStoryDouble)).thenReturn(userStoryDouble);
         when(projectDouble.addToProductBacklog(userStoryIdDouble, dtoDouble.priority)).thenReturn(priorityDouble);
-        when(projectRepositoryDouble.save(projectDouble)).thenReturn(true);
+        when(projectRepositoryDouble.replace(projectDouble)).thenReturn(projectDouble);
         when(mapperDouble.toDto(userStoryDouble)).thenReturn(dtoDouble2);
 
         // act
@@ -133,7 +133,7 @@ class UserStoryServiceTest {
         // Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         NewUserStoryInfoDTOMapper mapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, mapperDouble);
@@ -169,7 +169,7 @@ class UserStoryServiceTest {
         //Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
@@ -216,7 +216,7 @@ class UserStoryServiceTest {
         //Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
@@ -242,7 +242,7 @@ class UserStoryServiceTest {
         //Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
@@ -279,7 +279,7 @@ class UserStoryServiceTest {
         //Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        Repository<ProjectCode, ProjectDDD> projectRepositoryDouble = mock(Repository.class);
+        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
         UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
