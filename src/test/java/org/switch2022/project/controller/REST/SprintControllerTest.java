@@ -16,10 +16,14 @@ import org.switch2022.project.mapper.REST.SprintDTOUI;
 import org.switch2022.project.mapper.sprintDTOs.SprintDTOController;
 import org.switch2022.project.mapper.sprintDTOs.SprintDTOToController;
 import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.service.SprintServiceDDD;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +38,7 @@ class SprintControllerTest {
     SprintController sprintController;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
     @Test
@@ -93,6 +97,51 @@ class SprintControllerTest {
         ResponseEntity<SprintDTOUI> result = sprintController.createSprint(sprintDTO);
 
         //assert
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+    }
+    @Test
+    public void ensureControllerCreatesSprintLIst(){
+        // Arrange
+
+        ProjectCode projectCode = new ProjectCode("P1");
+        SprintDTOController mockDTOController = new SprintDTOController();
+        mockDTOController.projectCode = projectCode;
+
+        List<SprintDTOUI> mockList = new ArrayList<>();
+        mockList.add(new SprintDTOUI());
+        mockList.add(new SprintDTOUI());
+        mockList.add(new SprintDTOUI());
+
+        List<SprintDTOToController> mockControllerList = new ArrayList<>();
+        mockControllerList.add(new SprintDTOToController());
+        mockControllerList.add(new SprintDTOToController());
+        mockControllerList.add(new SprintDTOToController());
+
+        when(sprintMapper.getSprintList(anyList())).thenReturn(mockList);
+        when(sprintMapper.createProjectCode(any(SprintDTOUI.class))).thenReturn(mockDTOController);
+        when(serviceDDD.sprintList(any(ProjectCode.class))).thenReturn(mockControllerList);
+
+        // Act
+        ResponseEntity<List<SprintDTOUI>> result = sprintController.retrieveSprintList("P1");
+
+        // Assert
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(mockList, result.getBody());
+    }
+    @Test
+    public void ensureControllerThrowsException(){
+        // Arrange
+
+        ProjectCode projectCode = new ProjectCode("P1");
+        SprintDTOController mockDTOController = new SprintDTOController();
+        mockDTOController.projectCode = projectCode;
+
+        when(sprintMapper.createProjectCode(any(SprintDTOUI.class))).thenReturn(null);
+
+        // Act
+        ResponseEntity<List<SprintDTOUI>> result = sprintController.retrieveSprintList("P1");
+
+        // Assert
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 }

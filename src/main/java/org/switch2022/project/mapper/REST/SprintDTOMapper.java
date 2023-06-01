@@ -7,6 +7,9 @@ import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.model.valueobject.TimePeriod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class SprintDTOMapper {
 
@@ -15,7 +18,7 @@ public class SprintDTOMapper {
      * This will be consumed in the Sprint Services, to have the SprintDDD created.
      * Note that it doesn't have the Sprint Number, since it is retrieved by the Services
      * from the Repository
-     * @param sprintDTOFromUI
+     * @param sprintDTOFromUI with primitive data
      * @return SprintDTOController, which is a DTO that will be sent FROM the
      * Controller and to the Services
      */
@@ -35,7 +38,7 @@ public class SprintDTOMapper {
     /***
      * This one uses different DTOS, since they have the Sprint Number Value object
      * and the primitive int Sprint Number.
-     * @param toControllerDTO
+     * @param toControllerDTO with Value Objects
      * @return SprintDTOUI, which already has the field for the primitive Sprint Number
      */
     public SprintDTOUI toRestDTO (SprintDTOToController toControllerDTO){
@@ -47,5 +50,14 @@ public class SprintDTOMapper {
         newUiDTO.endDate = toControllerDTO.timePeriod.getEndDate();
 
         return newUiDTO;
+    }
+    public List<SprintDTOUI> getSprintList (List<SprintDTOToController> allSprintsFromProject){
+        List<SprintDTOUI> dtoList = new ArrayList<>();
+
+        for(SprintDTOToController serviceDTO : allSprintsFromProject){
+            SprintDTOUI sprintDTOUI = toRestDTO(serviceDTO);
+            dtoList.add(sprintDTOUI);
+        }
+        return dtoList;
     }
 }
