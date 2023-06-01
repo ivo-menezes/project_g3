@@ -9,12 +9,18 @@ public class ProjectName implements ValueObject {
 
     private final String projectName;
 
+
     public ProjectName (String projectName) {
         if (projectName==null || projectName.isBlank() || projectName.isEmpty()) {
             throw new IllegalArgumentException("projectName cannot be null/blank/empty");
         }
 
         this.projectName = projectName;
+    }
+
+    @Override
+    public String toString() {
+        return this.projectName;
     }
 
     @Override
