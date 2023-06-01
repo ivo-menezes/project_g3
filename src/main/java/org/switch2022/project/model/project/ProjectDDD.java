@@ -3,66 +3,85 @@ package org.switch2022.project.model.project;
 import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProjectDDD implements AggregateRoot<ProjectCode> {
 
-    private final ProjectCode projectCode;
-    private final ProjectName projectName;
-    private final Description description;
-    private final ProjectStatus projectStatus;
-    private final TimePeriod timePeriod;
-    private final ProjectBudget projectBudget;
-    private final ProjectSprintDuration projectSprintDuration;
-    private final ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints;
-    private final ProductBacklogDDD productBacklog;
+    private ProjectCode projectCode;
+    private ProjectName projectName;
+    private Description description;
+    private ProjectStatus projectStatus;
+    private TimePeriod timePeriod;
+    private ProjectSprintDuration projectSprintDuration;
+    private ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints;
+    private CustomerID customerID;
+    private BusinessSectorID businessSectorID;
+    private TypologyID typologyID;
+    private ProjectBudget projectBudget;
+    private ProductBacklogDDD productBacklog;
+
+
+    public ProjectDDD(ProjectCode projectCode,
+                      ProjectName projectName,
+                      Description description,
+                      TimePeriod timePeriod,
+                      ProjectSprintDuration projectSprintDuration,
+                      ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints,
+                      CustomerID customerID,
+                      BusinessSectorID businessSectorID,
+                      TypologyID typologyID,
+                      ProjectBudget projectBudget
+    ) {
+
+        this(projectCode, projectName, description, ProjectStatus.Planned, timePeriod, projectSprintDuration, projectNumberOfPlannedSprints, customerID, businessSectorID, typologyID, projectBudget, new ArrayList<>());
+
+    }
 
     public ProjectDDD(ProjectCode projectCode,
                       ProjectName projectName,
                       Description description,
                       ProjectStatus projectStatus,
                       TimePeriod timePeriod,
-                      ProjectBudget projectBudget,
                       ProjectSprintDuration projectSprintDuration,
-                      ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints
+                      ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints,
+                      CustomerID customerID,
+                      BusinessSectorID businessSectorID,
+                      TypologyID typologyID,
+                      ProjectBudget projectBudget,
+                      List<UserStoryID> userStoryIDs
     ) {
-
         if (projectCode == null) {
-            throw new IllegalArgumentException("projectCode cannot be null");
+            throw new IllegalArgumentException("Project code must not be null");
         }
-
         if (projectName == null) {
-            throw new IllegalArgumentException("projectName cannot be null");
+            throw new IllegalArgumentException("Project name must not be null");
         }
         if (description == null) {
-            throw new IllegalArgumentException("description cannot be null");
+            throw new IllegalArgumentException("Description must not be null");
         }
-        if (projectStatus == null) {
-            throw new IllegalArgumentException("projectStatus cannot be null");
+        if (customerID == null) {
+            throw new IllegalArgumentException("Customer ID must not be null");
         }
-        if (timePeriod == null) {
-            throw new IllegalArgumentException("timePeriod cannot be null");
+        if (businessSectorID == null) {
+            throw new IllegalArgumentException("Business sector ID must not be null");
         }
-        if (projectBudget == null) {
-            throw new IllegalArgumentException("projectBudget cannot be null");
+        if (typologyID == null) {
+            throw new IllegalArgumentException("Typology ID must not be null");
         }
-        if (projectSprintDuration == null) {
-            throw new IllegalArgumentException("projectSprintDuration cannot be null");
-        }
-        if (projectNumberOfPlannedSprints == null) {
-            throw new IllegalArgumentException("projectNumberOfPlannedSprints cannot be null");
-        }
-
         this.projectCode = projectCode;
         this.projectName = projectName;
         this.description = description;
         this.projectStatus = projectStatus;
         this.timePeriod = timePeriod;
-        this.projectBudget = projectBudget;
         this.projectSprintDuration = projectSprintDuration;
         this.projectNumberOfPlannedSprints = projectNumberOfPlannedSprints;
-
-        this.productBacklog = new ProductBacklogDDD();
+        this.customerID = customerID;
+        this.businessSectorID = businessSectorID;
+        this.typologyID = typologyID;
+        this.projectBudget = projectBudget;
+        this.productBacklog = new ProductBacklogDDD(userStoryIDs);
     }
 
     @Override
@@ -110,15 +129,40 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
         return timePeriod;
     }
 
-    public ProjectBudget getProjectBudget() {
-        return projectBudget;
-    }
-
     public ProjectSprintDuration getProjectSprintDuration() {
         return projectSprintDuration;
     }
 
     public ProjectNumberOfPlannedSprints getProjectNumberOfPlannedSprints() {
         return projectNumberOfPlannedSprints;
+    }
+
+    public CustomerID getCustomerID() {
+        return customerID;
+    }
+
+    public BusinessSectorID getBusinessSectorID() {
+        return businessSectorID;
+    }
+
+    public TypologyID getTypologyID() {
+        return typologyID;
+    }
+
+    public ProjectBudget getProjectBudget() {
+        return projectBudget;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectDDD that = (ProjectDDD) o;
+        return projectCode.equals(that.projectCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode);
     }
 }

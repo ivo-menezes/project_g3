@@ -3,42 +3,78 @@ package org.switch2022.project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.Repository;
-import org.switch2022.project.mapper.ProjectDTO;
+import org.switch2022.project.mapper.NewProjectDTO;
+import org.switch2022.project.mapper.NewProjectDTOMapper;
 import org.switch2022.project.mapper.ProjectDTOForListDDD;
-import org.switch2022.project.mapper.ProjectDTO_DDD;
 import org.switch2022.project.mapper.ProjectMapperDDD;
 import org.switch2022.project.model.project.IProjectFactory;
 import org.switch2022.project.model.project.ProjectDDD;
-import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
+import org.switch2022.project.service.irepositories.ICustomerRepository;
+import org.switch2022.project.service.irepositories.IProjectRepository;
+import org.switch2022.project.service.irepositories.ITypologyRepository;
 
 import java.util.List;
 
 @Service
 public class ProjectService {
-    @Autowired
-    private final IProjectFactory projectFactory;
-    @Autowired
-    private final Repository<ProjectCode, ProjectDDD> projectRepository;
 
-    /**
-     * Public constructor for ProjectService.
-     * @param projectFactory a factory that implements IProjectFactory
-     * @param projectRepository repository that implements Repository<ProjectCode, Project>
-     */
+    private ICustomerRepository customerRepository;
+    private IBusinessSectorRepository businessSectorRepository;
+    private ITypologyRepository typologyRepository;
+    private IProjectFactory projectFactory;
+    private IProjectRepository projectNewRepository;
+
+    private NewProjectDTOMapper newProjectDTOMapper;
+    private Repository<ProjectCode, ProjectDDD> projectRepository;
     private ProjectMapperDDD projectMapperDDD;
 
-
-    public ProjectService(IProjectFactory projectFactory, Repository<ProjectCode, ProjectDDD> projectRepository) {
-
+    public ProjectService(ICustomerRepository customerRepository, IBusinessSectorRepository businessSectorRepository, ITypologyRepository typologyRepository, IProjectFactory projectFactory, IProjectRepository projectNewRepository, NewProjectDTOMapper newProjectDTOMapper, Repository<ProjectCode, ProjectDDD> projectRepository, ProjectMapperDDD projectMapperDDD) {
+        if (customerRepository == null) {
+            throw new IllegalArgumentException("Customer Repository must not be null.");
+        }
+        if (businessSectorRepository == null) {
+            throw new IllegalArgumentException("Business Sector Repository must not be null.");
+        }
+        if (typologyRepository == null) {
+            throw new IllegalArgumentException("Typology Repository must not be null.");
+        }
         if (projectFactory == null) {
-            throw new IllegalArgumentException("projectFactory must not be null.");
+            throw new IllegalArgumentException("Project Factory must not be null.");
+        }
+        if (projectNewRepository == null) {
+            throw new IllegalArgumentException("Project New Repository must not be null.");
+        }
+        if (newProjectDTOMapper == null) {
+            throw new IllegalArgumentException("New Project DTO Mapper must not be null.");
         }
         if (projectRepository == null) {
-            throw new IllegalArgumentException("projectRepository must not be null.");
+            throw new IllegalArgumentException("Project Repository must not be null.");
+        }
+        if (projectMapperDDD == null) {
+            throw new IllegalArgumentException("Project Mapper must not be null.");
         }
 
+        this.customerRepository = customerRepository;
+        this.businessSectorRepository = businessSectorRepository;
+        this.typologyRepository = typologyRepository;
         this.projectFactory = projectFactory;
+        this.projectNewRepository = projectNewRepository;
+        this.newProjectDTOMapper = newProjectDTOMapper;
         this.projectRepository = projectRepository;
+        this.projectMapperDDD = projectMapperDDD;
+    }
+
+
+    public NewProjectDTO createProject(NewProjectDTO projectDto) {
+
+        ProjectDDD projectDDD = projectFactory.createProject(projectDto);
+
+        ProjectDDD savedProject = projectNewRepository.save(projectDDD);
+        NewProjectDTO dtoOut = newProjectDTOMapper.toDto(savedProject);
+
+        return dtoOut;
     }
 
     @Autowired
@@ -46,36 +82,6 @@ public class ProjectService {
         this.projectMapperDDD = projectMapperDDD;
     }
 
-
-
-
-    /**
-     * Creates a Project and adds it to the projectRepository.
-     * @param projectDTO_ddd a DTO with the information for the Project.
-     * @return true if Project was successfully created and saved, false otherwise.
-     */
-
-    public boolean createProject (ProjectDTO_DDD projectDTO_ddd) {
-
-        ProjectCode projectCode =  new ProjectCode(projectDTO_ddd.code);
-        ProjectName projectName = new ProjectName(projectDTO_ddd.name);
-        Description description = new Description(projectDTO_ddd.description);
-        ProjectStatus projectStatus = ProjectStatus.Planned;
-        TimePeriod timePeriod = new TimePeriod(projectDTO_ddd.StartDate, projectDTO_ddd.endDate);
-        ProjectBudget projectBudget = new ProjectBudget(projectDTO_ddd.budget);
-        ProjectSprintDuration projectSprintDuration = new ProjectSprintDuration(projectDTO_ddd.sprintDuration);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = new ProjectNumberOfPlannedSprints(projectDTO_ddd.numberOfPlannedSprints);
-
-        ProjectDDD project = this.projectFactory.createProject(projectCode,
-                                                               projectName,
-                                                               description,
-                                                               projectStatus,
-                                                               timePeriod,
-                                                               projectBudget,
-                                                               projectSprintDuration,
-                                                               projectNumberOfPlannedSprints);
-        return this.projectRepository.save(project);
-    }
 
     public List<ProjectDTOForListDDD> listProjects() {
 

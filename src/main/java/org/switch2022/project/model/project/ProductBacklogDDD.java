@@ -11,12 +11,17 @@ import java.util.List;
  * representing the set of open (not cancelled or concluded) user stories
  * ordered by priority.
  */
-public class ProductBacklogDDD {
+class ProductBacklogDDD {
 
-    private final List<UserStoryID> openUserStories;
+    private List<UserStoryID> openUserStories;
 
     protected ProductBacklogDDD() {
         this.openUserStories = new ArrayList<>();
+    }
+
+    protected ProductBacklogDDD(List<UserStoryID> userStoryIDs) {
+        this.openUserStories = new ArrayList<>();
+        this.openUserStories.addAll(userStoryIDs);
     }
 
     /**
@@ -47,8 +52,12 @@ public class ProductBacklogDDD {
      *
      * @return List<UserStoryID> with IDs of open user stories
      */
-    protected List<UserStoryID> getOpenUserStories() {
+    public List<UserStoryID> getOpenUserStories() {
         return List.copyOf(this.openUserStories);
     }
 
+
+    public void setOpenUserStories(List<UserStoryID> openUserStories) {
+        this.openUserStories = openUserStories;
+    }
 }

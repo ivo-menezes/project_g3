@@ -1,13 +1,14 @@
 package org.switch2022.project.model.project;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.switch2022.project.model.ProductBacklog;
-import org.switch2022.project.model.userStory.UserStoryDDD;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.switch2022.project.model.valueobject.*;
 
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -15,62 +16,84 @@ import static org.mockito.Mockito.when;
 
 class ProjectDDDTest {
 
+    @Mock
+    private ProjectCode projectCodeDouble;
+    @Mock
+    private ProjectName projectNameDouble;
+    @Mock
+    private Description descriptionDouble;
+    @Mock
+    private ProjectStatus projectStatusDouble;
+    @Mock
+    private TimePeriod timePeriodDouble;
+    @Mock
+    private ProjectSprintDuration projectSprintDurationDouble;
+    @Mock
+    private ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble;
+    @Mock
+    private CustomerID customerIDDouble;
+    @Mock
+    private BusinessSectorID businessSectorIDDouble;
+    @Mock
+    private TypologyID typologyIDDouble;
+    @Mock
+    private ProjectBudget projectBudgetDouble;
+
+    @Mock
+    private ProductBacklogDDD productBacklogDouble;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     /***
      * The test is used to ensure the ProjectDDD is correctly created, using a
      * mock for the ProjectCode class.
      */
     @Test
     @DisplayName("Test for a successful creation of ProjectDDD")
-    public void checkIfTheProjectDDDIsSuccessfulCreated(){
+    public void checkIfTheProjectDDDIsSuccessfulCreated() {
         // arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
 
         // act
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
                 descriptionDouble,
-                projectStatusDouble,
                 timePeriodDouble,
-                projectBudgetDouble,
                 projectSprintDurationDouble,
-                projectNumberOfPlannedSprintsDouble);
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
 
         // assert
         assertInstanceOf(ProjectDDD.class, project);
     }
 
+
     /***
      * This tests to ensure the mock object is correctly inserted into the product backlog.
      */
+
     @Test
     @DisplayName("Test for a successful addition to Backlog")
-    public void checkIfTheProjectDDDAddsToBacklog(){
+    public void checkIfTheProjectDDDAddsToBacklog() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        UserStoryPriority priority = mock(UserStoryPriority.class);
+
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
                 descriptionDouble,
-                projectStatusDouble,
                 timePeriodDouble,
-                projectBudgetDouble,
                 projectSprintDurationDouble,
-                projectNumberOfPlannedSprintsDouble);
-        UserStoryID userStoryID = mock(UserStoryID.class);
-        UserStoryPriority priority = mock(UserStoryPriority.class);
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
 
         //Act
         boolean result = project.addToProductBacklog(userStoryID, priority);
@@ -79,31 +102,28 @@ class ProjectDDDTest {
         assertTrue(result);
     }
 
+
     /***
      * This tests for a successful call for the list, using the UserStoryID.
      */
+
     @Test
     @DisplayName("Test for a successful call of List")
-    public void checkIfTheProjectDDDReturnsProductBacklog(){
+    public void checkIfTheProjectDDDReturnsProductBacklog() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        UserStoryPriority priority = mock(UserStoryPriority.class);
+
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
                 descriptionDouble,
-                projectStatusDouble,
                 timePeriodDouble,
-                projectBudgetDouble,
                 projectSprintDurationDouble,
-                projectNumberOfPlannedSprintsDouble);
-        UserStoryID userStoryID = mock(UserStoryID.class);
-        UserStoryPriority priority = mock(UserStoryPriority.class);
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
 
         //Act
         project.addToProductBacklog(userStoryID, priority);
@@ -112,29 +132,21 @@ class ProjectDDDTest {
         assertEquals(userStoryID, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
 
-    /***
-     *
-     */
+
     @Test
     @DisplayName("Test for the list returning more than one UserStory")
-    public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithNegativeValueSize(){
+    public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithNegativeValueSize() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
                 descriptionDouble,
-                projectStatusDouble,
                 timePeriodDouble,
-                projectBudgetDouble,
                 projectSprintDurationDouble,
-                projectNumberOfPlannedSprintsDouble);
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(0);
@@ -149,26 +161,21 @@ class ProjectDDDTest {
         //Act
         assertNotEquals(-2, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
+
     @Test
     @DisplayName("Test for the list returning more than one UserStory")
-    public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithValuesAboveTheTrueSize(){
+    public void checkIfTheProjectDDDDoesNotReturnProductBacklogWithValuesAboveTheTrueSize() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
         ProjectDDD project = new ProjectDDD(projectCodeDouble,
                 projectNameDouble,
                 descriptionDouble,
-                projectStatusDouble,
                 timePeriodDouble,
-                projectBudgetDouble,
                 projectSprintDurationDouble,
-                projectNumberOfPlannedSprintsDouble);
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         UserStoryID userStoryID = mock(UserStoryID.class);
         UserStoryPriority priority = mock(UserStoryPriority.class);
         when(priority.getValue()).thenReturn(0);
@@ -183,29 +190,25 @@ class ProjectDDDTest {
         //Act
         assertNotEquals(3, project.getProductBacklog().get(project.getProductBacklog().size() - 1));
     }
+
     @Test
     @DisplayName("Project constructor throws exception with null code")
-    void nullCodeThrowsException() {
+    void ensureNullCodeThrowsException() {
         //Arrange
-        ProjectName projectNameDouble = mock(ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "projectCode cannot be null";
+        String expectedMessage = "Project code must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(null,
                             projectNameDouble,
                             descriptionDouble,
-                            projectStatusDouble,
                             timePeriodDouble,
-                            projectBudgetDouble,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectNumberOfPlannedSprintsDouble,
+                            customerIDDouble,
+                            businessSectorIDDouble,
+                            typologyIDDouble,
+                            projectBudgetDouble);
                 }
         );
 
@@ -218,27 +221,22 @@ class ProjectDDDTest {
 
     @Test
     @DisplayName("Project constructor throws exception with null name")
-    void nullNameThrowsException() {
+    void ensureNullNameThrowsException() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "projectName cannot be null";
+        String expectedMessage = "Project name must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(projectCodeDouble,
                             null,
                             descriptionDouble,
-                            projectStatusDouble,
                             timePeriodDouble,
-                            projectBudgetDouble,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectNumberOfPlannedSprintsDouble,
+                            customerIDDouble,
+                            businessSectorIDDouble,
+                            typologyIDDouble,
+                            projectBudgetDouble);
                 }
         );
 
@@ -251,27 +249,22 @@ class ProjectDDDTest {
 
     @Test
     @DisplayName("Project constructor throws exception with null description")
-    void nullDescriptionThrowsException() {
+    void ensureNullDescriptionThrowsException() {
         //Arrange
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "description cannot be null";
+        String expectedMessage = "Description must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(projectCodeDouble,
                             projectNameDouble,
                             null,
-                            projectStatusDouble,
                             timePeriodDouble,
-                            projectBudgetDouble,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectNumberOfPlannedSprintsDouble,
+                            customerIDDouble,
+                            businessSectorIDDouble,
+                            typologyIDDouble,
+                            projectBudgetDouble);
                 }
         );
 
@@ -281,28 +274,24 @@ class ProjectDDDTest {
         //Assert
         assertEquals(expectedMessage, resultMessage);
     }
+
     @Test
-    @DisplayName("Project constructor throws exception with null projectStatus")
-    void nullProjectStatusThrowsException() {
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "projectStatus cannot be null";
+    @DisplayName("Project constructor throws exception with null customer")
+    void ensureNullCustomerThrowsException() {
+        String expectedMessage = "Customer ID must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(projectCodeDouble,
                             projectNameDouble,
                             descriptionDouble,
-                            null,
                             timePeriodDouble,
-                            projectBudgetDouble,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectNumberOfPlannedSprintsDouble,
+                            null,
+                            businessSectorIDDouble,
+                            typologyIDDouble,
+                            projectBudgetDouble);
                 }
         );
 
@@ -312,28 +301,24 @@ class ProjectDDDTest {
         //Assert
         assertEquals(expectedMessage, resultMessage);
     }
+
     @Test
-    @DisplayName("Project constructor throws exception with null timePeriod")
+    @DisplayName("Project constructor throws exception with null business sector")
     void nullTimePeriodThrowsException() {
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        ProjectBudget projectBudgetDouble = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "timePeriod cannot be null";
+        String expectedMessage = "Business sector ID must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(projectCodeDouble,
                             projectNameDouble,
                             descriptionDouble,
-                            projectStatusDouble,
-                            null,
-                            projectBudgetDouble,
+                            timePeriodDouble,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectNumberOfPlannedSprintsDouble,
+                            customerIDDouble,
+                            null,
+                            typologyIDDouble,
+                            projectBudgetDouble);
                 }
         );
 
@@ -345,59 +330,22 @@ class ProjectDDDTest {
     }
 
     @Test
-    @DisplayName("Project constructor throws exception with null budget")
+    @DisplayName("Project constructor throws exception with null typology")
     void nullBudgetThrowsException() {
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "projectBudget cannot be null";
+        String expectedMessage = "Typology ID must not be null";
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new ProjectDDD(projectCodeDouble,
                             projectNameDouble,
                             descriptionDouble,
-                            projectStatusDouble,
                             timePeriodDouble,
-                            null,
                             projectSprintDurationDouble,
-                            projectNumberOfPlannedSprintsDouble);
-                }
-        );
-
-        //Act
-        String resultMessage = exception.getMessage();
-
-        //Assert
-        assertEquals(expectedMessage, resultMessage);
-    }
-
-    @Test
-    @DisplayName("Project constructor throws exception with null sprint Duration")
-    void nullSprintDurationThrowsException() {
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudget = mock(ProjectBudget.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble = mock(ProjectNumberOfPlannedSprints.class);
-        String expectedMessage = "projectSprintDuration cannot be null";
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class, () -> {
-                    new ProjectDDD(projectCodeDouble,
-                            projectNameDouble,
-                            descriptionDouble,
-                            projectStatusDouble,
-                            timePeriodDouble,
-                            projectBudget,
+                            projectNumberOfPlannedSprintsDouble,
+                            customerIDDouble,
+                            businessSectorIDDouble,
                             null,
-                            projectNumberOfPlannedSprintsDouble);
+                            projectBudgetDouble);
                 }
         );
 
@@ -409,147 +357,486 @@ class ProjectDDDTest {
     }
 
     @Test
-    @DisplayName("Project constructor throws exception with null number of planned sprints")
-    void nullNumberOfPlannedSprintsThrowsException() {
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectName projectNameDouble = mock (ProjectName.class);
-        Description descriptionDouble = mock(Description.class);
-        ProjectStatus projectStatusDouble = mock(ProjectStatus.class);
-        TimePeriod timePeriodDouble = mock(TimePeriod.class);
-        ProjectBudget projectBudget = mock(ProjectBudget.class);
-        ProjectSprintDuration projectSprintDurationDouble =  mock(ProjectSprintDuration.class);
-        String expectedMessage = "projectNumberOfPlannedSprints cannot be null";
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class, () -> {
-                    new ProjectDDD(projectCodeDouble,
-                            projectNameDouble,
-                            descriptionDouble,
-                            projectStatusDouble,
-                            timePeriodDouble,
-                            projectBudget,
-                            projectSprintDurationDouble,
-                            null);
-                }
-        );
-
+    @DisplayName("Ensure projectCode is retrieved")
+    void ensureProjectCodeIsRetrieved() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        String resultMessage = exception.getMessage();
+        ProjectCode retrievedCode = project.getProjectCode();
 
         //Assert
-        assertEquals(expectedMessage, resultMessage);
+        assertEquals(projectCodeDouble, retrievedCode);
     }
 
     @Test
-    @DisplayName("ensure that we get the project code")
-    void ensureThatWeGetProjectCode () {
-
+    @DisplayName("Ensure project identity (projectCode) is retrieved")
+    void ensureProjectIdentityIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        Mockito.when(projectDDD.getProjectCode()).thenReturn(projectCode);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        ProjectCode result = projectDDD.getProjectCode();
+        ProjectCode retrievedCode = project.identity();
 
         //Assert
-        assertEquals(projectCode, result);
+        assertEquals(projectCodeDouble, retrievedCode);
     }
 
     @Test
-    @DisplayName("ensure that we get the description")
-    void ensureThatWeGetDescription () {
-
+    @DisplayName("Ensure projectName is retrieved")
+    void ensureProjectNameIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        Description description = mock(Description.class);
-        Mockito.when(projectDDD.getDescription()).thenReturn(description);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        Description result = projectDDD.getDescription();
+        ProjectName retrievedName = project.getProjectName();
 
         //Assert
-        assertEquals(description, result);
+        assertEquals(projectNameDouble, retrievedName);
     }
 
     @Test
-    @DisplayName("ensure that we get the project status")
-    void ensureThatWeGetProjectStatus () {
-
+    @DisplayName("Ensure project description is retrieved")
+    void ensureProjectDescriptionIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        ProjectStatus projectStatus = mock(ProjectStatus.class);
-        Mockito.when(projectDDD.getProjectStatus()).thenReturn(projectStatus);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        ProjectStatus result = projectDDD.getProjectStatus();
+        Description retrievedDescription = project.getDescription();
 
         //Assert
-        assertEquals(projectStatus, result);
+        assertEquals(descriptionDouble, retrievedDescription);
     }
 
     @Test
-    @DisplayName("ensure that we get the time period of project")
-    void ensureThatWeGetTimePeriod () {
-
+    @DisplayName("Ensure project status is retrieved")
+    void ensureProjectStatusIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        TimePeriod timePeriod = mock(TimePeriod.class);
-        Mockito.when(projectDDD.getTimePeriod()).thenReturn(timePeriod);
-
+        List<UserStoryID> userStoryIDs = new ArrayList<>();
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble,
+                userStoryIDs);
         //Act
-        TimePeriod result = projectDDD.getTimePeriod();
+        ProjectStatus retrievedStatus = project.getProjectStatus();
 
         //Assert
-        assertEquals(timePeriod, result);
+        assertEquals(projectStatusDouble, retrievedStatus);
     }
 
     @Test
-    @DisplayName("ensure that we get the project budget")
-    void ensureThatWeGetProjectBudget () {
-
+    @DisplayName("Ensure project time period is retrieved")
+    void ensureProjectTimePeriodIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        ProjectBudget projectBudget = mock(ProjectBudget.class);
-        Mockito.when(projectDDD.getProjectBudget()).thenReturn(projectBudget);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        ProjectBudget result = projectDDD.getProjectBudget();
+        TimePeriod retrievedTimePeriod = project.getTimePeriod();
 
         //Assert
-        assertEquals(projectBudget, result);
+        assertEquals(timePeriodDouble, retrievedTimePeriod);
     }
 
     @Test
-    @DisplayName("ensure that we get the project sprint duration")
-    void ensureThatWeGetProjectSprintDuration () {
-
+    @DisplayName("Ensure project sprint duration is retrieved")
+    void ensureProjectSprintDurationIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        ProjectSprintDuration projectSprintDuration = mock(ProjectSprintDuration.class);
-        Mockito.when(projectDDD.getProjectSprintDuration()).thenReturn(projectSprintDuration);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        ProjectSprintDuration result = projectDDD.getProjectSprintDuration();
+        ProjectSprintDuration retrievedSprintDuration = project.getProjectSprintDuration();
 
         //Assert
-        assertEquals(projectSprintDuration, result);
+        assertEquals(projectSprintDurationDouble, retrievedSprintDuration);
     }
 
     @Test
-    @DisplayName("ensure that we get the project number of planned sprints")
-    void ensureThatWeGetProjectNumberOfPlannedSprints() {
-
+    @DisplayName("Ensure project number of planned sprints is retrieved")
+    void ensureProjectNumberOfPlannedSprintsIsRetrieved() {
         //Arrange
-        ProjectDDD projectDDD = mock(ProjectDDD.class);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = mock(ProjectNumberOfPlannedSprints.class);
-        Mockito.when(projectDDD.getProjectNumberOfPlannedSprints()).thenReturn(projectNumberOfPlannedSprints);
-
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
         //Act
-        ProjectNumberOfPlannedSprints result = projectDDD.getProjectNumberOfPlannedSprints();
+        ProjectNumberOfPlannedSprints retrievedPlannedSprints = project.getProjectNumberOfPlannedSprints();
 
         //Assert
-        assertEquals(projectNumberOfPlannedSprints, result);
+        assertEquals(projectNumberOfPlannedSprintsDouble, retrievedPlannedSprints);
     }
 
+    @Test
+    @DisplayName("Ensure project customerID is retrieved")
+    void ensureProjectCustomerIsRetrieved() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+        //Act
+        CustomerID retrievedCustomerID = project.getCustomerID();
+
+        //Assert
+        assertEquals(customerIDDouble, retrievedCustomerID);
+    }
+
+    @Test
+    @DisplayName("Ensure project business sector is retrieved")
+    void ensureProjectBusinessSectorIsRetrieved() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        BusinessSectorID retrievedBusinessSectorID = project.getBusinessSectorID();
+
+        //Assert
+        assertEquals(businessSectorIDDouble, retrievedBusinessSectorID);
+    }
+
+    @Test
+    @DisplayName("Ensure project typology is retrieved")
+    void ensureProjectTypologyIsRetrieved() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        TypologyID retrievedTypologyID = project.getTypologyID();
+
+        //Assert
+        assertEquals(typologyIDDouble, retrievedTypologyID);
+    }
+
+    @Test
+    @DisplayName("Ensure project budget is retrieved")
+    void ensureProjectBudgetIsRetrieved() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        ProjectBudget retrievedBudget = project.getProjectBudget();
+
+        //Assert
+        assertEquals(projectBudgetDouble, retrievedBudget);
+    }
+
+    @Test
+    @DisplayName("Ensure project productBacklog is retrieved")
+    void ensureProjectProductBacklogIsRetrieved() {
+        //Arrange
+        List<UserStoryID> userStoryIDs = new ArrayList<>();
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                projectStatusDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble,
+                userStoryIDs);
+
+        //Act
+        List<UserStoryID> retrievedBacklog = project.getProductBacklog();
+
+        //Assert
+        assertInstanceOf(List.class, retrievedBacklog);
+    }
+
+    @Test
+    @DisplayName("Ensure object does not equal null")
+    void ensureObjectNotEqualNull() {
+        //Arrange
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        boolean result = project.equals(null);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object equals same object")
+    void objectEqualsSameObject() {
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        boolean result = project.equals(project);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object equals object with same project code")
+    void objectEqualsSameProjectCode() {
+        ProjectDDD project1 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        ProjectDDD project2 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        boolean result = project1.equals(project2);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object does not equal object with different project code")
+    void objectDoesNotEqualProjectWithDifferentProjectCode() {
+
+        ProjectCode projectCodeDouble2 = mock(ProjectCode.class);
+
+        ProjectDDD project1 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        ProjectDDD project2 = new ProjectDDD(projectCodeDouble2,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        boolean result = project1.equals(project2);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure object does not equal object of different class")
+    void objectDoesNotEqualProjectOfDifferentClass() {
+        ProjectDDD project = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+        String fakeProject = "Wannabe project";
+
+        //Act
+        boolean result = project.equals(fakeProject);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure equal objects have same hashcode")
+    void ensureEqualObjectsHaveSameHashcode() {
+        //Arrange
+        ProjectDDD project1 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        ProjectDDD project2 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        int hashCode1 = project1.hashCode();
+        int hashCode2 = project2.hashCode();
+
+        //Assert
+        assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        ProjectDDD project1 = new ProjectDDD(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        ProjectCode projectCodeDouble2 = mock(ProjectCode.class);
+        ProjectDDD project2 = new ProjectDDD(projectCodeDouble2,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble);
+
+        //Act
+        int hashCode1 = project1.hashCode();
+        int hashCode2 = project2.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
 }
