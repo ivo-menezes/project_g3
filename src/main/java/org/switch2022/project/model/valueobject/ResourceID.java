@@ -12,4 +12,8 @@ public class ResourceID implements DomainId, Serializable {
     public ResourceID(Long id) {
         this.id = id;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
