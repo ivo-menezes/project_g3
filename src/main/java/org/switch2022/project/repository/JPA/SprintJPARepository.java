@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
-import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.datamodel.JPA.SprintJpaID;
 
 import java.util.List;
 
-public interface SprintJPARepository extends CrudRepository<SprintJPA, SprintID> {
+public interface SprintJPARepository extends CrudRepository<SprintJPA, SprintJpaID> {
     @Query("SELECT MAX(s.sprintID.sprintNumber) FROM SprintJPA s WHERE s.sprintID.projectCode = :projectCode")
     Integer findMaxSprintNumberByProjectCode(@Param("projectCode") String projectCode);
 

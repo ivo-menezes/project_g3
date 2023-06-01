@@ -14,7 +14,7 @@ import java.util.Date;
 
         SprintID sprintID = sprintDDD.identity();
         String projectCode = sprintID.getProjectCode().toString();
-        int sprintNumber = Integer.parseInt(sprintID.getSprintNumber().toString());
+        int sprintNumber = sprintID.getSprintNumber().getSprintNumber(); // Get the underlying int value
         SprintJpaID sprintJpaID = new SprintJpaID(projectCode, sprintNumber);
 
         TimePeriod timePeriod = sprintDDD.getTimePeriod();
@@ -39,4 +39,10 @@ import java.util.Date;
 
         return sprint;
         }
+    public SprintJpaID convertToSprintJpaID(SprintID sprintID) {
+        ProjectCode projectCode = sprintID.getProjectCode();
+        String projectCodeString = projectCode != null ? projectCode.toString() : null;
+        int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
+        return new SprintJpaID(projectCodeString, sprintNumber);
+    }
 }

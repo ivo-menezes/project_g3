@@ -1,6 +1,7 @@
 package org.switch2022.project.repository;
 
 import org.switch2022.project.datamodel.JPA.SprintJPA;
+import org.switch2022.project.datamodel.JPA.SprintJpaID;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
@@ -40,7 +41,8 @@ public class SprintRepositoryJPA implements ISprintRepository {
      */
     @Override
     public boolean containsID(SprintID id) {
-        return sprintJpaRepository.existsById(id);
+        SprintJpaID jpaID = sprintAssemblerData.convertToSprintJpaID(id);
+        return sprintJpaRepository.existsById(jpaID);
     }
     public int findLastSprintNumber(ProjectCode projectCode) {
         String code = projectCode.toString();
@@ -91,7 +93,8 @@ public class SprintRepositoryJPA implements ISprintRepository {
      */
     @Override
     public Optional<SprintDDD> getByID(SprintID id) {
-        Optional<SprintJPA> sprintJPAOptional = sprintJpaRepository.findById(id);
+        SprintJpaID jpaID = sprintAssemblerData.convertToSprintJpaID(id);
+        Optional<SprintJPA> sprintJPAOptional = sprintJpaRepository.findById(jpaID);
 
         if(sprintJPAOptional.isEmpty()) {
             return Optional.empty();

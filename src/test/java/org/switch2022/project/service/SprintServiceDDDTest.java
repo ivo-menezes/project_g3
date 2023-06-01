@@ -58,7 +58,7 @@ public class SprintServiceDDDTest {
         //Create sprintDTO:
         SprintDTOController sprintDTO = new SprintDTOController();
         SprintDTOToController toControllerDTO = new SprintDTOToController();
-        //Create VO from sprintDTO:
+        //Create VO from sprintDTO and toControllerDTO:
         ProjectCode projectCode = new ProjectCode("AAA");
         sprintDTO.projectCode = projectCode;
         SprintNumber sprintNumber = new SprintNumber(1);
@@ -68,7 +68,7 @@ public class SprintServiceDDDTest {
         toControllerDTO.sprintID = sprintID;
         toControllerDTO.timePeriod = timePeriod;
         sprintDTO.timePeriod = timePeriod;
-        when(sprintRepository.findLastSprintNumber(projectCode)).thenReturn(0);
+        sprintDTO.sprintNumber = sprintNumber;
         //Create a mock sprint:
         SprintDDD sprint = mock(SprintDDD.class);
         //Mock and train a sprint factory:

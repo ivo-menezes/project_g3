@@ -45,12 +45,16 @@ public class SprintServiceDDD {
         this.iSprintRepository = sprintRepository;
         this.toControllerMapper = toControllerMapper;
     }
+    public int generateSprintNumber (ProjectCode projectCode){
+        int number = iSprintRepository.findLastSprintNumber(projectCode) + 1;
+        return number;
+    }
 
-    private SprintID newSprintID (SprintDTOController sprintDTO){
+    /*private SprintID newSprintID (SprintDTOController sprintDTO){
         int newNumber = iSprintRepository.findLastSprintNumber(sprintDTO.projectCode);
         SprintNumber number = new SprintNumber(newNumber+1);
         return new SprintID(sprintDTO.projectCode, number);
-    }
+    }*/
     /**
      * Creates a sprint and adds it to the sprintRepository.
      * @param sprintDTO a DTO with info to create the sprint with VOs, received from
@@ -59,7 +63,7 @@ public class SprintServiceDDD {
      */
     public SprintDTOToController createSprint(SprintDTOController sprintDTO) {
 
-        SprintID newID = newSprintID(sprintDTO);
+        SprintID newID = new SprintID(sprintDTO.projectCode, sprintDTO.sprintNumber);
         SprintDDD sprint = sprintFactory.createSprint(newID, sprintDTO.timePeriod);
 
          SprintDDD savedSprint = this.iSprintRepository.save(sprint);
