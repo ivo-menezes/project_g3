@@ -2,9 +2,13 @@ package org.switch2022.project.repository;
 
 import org.switch2022.project.datamodel.JPA.ResourceJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.ResourceDomainAssemblerData;
+import org.switch2022.project.model.resource.Resource;
 import org.switch2022.project.model.resource.ResourceDDD;
+import org.switch2022.project.model.valueobject.Role;
 import org.switch2022.project.repository.JPA.ResourceRepositoryJPA;
 import org.switch2022.project.service.irepositories.IResourceRepository;
+
+import java.util.Optional;
 
 public class ResourceRepository implements IResourceRepository {
 
@@ -24,9 +28,9 @@ public class ResourceRepository implements IResourceRepository {
         return resourceDomainAssemblerData.toDomain(savedResourceJPA);
     }
 
+    public boolean isRoleOccupied(ResourceDDD resourceDDD) {
 
-
-
-
-
+        String roleInUse = resourceDDD.getRole().toString();
+        return resourceRepositoryJPA.existsByRole(roleInUse);
+    }
 }
