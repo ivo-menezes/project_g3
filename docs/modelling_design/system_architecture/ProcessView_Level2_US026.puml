@@ -1,0 +1,32 @@
+@startuml
+!theme plain
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US026 - As Product Owner/Scrum Master/Team Member, \nI want to consult the product backlog in the web UI."
+
+participant "Product Owner/\n /Scrum Master/\n /Team Member" as PO
+participant Client
+participant Server
+participant Database
+
+PO -> Client: I want to consult the product \n backlog of a specific project
+activate Client
+Client -> Client: Shows UI
+Client --> PO: Ask for project code
+PO -> Client: Select project (project code)
+Client -> Client: Generate UI
+Client --> PO: Shows project with options
+PO -> Client: Selects view product backlog\noption
+Client -> Server: Get request
+activate Server
+Server -> Database: get product backlog
+activate Database
+Database --> Server: deliver product backlog
+deactivate Database
+Server --> Client: 201, product backlog
+deactivate Server
+Client -> Client: Generate UI
+Client --> PO: Displays product backlog
+
+@enduml
