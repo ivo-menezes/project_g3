@@ -1,6 +1,5 @@
 package org.switch2022.project.model.valueobject;
 
-import org.switch2022.project.ddd.DomainId;
 import org.switch2022.project.ddd.ValueObject;
 
 import java.io.Serializable;
@@ -46,5 +45,8 @@ public class Email implements ValueObject, Serializable {
         return Objects.hash(email);
     }
 
-
+    @Override
+    public String toString() {
+        return email;
+    }
 }

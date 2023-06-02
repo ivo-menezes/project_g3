@@ -29,6 +29,7 @@ public class ProfileName implements ValueObject {
     @Override
     public int hashCode() { return Objects.hash(profileName);}
 
+    @Override
     public String toString() {
         return profileName;
     }

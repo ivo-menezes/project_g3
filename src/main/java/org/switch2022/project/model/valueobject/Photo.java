@@ -20,4 +20,9 @@ public class Photo {
 
     @Override
     public int hashCode() { return Objects.hash(photo);}
+
+    @Override
+    public String toString() {
+        return photo;
+    }
 }
