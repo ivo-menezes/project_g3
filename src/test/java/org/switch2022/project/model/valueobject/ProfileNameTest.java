@@ -67,7 +67,7 @@ class ProfileNameTest {
     @DisplayName("With same object we should return true")
     @Test
     void shouldReturnTrueEqualsSameObject() {
-        ProfileName profileName = new ProfileName("Test");
+        ProfileName profileName = new ProfileName("User");
 
         boolean isEquals = profileName.equals(profileName);
 
@@ -77,8 +77,8 @@ class ProfileNameTest {
     @DisplayName("With same profile name we should return true")
     @Test
     void shouldReturnTrueEqualsSameProfileName() {
-        ProfileName profileName1 = new ProfileName("Test");
-        ProfileName profileName2 = new ProfileName("Test");
+        ProfileName profileName1 = new ProfileName("Administrator");
+        ProfileName profileName2 = new ProfileName("Administrator");
 
         boolean isEquals = profileName1.equals(profileName2);
 
@@ -88,8 +88,8 @@ class ProfileNameTest {
     @DisplayName("With differents profiles names we should return false")
     @Test
     void shouldReturnFalseEqualsDifferentProfileName() {
-        ProfileName profileName1 = new ProfileName("Test");
-        ProfileName profileName2 = new ProfileName("Test1");
+        ProfileName profileName1 = new ProfileName("Administrator");
+        ProfileName profileName2 = new ProfileName("Manager");
 
         boolean isEquals = profileName1.equals(profileName2);
 
@@ -99,8 +99,8 @@ class ProfileNameTest {
     @Test
     @DisplayName("test hash code")
     void testHashCode() {
-        ProfileName profileName = new ProfileName("Test");
-        ProfileName profileNameTest = new ProfileName("Test");
+        ProfileName profileName = new ProfileName("User");
+        ProfileName profileNameTest = new ProfileName("User");
 
         assertEquals(profileNameTest.hashCode(), profileName.hashCode());
         assertNotEquals(0, profileName.hashCode());

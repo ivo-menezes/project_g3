@@ -28,7 +28,7 @@ class AccountRepositoryTest {
         Name name = mock(Name.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-        Profile profile = mock(Profile.class);
+        ProfileName profile = mock(ProfileName.class);
         AccountStatus accountStatus = mock(AccountStatus.class);
 
         AccountDDD account = mock(AccountDDD.class);

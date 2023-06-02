@@ -1,15 +1,13 @@
 package org.switch2022.project.repository;
 
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.datamodel.JPA.ResourceJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.ResourceDomainAssemblerData;
-import org.switch2022.project.model.resource.Resource;
 import org.switch2022.project.model.resource.ResourceDDD;
-import org.switch2022.project.model.valueobject.Role;
 import org.switch2022.project.repository.JPA.ResourceRepositoryJPA;
 import org.switch2022.project.service.irepositories.IResourceRepository;
 
-import java.util.Optional;
-
+@Repository
 public class ResourceRepository implements IResourceRepository {
 
     private ResourceRepositoryJPA resourceRepositoryJPA;

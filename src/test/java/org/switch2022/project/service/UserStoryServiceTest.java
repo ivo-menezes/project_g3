@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
-import org.switch2022.project.mapper.UserStoryDTOForListDDD;
-import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
@@ -19,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -170,7 +169,6 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
-        UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
@@ -187,37 +185,33 @@ class UserStoryServiceTest {
         when(projectDouble.getProductBacklog()).thenReturn(openUserStoryIDs);
 
         //defining usRepositoryDouble behavior to return a userStoryDouble
-        when(usRepositoryDouble.containsID(userStoryIDDouble1)).thenReturn(true);
         when(usRepositoryDouble.getByID(userStoryIDDouble1)).thenReturn(Optional.of(userStoryDouble1));
 
         //defining mapperDouble behavior to return a mockDTOList
         List<UserStoryDDD> openUserStoryList = new ArrayList<>();
         openUserStoryList.add(userStoryDouble1);
-        List<UserStoryDTOForListDDD> mockDTOList = new ArrayList<>();
-        UserStoryDTOForListDDD userStoryDTODouble1 = mock(UserStoryDTOForListDDD.class);
+        List<NewUserStoryInfoDTO> mockDTOList = new ArrayList<>();
+        NewUserStoryInfoDTO userStoryDTODouble1 = mock(NewUserStoryInfoDTO.class);
         mockDTOList.add(userStoryDTODouble1);
-        when(mapperDouble.toDTOList(openUserStoryList)).thenReturn(mockDTOList);
+        when(infoMapperDouble.toDtoList(openUserStoryList)).thenReturn(mockDTOList);
 
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
-        service.setUserStoryMapper(mapperDouble);
 
         //Act
-        Optional<List<UserStoryDTOForListDDD>> result = service.getProductBacklog(projectCodeDouble);
+        List<NewUserStoryInfoDTO> result = service.getProductBacklog(projectCodeDouble);
 
         //Assert
-        assertTrue(result.isPresent());
-        assertEquals(mockDTOList, result.get());
+        assertEquals(mockDTOList, result);
     }
 
     @Test
-    @DisplayName("Ensure empty optional is returned when project is not found")
+    @DisplayName("Ensure exception is thrown when project is not found")
     void returnsEmptyOptionalWhenProjectNotFound() {
 
         //Arrange
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
-        UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
@@ -226,51 +220,18 @@ class UserStoryServiceTest {
         when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.empty());
 
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
-        service.setUserStoryMapper(mapperDouble);
 
+        String expectedMessage = "project with given projectCode does not exist";
         //Act
-        Optional<List<UserStoryDTOForListDDD>> result = service.getProductBacklog(projectCodeDouble);
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            service.getProductBacklog(projectCodeDouble);
+        });
+        String resultMessage = result.getMessage();
 
         //Assert
-        assertTrue(result.isEmpty());
+        assertEquals(expectedMessage, resultMessage);
     }
 
-    @Test
-    @DisplayName("Ensure empty optional is returned when userStory is not found")
-    void returnsEmptyOptionalWhenUserStoryNotFound(){
-
-        //Arrange
-        IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
-        IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
-        IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
-        UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
-        NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
-
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        ProjectDDD projectDouble = mock(ProjectDDD.class);
-        UserStoryID userStoryIDDouble1 = mock(UserStoryID.class);
-
-        //defining projectRepositoryDouble behavior
-        when(projectRepositoryDouble.getByID(projectCodeDouble)).thenReturn(Optional.of(projectDouble));
-
-        //defining projectDouble behavior to return openUserStoryIDs
-        List<UserStoryID> openUserStoryIDs = new ArrayList<>();
-        openUserStoryIDs.add(userStoryIDDouble1);
-        when(projectDouble.getProductBacklog()).thenReturn(openUserStoryIDs);
-
-        //defining usRepositoryDouble behavior
-        when(usRepositoryDouble.containsID(userStoryIDDouble1)).thenReturn(true);
-        when(usRepositoryDouble.getByID(userStoryIDDouble1)).thenReturn(Optional.empty());
-
-        UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
-        service.setUserStoryMapper(mapperDouble);
-
-        //Act
-        Optional<List<UserStoryDTOForListDDD>> result = service.getProductBacklog(projectCodeDouble);
-
-        //Assert
-        assertTrue(result.isEmpty());
-    }
 
     @Test
     @DisplayName("Ensure empty optional is returned when userStory id is not found")
@@ -280,7 +241,6 @@ class UserStoryServiceTest {
         IUserStoryFactory factoryDouble = mock(IUserStoryFactory.class);
         IUserStoryRepository usRepositoryDouble = mock(IUserStoryRepository.class);
         IProjectRepository projectRepositoryDouble = mock(IProjectRepository.class);
-        UserStoryMapperDDD mapperDouble = mock(UserStoryMapperDDD.class);
         NewUserStoryInfoDTOMapper infoMapperDouble = mock(NewUserStoryInfoDTOMapper.class);
 
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
@@ -295,17 +255,18 @@ class UserStoryServiceTest {
         openUserStoryIDs.add(userStoryIDDouble1);
         when(projectDouble.getProductBacklog()).thenReturn(openUserStoryIDs);
 
-        //defining usRepositoryDouble behavior to return false for containsID method
-        when(usRepositoryDouble.containsID(userStoryIDDouble1)).thenReturn(false);
+        when(usRepositoryDouble.getByID(userStoryIDDouble1)).thenReturn(Optional.empty());
 
         UserStoryService service = new UserStoryService(factoryDouble, usRepositoryDouble, projectRepositoryDouble, infoMapperDouble);
-        service.setUserStoryMapper(mapperDouble);
 
+        String expectedMessage = "user story with given ID does not exist";
         //Act
-        Optional<List<UserStoryDTOForListDDD>> result = service.getProductBacklog(projectCodeDouble);
+        RuntimeException result = assertThrows(RuntimeException.class, () -> {
+            service.getProductBacklog(projectCodeDouble);
+        });
+        String resultMessage = result.getMessage();
 
         //Assert
-        //because the result is an optional with a list with zero elements:
-        assertTrue(result.isPresent() && result.get().isEmpty());
+        assertEquals(expectedMessage, resultMessage);
     }
 }

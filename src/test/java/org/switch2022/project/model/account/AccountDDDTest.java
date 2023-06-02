@@ -21,7 +21,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         //Act
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
@@ -39,7 +39,7 @@ class AccountDDDTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         //Act
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
@@ -58,7 +58,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Email cannot be null";
 
@@ -87,7 +87,7 @@ class AccountDDDTest {
         Email emailDouble = null;
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Email cannot be null";
 
@@ -116,7 +116,7 @@ class AccountDDDTest {
         Name nameDouble = null;
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Name cannot be null";
 
@@ -145,7 +145,7 @@ class AccountDDDTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = null;
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Name cannot be null";
 
@@ -174,7 +174,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = null;
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Phone number cannot be null";
 
@@ -203,7 +203,7 @@ class AccountDDDTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = null;
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         String expectedMessage = "Phone number cannot be null";
 
@@ -232,7 +232,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = null;
+        ProfileName profileDouble = null;
 
         String expectedMessage = "Profile cannot be null";
 
@@ -261,7 +261,7 @@ class AccountDDDTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = null;
+        ProfileName profileDouble = null;
 
         String expectedMessage = "Profile cannot be null";
 
@@ -290,7 +290,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -311,7 +311,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -331,7 +331,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -352,7 +352,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -376,7 +376,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -402,8 +402,8 @@ class AccountDDDTest {
         PhoneNumber phoneNumberDouble2 = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
         Photo photoDouble2 = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
-        Profile profileDouble2 = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
+        ProfileName profileDouble2 = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -432,8 +432,8 @@ class AccountDDDTest {
         PhoneNumber phoneNumberDouble2 = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
         Photo photoDouble2 = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
-        Profile profileDouble2 = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
+        ProfileName profileDouble2 = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -457,7 +457,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -479,7 +479,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -501,7 +501,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -523,7 +523,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -545,7 +545,7 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -567,14 +567,14 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
-        Profile expected = profileDouble;
+        ProfileName expected = profileDouble;
 
         //Act
-        Profile result = account.getProfile();
+        ProfileName result = account.getProfile();
 
         //Assert
         assertEquals(expected, result);
@@ -605,9 +605,9 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
-        when(profileDouble.getProfileName()).thenReturn("User");
+        when(profileDouble.toString()).thenReturn("User");
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);
@@ -629,9 +629,9 @@ class AccountDDDTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
-        when(profileDouble.getProfileName()).thenReturn("Administrator");
+        when(profileDouble.toString()).thenReturn("Administrator");
 
         AccountDDD account = new AccountDDD(accountIDDouble, emailDouble, nameDouble, phoneNumberDouble,
                 photoDouble, profileDouble);

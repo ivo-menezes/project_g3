@@ -10,7 +10,10 @@ public class ProfileName implements ValueObject {
 
     public ProfileName(String profileName) {
         if (profileName == null || profileName.isBlank() || profileName.isEmpty())
-            throw new IllegalArgumentException(("profileName cannot be null/blank/empty"));
+            throw new IllegalArgumentException("profileName cannot be null/blank/empty");
+        if (!profileName.equals("Administrator") && !profileName.equals("Manager") && !profileName.equals("User")) {
+            throw new IllegalArgumentException("ProfileName is not valid");
+        }
 
         this.profileName = profileName;
     }
@@ -25,5 +28,9 @@ public class ProfileName implements ValueObject {
 
     @Override
     public int hashCode() { return Objects.hash(profileName);}
+
+    public String toString() {
+        return profileName;
+    }
 
 }

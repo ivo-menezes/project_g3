@@ -16,5 +16,7 @@ public interface IAccountRepository {
     AccountDDD save (AccountDDD account);
 
     Optional<AccountDDD> getByEmail(Email email);
+
+    boolean existsByEmail(String email);
 }
 

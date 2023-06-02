@@ -2,13 +2,14 @@ package org.switch2022.project.controller.REST;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.REST.UserStoryRestDto;
 import org.switch2022.project.mapper.REST.UserStoryRestDtoMapper;
+import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.service.UserStoryService;
+
+import java.util.List;
 
 @RestController
 public class UserStoryController {
@@ -41,6 +42,21 @@ public class UserStoryController {
         } catch (Exception e) {
             e.printStackTrace();
             ResponseEntity<UserStoryRestDto> response = new ResponseEntity<>(restDto, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+    }
+
+    @GetMapping("/projects/{projectCode}/productbacklog")
+    public ResponseEntity<?> consultBacklog(@PathVariable ProjectCode projectCode) {
+        try {
+            List<NewUserStoryInfoDTO> domainDtoList = service.getProductBacklog(projectCode);
+            List<UserStoryRestDto> restDtoList = dtoMapper.toRestDtoList(domainDtoList);
+            ResponseEntity<List<UserStoryRestDto>> response = new ResponseEntity<>(restDtoList, HttpStatus.OK);
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseEntity<Object> response = new ResponseEntity<>( HttpStatus.NOT_FOUND);
             return response;
         }
     }

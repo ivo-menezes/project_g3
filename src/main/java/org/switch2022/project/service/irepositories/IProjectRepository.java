@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface IProjectRepository {
 
     ProjectDDD save (ProjectDDD project);
+    boolean existsByProjectCode(String projectCode);
 
     Optional<ProjectDDD> getByID(ProjectCode projectCode);
 
