@@ -4,13 +4,10 @@ import java.util.Objects;
 
 public class Photo {
 
-    private final String photoName;
+    private final String photo;
 
-    public Photo(String photoName) {
-        if(photoName == null || photoName.isBlank() || photoName.isEmpty())
-            throw new IllegalArgumentException("photoName cannot be null/blank/empty");
-
-        this.photoName = photoName;
+    public Photo(String photo) {
+        this.photo = photo;
     }
 
     @Override
@@ -18,9 +15,9 @@ public class Photo {
         if (this == o) return true;
         if (!(o instanceof Photo)) return false;
         Photo that = (Photo) o;
-        return Objects.equals(photoName, that.photoName);
+        return Objects.equals(photo, that.photo);
     }
 
     @Override
-    public int hashCode() { return Objects.hash(photoName);}
+    public int hashCode() { return Objects.hash(photo);}
 }
