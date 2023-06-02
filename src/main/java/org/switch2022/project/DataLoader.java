@@ -1,13 +1,15 @@
 package org.switch2022.project;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.*;
+import org.switch2022.project.mapper.sprintDTOs.SprintDTOController;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Profile("!test")
@@ -16,31 +18,46 @@ public class DataLoader implements CommandLineRunner {
     /**
      * This class runs at the same time as application.java.
      * So is necessary to avoid problems to run tests add the annotation @ActiveProfiles("test") in each test class of Services injected.
-     *
      */
-    @Autowired
+    final
     TypologyService typologyService;
-    @Autowired
+    final
     CustomerService customerService;
-    @Autowired
+    final
     BusinessSectorService businessSectorService;
 
-    @Autowired
+    final
     ProjectService projectService;
 
-    @Autowired
+    final
     SprintServiceDDD sprintService;
 
-    @Autowired
+    final
     UserStoryService userStoryService;
+
+    public DataLoader(TypologyService typologyService, CustomerService customerService,
+                      BusinessSectorService businessSectorService,
+                      ProjectService projectService, SprintServiceDDD sprintService,
+                      UserStoryService userStoryService) {
+        this.typologyService = typologyService;
+        this.customerService = customerService;
+        this.businessSectorService = businessSectorService;
+        this.projectService = projectService;
+        this.sprintService = sprintService;
+        this.userStoryService = userStoryService;
+    }
 
     @Override
     public void run(String... args) throws Exception {
         loadData();
     }
+
+    /**
+     * This method populates the database with data;
+     */
     private void loadData() {
 
-    //Load Customers
+        //Load Customers
         CustomerNIF customerNIFOne = new CustomerNIF("306123987");
         CustomerDesignation customerDesignationOne = new CustomerDesignation("XPTO, SA");
 
@@ -66,7 +83,7 @@ public class DataLoader implements CommandLineRunner {
         CustomerID customerID_2 = new CustomerID(customerService.createCustomer(customerTwo).customerID.getId());
         CustomerID customerID_3 = new CustomerID(customerService.createCustomer(customerThree).customerID.getId());
 
-    //Load Business Sectors
+        //Load Business Sectors
         BusinessSectorDesignation businessSectorDesignationOne = new BusinessSectorDesignation("It doesn't matter");
         BusinessSectorDesignation businessSectorDesignationTwo = new BusinessSectorDesignation("Hospitality industry");
 
@@ -79,7 +96,7 @@ public class DataLoader implements CommandLineRunner {
         BusinessSectorID businessSectorID_1 = new BusinessSectorID(businessSectorService.createBusinessSector(businessSectorOne).businessSectorID.getId());
         BusinessSectorID businessSectorID_2 = new BusinessSectorID(businessSectorService.createBusinessSector(businessSectorTwo).businessSectorID.getId());
 
-    //Load Typologies
+        //Load Typologies
         TypologyDesignation typologyDesignationOne = new TypologyDesignation("Fixed cost");
         TypologyDesignation typologyDesignationTwo = new TypologyDesignation("Time and materials");
 
@@ -92,13 +109,18 @@ public class DataLoader implements CommandLineRunner {
         TypologyID typologyID_1 = new TypologyID(typologyService.createTypology(typologyOne).typologyID.getId());
         TypologyID typologyID_2 = new TypologyID(typologyService.createTypology(typologyTwo).typologyID.getId());
 
-    //Load Projects
+        //Load Projects
 
         //Project 1
         ProjectCode projectCode_1 = new ProjectCode("A1");
         ProjectName projectName_1 = new ProjectName("Dummy01");
         Description description_1 = new Description("Just a dummy project");
-        TimePeriod timePeriod_1 = new TimePeriod(new Date(1/3/2022), new Date (31/7/2022));
+        LocalDate startDate_project_1 = LocalDate.of(2022, 3, 1);
+        Date newStardDate_project_1 = Date.from(startDate_project_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate endDate_project_1 = LocalDate.of(2022, 7, 31);
+        Date newEndDate_project_1 = Date.from(endDate_project_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        TimePeriod timePeriod_1 = new TimePeriod(newStardDate_project_1, newEndDate_project_1);
         //ProjectStatus projectStatus_1 = new ProjectStatus();
         ProjectSprintDuration projectSprintDuration_1 = new ProjectSprintDuration(2);
         ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_1 = new ProjectNumberOfPlannedSprints(8);
@@ -113,12 +135,18 @@ public class DataLoader implements CommandLineRunner {
         ProjectCode projectCode_2 = new ProjectCode("A2");
         ProjectName projectName_2 = new ProjectName("Dummy02");
         Description description_2 = new Description("Just another dummy project");
-        TimePeriod timePeriod_2 = new TimePeriod(new Date(31/5/2022), new Date (29/4/2023));
+
+        LocalDate startDate_project_2 = LocalDate.of(2022, 5, 31);
+        Date newStardDate_project_2 = Date.from(startDate_project_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate endDate_project_2 = LocalDate.of(2023, 4, 29);
+        Date newEndDate_project_2 = Date.from(endDate_project_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        TimePeriod timePeriod_2 = new TimePeriod(newStardDate_project_2, newEndDate_project_2);
         ProjectSprintDuration projectSprintDuration_2 = new ProjectSprintDuration(4);
         ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_2 = new ProjectNumberOfPlannedSprints(12);
         ProjectBudget projectBudget_2 = new ProjectBudget(350000.00F);
 
-        NewProjectDTO project_2 =createProjectDTO(customerID_2, businessSectorID_1,
+        NewProjectDTO project_2 = createProjectDTO(customerID_2, businessSectorID_1,
                 typologyID_1, projectCode_2, projectName_2, description_2, timePeriod_2,
                 projectSprintDuration_2, projectNumberOfPlannedSprints_2,
                 projectBudget_2);
@@ -129,7 +157,11 @@ public class DataLoader implements CommandLineRunner {
         ProjectCode projectCode_3 = new ProjectCode("666");
         ProjectName projectName_3 = new ProjectName("Inevitable nightmare");
         Description description_3 = new Description("Doomed from the start");
-        TimePeriod timePeriod_3 = new TimePeriod(new Date(10/3/2023), new Date());
+
+        LocalDate startDate_project_3 = LocalDate.of(2023, 3, 10);
+        Date newStardDate_project_3 = Date.from(startDate_project_3.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        TimePeriod timePeriod_3 = new TimePeriod(newStardDate_project_3, new Date());
         ProjectSprintDuration projectSprintDuration_3 = new ProjectSprintDuration(3);
         ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_3 = new ProjectNumberOfPlannedSprints(15);
         ProjectBudget projectBudget_3 = new ProjectBudget(750000.00F);
@@ -151,8 +183,8 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_1 = new UserStoryPriority(3);
 
         NewUserStoryInfoDTO userStoryDTO_1 = createUserStoryDTO(projectCode_1,
-                actor_1,acceptanceCriteria_1,userStoryNumber_1,
-                usDescription_1,userStoryPriority_1);
+                actor_1, acceptanceCriteria_1, userStoryNumber_1,
+                usDescription_1, userStoryPriority_1);
 
         userStoryService.createUserStory(userStoryDTO_1);
 
@@ -198,8 +230,47 @@ public class DataLoader implements CommandLineRunner {
 
         userStoryService.createUserStory(userStoryInfoDTO_5);
 
+        //Load Sprints
+
+        // Sprint A1-1
+
+        int sprint_1 = sprintService.generateSprintNumber(projectCode_1);
+        SprintNumber sprintNumber_1 = new SprintNumber(sprint_1);
+
+        LocalDate startDate_sprint_1 = LocalDate.of(2022, 3, 22);
+        Date newStardDate_sprint_1 = Date.from(startDate_sprint_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        TimePeriod timePeriod_sprint_1 = new TimePeriod(newStardDate_sprint_1, new Date());
+
+        SprintDTOController sprintDTO_1 = new SprintDTOController();
+
+        sprintDTO_1.projectCode = projectCode_1;
+        sprintDTO_1.sprintNumber = sprintNumber_1;
+        sprintDTO_1.timePeriod = timePeriod_sprint_1;
+
+        sprintService.createSprint(sprintDTO_1);
+
+
+
+
+
     }
 
+    /**
+     * Creates a NewProjectDTO to pass on to projectService, to create a new project.
+     *
+     * @param customerID customer ID
+     * @param businessSectorID business sector ID
+     * @param typologyID typology ID
+     * @param projectCode project code
+     * @param projectName project name
+     * @param description decsription
+     * @param timePeriod timePeriod
+     * @param projectSprintDuration sprint duration
+     * @param projectNumberOfPlannedSprints number of planned sprints
+     * @param projectBudget project budget
+     * @return NewProjectDTO
+     */
     private NewProjectDTO createProjectDTO(CustomerID customerID, BusinessSectorID businessSectorID,
                                            TypologyID typologyID, ProjectCode projectCode,
                                            ProjectName projectName, Description description,
@@ -224,6 +295,17 @@ public class DataLoader implements CommandLineRunner {
         return project;
     }
 
+    /** Creates a NewUserStoryInfoDTO to pass on to UserStoryService, to create a new
+     * user story.
+     *
+     * @param projectCode project code
+     * @param  actor actor
+     * @param acceptanceCriteria acceptance criteria
+     * @param userStoryNumber user story number
+     * @param usDescription user story description
+     * @param userStoryPriority user story priority
+     * @return NewUserStoryInfoDTO
+     */
     private NewUserStoryInfoDTO createUserStoryDTO(ProjectCode projectCode, UserStoryActor actor,
                                                    UserStoryAcceptanceCriteria acceptanceCriteria,
                                                    UserStoryNumber userStoryNumber, Description usDescription,

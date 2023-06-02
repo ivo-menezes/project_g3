@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewProjectDTO;
 import org.switch2022.project.mapper.REST.ProjectRestDto;
 import org.switch2022.project.mapper.REST.ProjectRestDtoMapper;
@@ -14,7 +15,7 @@ import org.switch2022.project.service.ProjectService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+@ActiveProfiles("test")
 @SpringBootTest
 class ProjectControllerTest {
 
