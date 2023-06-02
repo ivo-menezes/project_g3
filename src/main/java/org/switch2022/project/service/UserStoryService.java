@@ -1,11 +1,8 @@
 package org.switch2022.project.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTOMapper;
-import org.switch2022.project.mapper.UserStoryDTOForListDDD;
-import org.switch2022.project.mapper.UserStoryMapperDDD;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.userStory.IUserStoryFactory;
 import org.switch2022.project.model.userStory.UserStoryDDD;
@@ -30,8 +27,6 @@ public class UserStoryService {
     private final IProjectRepository projectRepository;
 
     private final NewUserStoryInfoDTOMapper userStoryInfoDTOMapper;
-    private UserStoryMapperDDD userStoryMapper;
-
 
     /**
      * Public constructor for UserStoryService.
@@ -98,30 +93,19 @@ public class UserStoryService {
         return outboundDto;
     }
 
-    /**
-     * Sets the UserStoryMapperDDD for this UserStoryServer instance
-     *
-     * @param userStoryMapper the UserStoryMapperDDD implementation to set
-     */
-
-    @Autowired
-    public void setUserStoryMapper(UserStoryMapperDDD userStoryMapper) {
-        this.userStoryMapper = userStoryMapper;
-    }
-
 
     /**
      * Retrieves the productBacklog of a project
      *
      * @param projectCode the code of the project to retrieve the productBacklog for
-     * @return an Optional containing the product backlog as a list of UserStoryDTOs (named "UserStoryDTOForListDDD")
+     * @return a List of NewUserStoryInfoDTO
      */
-    public Optional<List<UserStoryDTOForListDDD>> getProductBacklog(ProjectCode projectCode) {
+    public List<NewUserStoryInfoDTO> getProductBacklog(ProjectCode projectCode) {
 
         Optional<ProjectDDD> projectOptional = this.projectRepository.getByID(projectCode);
 
         if (projectOptional.isEmpty()) {
-            return Optional.empty();
+            throw new RuntimeException("project with given projectCode does not exist");
         }
 
         ProjectDDD project = projectOptional.get();
@@ -130,18 +114,28 @@ public class UserStoryService {
 
         List<UserStoryDDD> openUserStoryList = new ArrayList<>();
         for (UserStoryID id : openUserStoryIDs) {
-            if (this.userStoryRepository.containsID(id)) {
-                Optional<UserStoryDDD> userStoryOptional = this.userStoryRepository.getByID(id);
-                if (userStoryOptional.isEmpty()) {
-                    return Optional.empty();
-                }
-                UserStoryDDD userStory = userStoryOptional.get();
-                openUserStoryList.add(userStory);
-            }
-        }
-        List<UserStoryDTOForListDDD> productBacklog = this.userStoryMapper.toDTOList(openUserStoryList);
 
-        return Optional.of(productBacklog);
+            Optional<UserStoryDDD> userStoryOptional = this.userStoryRepository.getByID(id);
+
+            if (userStoryOptional.isEmpty()) {
+                throw new RuntimeException("user story with given ID does not exist");
+            }
+
+            UserStoryDDD userStory = userStoryOptional.get();
+            openUserStoryList.add(userStory);
+        }
+
+        List<NewUserStoryInfoDTO> productBacklog = this.userStoryInfoDTOMapper.toDtoList(openUserStoryList);
+
+        // setting the priorities as the order in which US appear (+1 to be human-readable)
+        int priorityValue = 0;
+        for (NewUserStoryInfoDTO dto : productBacklog) {
+            UserStoryPriority priority = new UserStoryPriority(priorityValue + 1);
+            dto.priority = priority;
+            priorityValue += 1;
+        }
+
+        return productBacklog;
     }
 }
 
