@@ -26,7 +26,7 @@ public class AccountDomainDataAssembler {
         Name nameDomain = new Name(accountJPA.getName());
         PhoneNumber phoneNumberDomain = new PhoneNumber(accountJPA.getPhoneNumber());
         Photo photoDomain = new Photo(accountJPA.getPhoto());
-        Profile profileDomain = new Profile(accountJPA.getProfile());
+        ProfileName profileDomain = new ProfileName(accountJPA.getProfile());
         AccountStatus accountStatusDomain = AccountStatus.valueOf(accountJPA.getAccountStatus());
 
         return new AccountDDD(accountID, emailDomain, nameDomain, phoneNumberDomain, photoDomain, profileDomain,

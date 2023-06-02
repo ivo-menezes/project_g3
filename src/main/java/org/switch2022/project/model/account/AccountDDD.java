@@ -12,19 +12,20 @@ public class AccountDDD implements AggregateRoot<AccountID> {
     private final Name name;
     private final PhoneNumber phoneNumber;
     private Photo photo;
-    private final Profile profile;
+    private final ProfileName profile;
     private final AccountStatus accountStatus;
 
-    public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo, Profile profile){
+    public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo,
+                       ProfileName profile){
         this(accountID, email, name, phoneNumber, photo, profile, AccountStatus.Active);
     }
 
-    public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Profile profile){
+    public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, ProfileName profile){
         this(accountID, email, name, phoneNumber, profile, AccountStatus.Active);
     }
 
     public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo,
-                       Profile profile, AccountStatus accountStatus) {
+                       ProfileName profile, AccountStatus accountStatus) {
         if (email == null) {
             throw new IllegalArgumentException("Email cannot be null");
         }
@@ -47,7 +48,7 @@ public class AccountDDD implements AggregateRoot<AccountID> {
     }
 
     public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber,
-                       Profile profile, AccountStatus accountStatus) {
+                       ProfileName profile, AccountStatus accountStatus) {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
@@ -83,7 +84,7 @@ public class AccountDDD implements AggregateRoot<AccountID> {
         return photo;
     }
 
-    public Profile getProfile() {
+    public ProfileName getProfile() {
         return profile;
     }
 
@@ -104,9 +105,9 @@ public class AccountDDD implements AggregateRoot<AccountID> {
         return Objects.hash(email);
     }
 
-    public boolean isUser(Profile profile){
+    public boolean isUser(ProfileName profile){
         boolean isUser= false;
-        String profileName = profile.getProfileName();
+        String profileName = profile.toString();
 
         if (profileName.equals("User")) {
             isUser = true;

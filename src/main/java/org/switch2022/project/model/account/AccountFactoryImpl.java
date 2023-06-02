@@ -1,13 +1,16 @@
 package org.switch2022.project.model.account;
 
+import org.springframework.stereotype.Component;
+import org.switch2022.project.mapper.NewAccountDTO;
 import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.valueobject.*;
 
+@Component
 public class AccountFactoryImpl implements IAccountFactory {
 
     @Override
     public AccountDDD createAccount(AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo,
-                                    Profile profile) {
+                                    ProfileName profile) {
         if (email == null) {
             throw new IllegalArgumentException("Email cannot be null");
         }
@@ -25,7 +28,7 @@ public class AccountFactoryImpl implements IAccountFactory {
     }
 
     @Override
-    public AccountDDD createAccount(AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Profile profile) {
+    public AccountDDD createAccount(AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, ProfileName profile) {
         if (email == null) {
             throw new IllegalArgumentException("Email cannot be null");
         }

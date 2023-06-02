@@ -19,7 +19,7 @@ class AccountFactoryImplTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -39,7 +39,7 @@ class AccountFactoryImplTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -60,7 +60,7 @@ class AccountFactoryImplTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -85,7 +85,7 @@ class AccountFactoryImplTest {
         Email email = null;
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -111,7 +111,7 @@ class AccountFactoryImplTest {
         Name name = null;
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -136,7 +136,7 @@ class AccountFactoryImplTest {
         Email emailDouble = mock(Email.class);
         Name name = null;
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -162,7 +162,7 @@ class AccountFactoryImplTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumber = null;
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -187,7 +187,7 @@ class AccountFactoryImplTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumber = null;
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -213,7 +213,7 @@ class AccountFactoryImplTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profile = null;
+        ProfileName profile = null;
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 
@@ -238,7 +238,7 @@ class AccountFactoryImplTest {
         Email emailDouble = mock(Email.class);
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
-        Profile profile = null;
+        ProfileName profile = null;
 
         AccountFactoryImpl factory = new AccountFactoryImpl();
 

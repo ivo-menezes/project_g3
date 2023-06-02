@@ -22,7 +22,7 @@ class AccountDomainDataAssemblerTest {
         Name nameDouble = mock(Name.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Profile profileDouble = mock(Profile.class);
+        ProfileName profileDouble = mock(ProfileName.class);
         AccountStatus accountStatusDouble = mock(AccountStatus.class);
 
         AccountDDD accountDouble = mock(AccountDDD.class);

@@ -68,4 +68,9 @@ public class AccountRepository implements IAccountRepository {
     public void clearRepository() {
         accountJpaRepository.deleteAll();
     }
+
+    public boolean existsByEmail(String email) {
+
+        return accountJpaRepository.existsByEmail(email);
+    }
 }
