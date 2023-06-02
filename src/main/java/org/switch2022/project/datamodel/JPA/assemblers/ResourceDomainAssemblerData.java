@@ -1,11 +1,13 @@
 package org.switch2022.project.datamodel.JPA.assemblers;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.datamodel.JPA.ResourceJPA;
 import org.switch2022.project.model.resource.ResourceDDD;
 import org.switch2022.project.model.valueobject.*;
 
 import java.util.Date;
 
+@Component
 public class ResourceDomainAssemblerData {
 
     public ResourceJPA toData(ResourceDDD resourceDDD) {
@@ -31,7 +33,7 @@ public class ResourceDomainAssemblerData {
         double resourceCostPerHour = resourceJPA.getCostPerHour();
         CostPerHour costPerHour = new CostPerHour(resourceCostPerHour);
         String resourceRole = resourceJPA.getRole();
-        Role role = Role.valueOf(resourceRole);
+        Role role = new Role(resourceRole);
         double resourcePercentageOfAllocation = resourceJPA.getPercentageOfAllocation();
         PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(resourcePercentageOfAllocation);
         String resourceProjectCode = resourceJPA.getProjectCode();
