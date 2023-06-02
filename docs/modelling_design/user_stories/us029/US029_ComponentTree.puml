@@ -1,0 +1,37 @@
+@startuml
+
+[CreateResourceContainer] as Resource
+[CreateResourceHeader] as Header
+[Button] as Button
+[DateInput] as Date
+[DropList] as DropList
+[InputForm] as InputForm
+[SaveButton] as Save
+[CancelButton] as Cancel
+[StartDateInput] as SDate
+[EndDateInput] as EDate
+[Email] as Email
+[CostPerHour] as CostPerHour
+[PercentageOfAllocation] as PerctOfAllocation
+[Role] as Role
+
+
+Resource -- Header
+Resource -- InputForm
+Resource -- Button
+Resource -- Date
+Resource -- DropList
+InputForm -- Email
+InputForm -- CostPerHour
+InputForm -- PerctOfAllocation
+
+
+
+DropList -- Role
+Button -- Save
+Button -- Cancel
+Date -- SDate
+Date -- EDate
+
+
+@enduml
