@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RestController
-@RequestMapping(path="/project/{projectCode}/sprints")
+@RequestMapping(path="/projects/{projectCode}/sprints")
 public class SprintController {
 
     private final SprintServiceDDD service;
@@ -34,7 +34,7 @@ public class SprintController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/create_sprint")
+    @PostMapping("")
     public ResponseEntity<SprintDTOUI> createSprint(@RequestBody SprintDTOUI sprintDTOFromUI){
         try{
             SprintDTOController toController = mapper.createProjectCode(sprintDTOFromUI);
@@ -63,7 +63,7 @@ public class SprintController {
             List<SprintDTOUI> allSprints = mapper.getSprintList(allSprintsFromProject);
             ResponseEntity<List<SprintDTOUI>> response = new ResponseEntity<>(allSprints, HttpStatus.OK);
             return response;
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
