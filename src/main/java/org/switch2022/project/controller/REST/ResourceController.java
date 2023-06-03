@@ -3,13 +3,16 @@ package org.switch2022.project.controller.REST;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.mapper.NewResourceDTO;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTOMapper;
+import org.switch2022.project.mapper.REST.UserStoryRestDto;
+import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.service.ResourceService;
+
+import java.util.List;
 
 @Controller
 @RestController
@@ -43,6 +46,21 @@ public class ResourceController {
         } catch (Exception e) {
             e.printStackTrace();
             ResponseEntity<ResourceRestDTO> response = new ResponseEntity<>(restDTO, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+    }
+
+    @GetMapping("/projects/{projectCode}/resources")
+    public ResponseEntity<?> getResource(@PathVariable ProjectCode projectCode) {
+        try {
+            List<NewResourceDTO> domainDtoList = resourceService.getAll();
+            List<ResourceRestDTO> restDtoList = mapper.toRestDTOList(domainDtoList);
+            ResponseEntity<List<ResourceRestDTO>> response = new ResponseEntity<>(restDtoList, HttpStatus.OK);
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseEntity<Object> response = new ResponseEntity<>( HttpStatus.NOT_FOUND);
             return response;
         }
     }
