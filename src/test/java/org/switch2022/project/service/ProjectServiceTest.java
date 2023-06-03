@@ -18,6 +18,9 @@ import org.switch2022.project.service.irepositories.ICustomerRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -36,7 +39,7 @@ class ProjectServiceTest {
     @MockBean
     IProjectFactory projectFactory;
     @MockBean
-    IProjectRepository projectNewRepository;
+    IProjectRepository projectRepository;
     @MockBean
     NewProjectDTOMapper newProjectDTOMapper;
 
@@ -52,7 +55,7 @@ class ProjectServiceTest {
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
                 new ProjectService(null, businessSectorRepository,
-                typologyRepository, projectFactory, projectNewRepository,
+                typologyRepository, projectFactory, projectRepository,
                 newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
@@ -71,7 +74,7 @@ class ProjectServiceTest {
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
                 new ProjectService(customerRepository, null,
-                typologyRepository, projectFactory, projectNewRepository,
+                typologyRepository, projectFactory, projectRepository,
                 newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
@@ -89,7 +92,7 @@ class ProjectServiceTest {
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
                 new ProjectService(customerRepository, businessSectorRepository,
-                null, projectFactory, projectNewRepository,
+                null, projectFactory, projectRepository,
                 newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
@@ -108,7 +111,7 @@ class ProjectServiceTest {
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
                 new ProjectService(customerRepository, businessSectorRepository,
-                typologyRepository, null, projectNewRepository,
+                typologyRepository, null, projectRepository,
                 newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
@@ -144,7 +147,7 @@ class ProjectServiceTest {
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
                 new ProjectService(customerRepository, businessSectorRepository,
-                typologyRepository, projectFactory, projectNewRepository,
+                typologyRepository, projectFactory, projectRepository,
                 null));
 
         String resultMessage = result.getMessage();
@@ -176,7 +179,7 @@ class ProjectServiceTest {
         ProjectDDD savedProjectDouble = mock(ProjectDDD.class);
 
         when(projectFactory.createProject(projectDtoDouble)).thenReturn(projectDouble);
-        when(projectNewRepository.save(projectDouble)).thenReturn(savedProjectDouble);
+        when(projectRepository.save(projectDouble)).thenReturn(savedProjectDouble);
         when(newProjectDTOMapper.toDto(savedProjectDouble)).thenReturn(projectDtoDouble2);
 
         //Act
@@ -256,6 +259,40 @@ class ProjectServiceTest {
 
         //Assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure project list is returned")
+    void ensureProjectListIsReturned(){
+        //Arrange
+        ProjectDDD projectDouble1 = mock(ProjectDDD.class);
+        ProjectDDD projectDouble2 = mock(ProjectDDD.class);
+        ProjectDDD projectDouble3 = mock(ProjectDDD.class);
+        NewProjectDTO newProjectDTO1 = mock(NewProjectDTO.class);
+        NewProjectDTO newProjectDTO2 = mock(NewProjectDTO.class);
+        NewProjectDTO newProjectDTO3 = mock(NewProjectDTO.class);
+
+        List<ProjectDDD> projectListDouble = new ArrayList<>();
+        projectListDouble.add(projectDouble1);
+        projectListDouble.add(projectDouble2);
+        projectListDouble.add(projectDouble3);
+
+        when(projectRepository.getAllProjects()).thenReturn(projectListDouble);
+
+        when(newProjectDTOMapper.toDto(projectDouble1)).thenReturn(newProjectDTO1);
+        when(newProjectDTOMapper.toDto(projectDouble2)).thenReturn(newProjectDTO2);
+        when(newProjectDTOMapper.toDto(projectDouble3)).thenReturn(newProjectDTO3);
+
+        List<NewProjectDTO> expectedProjectDTOList = new ArrayList<>();
+        expectedProjectDTOList.add(newProjectDTO1);
+        expectedProjectDTOList.add(newProjectDTO2);
+        expectedProjectDTOList.add(newProjectDTO3);
+
+        //Act
+        List<NewProjectDTO> resultProjectDTOList = projectService.getAllProjects();
+
+        //Assert
+        assertEquals(expectedProjectDTOList, resultProjectDTOList);
     }
 }
 

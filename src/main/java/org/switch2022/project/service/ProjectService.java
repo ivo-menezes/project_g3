@@ -13,6 +13,9 @@ import org.switch2022.project.service.irepositories.ICustomerRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ProjectService {
 
@@ -76,6 +79,17 @@ public class ProjectService {
         NewProjectDTO savedProjectDto = newProjectDTOMapper.toDto(savedProject);
 
         return savedProjectDto;
+    }
+
+    public List<NewProjectDTO> getAllProjects() {
+
+        List<ProjectDDD> projectList = projectRepository.getAllProjects();
+        List<NewProjectDTO> projectDtoList = new ArrayList<>();
+
+        for (ProjectDDD project : projectList) {
+            projectDtoList.add(newProjectDTOMapper.toDto(project));
+        }
+        return projectDtoList;
     }
 }
 

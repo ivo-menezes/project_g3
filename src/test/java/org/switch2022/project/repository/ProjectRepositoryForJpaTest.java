@@ -12,6 +12,8 @@ import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.repository.JPA.ProjectJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,12 +30,12 @@ class ProjectRepositoryForJpaTest {
     ProjectDomainDataAssembler projectAssembler;
 
     @InjectMocks
-    ProjectRepositoryForJpa projectRepositoryForJpaRepository;
+    ProjectRepositoryForJpa projectRepository;
 
 
     @Test
     @DisplayName("Ensure project is successfully saved")
-    void ensureProjectIsSaved(){
+    void ensureProjectIsSaved() {
         //Arrange
         ProjectDDD project = mock(ProjectDDD.class);
         ProjectDDD savedProject = mock(ProjectDDD.class);
@@ -46,13 +48,13 @@ class ProjectRepositoryForJpaTest {
         when(project.identity()).thenReturn(projectCodeDouble);
         when(projectCodeDouble.toString()).thenReturn("P001");
 
-        when(projectRepositoryForJpaRepository.existsByProjectCode("P001")).thenReturn(false);
+        when(projectRepository.existsByProjectCode("P001")).thenReturn(false);
         when(projectAssembler.toData(project)).thenReturn(projectJpa);
         when(projectJpaRepository.save(projectJpa)).thenReturn(savedProjectJpa);
         when(projectAssembler.toDomain(savedProjectJpa)).thenReturn(savedProject);
 
         //Act
-        ProjectDDD resultingProject = projectRepositoryForJpaRepository.save(project);
+        ProjectDDD resultingProject = projectRepository.save(project);
 
         //Assert
         assertEquals(savedProject, resultingProject);
@@ -73,7 +75,7 @@ class ProjectRepositoryForJpaTest {
         when(projectAssembler.toDomain(projectJpaDouble)).thenReturn(projectDouble);
 
         // Act
-        Optional<ProjectDDD> result = projectRepositoryForJpaRepository.getByID(projectCodeDouble);
+        Optional<ProjectDDD> result = projectRepository.getByID(projectCodeDouble);
 
         // Assert
         assertEquals(projectDoubleOptional, result);
@@ -89,7 +91,7 @@ class ProjectRepositoryForJpaTest {
         when(projectJpaRepository.findById("PROJ001")).thenReturn(Optional.empty());
 
         // Act
-        Optional<ProjectDDD> result = projectRepositoryForJpaRepository.getByID(projectCodeDouble);
+        Optional<ProjectDDD> result = projectRepository.getByID(projectCodeDouble);
 
         // Assert
         assertEquals(Optional.empty(), result);
@@ -110,10 +112,43 @@ class ProjectRepositoryForJpaTest {
         when(projectAssembler.toDomain(savedProjectJpa)).thenReturn(savedProject);
 
         //Act
-        ProjectDDD resultingProject = projectRepositoryForJpaRepository.replace(project);
+        ProjectDDD resultingProject = projectRepository.replace(project);
 
         //Assert
         assertEquals(savedProject, resultingProject);
     }
 
+    @Test
+    @DisplayName("Ensure project list is returned")
+    void ensureProjectListIsReturned() {
+        //Arrange
+        ProjectDDD projectDouble1 = mock(ProjectDDD.class);
+        ProjectDDD projectDouble2 = mock(ProjectDDD.class);
+        ProjectDDD projectDouble3 = mock(ProjectDDD.class);
+        ProjectJpa projectJpaDouble1 = mock(ProjectJpa.class);
+        ProjectJpa projectJpaDouble2 = mock(ProjectJpa.class);
+        ProjectJpa projectJpaDouble3 = mock(ProjectJpa.class);
+
+        List <ProjectJpa> projectJpaListDouble = new ArrayList<>();
+        projectJpaListDouble.add(projectJpaDouble1);
+        projectJpaListDouble.add(projectJpaDouble2);
+        projectJpaListDouble.add(projectJpaDouble3);
+
+        when(projectJpaRepository.findAll()).thenReturn(projectJpaListDouble);
+
+        when(projectAssembler.toDomain(projectJpaDouble1)).thenReturn(projectDouble1);
+        when(projectAssembler.toDomain(projectJpaDouble2)).thenReturn(projectDouble2);
+        when(projectAssembler.toDomain(projectJpaDouble3)).thenReturn(projectDouble3);
+
+        List<ProjectDDD> expectedProjectList = new ArrayList<>();
+        expectedProjectList.add(projectDouble1);
+        expectedProjectList.add(projectDouble2);
+        expectedProjectList.add(projectDouble3);
+
+        //Act
+        List<ProjectDDD> resultProjectList = projectRepository.getAllProjects();
+
+        //Assert
+        assertEquals(expectedProjectList, resultProjectList);
     }
+}

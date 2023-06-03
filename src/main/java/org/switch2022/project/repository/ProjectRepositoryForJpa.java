@@ -8,6 +8,8 @@ import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.repository.JPA.ProjectJpaRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -65,4 +67,14 @@ public class ProjectRepositoryForJpa implements IProjectRepository {
         return projectJpaRepository.existsById(projectCode);
     }
 
+    @Override
+    public List<ProjectDDD> getAllProjects() {
+
+        Iterable<ProjectJpa> projectJpaList = projectJpaRepository.findAll();
+        List<ProjectDDD> projectList = new ArrayList<>();
+        for (ProjectJpa projectJpa : projectJpaList) {
+            projectList.add(projectDomainDataAssembler.toDomain(projectJpa));
+        }
+        return projectList;
+    }
 }
