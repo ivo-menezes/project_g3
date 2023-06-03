@@ -13,14 +13,14 @@ participant "restDto : ProjectRestDto" as DTOin
 participant ": ProjectController" as Controller
 participant ": ProjectRestDtoMapper" as Mapper
 participant ": ProjectService" as Service
-participant ": ICustomerJpaRepository" as CustomerJpaRepository
-participant ": IBusinessSectorJpaRepository" as BusinessSectorJpaRepository
-participant ": ITypologyJpaRepository" as TypologyJpaRepository
+participant ": ICustomerRepository" as CustomerJpaRepository
+participant ": IBusinessSectorRepository" as BusinessSectorJpaRepository
+participant ": ITypologyRepository" as TypologyJpaRepository
 participant ": IProjectFactory" as Factory
 
 participant ": IProjectRepository" as ProjRepository
 participant ": ProjectDomainDataAssembler" as Assembler
-participant "IProjectJpaRepository" as ProjectJpaRepository
+participant ": IProjectJpaRepository" as ProjectJpaRepository
 participant ": NewProjectDtoMapper" as NewMapper
 participant "project:Project" as project
 participant "projectJpa:ProjectJpa" as projectJpa
@@ -28,11 +28,11 @@ participant "savedProject:Project" as savedProject
 participant "response : ResponseEntity<ProjectDTO>" as response
 
 
-Client ->  Springboot: POST /projects {"projectCode":"projectCode",\n                     "projectName":"projectName",\n                     "description":"description",\n                     "typology":"typologyDesignation",\n                     "businessSector":"businessSectorDesignation",\n                     "customer":"customerNIF"}
+Client ->  Springboot: POST /projects {"projectCode":"projectCode",\n                     "projectName":"projectName",\n                     "description":"description",\n                     "customerID":"customerID",\n                     "businessSectorID":"businessSectorID",\n                     "typologyID":"typologyID"}
 activate Client
 
 activate Springboot
-Springboot --> DTOin ** : create(projectCode, name,\n         description,\n         typologyDesignation,\n         businessSectorDesignation,\n         customerDesignation)
+Springboot --> DTOin ** : create(projectCode, projectName,\n         description, customerID,\n         businessSectorID,\n         typologyID)
 Springboot -> Controller: createProject(projectRestDto)
 deactivate Springboot
 activate Controller
@@ -46,18 +46,17 @@ deactivate Mapper
 Controller -> Service: createProject(projectDto)
 activate Service
 
-'TODO: add these following three verifications in the implementation
-Service -> CustomerJpaRepository : existsById\n(customerID)
+Service -> CustomerJpaRepository : containsID\n(customerID)
 activate CustomerJpaRepository
 CustomerJpaRepository --> Service : true
 deactivate CustomerJpaRepository
 
-Service -> BusinessSectorJpaRepository : existsById\n(businessSectorID)
+Service -> BusinessSectorJpaRepository : containsID\n(businessSectorID)
 activate BusinessSectorJpaRepository
 BusinessSectorJpaRepository --> Service : true
 deactivate BusinessSectorJpaRepository
 
-Service -> TypologyJpaRepository : existsById\n(typologyID)
+Service -> TypologyJpaRepository : containsID\n(typologyID)
 activate TypologyJpaRepository
 TypologyJpaRepository --> Service : true
 deactivate TypologyJpaRepository
@@ -65,7 +64,7 @@ deactivate TypologyJpaRepository
 Service -> Factory:createProject(projectDto)
 activate Factory
 
-Factory --> project ** :create(projectCode, name,\n          description, customer,\n          businessSector, typology)
+Factory --> project ** :create(projectCode, projectName,\n          description, customerID,\n          businessSectorID, typologyID)
 Factory --> Service :project
 deactivate
 
