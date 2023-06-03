@@ -1,48 +1,82 @@
 @startuml
 !theme plain
-autonumber
 hide footbox
-title "US015 - As Manager, I want to get a list of all projects"
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US015
 
-actor Manager as Manager
-participant ": ListProjectUI" as UI
-participant ": ListProjectController" as Controller
-participant ": ProjectList" as ProjectList
-participant ": ProjectMapper" as Mapper
-participant "lsProject : List<ProjectDTO>" as DTOList
+participant Client
+participant Springboot
+'participant "restDto : ProjectRestDto" as DTOin
+participant ": ProjectController" as Controller
+participant ": ProjectRestDtoMapper" as Mapper
+participant "projectRestDtoList:\n : List<ProjectRestDto>" as projectRestDtoList
+participant ": ProjectService" as Service
+participant ": IProjectRepository" as ProjRepository
+participant ": ProjectDomainDataAssembler" as Assembler
+participant "IProjectJpaRepository" as ProjectJpaRepository
+participant "projectJpaList:\n : List<ProjectJpa>" as projectJpaList
+participant "projectList:\n : List<Project>" as projectList
+participant ": NewProjectDtoMapper" as NewMapper
+participant "projectDtoList:\n : List<NewProjectDTO>" as projectDtoList
+participant "response:\n : ResponseEntity<ProjectDTO>" as response
 
-activate Manager #FFBBBB
-Manager -> UI: Requests list of all projects
 
-activate UI #FFBBBB
-UI -> Controller: listProjects()
+Client ->  Springboot: GET /projects {}
+activate Springboot
+Springboot -> Controller: getAllProjects()
+deactivate Springboot
+activate Controller
 
-activate Controller #FFBBBB
-Controller -> ProjectList : getProjectList()
-activate ProjectList #FFBBBB
+Controller -> Service: getAllProjects()
+activate Service
 
-ProjectList -> Controller : projectList
-deactivate ProjectList
+'Saving in the JpaRepository
+Service -> ProjRepository : getAllProjects()
+activate ProjRepository
 
-Controller -> Mapper : toDTOList(projectList)
-activate Mapper #FFBBBB
+ProjRepository -> ProjectJpaRepository : findAll()
+activate ProjectJpaRepository
 
-Mapper -> DTOList ** : create
+ProjectJpaRepository -> projectJpaList ** : create
 
-loop for each project in ProjectList
-Mapper -> Mapper : toDTO(project)
-Mapper -> DTOList : add(projectDTO)
-activate DTOList #FFBBBB
-deactivate DTOList
-end
+ProjectJpaRepository --> ProjRepository : projectsJpaList
+deactivate ProjectJpaRepository
 
-Mapper -> Controller : lsProject
+ProjRepository -> Assembler : toDomain(projectsJpaList)
+activate Assembler
+
+Assembler -> projectList ** : create
+Assembler --> ProjRepository: projectList
+deactivate Assembler
+
+deactivate Assembler
+
+ProjRepository --> Service: projectList
+deactivate ProjRepository
+
+Service -> NewMapper: toDto(projectList)
+activate NewMapper
+NewMapper -> projectDtoList ** : create
+
+NewMapper --> Service: projectDtoList
+deactivate NewMapper
+
+Service --> Controller : projectDtoList
+deactivate Service
+
+Controller -> Mapper: toRestDto(projectDtoList)
+activate Mapper
+
+Mapper -> projectRestDtoList ** : create
+
+Mapper --> Controller: projectRestDtoList
 deactivate Mapper
 
-Controller --> UI : lsProject
+Controller --> response ** : create(projectRestDtoListttpStatus.OK)
+Controller --> Client : Display all projects
 deactivate Controller
 
-UI --> Manager: Displays all projects
-deactivate UI
-deactivate Manager #FFBBBB
 @enduml
