@@ -1,4 +1,4 @@
-import {fetchBacklogFromBackend, fetchProjectsFromBackend} from "../services/Service";
+import {fetchBacklogFromBackend, fetchProjectsFromBackend, fetchSprintsFromBackend} from "../services/Service";
 
 export const CHANGE_TEXT = 'CHANGE_TEXT';
 export const ADD_USER_STORY = 'ADD_USER_STORY';
@@ -119,5 +119,35 @@ export const fetchProjects = (dispatch) => {
     fetchProjectsFromBackend(
         (response) => dispatch(fetchProjectsSuccess(response)),
         (errorMessage) => dispatch(fetchProjectsFailure(errorMessage))
+    )
+}
+
+// Fetch projects actions
+export const FETCH_SPRINTS_STARTED = "FETCH_SPRINTS_STARTED"
+export const FETCH_SPRINTS_SUCCESS = "FETCH_SPRINTS_SUCCESS"
+export const FETCH_SPRINTS_ERROR = "FETCH_SPRINTS_ERROR"
+
+const fetchSprintsSuccess = (sprints) => {
+    return {
+        type: FETCH_SPRINTS_SUCCESS,
+        payload: sprints
+    }
+}
+
+const fetchSprintsFailure = (message) => {
+    return {
+        type: FETCH_SPRINTS_ERROR,
+        payload: message
+    }
+}
+
+export const fetchSprints = (dispatch, projectCode) => {
+    dispatch({
+        type: FETCH_SPRINTS_STARTED
+    })
+    fetchSprintsFromBackend(
+        (response) => dispatch(fetchSprintsSuccess(response)),
+        (errorMessage) => dispatch(fetchSprintsFailure(errorMessage)),
+        projectCode
     )
 }

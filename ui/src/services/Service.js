@@ -21,3 +21,13 @@ export const fetchProjectsFromBackend = (success, failure) => {
         })
         .catch(error => failure(error.message))
 }
+
+export const fetchSprintsFromBackend = (success, failure, projectCode) => {
+    const ENDPOINT = `projects/${projectCode}/sprints`;
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}

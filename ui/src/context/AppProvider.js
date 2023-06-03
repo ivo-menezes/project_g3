@@ -22,7 +22,11 @@ const AppProvider = (props) =>{
             error : null,
             data : []
         },
-        sprints : sprints,
+        sprints : {
+            loading : true,
+            error : null,
+            data : []
+        },
         resources : resources,
         textValue:'',
         startDate: null,
