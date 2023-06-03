@@ -47,9 +47,9 @@ class ResourceServiceTest {
     @Autowired
     ResourceService resourceService;
 
-    @DisplayName("assert that creating a resource succeeds when role is product owner")
+    @DisplayName("assert that creating a resource succeeds")
     @Test
-    void createResourceSucceedsWhenRoleIsProductOwner() {
+    void createResourceSucceeds() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
         Email email = mock(Email.class);
@@ -70,79 +70,6 @@ class ResourceServiceTest {
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(true);
         when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
-        when(role.toString()).thenReturn("Product Owner");
-
-        when(resourceFactory.createResource(newResourceDTO)).thenReturn(resource);
-        when(resourceRepository.save(resource)).thenReturn(savedResource);
-        when(resourceDTOMapper.toDTO(savedResource)).thenReturn(resourceDTO);
-
-        // Act
-        NewResourceDTO result = resourceService.createResource(newResourceDTO);
-
-        // Assert
-        assertEquals(resourceDTO, result);
-    }
-
-    @DisplayName("assert that creating a resource succeeds when role is scrum master")
-    @Test
-    void createResourceSucceedsWhenRoleIsScrumMaster() {
-        // Arrange
-        NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
-        Role role = mock(Role.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        ProfileName profile = mock(ProfileName.class);
-
-        AccountDDD account = mock(AccountDDD.class);
-        ResourceDDD resource = mock(ResourceDDD.class);
-        ResourceDDD savedResource = mock(ResourceDDD.class);
-        NewResourceDTO resourceDTO = mock(NewResourceDTO.class);
-
-        newResourceDTO.email = email;
-        newResourceDTO.role = role;
-        newResourceDTO.projectCode = projectCode;
-
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
-        when(account.getProfile()).thenReturn(profile);
-        when(account.isUser(profile)).thenReturn(true);
-        when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
-        when(role.toString()).thenReturn("Scrum Master");
-
-        when(resourceFactory.createResource(newResourceDTO)).thenReturn(resource);
-        when(resourceRepository.save(resource)).thenReturn(savedResource);
-        when(resourceDTOMapper.toDTO(savedResource)).thenReturn(resourceDTO);
-
-        // Act
-        NewResourceDTO result = resourceService.createResource(newResourceDTO);
-
-        // Assert
-        assertEquals(resourceDTO, result);
-    }
-
-    @DisplayName("assert that creating a resource succeeds when role is team member")
-    @Test
-    void createResourceSucceedsWhenRoleIsTeamMember() {
-        // Arrange
-        NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
-        Role role = mock(Role.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        ProfileName profile = mock(ProfileName.class);
-
-        AccountDDD account = mock(AccountDDD.class);
-        ResourceDDD resource = mock(ResourceDDD.class);
-        ResourceDDD savedResource = mock(ResourceDDD.class);
-        NewResourceDTO resourceDTO = mock(NewResourceDTO.class);
-
-        newResourceDTO.email = email;
-        newResourceDTO.role = role;
-        newResourceDTO.projectCode = projectCode;
-
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
-        when(account.getProfile()).thenReturn(profile);
-        when(account.isUser(profile)).thenReturn(true);
-        when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
-        when(role.toString()).thenReturn("Team Member");
 
         when(resourceFactory.createResource(newResourceDTO)).thenReturn(resource);
         when(resourceRepository.save(resource)).thenReturn(savedResource);
@@ -246,39 +173,4 @@ class ResourceServiceTest {
         // Assert
         assertEquals(expected, resultMessage);
     }
-
-    @DisplayName("assert that creating a resource fails when role doesn't exist")
-    @Test
-    void createResourceFailsWhenRoleDoesntExist() {
-        // Arrange
-        NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
-        Role role = mock(Role.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        ProfileName profile = mock(ProfileName.class);
-
-        AccountDDD account = mock(AccountDDD.class);
-
-        newResourceDTO.email = email;
-        newResourceDTO.role = role;
-        newResourceDTO.projectCode = projectCode;
-
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
-        when(account.getProfile()).thenReturn(profile);
-        when(account.isUser(profile)).thenReturn(true);
-        when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
-        when(role.toString()).thenReturn("Coach");
-
-        String expected = "This role doesn't exist";
-
-        // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            resourceService.createResource(newResourceDTO);
-        });
-        String resultMessage = result.getMessage();
-
-        // Assert
-        assertEquals(expected, resultMessage);
-    }
-
 }

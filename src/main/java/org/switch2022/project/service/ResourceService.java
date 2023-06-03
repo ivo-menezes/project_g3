@@ -64,7 +64,6 @@ public class ResourceService {
 
     public NewResourceDTO createResource (NewResourceDTO newResourceDTO) {
         Email email = newResourceDTO.email;
-        Role role = newResourceDTO.role;
         String projectCode = newResourceDTO.projectCode.toString();
 
         //get account with respective email, if it really exists in the accountRepository
