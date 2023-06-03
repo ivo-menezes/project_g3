@@ -6,6 +6,7 @@ import org.switch2022.project.datamodel.JPA.TypologyJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.TypologyDomainDataAssembler;
 import org.switch2022.project.model.typology.*;
 import org.switch2022.project.model.valueobject.TypologyDesignation;
+import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.repository.JPA.TypologyJpaRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
@@ -52,6 +53,15 @@ public class TypologyRepository implements ITypologyRepository {
     public boolean containsTypologyDesignation(TypologyDesignation typologyDesignation) {
         String designation = typologyDesignation.toString();
         return typologyJpaRepository.existsByTypologyDesignation(designation);
+    }
+
+    /**
+     * Verifies if this id exists
+     * @param typologyID the id to be checked
+     * @return true if it already exists, false otherwise
+     */
+    public boolean containsID(TypologyID typologyID) {
+        return typologyJpaRepository.existsById(typologyID.getId());
     }
 
 

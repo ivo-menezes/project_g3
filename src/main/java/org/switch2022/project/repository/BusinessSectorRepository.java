@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.switch2022.project.datamodel.JPA.BusinessSectorJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.BusinessSectorDomainDataAssembler;
 import org.switch2022.project.model.businessSector.BusinessSectorDDD;
+import org.switch2022.project.model.valueobject.BusinessSectorID;
 import org.switch2022.project.repository.JPA.BusinessSectorRepositoryJPA;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
 
@@ -53,5 +54,14 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
         }
 
         return customers;
+    }
+
+    /**
+     * Verifies if this id exists
+     * @param businessSectorID the id to be checked
+     * @return true if it already exists, false otherwise
+     */
+    public boolean containsID(BusinessSectorID businessSectorID) {
+        return businessSectorRepositoryJPA.existsById(businessSectorID.getId());
     }
 }

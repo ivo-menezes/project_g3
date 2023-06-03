@@ -12,6 +12,7 @@ import org.switch2022.project.datamodel.JPA.TypologyJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.TypologyDomainDataAssembler;
 import org.switch2022.project.model.typology.TypologyDDD;
 import org.switch2022.project.model.valueobject.TypologyDesignation;
+import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.repository.JPA.TypologyJpaRepository;
 
 import java.util.ArrayList;
@@ -171,5 +172,34 @@ class TypologyRepositoryTest {
         assertEquals(expected,result);
     }
 
+    @Test
+    @DisplayName("Should return true when typologyID exists")
+    void returnsTrueWhenTypologyIDExists(){
+        //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
+        when(typologyID.getId()).thenReturn(1000L);
+        when(typologyJpaRepository.existsById(typologyID.getId())).thenReturn(true);
+
+        //Act
+        boolean result = typologyJpaRepository.existsById(typologyID.getId());
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Should return false when typologyID does not exist")
+    void returnsFalseWhenTypologyIDDoesNotExist(){
+        //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
+        when(typologyID.getId()).thenReturn(1000L);
+        when(typologyJpaRepository.existsById(typologyID.getId())).thenReturn(false);
+
+        //Act
+        boolean result = typologyJpaRepository.existsById(typologyID.getId());
+
+        //Assert
+        assertFalse(result);
+    }
 }
 

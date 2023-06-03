@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.switch2022.project.datamodel.JPA.CustomerJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.CustomerDomainDataAssembler;
 import org.switch2022.project.model.customer.CustomerDDD;
+import org.switch2022.project.model.valueobject.CustomerID;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 
@@ -52,5 +53,14 @@ public class CustomerRepository implements ICustomerRepository {
         }
 
         return customers;
+    }
+
+    /**
+     * Verifies if this id exists
+     * @param customerID the id to be checked
+     * @return true if it already exists, false otherwise
+     */
+    public boolean containsID(CustomerID customerID) {
+        return customerRepositoryJPA.existsById(customerID.getId());
     }
 }

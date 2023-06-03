@@ -12,14 +12,14 @@ import org.switch2022.project.datamodel.JPA.CustomerJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.CustomerDomainDataAssembler;
 import org.switch2022.project.model.customer.CustomerDDD;
 import org.switch2022.project.model.valueobject.CustomerDesignation;
+import org.switch2022.project.model.valueobject.CustomerID;
 import org.switch2022.project.model.valueobject.CustomerNIF;
 import org.switch2022.project.repository.JPA.CustomerRepositoryJPA;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -121,6 +121,36 @@ class CustomerRepositoryTest {
 
         //Assert
         assertEquals(expected,result);
+    }
+
+    @Test
+    @DisplayName("Should return true when customerID exists")
+    void returnsTrueWhenCustomerIDExists(){
+        //Arrange
+        CustomerID customerID = mock(CustomerID.class);
+        when(customerID.getId()).thenReturn(1000L);
+        when(customerRepositoryJPA.existsById(customerID.getId())).thenReturn(true);
+
+        //Act
+        boolean result = customerRepositoryJPA.existsById(customerID.getId());
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Should return false when customerID does not exist")
+    void returnsFalseWhenCustomerIDDoesNotExist(){
+        //Arrange
+        CustomerID customerID = mock(CustomerID.class);
+        when(customerID.getId()).thenReturn(1000L);
+        when(customerRepositoryJPA.existsById(customerID.getId())).thenReturn(false);
+
+        //Act
+        boolean result = customerRepositoryJPA.existsById(customerID.getId());
+
+        //Assert
+        assertFalse(result);
     }
 
 }

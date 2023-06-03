@@ -12,6 +12,7 @@ import org.switch2022.project.datamodel.JPA.BusinessSectorJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.BusinessSectorDomainDataAssembler;
 import org.switch2022.project.model.businessSector.BusinessSectorDDD;
 import org.switch2022.project.model.valueobject.BusinessSectorDesignation;
+import org.switch2022.project.model.valueobject.BusinessSectorID;
 import org.switch2022.project.repository.JPA.BusinessSectorRepositoryJPA;
 
 import java.util.ArrayList;
@@ -119,5 +120,35 @@ class BusinessSectorRepositoryTest {
 
         //Assert
         assertEquals(expected,result);
+    }
+
+    @Test
+    @DisplayName("Should return true when businessSectorID exists")
+    void returnsTrueWhenBusinessSectorIDExists(){
+        //Arrange
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+        when(businessSectorID.getId()).thenReturn(1000L);
+        when(businessSectorRepositoryJPA.existsById(businessSectorID.getId())).thenReturn(true);
+
+        //Act
+        boolean result = businessSectorRepositoryJPA.existsById(businessSectorID.getId());
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Should return false when businessSectorID does not exist")
+    void returnsFalseWhenBusinessSectorIDDoesNotExist(){
+        //Arrange
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+        when(businessSectorID.getId()).thenReturn(1000L);
+        when(businessSectorRepositoryJPA.existsById(businessSectorID.getId())).thenReturn(false);
+
+        //Act
+        boolean result = businessSectorRepositoryJPA.existsById(businessSectorID.getId());
+
+        //Assert
+        assertFalse(result);
     }
 }
