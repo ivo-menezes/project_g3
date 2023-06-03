@@ -32,7 +32,7 @@ public class ResourceRestDTOMapper {
 
         ResourceRestDTO resourceRestDTO = new ResourceRestDTO();
 
-        //resourceRestDTO.resourceID = domainDto.resourceID.getId();
+        resourceRestDTO.resourceID = domainDto.resourceID.getId();
         resourceRestDTO.email = domainDto.email.toString();
         resourceRestDTO.costPerHour = domainDto.costPerHour.getValue();
         resourceRestDTO.role = domainDto.role.toString();
