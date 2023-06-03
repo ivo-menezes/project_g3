@@ -13,7 +13,7 @@ const ViewProject = () => {
     const { id } = useParams();
     const { state } = useContext(AppContext);
 
-    const project = state.projectList.find((project) => project.id === id);
+    const project = state.projects.data.find((project) => project.projectCode === id);
 
     // Define column labels and their corresponding attributes
     const columnLabels = [

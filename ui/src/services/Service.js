@@ -11,3 +11,13 @@ export const fetchBacklogFromBackend = (success, failure, projectCode) => {
         })
         .catch(error => failure(error.message))
 }
+
+export const fetchProjectsFromBackend = (success, failure) => {
+    const ENDPOINT = "projects";
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}

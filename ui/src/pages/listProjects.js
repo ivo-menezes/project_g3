@@ -5,6 +5,7 @@ import Button from "../components/button";
 import Table from "../components/table";
 import {Link, useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
+import {fetchProjects} from "../context/Actions";
 
 
 const headers = [
@@ -15,31 +16,34 @@ const headers = [
 
 const ListProjects = () => {
 
+    const { state, dispatch } = useContext(AppContext)
+
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        // use the fetchProjects action to get list of projects from backend
+        fetchProjects(dispatch)
     }, []);
 
-    const { state } = useContext(AppContext)
-    const { projectList } = state;
 
     const navigate = useNavigate();
 
     const handleRowClick = (id) => {
-        console.log("Clicked row with ID:", id);
         navigate(`/viewProject/${id}`);
     };
 
+    const projectList = state.projects.data
     const projects = projectList.map((project) => ({
-        id: project.id,
-        title: project.title,
+        id: project.projectCode,
+        title: project.projectName,
         view: ( <>
                 <img
                     className="button-view"
                     src="Eye icon.svg"
                     alt="View"
-                    onClick={() => handleRowClick(project.id)}
+                    onClick={() => handleRowClick(project.projectCode)}
                 />
             </>
         ),

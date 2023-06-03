@@ -4,7 +4,7 @@ import {
     CHANGE_TEXT,
     FETCH_BACKLOG_ERROR,
     FETCH_BACKLOG_STARTED,
-    FETCH_BACKLOG_SUCCESS
+    FETCH_BACKLOG_SUCCESS, FETCH_PROJECTS_ERROR, FETCH_PROJECTS_STARTED, FETCH_PROJECTS_SUCCESS
 } from "./Actions";
 import { ADD_USER_STORY } from "./Actions";
 import {ADD_PROJECT} from "./Actions";
@@ -71,13 +71,42 @@ const reducer = (state, action) => {
             }
 
         case FETCH_BACKLOG_ERROR:
-            console.log(action.payload)
             return {
                 ...state,
                 backlogs: {
                     loading: false,
                     error: action.payload,
                     data: []
+                }
+            }
+
+        case FETCH_PROJECTS_STARTED:
+            return {
+                ...state,
+                projects: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_PROJECTS_SUCCESS:
+            return {
+                ...state,
+                projects: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_PROJECTS_ERROR:
+            return {
+                ...state,
+                projects: {
+                    loading: false,
+                    error: action.payload,
+                    data : []
                 }
             }
 
