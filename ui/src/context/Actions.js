@@ -1,4 +1,9 @@
-import {fetchBacklogFromBackend, fetchProjectsFromBackend, fetchSprintsFromBackend} from "../services/Service";
+import {
+    fetchBacklogFromBackend,
+    fetchProjectsFromBackend,
+    fetchSprintsFromBackend,
+    postUserStoryToBackend
+} from "../services/Service";
 
 export const CHANGE_TEXT = 'CHANGE_TEXT';
 export const ADD_USER_STORY = 'ADD_USER_STORY';
@@ -149,5 +154,13 @@ export const fetchSprints = (dispatch, projectCode) => {
         (response) => dispatch(fetchSprintsSuccess(response)),
         (errorMessage) => dispatch(fetchSprintsFailure(errorMessage)),
         projectCode
+    )
+}
+
+export const postUserStory = (dispatch, projectCode, userStory) => {
+    postUserStoryToBackend(
+        (response) => console.log("user story successfully posted"),
+        (error) => console.log("user story failed to be posted"),
+        projectCode, userStory
     )
 }

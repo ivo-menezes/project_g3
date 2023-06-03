@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import AppContext from "../context/AppContext";
-import {addUserStory} from '../context/Actions';
+import {addUserStory, postUserStory} from '../context/Actions';
 import Button from '../components/button';
 import Header from '../components/header';
 import TextField from '../components/textField';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import TextArea from "../components/textArea";
+import {postUserStoryToBackend} from "../services/Service";
 
 const CreateUserStory = () => {
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
@@ -17,12 +18,11 @@ const CreateUserStory = () => {
     const {projectCode} = useParams();
     const emptyUserStory = {
         projectCode: projectCode,
-        number: "",
+        userStoryNumber: "",
         actor: "",
         description: "",
-        status: "To Do",
         priority: "",
-        ac: "",
+        acceptanceCriteria: "",
     }
 
     const [newUserStory, setNewUserStory] = useState(emptyUserStory)
@@ -39,7 +39,9 @@ const CreateUserStory = () => {
     const navigate = useNavigate();
 
     const handleSubmission = () => {
-        addUserStory(dispatch, newUserStory);
+        //addUserStory(dispatch, newUserStory);
+        console.log(newUserStory)
+        postUserStory(dispatch, projectCode, newUserStory)
         navigate(`/backlog/${projectCode}`);
     };
 
@@ -56,7 +58,7 @@ const CreateUserStory = () => {
                         className="textField"
                         mandatory={true}
                         label="Number"
-                        name={"number"}
+                        name={"userStoryNumber"}
                         whenTyped={handleChange}
                     />
                     <TextField
@@ -84,7 +86,7 @@ const CreateUserStory = () => {
                         className="textArea"
                         mandatory={true}
                         label="Acceptance Criteria"
-                        name={"ac"}
+                        name={"acceptanceCriteria"}
                         whenTyped={handleChange}
                     />
                     <div className="button-container">

@@ -31,3 +31,10 @@ export const fetchSprintsFromBackend = (success, failure, projectCode) => {
         })
         .catch(error => failure(error.message))
 }
+
+export const postUserStoryToBackend = (success, failure, projectCode, userStory) => {
+    const ENDPOINT = `projects/${projectCode}/productbacklog`;
+    axios.post(API_URL + ENDPOINT, userStory)
+        .then(response => success(response))
+        .catch(error => failure(error))
+}
