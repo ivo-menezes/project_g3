@@ -1,4 +1,11 @@
-import {ADD_RESOURCE, ADD_SPRINT, CHANGE_TEXT} from "./Actions";
+import {
+    ADD_RESOURCE,
+    ADD_SPRINT,
+    CHANGE_TEXT,
+    FETCH_BACKLOG_ERROR,
+    FETCH_BACKLOG_STARTED,
+    FETCH_BACKLOG_SUCCESS
+} from "./Actions";
 import { ADD_USER_STORY } from "./Actions";
 import {ADD_PROJECT} from "./Actions";
 import {SET_START_DATE} from "./Actions";
@@ -41,8 +48,39 @@ const reducer = (state, action) => {
             return{
                 ...state,
                 resources: [...state.resources, action.payload]
-
             }
+
+        case FETCH_BACKLOG_STARTED:
+            return {
+                ...state,
+                backlogs: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_BACKLOG_SUCCESS:
+            return {
+                ...state,
+                backlogs: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_BACKLOG_ERROR:
+            console.log(action.payload)
+            return {
+                ...state,
+                backlogs: {
+                    loading: false,
+                    error: action.payload,
+                    data: []
+                }
+            }
+
         default:
             return state;
     }

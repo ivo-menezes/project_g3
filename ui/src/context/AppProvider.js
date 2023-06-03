@@ -13,7 +13,11 @@ Will delete this part when switching from the local store to the API.
 const AppProvider = (props) =>{
     const initialState = {
         projectList: projects,
-        backlogs : backlogs,
+        backlogs : {
+            loading : true,
+            error : null,
+            data : []
+        },
         sprints : sprints,
         resources : resources,
         textValue:'',

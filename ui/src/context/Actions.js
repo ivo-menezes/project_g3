@@ -1,3 +1,5 @@
+import {fetchBacklogFromBackend} from "../services/Service";
+
 export const CHANGE_TEXT = 'CHANGE_TEXT';
 export const ADD_USER_STORY = 'ADD_USER_STORY';
 export const  ADD_PROJECT = 'ADD_PROJECT';
@@ -58,4 +60,34 @@ export const addResource = (dispatch, resource) => {
         type: ADD_RESOURCE,
         payload: resource,
     })
+}
+
+// Fetch backlog actions
+export const FETCH_BACKLOG_STARTED = "FETCH_BACKLOG_STARTED"
+export const FETCH_BACKLOG_SUCCESS = "FETCH_BACKLOG_SUCCESS"
+export const FETCH_BACKLOG_ERROR = "FETCH_BACKLOG_ERROR"
+
+
+const fetchBacklogSuccess = (backlog) => {
+    return {
+        type: FETCH_BACKLOG_SUCCESS,
+        payload: backlog
+    }
+}
+
+const fetchBacklogFailure = (message) => {
+    return {
+        type: FETCH_BACKLOG_ERROR,
+        payload: message
+    }
+}
+
+export const fetchBacklog = (dispatch, projectCode) => {
+    dispatch({
+        type: FETCH_BACKLOG_STARTED
+    })
+    fetchBacklogFromBackend(
+        (response) => dispatch(fetchBacklogSuccess(response)),
+        (errorMessage) => dispatch(fetchBacklogFailure(errorMessage)),
+        projectCode)
 }

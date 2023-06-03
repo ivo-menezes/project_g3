@@ -4,6 +4,7 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
+import {fetchBacklog} from "../context/Actions";
 
 const headers = [
     {label: "Project Code", key: "projectCode"},
@@ -16,23 +17,28 @@ const headers = [
 ]
 
 const ConsultBacklog = () => {
+
+    const {state, dispatch} = useContext(AppContext);
+
+    // getting the projectCode from the URL match (this is a function of react-router-dom)
+    const {projectCode} = useParams();
+
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        // calling the fetchBacklog action that fetches the backlog for the given project from backend
+        fetchBacklog(dispatch, projectCode);
     }, []);
 
-    // getting the projectCode from the URL match (this is a function of react-router-dom)
-    const {projectCode} = useParams();
+    const backlogForProject = state.backlogs.data;
+    // table component renders columns in the same order as the object properties...
+    // to match the headers, need to sort the object properties
+    const sortedBacklog = JSON.parse(JSON.stringify(backlogForProject, ["projectCode", "userStoryNumber", "actor", "description", "status", "priority", "acceptanceCriteria"]))
+
     const navigate = useNavigate();
     const location = useLocation();
-
-    // finding backlog for project from context
-    // in the future this will be an API call with useEffect
-
-    const {state} = useContext(AppContext);
-
-    const backlogForProject = state.backlogs.filter((backlog) => backlog.projectCode === projectCode);
 
     const handleCreateUS = () => {
         const from = location.pathname;
@@ -57,7 +63,7 @@ const ConsultBacklog = () => {
             />
             <div className="table-container-a">
                 {backlogForProject.length > 0 ? (
-                    <Table className="table-b" data={backlogForProject} headers={headers}/>
+                    <Table className="table-b" data={sortedBacklog} headers={headers}/>
                 ) : (
                     <div className="string-notification">
                         <span className="string-notification">This project has an empty backlog!</span>
