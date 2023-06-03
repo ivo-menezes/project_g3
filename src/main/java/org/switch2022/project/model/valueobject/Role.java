@@ -29,4 +29,8 @@ public class Role implements ValueObject {
     @Override
     public int hashCode() { return Objects.hash(role);}
 
+    @Override
+    public String toString() {
+        return role;
+    }
 }
