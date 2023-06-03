@@ -1,21 +1,17 @@
 package org.switch2022.project.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewProjectDTO;
 import org.switch2022.project.mapper.NewProjectDTOMapper;
-import org.switch2022.project.mapper.ProjectDTOForListDDD;
-import org.switch2022.project.mapper.ProjectMapperDDD;
 import org.switch2022.project.model.project.IProjectFactory;
 import org.switch2022.project.model.project.ProjectDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.BusinessSectorID;
+import org.switch2022.project.model.valueobject.CustomerID;
+import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
-
-import java.util.List;
 
 @Service
 public class ProjectService {
@@ -24,13 +20,11 @@ public class ProjectService {
     private IBusinessSectorRepository businessSectorRepository;
     private ITypologyRepository typologyRepository;
     private IProjectFactory projectFactory;
-    private IProjectRepository projectNewRepository;
-
+    private IProjectRepository projectRepository;
     private NewProjectDTOMapper newProjectDTOMapper;
-    private Repository<ProjectCode, ProjectDDD> projectRepository;
-    private ProjectMapperDDD projectMapperDDD;
 
-    public ProjectService(ICustomerRepository customerRepository, IBusinessSectorRepository businessSectorRepository, ITypologyRepository typologyRepository, IProjectFactory projectFactory, IProjectRepository projectNewRepository, NewProjectDTOMapper newProjectDTOMapper, Repository<ProjectCode, ProjectDDD> projectRepository, ProjectMapperDDD projectMapperDDD) {
+
+    public ProjectService(ICustomerRepository customerRepository, IBusinessSectorRepository businessSectorRepository, ITypologyRepository typologyRepository, IProjectFactory projectFactory, IProjectRepository projectRepository, NewProjectDTOMapper newProjectDTOMapper) {
         if (customerRepository == null) {
             throw new IllegalArgumentException("Customer Repository must not be null.");
         }
@@ -43,50 +37,45 @@ public class ProjectService {
         if (projectFactory == null) {
             throw new IllegalArgumentException("Project Factory must not be null.");
         }
-        if (projectNewRepository == null) {
+        if (projectRepository == null) {
             throw new IllegalArgumentException("Project New Repository must not be null.");
         }
         if (newProjectDTOMapper == null) {
             throw new IllegalArgumentException("New Project DTO Mapper must not be null.");
-        }
-        if (projectRepository == null) {
-            throw new IllegalArgumentException("Project Repository must not be null.");
-        }
-        if (projectMapperDDD == null) {
-            throw new IllegalArgumentException("Project Mapper must not be null.");
         }
 
         this.customerRepository = customerRepository;
         this.businessSectorRepository = businessSectorRepository;
         this.typologyRepository = typologyRepository;
         this.projectFactory = projectFactory;
-        this.projectNewRepository = projectNewRepository;
-        this.newProjectDTOMapper = newProjectDTOMapper;
         this.projectRepository = projectRepository;
-        this.projectMapperDDD = projectMapperDDD;
+        this.newProjectDTOMapper = newProjectDTOMapper;
     }
 
 
     public NewProjectDTO createProject(NewProjectDTO projectDto) {
 
+        CustomerID customerID = projectDto.customerID;
+        if (!customerRepository.containsID(customerID)) {
+            throw new IllegalArgumentException("There is no Customer with that ID.");
+        }
+
+        BusinessSectorID businessSectorID = projectDto.businessSectorID;
+        if (!businessSectorRepository.containsID(businessSectorID)) {
+            throw new IllegalArgumentException("There is no Business sector with that ID.");
+        }
+
+        TypologyID typologyID = projectDto.typologyID;
+        if (!typologyRepository.containsID(typologyID)) {
+            throw new IllegalArgumentException("There is no Typology with that ID.");
+        }
+
         ProjectDDD projectDDD = projectFactory.createProject(projectDto);
 
-        ProjectDDD savedProject = projectNewRepository.save(projectDDD);
-        NewProjectDTO dtoOut = newProjectDTOMapper.toDto(savedProject);
+        ProjectDDD savedProject = projectRepository.save(projectDDD);
+        NewProjectDTO savedProjectDto = newProjectDTOMapper.toDto(savedProject);
 
-        return dtoOut;
-    }
-
-    @Autowired
-    public void setProjectMapper(ProjectMapperDDD projectMapperDDD) {
-        this.projectMapperDDD = projectMapperDDD;
-    }
-
-
-    public List<ProjectDTOForListDDD> listProjects() {
-
-        Iterable<ProjectDDD> projectCollection = projectRepository.findAll();
-
-        return projectMapperDDD.toDTOList(projectCollection);
+        return savedProjectDto;
     }
 }
+

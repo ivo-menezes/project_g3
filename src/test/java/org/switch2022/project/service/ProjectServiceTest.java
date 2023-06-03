@@ -6,28 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.switch2022.project.ddd.Repository;
 import org.switch2022.project.mapper.NewProjectDTO;
 import org.switch2022.project.mapper.NewProjectDTOMapper;
-import org.switch2022.project.mapper.ProjectDTOForListDDD;
-import org.switch2022.project.mapper.ProjectMapperDDD;
 import org.switch2022.project.model.project.IProjectFactory;
 import org.switch2022.project.model.project.ProjectDDD;
-import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.model.valueobject.BusinessSectorID;
+import org.switch2022.project.model.valueobject.CustomerID;
+import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.service.irepositories.IBusinessSectorRepository;
 import org.switch2022.project.service.irepositories.ICustomerRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 @ActiveProfiles("test")
 @SpringBootTest
 class ProjectServiceTest {
@@ -44,10 +39,6 @@ class ProjectServiceTest {
     IProjectRepository projectNewRepository;
     @MockBean
     NewProjectDTOMapper newProjectDTOMapper;
-    @MockBean
-    Repository<ProjectCode, ProjectDDD> projectRepository;
-    @MockBean
-    ProjectMapperDDD projectMapper;
 
     @Autowired
     ProjectService projectService;
@@ -59,11 +50,10 @@ class ProjectServiceTest {
         String expectedMessage = "Customer Repository must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(null, businessSectorRepository,
-                    typologyRepository, projectFactory, projectNewRepository,
-                    newProjectDTOMapper, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(null, businessSectorRepository,
+                typologyRepository, projectFactory, projectNewRepository,
+                newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
 
@@ -79,11 +69,10 @@ class ProjectServiceTest {
         String expectedMessage = "Business Sector Repository must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, null,
-                    typologyRepository, projectFactory, projectNewRepository,
-                    newProjectDTOMapper, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(customerRepository, null,
+                typologyRepository, projectFactory, projectNewRepository,
+                newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
 
@@ -98,11 +87,10 @@ class ProjectServiceTest {
         String expectedMessage = "Typology Repository must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    null, projectFactory, projectNewRepository,
-                    newProjectDTOMapper, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(customerRepository, businessSectorRepository,
+                null, projectFactory, projectNewRepository,
+                newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
 
@@ -118,11 +106,10 @@ class ProjectServiceTest {
         String expectedMessage = "Project Factory must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    typologyRepository, null, projectNewRepository,
-                    newProjectDTOMapper, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(customerRepository, businessSectorRepository,
+                typologyRepository, null, projectNewRepository,
+                newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
 
@@ -137,11 +124,10 @@ class ProjectServiceTest {
         String expectedMessage = "Project New Repository must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    typologyRepository, projectFactory, null,
-                    newProjectDTOMapper, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(customerRepository, businessSectorRepository,
+                typologyRepository, projectFactory, null,
+                newProjectDTOMapper));
 
         String resultMessage = result.getMessage();
 
@@ -156,11 +142,10 @@ class ProjectServiceTest {
         String expectedMessage = "New Project DTO Mapper must not be null.";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    typologyRepository, projectFactory, projectNewRepository,
-                    null, projectRepository, projectMapper);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectService(customerRepository, businessSectorRepository,
+                typologyRepository, projectFactory, projectNewRepository,
+                null));
 
         String resultMessage = result.getMessage();
 
@@ -168,49 +153,24 @@ class ProjectServiceTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-    @DisplayName("assert that creating a ProjectService with null ProjectRepository throws Exception")
-    @Test
-    void createProjectNullRepositoryThrowsException() {
-        // arrange
-        String expectedMessage = "Project Repository must not be null.";
-
-        // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    typologyRepository, projectFactory, projectNewRepository,
-                    newProjectDTOMapper, null, projectMapper);
-        });
-
-        String resultMessage = result.getMessage();
-
-        // assert
-        assertEquals(expectedMessage, resultMessage);
-    }
-
-    @Test
-    @DisplayName("Ensure exception is returned when Project Mapper is null")
-    void ensureExceptionWhenProjectMapperNull() {
-        // arrange
-        String expectedMessage = "Project Mapper must not be null.";
-
-        // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            new ProjectService(customerRepository, businessSectorRepository,
-                    typologyRepository, projectFactory, projectNewRepository,
-                    newProjectDTOMapper, projectRepository, null);
-        });
-
-        String resultMessage = result.getMessage();
-
-        // assert
-        assertEquals(expectedMessage, resultMessage);
-    }
 
     @Test
     @DisplayName("assert that creating a project succeeds")
     void createProjectSuccess() {
         //Arrange
         NewProjectDTO projectDtoDouble = mock(NewProjectDTO.class);
+        CustomerID customerID = mock(CustomerID.class);
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+        TypologyID typologyID = mock(TypologyID.class);
+
+        projectDtoDouble.customerID = customerID;
+        projectDtoDouble.businessSectorID = businessSectorID;
+        projectDtoDouble.typologyID = typologyID;
+
+        when(customerRepository.containsID(customerID)).thenReturn(true);
+        when(businessSectorRepository.containsID(businessSectorID)).thenReturn(true);
+        when(typologyRepository.containsID(typologyID)).thenReturn(true);
+
         NewProjectDTO projectDtoDouble2 = mock(NewProjectDTO.class);
         ProjectDDD projectDouble = mock(ProjectDDD.class);
         ProjectDDD savedProjectDouble = mock(ProjectDDD.class);
@@ -226,45 +186,78 @@ class ProjectServiceTest {
         assertEquals(projectDtoDouble2, resultDto);
     }
 
+    @Test
+    @DisplayName("assert that creating a project fails when customerID does not exist")
+    void createProjectFailsWhenCustomerIDDoesNotExist() {
+        //Arrange
+        NewProjectDTO projectDtoDouble = mock(NewProjectDTO.class);
+        CustomerID customerID = mock(CustomerID.class);
+        projectDtoDouble.customerID = customerID;
 
-        @DisplayName("ensure that return a list of ProjectDTOForListDDD")
-        @Test
-        void returnAListOfProjectDTOForListDD() {
+        when(customerRepository.containsID(customerID)).thenReturn(false);
+        String expectedMessage = "There is no Customer with that ID.";
 
-            ProjectCode projectCode = mock(ProjectCode.class);
-            ProjectName projectName = mock(ProjectName.class);
-            Description description = mock(Description.class);
-            TimePeriod timePeriod = mock(TimePeriod.class);
-            ProjectSprintDuration projectSprintDuration = mock(ProjectSprintDuration.class);
-            ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = mock(ProjectNumberOfPlannedSprints.class);
-            CustomerID customerID = mock(CustomerID.class);
-            BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
-            TypologyID typologyID = mock(TypologyID.class);
-            ProjectBudget projectBudget = mock(ProjectBudget.class);
+        // Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> projectService.createProject(projectDtoDouble));
+        String resultMessage = exception.getMessage();
 
-            ProjectDDD projectDDD = mock(ProjectDDD.class);
-            ProjectDDD projectDDD1 = mock(ProjectDDD.class);
-            List<ProjectDDD> projectDDDList = new ArrayList<>();
-            projectDDDList.add(projectDDD);
-            projectDDDList.add(projectDDD1);
-
-            ProjectDTOForListDDD dto1 = new ProjectDTOForListDDD();
-            ProjectDTOForListDDD dto2 = new ProjectDTOForListDDD();
-
-            List<ProjectDTOForListDDD> expectedDTOs = Arrays.asList(dto1, dto2);
-
-            when(projectRepository.findAll()).thenReturn(projectDDDList);
-            when(projectMapper.toDTOList(projectDDDList)).thenReturn(expectedDTOs);
-
-            when(projectFactory.createProject(eq(projectCode), eq(projectName), eq(description), eq(timePeriod), eq(projectSprintDuration), eq(projectNumberOfPlannedSprints), eq(customerID),  eq(businessSectorID), eq(typologyID),eq(projectBudget))).thenReturn(projectDDDList.get(0));
-
-            List<ProjectDTOForListDDD> actualDTOs = projectService.listProjects();
-
-            assertEquals(expectedDTOs, actualDTOs);
-        }
-
-
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
     }
+
+
+    @Test
+    @DisplayName("assert that creating a project fails when businessSectorID does not exist")
+    void createProjectFailsWhenBusinessSectorIDDoesNotExist() {
+        //Arrange
+        NewProjectDTO projectDtoDouble = mock(NewProjectDTO.class);
+        CustomerID customerID = mock(CustomerID.class);
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+
+        projectDtoDouble.customerID = customerID;
+        projectDtoDouble.businessSectorID = businessSectorID;
+
+        when(customerRepository.containsID(customerID)).thenReturn(true);
+        when(businessSectorRepository.containsID(businessSectorID)).thenReturn(false);
+        String expectedMessage = "There is no Business sector with that ID.";
+
+        // Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> projectService.createProject(projectDtoDouble));
+        String resultMessage = exception.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("assert that creating a project fails when typologyID does not exist")
+    void createProjectFailsWhenTypologyIDDoesNotExist() {
+        //Arrange
+        NewProjectDTO projectDtoDouble = mock(NewProjectDTO.class);
+        CustomerID customerID = mock(CustomerID.class);
+        BusinessSectorID businessSectorID = mock(BusinessSectorID.class);
+        TypologyID typologyID = mock(TypologyID.class);
+
+        projectDtoDouble.customerID = customerID;
+        projectDtoDouble.businessSectorID = businessSectorID;
+        projectDtoDouble.typologyID = typologyID;
+
+        when(customerRepository.containsID(customerID)).thenReturn(true);
+        when(businessSectorRepository.containsID(businessSectorID)).thenReturn(true);
+        when(typologyRepository.containsID(typologyID)).thenReturn(false);
+        String expectedMessage = "There is no Typology with that ID.";
+
+        // Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> projectService.createProject(projectDtoDouble));
+        String resultMessage = exception.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+}
 
 
 

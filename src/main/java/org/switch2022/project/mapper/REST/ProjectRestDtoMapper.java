@@ -26,13 +26,6 @@ public class ProjectRestDtoMapper {
         domainDto.typologyID = new TypologyID(projectRestDto.typologyID);
         domainDto.projectBudget = new ProjectBudget(projectRestDto.projectBudget);
 
-        domainDto.productBacklog = new ArrayList<>();
-        for (String id : projectRestDto.productBacklog) {
-            UserStoryNumber userStoryNumber = new UserStoryNumber(id);
-            UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
-            domainDto.productBacklog.add(userStoryID);
-        }
-
         return domainDto;
     }
 
