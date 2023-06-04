@@ -38,3 +38,10 @@ export const postUserStoryToBackend = (success, failure, projectCode, userStory)
         .then(response => success(response))
         .catch(error => failure(error))
 }
+
+export const postProjectToBackend = (project) => {
+    const ENDPOINT = "projects";
+    axios.post(API_URL + ENDPOINT, project)
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+}

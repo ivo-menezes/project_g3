@@ -1,7 +1,7 @@
 import {
     fetchBacklogFromBackend,
     fetchProjectsFromBackend,
-    fetchSprintsFromBackend,
+    fetchSprintsFromBackend, postProjectToBackend,
     postUserStoryToBackend
 } from "../services/Service";
 
@@ -162,5 +162,11 @@ export const postUserStory = (dispatch, projectCode, userStory) => {
         (response) => console.log("user story successfully posted"),
         (error) => console.log("user story failed to be posted"),
         projectCode, userStory
+    )
+}
+
+export const postProject = (dispatch, project) => {
+    postProjectToBackend(
+        project
     )
 }

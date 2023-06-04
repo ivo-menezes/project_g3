@@ -4,7 +4,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate} from "react-router-dom";
-import {addProject} from "../context/Actions";
+import {addProject, postProject} from "../context/Actions";
 import DropDownList from "../components/dropDownList";
 import PickDate from "../components/date";
 
@@ -17,17 +17,18 @@ const CreateProject = () => {
 
     // using a local state to save user input before submitting
     const emptyProject = {
-        id: '',
-        title: '',
+        projectCode: '',
+        projectName: '',
         description: '',
-        customer: '',
         startDate: '',
         endDate: '',
-        budget: '',
-        selectedStatus: '',
-        selectedTypology: '',
-        selectedSprintDuration: '',
-        numberOfPlannedSprints: ''
+        customerID: '',
+        typologyID: '',
+        businessSectorID: '',
+        // the following are optional
+        projectBudget: '',
+        sprintDuration: '',
+        projectNumberOfPlannedSprints: ''
     }
 
     const [newProject, setNewProject] = useState(emptyProject)
@@ -64,8 +65,9 @@ const CreateProject = () => {
                 newProject[key] = newProject[key].toISOString().split('T')[0];
             }
         }
-        addProject(dispatch, newProject)
-        alert("New project created!")
+
+        console.log(newProject)
+        postProject(dispatch, newProject)
         navigate('/listProjects')
     }
 
@@ -104,14 +106,14 @@ const CreateProject = () => {
                     <TextField className="textField"
                                mandatory={true}
                                label='Code'
-                               name={'id'}
+                               name={'projectCode'}
                                whenTyped={handleChange}
                     />
 
                     <TextField className="textField"
                                mandatory={true}
                                label='Name'
-                               name={'title'}
+                               name={'projectName'}
                                whenTyped={handleChange}
                     />
 
@@ -125,7 +127,21 @@ const CreateProject = () => {
                     <TextField className="textField"
                                mandatory={false}
                                label='Customer'
-                               name={'customer'}
+                               name={'customerID'}
+                               whenTyped={handleChange}
+                    />
+
+                    <TextField className="textField"
+                               mandatory={false}
+                               label='Business Sector'
+                               name={'businessSectorID'}
+                               whenTyped={handleChange}
+                    />
+
+                    <TextField className="textField"
+                               mandatory={false}
+                               label='Typology'
+                               name={'typologyID'}
                                whenTyped={handleChange}
                     />
 
@@ -154,26 +170,6 @@ const CreateProject = () => {
                     <div className="dropDownList">
                         <DropDownList
                             mandatory={false}
-                            label='Status'
-                            name={'status'}
-                            items={status}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="dropDownList">
-                        <DropDownList
-                            mandatory={false}
-                            label='Typology'
-                            name={'typology'}
-                            items={typology}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="dropDownList">
-                        <DropDownList
-                            mandatory={false}
                             label='Sprint Duration'
                             name={'sprintDuration'}
                             items={sprintDuration}
@@ -185,14 +181,14 @@ const CreateProject = () => {
                     <TextField className="textField"
                                mandatory={false}
                                label='Number Of Planned Sprints'
-                               name={'numberOfPlannedSprints'}
+                               name={'projectNumberOfPlannedSprints'}
                                whenTyped={handleChange}
                     />
 
                     <TextField className="textField"
                                mandatory={false}
                                label='Budget'
-                               name={'budget'}
+                               name={'projectBudget'}
                                whenTyped={handleChange}
                     />
                     <div className="button-container">
