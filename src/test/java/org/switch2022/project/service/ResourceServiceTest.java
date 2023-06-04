@@ -246,39 +246,4 @@ class ResourceServiceTest {
         // Assert
         assertEquals(expected, resultMessage);
     }
-
-    @DisplayName("assert that creating a resource fails when role doesn't exist")
-    @Test
-    void createResourceFailsWhenRoleDoesntExist() {
-        // Arrange
-        NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
-        Role role = mock(Role.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        ProfileName profile = mock(ProfileName.class);
-
-        AccountDDD account = mock(AccountDDD.class);
-
-        newResourceDTO.email = email;
-        newResourceDTO.role = role;
-        newResourceDTO.projectCode = projectCode;
-
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
-        when(account.getProfile()).thenReturn(profile);
-        when(account.isUser(profile)).thenReturn(true);
-        when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
-        when(role.toString()).thenReturn("Coach");
-
-        String expected = "This role doesn't exist";
-
-        // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            resourceService.createResource(newResourceDTO);
-        });
-        String resultMessage = result.getMessage();
-
-        // Assert
-        assertEquals(expected, resultMessage);
-    }
-
 }

@@ -7,6 +7,8 @@ import org.switch2022.project.model.resource.ResourceDDD;
 import org.switch2022.project.repository.JPA.ResourceRepositoryJPA;
 import org.switch2022.project.service.irepositories.IResourceRepository;
 
+import java.util.ArrayList;
+
 @Repository
 public class ResourceRepository implements IResourceRepository {
 
@@ -30,5 +32,17 @@ public class ResourceRepository implements IResourceRepository {
 
         String roleInUse = resourceDDD.getRole().toString();
         return resourceRepositoryJPA.existsByRole(roleInUse);
+    }
+
+    public ArrayList<ResourceDDD> getAll() {
+        ArrayList<ResourceDDD> resources = new ArrayList();
+
+        Iterable<ResourceJPA> resourceJPA = resourceRepositoryJPA.findAll();
+
+        for (ResourceJPA resource : resourceJPA) {
+            resources.add(resourceDomainAssemblerData.toDomain(resource));
+        }
+
+        return resources;
     }
 }

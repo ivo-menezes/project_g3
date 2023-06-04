@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.model.valueobject.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class ResourceRestDTOMapper {
@@ -30,7 +32,7 @@ public class ResourceRestDTOMapper {
 
         ResourceRestDTO resourceRestDTO = new ResourceRestDTO();
 
-        //resourceRestDTO.resourceID = domainDto.resourceID.getId();
+        resourceRestDTO.resourceID = domainDto.resourceID.getId();
         resourceRestDTO.email = domainDto.email.toString();
         resourceRestDTO.costPerHour = domainDto.costPerHour.getValue();
         resourceRestDTO.role = domainDto.role.toString();
@@ -43,4 +45,16 @@ public class ResourceRestDTOMapper {
 
         return resourceRestDTO;
     }
+
+    public List<ResourceRestDTO> toRestDTOList(List<NewResourceDTO> domainList) {
+        List<ResourceRestDTO> restList = new ArrayList<>();
+
+        for (NewResourceDTO domainDTO : domainList) {
+            ResourceRestDTO restDTO = toRestDto(domainDTO);
+            restList.add(restDTO);
+        }
+        return restList;
+    }
+
+
 }
