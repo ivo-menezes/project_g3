@@ -48,7 +48,7 @@ public class ProjectRestDtoMapper {
 
         List<String> productBacklog = new ArrayList<>();
         for (UserStoryID userStoryID : domainDto.productBacklog) {
-            productBacklog.add(userStoryID.toString());
+            productBacklog.add(userStoryID.getUserStoryNumber().toString());
         }
         restDto.productBacklog = productBacklog;
 
