@@ -921,6 +921,149 @@ public class DataLoader implements CommandLineRunner {
 
         accountService.createAccount(account_4);
 
+        // Account 5
+        Email email_account_5 = new Email("tc@mymail.com");
+        Name name_account_5 = new Name("Tiago Cancado");
+        PhoneNumber phone_account_5 = new PhoneNumber("+351263650345");
+
+        NewAccountDTO account_5 = new NewAccountDTO();
+        account_5.email = email_account_5;
+        account_5.name = name_account_5;
+        account_5.phoneNumber = phone_account_5;
+        account_5.photo = photo_account;
+        account_5.profile = profile_account;
+
+        accountService.createAccount(account_5);
+
+        // Account 6
+        Email email_account_6 = new Email("nel.m@mymail.com");
+        Name name_account_6 = new Name("Nel Moleiro");
+        PhoneNumber phone_account_6 = new PhoneNumber("+351930123456");
+
+        NewAccountDTO account_6 = new NewAccountDTO();
+        account_6.email = email_account_6;
+        account_6.name = name_account_6;
+        account_6.phoneNumber = phone_account_6;
+        account_6.photo = photo_account;
+        account_6.profile = profile_account;
+
+        accountService.createAccount(account_6);
+
+        // Account 7
+        Email email_account_7 = new Email("ze@mymail.com");
+        Name name_account_7 = new Name("Ze da Esquina");
+        PhoneNumber phone_account_7 = new PhoneNumber("+351212349016");
+        ProfileName profile_account_2 = new ProfileName("Manager");
+
+        NewAccountDTO account_7 = new NewAccountDTO();
+        account_7.email = email_account_7;
+        account_7.name = name_account_7;
+        account_7.phoneNumber = phone_account_7;
+        account_7.photo = photo_account;
+        account_7.profile = profile_account_2;
+
+        accountService.createAccount(account_7);
+
+        // Account 8
+        Email email_account_8 = new Email("zb@mymail.com");
+        Name name_account_8 = new Name("Zé do Bento");
+        PhoneNumber phone_account_8 = new PhoneNumber("+351921458791");
+
+        NewAccountDTO account_8 = new NewAccountDTO();
+        account_8.email = email_account_8;
+        account_8.name = name_account_8;
+        account_8.phoneNumber = phone_account_8;
+        account_8.photo = photo_account;
+        account_8.profile = profile_account;
+
+        accountService.createAccount(account_8);
+
+        // Account 9
+        Email email_account_9 = new Email("to.f@mymail.com");
+        Name name_account_9 = new Name("Tó Farrulo");
+        PhoneNumber phone_account_9 = new PhoneNumber("+351921458795");
+
+        NewAccountDTO account_9 = new NewAccountDTO();
+        account_9.email = email_account_9;
+        account_9.name = name_account_9;
+        account_9.phoneNumber = phone_account_9;
+        account_9.photo = photo_account;
+        account_9.profile = profile_account;
+
+        accountService.createAccount(account_9);
+
+        // Account 10
+        Email email_account_10 = new Email("tdc@mymail.com");
+        Name name_account_10 = new Name("Tino das Cruzes");
+        PhoneNumber phone_account_10 = new PhoneNumber("+351921458799");
+
+        NewAccountDTO account_10 = new NewAccountDTO();
+        account_10.email = email_account_10;
+        account_10.name = name_account_10;
+        account_10.phoneNumber = phone_account_10;
+        account_10.photo = photo_account;
+        account_10.profile = profile_account;
+
+        accountService.createAccount(account_10);
+
+        // Account 11
+        Email email_account_11 = new Email("zm@mymail.com");
+        Name name_account_11 = new Name("Zé Manel");
+        PhoneNumber phone_account_11 = new PhoneNumber("+351921458811");
+
+        NewAccountDTO account_11 = new NewAccountDTO();
+        account_11.email = email_account_11;
+        account_11.name = name_account_11;
+        account_11.phoneNumber = phone_account_11;
+        account_11.photo = photo_account;
+        account_11.profile = profile_account;
+
+        accountService.createAccount(account_11);
+
+        // Account 12
+        Email email_account_12 = new Email("as@mymail.com");
+        Name name_account_12 = new Name("Antonio Silva");
+        PhoneNumber phone_account_12 = new PhoneNumber("+351921458815");
+
+        NewAccountDTO account_12 = new NewAccountDTO();
+        account_12.email = email_account_12;
+        account_12.name = name_account_12;
+        account_12.phoneNumber = phone_account_12;
+        account_12.photo = photo_account;
+        account_12.profile = profile_account;
+
+        accountService.createAccount(account_12);
+
+        // Account 13
+        Email email_account_13 = new Email("tg@mymail.com");
+        Name name_account_13 = new Name("Tiago Geringonca");
+        PhoneNumber phone_account_13 = new PhoneNumber("+351921458807");
+
+        NewAccountDTO account_13 = new NewAccountDTO();
+        account_13.email = email_account_13;
+        account_13.name = name_account_13;
+        account_13.phoneNumber = phone_account_13;
+        account_13.photo = photo_account;
+        account_13.profile = profile_account_2;
+
+        accountService.createAccount(account_13);
+
+        // Account 14
+        Email email_account_14 = new Email("udu@mymail.com");
+        Name name_account_14 = new Name("Urbino das Urzes");
+        PhoneNumber phone_account_14 = new PhoneNumber("+351962547891");
+        ProfileName profile_account_3 = new ProfileName("Administrator");
+
+        NewAccountDTO account_14 = new NewAccountDTO();
+        account_14.email = email_account_14;
+        account_14.name = name_account_14;
+        account_14.phoneNumber = phone_account_14;
+        account_14.photo = photo_account;
+        account_14.profile = profile_account_3;
+
+        accountService.createAccount(account_14);
+
+
         //LOAD RESOURCES
 
         // Resource A1_1
