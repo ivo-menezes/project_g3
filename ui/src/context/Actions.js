@@ -1,7 +1,7 @@
 import {
     fetchBacklogFromBackend,
     fetchProjectsFromBackend, fetchResourcesFromBackend,
-    fetchSprintsFromBackend, postProjectToBackend, postSprintToBackend,
+    fetchSprintsFromBackend, postProjectToBackend, postResourceToBackend, postSprintToBackend,
     postUserStoryToBackend
 } from "../services/Service";
 
@@ -205,5 +205,12 @@ export const postSprint = (dispatch, projectCode, sprint) => {
     postSprintToBackend(
         projectCode,
         sprint
+    )
+}
+
+export const postResource = (dispatch, projectCode, resource) => {
+    postResourceToBackend(
+        projectCode,
+        resource
     )
 }

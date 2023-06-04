@@ -5,7 +5,7 @@ import Button from "../components/button";
 import DropDownList from "../components/dropDownList";
 import PickDate from "../components/date";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {addResource} from "../context/Actions";
+import {addResource, postResource} from "../context/Actions";
 import TextField from "../components/textField";
 
 const AssociateResource = () => {
@@ -31,7 +31,7 @@ const AssociateResource = () => {
         startDate: '',
         endDate: '',
         costPerHour: '',
-        allocationPercentage: ''
+        percentageOfAllocation: ''
     }
 
     const [newResource, setNewResource] = useState(emptyResource);
@@ -58,7 +58,8 @@ const AssociateResource = () => {
                 newResource[key] = newResource[key].toISOString().split('T')[0];
             }
         }
-        addResource(dispatch, newResource);
+        console.log(newResource)
+        postResource(dispatch, projectCode, newResource)
         //creates an array of strings representing each key-value pair in the newResource object, values are stringified
         //individually and joined with the '\n' character.
         const formattedResource = Object.entries(newResource).map(([key, value]) => {
@@ -127,7 +128,7 @@ const AssociateResource = () => {
                     <TextField className="textField"
                                mandatory={true}
                                label="Percentage of Allocation"
-                               name={'allocationPercentage'}
+                               name={'percentageOfAllocation'}
                                whenTyped={handleChange}
                     />
                     <div className="button-container">

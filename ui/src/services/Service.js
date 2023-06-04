@@ -62,3 +62,10 @@ export const postSprintToBackend = (projectCode, sprint) => {
         .then(response => console.log(response))
         .catch(error => console.log(error))
 }
+
+export const postResourceToBackend = (projectCode, resource) => {
+    const ENDPOINT = `projects/${projectCode}/resources`
+    axios.post(API_URL + ENDPOINT, resource)
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+}
