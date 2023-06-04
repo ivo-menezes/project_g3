@@ -32,6 +32,16 @@ export const fetchSprintsFromBackend = (success, failure, projectCode) => {
         .catch(error => failure(error.message))
 }
 
+export const fetchResourcesFromBackend = (success, failure, projectCode) => {
+    const ENDPOINT = `projects/${projectCode}/resources`;
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}
+
 export const postUserStoryToBackend = (success, failure, projectCode, userStory) => {
     const ENDPOINT = `projects/${projectCode}/productbacklog`;
     axios.post(API_URL + ENDPOINT, userStory)

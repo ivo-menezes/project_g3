@@ -1,6 +1,6 @@
 import {
     fetchBacklogFromBackend,
-    fetchProjectsFromBackend,
+    fetchProjectsFromBackend, fetchResourcesFromBackend,
     fetchSprintsFromBackend, postProjectToBackend, postSprintToBackend,
     postUserStoryToBackend
 } from "../services/Service";
@@ -127,7 +127,7 @@ export const fetchProjects = (dispatch) => {
     )
 }
 
-// Fetch projects actions
+// Fetch sprints actions
 export const FETCH_SPRINTS_STARTED = "FETCH_SPRINTS_STARTED"
 export const FETCH_SPRINTS_SUCCESS = "FETCH_SPRINTS_SUCCESS"
 export const FETCH_SPRINTS_ERROR = "FETCH_SPRINTS_ERROR"
@@ -153,6 +153,36 @@ export const fetchSprints = (dispatch, projectCode) => {
     fetchSprintsFromBackend(
         (response) => dispatch(fetchSprintsSuccess(response)),
         (errorMessage) => dispatch(fetchSprintsFailure(errorMessage)),
+        projectCode
+    )
+}
+
+// Fetch resources actions
+export const FETCH_RESOURCES_STARTED = "FETCH_RESOURCES_STARTED"
+export const FETCH_RESOURCES_SUCCESS = "FETCH_RESOURCES_SUCCESS"
+export const FETCH_RESOURCES_ERROR = "FETCH_RESOURCES_ERROR"
+
+const fetchResourcesSuccess = (resources) => {
+    return {
+        type: FETCH_RESOURCES_SUCCESS,
+        payload: resources
+    }
+}
+
+const fetchResourcesFailure = (message) => {
+    return {
+        type: FETCH_RESOURCES_ERROR,
+        payload: message
+    }
+}
+
+export const fetchResources = (dispatch, projectCode) => {
+    dispatch({
+        type: FETCH_RESOURCES_STARTED
+    })
+    fetchResourcesFromBackend(
+        (response) => dispatch(fetchResourcesSuccess(response)),
+        (errorMessage) => dispatch(fetchResourcesFailure(errorMessage)),
         projectCode
     )
 }

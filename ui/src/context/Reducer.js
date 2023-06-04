@@ -7,7 +7,7 @@ import {
     FETCH_BACKLOG_SUCCESS,
     FETCH_PROJECTS_ERROR,
     FETCH_PROJECTS_STARTED,
-    FETCH_PROJECTS_SUCCESS,
+    FETCH_PROJECTS_SUCCESS, FETCH_RESOURCES_ERROR, FETCH_RESOURCES_STARTED, FETCH_RESOURCES_SUCCESS,
     FETCH_SPRINTS_ERROR, FETCH_SPRINTS_STARTED,
     FETCH_SPRINTS_SUCCESS
 } from "./Actions";
@@ -139,6 +139,36 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 sprints: {
+                    loading: false,
+                    error: action.payload,
+                    data : []
+                }
+            }
+
+        case FETCH_RESOURCES_STARTED:
+            return {
+                ...state,
+                resources: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_RESOURCES_SUCCESS:
+            return {
+                ...state,
+                resources: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_RESOURCES_ERROR:
+            return {
+                ...state,
+                resources: {
                     loading: false,
                     error: action.payload,
                     data : []

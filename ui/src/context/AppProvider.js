@@ -27,7 +27,11 @@ const AppProvider = (props) =>{
             error : null,
             data : []
         },
-        resources : resources,
+        resources : {
+            loading : true,
+            error : null,
+            data : []
+        },
         textValue:'',
         startDate: null,
         endDate: null,

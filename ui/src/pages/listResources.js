@@ -4,6 +4,7 @@ import Button from "../components/button";
 import Table from "../components/table";
 import AppContext from "../context/AppContext";
 import {useNavigate, useParams} from "react-router-dom";
+import {fetchResources} from "../context/Actions";
 
 const headers =  [
     {label: "Role", key: "role"},
@@ -19,13 +20,15 @@ const ResourceList = () => {
     //of the content are visible when rendering the page.
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        fetchResources(dispatch, projectCode)
     }, []);
 
     const{projectCode} = useParams();
-    const {state} = useContext(AppContext);
+    const {state, dispatch} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const resourcesInProject = state.resources.filter((resource) =>
+    const resourcesInProject = state.resources.data.filter((resource) =>
     resource.projectCode === projectCode);
     console.log(resourcesInProject);
 
@@ -35,7 +38,7 @@ const ResourceList = () => {
         startDate: resource.startDate,
         endDate: resource.endDate,
         costPerHour: resource.costPerHour,
-        allocationPercentage: resource.allocationPercentage
+        allocationPercentage: resource.percentageOfAllocation
     }));
 
     const handleAssociateResource = () => {
