@@ -14,6 +14,7 @@ import ViewSprint from "../pages/viewSprintPage";
 import PageUnderConstruction from "../pages/pageUnderConstruction";
 import ListResources from "../pages/listResources";
 import AssociateResource from "../pages/associateResource";
+import AboutUs from "../pages/aboutUs";
 
 
 const Router= createBrowserRouter([
@@ -69,6 +70,10 @@ const Router= createBrowserRouter([
     {
         path: "/associateResource/:projectCode",
         element: <AssociateResource />,
+    },
+    {
+        path: "/aboutUs",
+        element: <AboutUs/>
     }
 ]);
 export default Router;

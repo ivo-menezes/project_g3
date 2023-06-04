@@ -593,6 +593,96 @@ a:link {
     color: #FFFFFF;
 }
 
+/* About Us page */
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: transparent;
+    padding-top: 65px;
+    justify-content: center; /* Add this line to center horizontally */
+}
+.grid-item {
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
+    text-align: center;
+    width: 10vw;
+    height: 12vw;
+    object-fit: cover;
+    min-width: 100px; /* adjust the value as needed */
+    min-height: 120px; /* adjust the value as needed */
+}
+
+.caption {
+    color: #FFFFFF;
+    padding-top: 7px;
+    font-size: 12px;
+}
+
+.grid-item .image-box img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container size */
+    max-height: 100%; /* Ensure the image doesn't exceed the container size */
+    display: block; /* Remove any additional spacing */
+    margin: auto; /* Center the image */
+    border-radius: 50%; /* Apply circular border radius */
+    overflow: hidden; /* Hide the overflowing parts of the image */
+}
+
+.grid-item-text {
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-weight: 550;
+    font-size: 60px;
+    line-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    position: relative;
+    height: 100%; /* Add this line to expand the grid item vertically */
+}
+
+.grid-item-text.are {
+    /* CSS properties for "ARE" */
+    justify-content: flex-start;
+}
+
+.grid-item.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-item.logo .image-box img {
+    max-width: initial; /* Reset the max-width property */
+    max-height: initial; /* Reset the max-height property */
+    width: 120%; /* Adjust the width as needed */
+    height: 120%; /* Adjust the height as needed */
+    margin: 0; /* Remove any margin */
+    border-radius: 0; /* Reset border-radius for the logo image */
+}
+
+.grid-item-text span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f2f2f2;
+    height: 100%; /* Add this line to expand the grid item vertically */
+}
+
+@media (max-width: 768px) {
+    /* CSS for smaller screen sizes */
+    .grid-item-text {
+        font-size: 40px; /* adjust the value as needed */
+        line-height: 60px; /* adjust the value as needed */
+    }
+
+    .caption {
+        font-size: 10px; /* adjust the value as needed */
+        padding-top: 5px; /* adjust the value as needed */
+    }
+}
+
+
 /* View project page style */
 
 .project-info-container {

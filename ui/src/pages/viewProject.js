@@ -35,7 +35,7 @@ const ViewProject = () => {
             <Header />
             <div className="header-background-container" />
             <Header
-                text={`${id} - ${project.title}`}
+                text={`Project ${id} - ${project ? project.projectName : ""}`}
                 className="header-list"
             />
             {project ? (
