@@ -4,7 +4,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {addSprint} from "../context/Actions";
+import {addSprint, postSprint} from "../context/Actions";
 import PickDate from "../components/date";
 
 const CreateSprint = () => {
@@ -73,8 +73,7 @@ const CreateSprint = () => {
         // Allows to view in the console the newly created sprint
         console.log(newSprint)
 
-        //Dispatches an addSprint action with the newSprint data
-        addSprint(dispatch, newSprint);
+        postSprint(dispatch, projectCode, newSprint)
 
         //Navigates to the sprint list for the current project
         navigate(`/listSprints/${projectCode}`)
