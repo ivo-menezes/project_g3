@@ -1069,7 +1069,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_1
 
         NewResourceDTO resource_A1_1 = new NewResourceDTO();
-        resource_A1_1.email = email_account_1;
+        resource_A1_1.email = email_account_1; //João Silva, USER
         resource_A1_1.costPerHour = new CostPerHour(25.00);
         resource_A1_1.role = new Role("Product Owner");
         resource_A1_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
@@ -1079,11 +1079,149 @@ public class DataLoader implements CommandLineRunner {
 
         resourceService.createResource(resource_A1_1);
 
+        // Resource A1_2
+
+        NewResourceDTO resource_A1_2 = new NewResourceDTO();
+        resource_A1_2.email = email_account_2; //"Manel Costa" USER
+        resource_A1_2.costPerHour = new CostPerHour(25.00);
+        resource_A1_2.role = new Role("Scrum Master");
+        resource_A1_2.percentageOfAllocation = new PercentageOfAllocation(0.3);
+        resource_A1_2.projectCode = projectCode_1;
+        resource_A1_2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 4)),
+                createDate(LocalDate.of(2022, 7, 31)));
+
+        resourceService.createResource(resource_A1_2);
+
+        // Resource A1_3
+
+        NewResourceDTO resource_A1_3 = new NewResourceDTO();
+        resource_A1_3.email = email_account_3; //"Xico Ferreira" USER
+        resource_A1_3.costPerHour = new CostPerHour(20.00);
+        resource_A1_3.role = new Role("Team Member");
+        resource_A1_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A1_3.projectCode = projectCode_1;
+        resource_A1_3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 5)),
+                createDate(LocalDate.of(2022, 7, 31)));
+
+        resourceService.createResource(resource_A1_3);
+
+        // Resource A1_4
+
+        NewResourceDTO resource_A1_4 = new NewResourceDTO();
+        resource_A1_4.email = email_account_5; //"Tiago Cancado" USER
+        resource_A1_4.costPerHour = new CostPerHour(35.00);
+        resource_A1_4.role = new Role("Project Manager");
+        resource_A1_4.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resource_A1_4.projectCode = projectCode_1;
+        resource_A1_4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 2)),
+                createDate(LocalDate.of(2022, 7, 31)));
+
+        resourceService.createResource(resource_A1_4);
+
+        // Resource A1_5
+
+        NewResourceDTO resource_A1_5 = new NewResourceDTO();
+        resource_A1_5.email = email_account_6; //"Nel Moleiro" USER
+        resource_A1_5.costPerHour = new CostPerHour(20.00);
+        resource_A1_5.role = new Role("Team Member");
+        resource_A1_5.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A1_5.projectCode = projectCode_1;
+        resource_A1_5.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 7)),
+                createDate(LocalDate.of(2022, 7, 31)));
+
+        resourceService.createResource(resource_A1_5);
 
 
+        // Resource A1_6
 
+        NewResourceDTO resource_A1_6 = new NewResourceDTO();
+        resource_A1_6.email = email_account_8; //"Zé do Bento" USER
+        resource_A1_6.costPerHour = new CostPerHour(20.00);
+        resource_A1_6.role = new Role("Team Member");
+        resource_A1_6.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A1_6.projectCode = projectCode_1;
+        resource_A1_6.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
+                createDate(LocalDate.of(2022, 6, 20)));
 
+        resourceService.createResource(resource_A1_6);
 
+        // Resource A1_7
+
+        NewResourceDTO resource_A1_7 = new NewResourceDTO();
+        resource_A1_7.email = email_account_9; //"Tó Farrulo" USER
+        resource_A1_7.costPerHour = new CostPerHour(20.00);
+        resource_A1_7.role = new Role("Team Member");
+        resource_A1_7.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A1_7.projectCode = projectCode_1;
+        resource_A1_7.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
+                createDate(LocalDate.of(2022, 6, 20)));
+
+        resourceService.createResource(resource_A1_7);
+
+        // Resource A1_8
+
+        NewResourceDTO resource_A1_8 = new NewResourceDTO();
+        resource_A1_8.email = email_account_10; //"Tino das Cruzes" USER
+        resource_A1_8.costPerHour = new CostPerHour(20.00);
+        resource_A1_8.role = new Role("Team Member");
+        resource_A1_8.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A1_8.projectCode = projectCode_1;
+        resource_A1_8.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 10)),
+                createDate(LocalDate.of(2022, 6, 20)));
+
+        resourceService.createResource(resource_A1_8);
+
+        // Resource A2_1
+
+        NewResourceDTO resource_A2_1 = new NewResourceDTO();
+        resource_A2_1.email = email_account_4; //"Quim Barreiros" USER
+        resource_A2_1.costPerHour = new CostPerHour(42.00);
+        resource_A2_1.role = new Role("Project Manager");
+        resource_A2_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resource_A2_1.projectCode = projectCode_2;
+        resource_A2_1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
+                createDate(LocalDate.of(2023, 4, 30)));
+
+        resourceService.createResource(resource_A2_1);
+
+        /*// Resource A2_2
+
+        NewResourceDTO resource_A2_2 = new NewResourceDTO();
+        resource_A2_2.email = email_account_13; //"Tiago Geringonca" MANAGER (Bate nas validações)
+        resource_A2_2.costPerHour = new CostPerHour(30.00);
+        resource_A2_2.role = new Role("Product Owner");
+        resource_A2_2.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resource_A2_2.projectCode = projectCode_2;
+        resource_A2_2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
+                createDate(LocalDate.of(2023, 4, 30)));
+
+        resourceService.createResource(resource_A2_2);*/
+
+        // Resource A2_3
+
+        NewResourceDTO resource_A2_3 = new NewResourceDTO();
+        resource_A2_3.email = email_account_11;
+        resource_A2_3.costPerHour = new CostPerHour(20.00);
+        resource_A2_3.role = new Role("Team Member");
+        resource_A2_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A2_3.projectCode = projectCode_2;
+        resource_A2_3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
+                createDate(LocalDate.of(2023, 4, 30)));
+
+        resourceService.createResource(resource_A2_3);
+
+        // Resource A2_4
+
+        NewResourceDTO resource_A2_4 = new NewResourceDTO();
+        resource_A2_4.email = email_account_12;
+        resource_A2_4.costPerHour = new CostPerHour(18.00);
+        resource_A2_4.role = new Role("Team Member");
+        resource_A2_4.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resource_A2_4.projectCode = projectCode_2;
+        resource_A2_4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
+                createDate(LocalDate.of(2023, 4, 30)));
+
+        resourceService.createResource(resource_A2_4);
 
 
 
