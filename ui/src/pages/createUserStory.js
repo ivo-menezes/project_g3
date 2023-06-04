@@ -8,6 +8,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import TextArea from "../components/textArea";
 import {postUserStoryToBackend} from "../services/Service";
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CreateUserStory = () => {
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
@@ -38,10 +39,11 @@ const CreateUserStory = () => {
     const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const handleSubmission = () => {
+    const handleSubmission = async () => {
         //addUserStory(dispatch, newUserStory);
         console.log(newUserStory)
         postUserStory(dispatch, projectCode, newUserStory)
+        sleep(500)
         navigate(`/backlog/${projectCode}`);
     };
 

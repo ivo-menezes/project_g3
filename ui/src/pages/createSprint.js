@@ -7,6 +7,9 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {addSprint, postSprint} from "../context/Actions";
 import PickDate from "../components/date";
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+
 const CreateSprint = () => {
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
@@ -60,7 +63,7 @@ const CreateSprint = () => {
     // Provides navigation functionality using the useNavigate hook from React Router
     const navigate = useNavigate();
     // Handles form submission by converting dates to strings and dispatching an addSprint action
-    const handleSubmission = (e) => {
+    const handleSubmission = async (e) => {
         e.preventDefault();
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newSprint) {
@@ -74,7 +77,7 @@ const CreateSprint = () => {
         console.log(newSprint)
 
         postSprint(dispatch, projectCode, newSprint)
-
+        await sleep(500)
         //Navigates to the sprint list for the current project
         navigate(`/listSprints/${projectCode}`)
     };

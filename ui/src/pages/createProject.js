@@ -8,6 +8,7 @@ import {addProject, postProject} from "../context/Actions";
 import DropDownList from "../components/dropDownList";
 import PickDate from "../components/date";
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CreateProject = () => {
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
@@ -56,7 +57,7 @@ const CreateProject = () => {
     // submits the newProject to the global context via the addProject action
     const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
-    const handleSubmission = () => {
+    const handleSubmission = async () => {
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newProject) {
             if (typeof newProject[key] === 'object' && newProject[key] instanceof Date) {
@@ -65,9 +66,9 @@ const CreateProject = () => {
                 newProject[key] = newProject[key].toISOString().split('T')[0];
             }
         }
-
         console.log(newProject)
         postProject(dispatch, newProject)
+        sleep(500)
         navigate('/listProjects')
     }
 
