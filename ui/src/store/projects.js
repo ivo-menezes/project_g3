@@ -138,6 +138,11 @@ const projects = [
         numberOfPlannedSprints: 45,
         budget: 350000
     },
+
+    {
+        id: "A1",
+        title: 'Dummy01',
+    },
 ]
 
 export default projects;

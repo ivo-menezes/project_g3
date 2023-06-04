@@ -4,6 +4,7 @@ import Button from "../components/button";
 import Table from "../components/table";
 import {useParams, useNavigate, useLocation} from "react-router-dom";
 import AppContext from "../context/AppContext";
+import {fetchSprints} from "../context/Actions";
 
 const headers = [
     { label: "Project code", key: "projectCode"},
@@ -14,26 +15,29 @@ const headers = [
 
 const ListSprints = () => {
 
+    const {state, dispatch} = useContext(AppContext);
+    const {projectCode} = useParams();
+
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        fetchSprints(dispatch, projectCode)
     }, []);
 
-    const {projectCode} = useParams();
-    const {state} = useContext(AppContext);
+
+
     const navigate = useNavigate();
     const location = useLocation();
 
-    const sprintInProject = state.sprints.filter((sprint) => sprint.projectCode === projectCode);
-    console.log(sprintInProject);
+    const sprintInProject = state.sprints.data.filter((sprint) => sprint.projectCode === projectCode);
 
     const handleCreateSprint = () => {
         const from = location.pathname;
         navigate(`/createSprint/${projectCode}`, { state: { from } });
     };
     const handleRowClick = (id) => {
-        console.log("Clicked row with ID:", id);
         navigate(`/viewProject/${id}`);
     };
 

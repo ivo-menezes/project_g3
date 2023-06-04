@@ -20,7 +20,7 @@ const CreateSprint = () => {
     // Extracts the dispatch function and state from the AppContext using the useContext hook
     const {state, dispatch} = useContext(AppContext);
     // gets the current sprint list from context
-    const sprints = state.sprints;
+    const sprints = state.sprints.data;
 
     const projectSprints = sprints.filter(
         (sprint) => sprint.projectCode === projectCode

@@ -35,16 +35,23 @@ public class DataLoader implements CommandLineRunner {
     final
     UserStoryService userStoryService;
 
+    AccountService accountService;
+
+    ResourceService resourceService;
+
     public DataLoader(TypologyService typologyService, CustomerService customerService,
                       BusinessSectorService businessSectorService,
                       ProjectService projectService, SprintServiceDDD sprintService,
-                      UserStoryService userStoryService) {
+                      UserStoryService userStoryService, AccountService accountService,
+                      ResourceService resourceService) {
         this.typologyService = typologyService;
         this.customerService = customerService;
         this.businessSectorService = businessSectorService;
         this.projectService = projectService;
         this.sprintService = sprintService;
         this.userStoryService = userStoryService;
+        this.accountService = accountService;
+        this.resourceService = resourceService;
     }
 
     @Override
@@ -109,7 +116,7 @@ public class DataLoader implements CommandLineRunner {
         TypologyID typologyID_1 = new TypologyID(typologyService.createTypology(typologyOne).typologyID.getId());
         TypologyID typologyID_2 = new TypologyID(typologyService.createTypology(typologyTwo).typologyID.getId());
 
-        //Load Projects
+        //LOAD PROJECTS
 
         //Project 1
         ProjectCode projectCode_1 = new ProjectCode("A1");
@@ -173,62 +180,62 @@ public class DataLoader implements CommandLineRunner {
 
         projectService.createProject(project_3);
 
-        //Load User Stories
+        //LOAD USERSTORIES
 
-        // User story 1
-        UserStoryNumber userStoryNumber_1 = new UserStoryNumber("US01");
-        UserStoryActor actor_1 = new UserStoryActor("Team member");
-        Description usDescription_1 = new Description("Dummy 01");
-        UserStoryAcceptanceCriteria acceptanceCriteria_1 = new UserStoryAcceptanceCriteria("To be defined");
-        UserStoryPriority userStoryPriority_1 = new UserStoryPriority(3);
+        // User story A1_1
+        UserStoryNumber userStoryNumberA1_1 = new UserStoryNumber("US01");
+        UserStoryActor actorA1_1 = new UserStoryActor("Team member");
+        Description usDescriptionA1_1 = new Description("Dummy 01");
+        UserStoryAcceptanceCriteria acceptanceCriteriaA1_1 = new UserStoryAcceptanceCriteria("To be defined");
+        UserStoryPriority userStoryPriorityA1_1 = new UserStoryPriority(3);
 
-        NewUserStoryInfoDTO userStoryDTO_1 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_1,
-        usDescription_1, userStoryPriority_1);
+        NewUserStoryInfoDTO userStoryDTOA1_1 = createUserStoryDTO(projectCode_1,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_1,
+                usDescriptionA1_1, userStoryPriorityA1_1);
 
-        userStoryService.createUserStory(userStoryDTO_1);
+        userStoryService.createUserStory(userStoryDTOA1_1);
 
-        // User story 2
-        UserStoryNumber userStoryNumber_2 = new UserStoryNumber("US02");
-        Description usDescription_2 = new Description("Dummy 02");
-        UserStoryPriority userStoryPriority_2 = new UserStoryPriority(2);
+        // User story A1_2
+        UserStoryNumber userStoryNumberA1_2 = new UserStoryNumber("US02");
+        Description usDescriptionA1_2 = new Description("Dummy 02");
+        UserStoryPriority userStoryPriorityA1_2 = new UserStoryPriority(2);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_2 = createUserStoryDTO(projectCode_1, actor_1,
-        acceptanceCriteria_1, userStoryNumber_2, usDescription_2, userStoryPriority_2);
+        NewUserStoryInfoDTO userStoryInfoDTOA1_2 = createUserStoryDTO(projectCode_1, actorA1_1,
+                acceptanceCriteriaA1_1, userStoryNumberA1_2, usDescriptionA1_2, userStoryPriorityA1_2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_2);
+        userStoryService.createUserStory(userStoryInfoDTOA1_2);
 
-        // User story 3
-        UserStoryNumber userStoryNumber_3 = new UserStoryNumber("US03");
-        Description usDescription_3 = new Description("Dummy 03");
-        UserStoryPriority userStoryPriority_3 = new UserStoryPriority(1);
+        // User story A1_3
+        UserStoryNumber userStoryNumberA1_3 = new UserStoryNumber("US03");
+        Description usDescriptionA1_3 = new Description("Dummy 03");
+        UserStoryPriority userStoryPriorityA1_3 = new UserStoryPriority(1);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_3 = createUserStoryDTO(projectCode_1, actor_1,
-        acceptanceCriteria_1, userStoryNumber_3, usDescription_3, userStoryPriority_3);
+        NewUserStoryInfoDTO userStoryInfoDTOA1_3 = createUserStoryDTO(projectCode_1, actorA1_1,
+                acceptanceCriteriaA1_1, userStoryNumberA1_3, usDescriptionA1_3, userStoryPriorityA1_3);
 
-        userStoryService.createUserStory(userStoryInfoDTO_3);
+        userStoryService.createUserStory(userStoryInfoDTOA1_3);
 
-        // User story 4
-        UserStoryNumber userStoryNumber_4 = new UserStoryNumber("US04");
-        Description usDescription_4 = new Description("Dummy 04");
-        UserStoryPriority userStoryPriority_4 = new UserStoryPriority(4);
+        // User story A1_4
+        UserStoryNumber userStoryNumberA1_4 = new UserStoryNumber("US04");
+        Description usDescriptionA1_4 = new Description("Dummy 04");
+        UserStoryPriority userStoryPriorityA1_4 = new UserStoryPriority(4);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_4 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_4, usDescription_4,
-        userStoryPriority_4);
+        NewUserStoryInfoDTO userStoryInfoDTOA1_4 = createUserStoryDTO(projectCode_1,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_4, usDescriptionA1_4,
+                userStoryPriorityA1_4);
 
-        userStoryService.createUserStory(userStoryInfoDTO_4);
+        userStoryService.createUserStory(userStoryInfoDTOA1_4);
 
-        // User story 5
-        UserStoryNumber userStoryNumber_5 = new UserStoryNumber("US05");
-        Description usDescription_5 = new Description("Dummy 05");
-        UserStoryPriority userStoryPriority_5 = new UserStoryPriority(5);
+        // User story A1_5
+        UserStoryNumber userStoryNumberA1_5 = new UserStoryNumber("US05");
+        Description usDescriptionA1_5 = new Description("Dummy 05");
+        UserStoryPriority userStoryPriorityA1_5 = new UserStoryPriority(5);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_5 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_5, usDescription_5,
-        userStoryPriority_5);
+        NewUserStoryInfoDTO userStoryInfoDTOA1_5 = createUserStoryDTO(projectCode_1,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_5, usDescriptionA1_5,
+                userStoryPriorityA1_5);
 
-        userStoryService.createUserStory(userStoryInfoDTO_5);
+        userStoryService.createUserStory(userStoryInfoDTOA1_5);
 
         // User story 6
         UserStoryNumber userStoryNumber_6 = new UserStoryNumber("US06");
@@ -236,7 +243,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_6 = new UserStoryPriority(6);
 
         NewUserStoryInfoDTO userStoryInfoDTO_6 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_6, usDescription_6,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_6, usDescription_6,
         userStoryPriority_6);
 
         userStoryService.createUserStory(userStoryInfoDTO_6);
@@ -247,7 +254,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_7 = new UserStoryPriority(7);
 
         NewUserStoryInfoDTO userStoryInfoDTO_7 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_7, usDescription_7,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_7, usDescription_7,
         userStoryPriority_7);
 
         userStoryService.createUserStory(userStoryInfoDTO_7);
@@ -258,7 +265,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_8 = new UserStoryPriority(8);
 
         NewUserStoryInfoDTO userStoryInfoDTO_8 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_8, usDescription_8,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_8, usDescription_8,
         userStoryPriority_8);
 
         userStoryService.createUserStory(userStoryInfoDTO_8);
@@ -269,7 +276,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_9 = new UserStoryPriority(9);
 
         NewUserStoryInfoDTO userStoryInfoDTO_9 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_9, usDescription_9,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_9, usDescription_9,
         userStoryPriority_9);
 
         userStoryService.createUserStory(userStoryInfoDTO_9);
@@ -280,7 +287,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_10 = new UserStoryPriority(10);
 
         NewUserStoryInfoDTO userStoryInfoDTO_10 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_10, usDescription_10,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_10, usDescription_10,
         userStoryPriority_10);
 
         userStoryService.createUserStory(userStoryInfoDTO_10);
@@ -291,7 +298,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_11 = new UserStoryPriority(11);
 
         NewUserStoryInfoDTO userStoryInfoDTO_11 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_11, usDescription_11,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_11, usDescription_11,
         userStoryPriority_11);
 
         userStoryService.createUserStory(userStoryInfoDTO_11);
@@ -302,7 +309,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_12 = new UserStoryPriority(12);
 
         NewUserStoryInfoDTO userStoryInfoDTO_12 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_12, usDescription_12,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_12, usDescription_12,
         userStoryPriority_12);
 
         userStoryService.createUserStory(userStoryInfoDTO_12);
@@ -313,7 +320,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_13 = new UserStoryPriority(13);
 
         NewUserStoryInfoDTO userStoryInfoDTO_13 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_13, usDescription_13,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_13, usDescription_13,
         userStoryPriority_13);
 
         userStoryService.createUserStory(userStoryInfoDTO_13);
@@ -324,7 +331,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_14 = new UserStoryPriority(14);
 
         NewUserStoryInfoDTO userStoryInfoDTO_14 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_14, usDescription_14,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_14, usDescription_14,
         userStoryPriority_14);
 
         userStoryService.createUserStory(userStoryInfoDTO_14);
@@ -335,7 +342,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_15 = new UserStoryPriority(15);
 
         NewUserStoryInfoDTO userStoryInfoDTO_15 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_15, usDescription_15,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_15, usDescription_15,
         userStoryPriority_15);
 
         userStoryService.createUserStory(userStoryInfoDTO_15);
@@ -346,7 +353,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_16 = new UserStoryPriority(16);
 
         NewUserStoryInfoDTO userStoryInfoDTO_16 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_16, usDescription_16,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_16, usDescription_16,
         userStoryPriority_16);
 
         userStoryService.createUserStory(userStoryInfoDTO_16);
@@ -357,7 +364,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_17 = new UserStoryPriority(17);
 
         NewUserStoryInfoDTO userStoryInfoDTO_17 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_17, usDescription_17,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_17, usDescription_17,
         userStoryPriority_17);
 
         userStoryService.createUserStory(userStoryInfoDTO_17);
@@ -368,7 +375,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_18 = new UserStoryPriority(18);
 
         NewUserStoryInfoDTO userStoryInfoDTO_18 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_18, usDescription_18,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_18, usDescription_18,
         userStoryPriority_18);
 
         userStoryService.createUserStory(userStoryInfoDTO_18);
@@ -379,7 +386,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_19 = new UserStoryPriority(19);
 
         NewUserStoryInfoDTO userStoryInfoDTO_19 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_19, usDescription_19,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_19, usDescription_19,
         userStoryPriority_19);
 
         userStoryService.createUserStory(userStoryInfoDTO_19);
@@ -390,7 +397,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_20 = new UserStoryPriority(20);
 
         NewUserStoryInfoDTO userStoryInfoDTO_20 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_20, usDescription_20,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_20, usDescription_20,
         userStoryPriority_20);
 
         userStoryService.createUserStory(userStoryInfoDTO_20);
@@ -401,7 +408,7 @@ public class DataLoader implements CommandLineRunner {
         UserStoryPriority userStoryPriority_21 = new UserStoryPriority(21);
 
         NewUserStoryInfoDTO userStoryInfoDTO_21 = createUserStoryDTO(projectCode_1,
-        actor_1, acceptanceCriteria_1, userStoryNumber_21, usDescription_21,
+                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_21, usDescription_21,
         userStoryPriority_21);
 
         userStoryService.createUserStory(userStoryInfoDTO_21);
@@ -748,368 +755,209 @@ public class DataLoader implements CommandLineRunner {
 
         userStoryService.createUserStory(userStoryInfoDTO_31P2);
 
-        //Load Sprints
+        //LOAD SPRINTS
 
         // Sprint A1-1
 
-        int sprint_1 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_1 = new SprintNumber(sprint_1);
+        SprintNumber sprintNumber_A1_1 = getNextSprintNumber(projectCode_1);
 
-        LocalDate startDate_sprint_1 = LocalDate.of(2022, 3, 22);
-        Date newStardDate_sprint_1 = Date.from(startDate_sprint_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDate_sprint_A1_1 = LocalDate.of(2022, 3, 22);
+        Date newStardDate_sprint_A1_1 = createDate(startDate_sprint_A1_1);
+        LocalDate endDate_sprint_A1_1 = LocalDate.of(2022, 4, 4);
+        Date newEndDate_sprint_A1_1 = createDate(endDate_sprint_A1_1);
 
-        TimePeriod timePeriod_sprint_1 = new TimePeriod(newStardDate_sprint_1, new Date());
+        TimePeriod timePeriod_sprint_A1_1 = new TimePeriod(newStardDate_sprint_A1_1,
+                newEndDate_sprint_A1_1);
 
-        SprintDTOController sprintDTO_1 = new SprintDTOController();
+        SprintDTOController sprintDTO_A1_1 = createSprintDTOController(projectCode_1,
+                sprintNumber_A1_1, timePeriod_sprint_A1_1);
 
-        sprintDTO_1.projectCode = projectCode_1;
-        sprintDTO_1.sprintNumber = sprintNumber_1;
-        sprintDTO_1.timePeriod = timePeriod_sprint_1;
-
-        sprintService.createSprint(sprintDTO_1);
+        sprintService.createSprint(sprintDTO_A1_1);
 
         // Sprint A1-2
+        // This line is duplicated because it needs to. Each time a sprint is created, a
+        // different sprintNumber will be generated here, depending on how many sprints
+        // already exist (autonumber feature)
+        SprintNumber sprintNumber_A1_2 = getNextSprintNumber(projectCode_1);
 
-        int sprint_2 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_2 = new SprintNumber(sprint_2);
+        LocalDate startDate_sprint_A1_2 = LocalDate.of(2022, 4, 5);
+        Date newStardDate_sprint_A1_2 = createDate(startDate_sprint_A1_2);
+        LocalDate endDate_sprint_A1_2 = LocalDate.of(2022, 4, 25);
+        Date newEndDate_sprint_A1_2 = createDate(endDate_sprint_A1_2);
 
-        LocalDate startDate_sprint_2 = LocalDate.of(2022, 4, 5);
-        Date newStardDate_sprint_2 = Date.from(startDate_sprint_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        TimePeriod timePeriod_sprint_A1_2 = new TimePeriod(newStardDate_sprint_A1_2,
+                newEndDate_sprint_A1_2);
 
-        TimePeriod timePeriod_sprint_2 = new TimePeriod(newStardDate_sprint_2, new Date());
+        SprintDTOController sprintDTO_A1_2 = createSprintDTOController(projectCode_1,
+                sprintNumber_A1_2, timePeriod_sprint_A1_2);
 
-        SprintDTOController sprintDTO_2 = new SprintDTOController();
-
-        sprintDTO_2.projectCode = projectCode_1;
-        sprintDTO_2.sprintNumber = sprintNumber_2;
-        sprintDTO_2.timePeriod = timePeriod_sprint_2;
-
-        sprintService.createSprint(sprintDTO_2);
+        sprintService.createSprint(sprintDTO_A1_2);
 
         // Sprint A1-3
 
-        int sprint_3 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_3 = new SprintNumber(sprint_3);
+        SprintNumber sprintNumber_A1_3 = getNextSprintNumber(projectCode_1);
 
-        LocalDate startDate_sprint_3 = LocalDate.of(2022, 4, 26);
-        Date newStardDate_sprint_3 = Date.from(startDate_sprint_3.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDate_sprint_A1_3 = LocalDate.of(2022, 4, 26);
+        Date newStardDate_sprint_A1_3 = createDate(startDate_sprint_A1_3);
+        LocalDate endDate_sprint_A1_3 = LocalDate.of(2022, 5, 9);
+        Date newEndDate_sprint_A1_3 = createDate(endDate_sprint_A1_3);
 
-        TimePeriod timePeriod_sprint_3 = new TimePeriod(newStardDate_sprint_3, new Date());
+        TimePeriod timePeriod_sprint_A1_3 = new TimePeriod(newStardDate_sprint_A1_3,
+                newEndDate_sprint_A1_3);
 
-        SprintDTOController sprintDTO_3 = new SprintDTOController();
+        SprintDTOController sprintDTO_A1_3 = createSprintDTOController(projectCode_1,
+                sprintNumber_A1_3, timePeriod_sprint_A1_3);
 
-        sprintDTO_3.projectCode = projectCode_1;
-        sprintDTO_3.sprintNumber = sprintNumber_3;
-        sprintDTO_3.timePeriod = timePeriod_sprint_3;
-
-        sprintService.createSprint(sprintDTO_3);
-
-        // Sprint A1-4
-
-        int sprint_4 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_4 = new SprintNumber(sprint_4);
-
-        LocalDate startDate_sprint_4 = LocalDate.of(2022, 5, 10);
-        Date newStardDate_sprint_4 = Date.from(startDate_sprint_4.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_4 = new TimePeriod(newStardDate_sprint_4, new Date());
-
-        SprintDTOController sprintDTO_4 = new SprintDTOController();
-
-        sprintDTO_4.projectCode = projectCode_1;
-        sprintDTO_4.sprintNumber = sprintNumber_4;
-        sprintDTO_4.timePeriod = timePeriod_sprint_4;
-
-        sprintService.createSprint(sprintDTO_4);
-
-        // Sprint A1-5
-
-        int sprint_5 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_5 = new SprintNumber(sprint_5);
-
-        LocalDate startDate_sprint_5 = LocalDate.of(2022, 5, 24);
-        Date newStardDate_sprint_5 = Date.from(startDate_sprint_5.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_5 = new TimePeriod(newStardDate_sprint_5, new Date());
-
-        SprintDTOController sprintDTO_5 = new SprintDTOController();
-
-        sprintDTO_5.projectCode = projectCode_1;
-        sprintDTO_5.sprintNumber = sprintNumber_5;
-        sprintDTO_5.timePeriod = timePeriod_sprint_5;
-
-        sprintService.createSprint(sprintDTO_5);
-
-        // Sprint A1-6
-
-        int sprint_6 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_6 = new SprintNumber(sprint_6);
-
-        LocalDate startDate_sprint_6 = LocalDate.of(2022, 6, 7);
-        Date newStardDate_sprint_6 = Date.from(startDate_sprint_6.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_6 = new TimePeriod(newStardDate_sprint_6, new Date());
-
-        SprintDTOController sprintDTO_6 = new SprintDTOController();
-
-        sprintDTO_6.projectCode = projectCode_1;
-        sprintDTO_6.sprintNumber = sprintNumber_6;
-        sprintDTO_6.timePeriod = timePeriod_sprint_6;
-
-        sprintService.createSprint(sprintDTO_6);
-
-        // Sprint A1-7
-
-        int sprint_7 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_7 = new SprintNumber(sprint_7);
-
-        LocalDate startDate_sprint_7 = LocalDate.of(2022, 6, 21);
-        Date newStardDate_sprint_7 = Date.from(startDate_sprint_7.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_7 = new TimePeriod(newStardDate_sprint_7, new Date());
-
-        SprintDTOController sprintDTO_7 = new SprintDTOController();
-
-        sprintDTO_7.projectCode = projectCode_1;
-        sprintDTO_7.sprintNumber = sprintNumber_7;
-        sprintDTO_7.timePeriod = timePeriod_sprint_7;
-
-        sprintService.createSprint(sprintDTO_7);
-
-        // Sprint A1-8
-
-        int sprint_8 = sprintService.generateSprintNumber(projectCode_1);
-        SprintNumber sprintNumber_8 = new SprintNumber(sprint_8);
-
-        LocalDate startDate_sprint_8 = LocalDate.of(2022, 7, 19);
-        Date newStardDate_sprint_8 = Date.from(startDate_sprint_8.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_8 = new TimePeriod(newStardDate_sprint_8, new Date());
-
-        SprintDTOController sprintDTO_8 = new SprintDTOController();
-
-        sprintDTO_8.projectCode = projectCode_1;
-        sprintDTO_8.sprintNumber = sprintNumber_8;
-        sprintDTO_8.timePeriod = timePeriod_sprint_8;
-
-        sprintService.createSprint(sprintDTO_8);
+        sprintService.createSprint(sprintDTO_A1_3);
 
         // Sprint A2-1
 
-        int sprint_1A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_1A2 = new SprintNumber(sprint_1A2);
+        SprintNumber sprintNumber_A2_1 = getNextSprintNumber(projectCode_2);
 
-        LocalDate startDate_sprint_1A2 = LocalDate.of(2022, 6, 7);
-        Date newStardDate_sprint_1A2 = Date.from(startDate_sprint_1A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDate_sprint_A2_1 = LocalDate.of(2022, 6, 7);
+        Date newStardDate_sprint_A2_1 = createDate(startDate_sprint_A2_1);
+        LocalDate endDate_sprint_A2_1 = LocalDate.of(2022, 7,4);
+        Date newEndDate_sprint_A2_1 = createDate(endDate_sprint_A2_1);
 
-        TimePeriod timePeriod_sprint_1A2 = new TimePeriod(newStardDate_sprint_1A2, new Date());
+        TimePeriod timePeriod_sprint_A2_1 = new TimePeriod(newStardDate_sprint_A2_1,
+                newEndDate_sprint_A2_1);
 
-        SprintDTOController sprintDTO_1A2 = new SprintDTOController();
+        SprintDTOController sprintDTO_A2_1 = createSprintDTOController(projectCode_2,
+                sprintNumber_A2_1, timePeriod_sprint_A2_1);
 
-        sprintDTO_1A2.projectCode = projectCode_2;
-        sprintDTO_1A2.sprintNumber = sprintNumber_1A2;
-        sprintDTO_1A2.timePeriod = timePeriod_sprint_1A2;
-
-        sprintService.createSprint(sprintDTO_1A2);
+        sprintService.createSprint(sprintDTO_A2_1);
 
         // Sprint A2-2
 
-        int sprint_2A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_2A2 = new SprintNumber(sprint_2A2);
+        SprintNumber sprintNumber_A2_2 = getNextSprintNumber(projectCode_2);
 
-        LocalDate startDate_sprint_2A2 = LocalDate.of(2022, 7, 5);
-        Date newStardDate_sprint_2A2 = Date.from(startDate_sprint_2A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDate_sprint_A2_2 = LocalDate.of(2022, 7, 5);
+        Date newStardDate_sprint_A2_2 = createDate(startDate_sprint_A2_2);
+        LocalDate endDate_sprint_A2_2 = LocalDate.of(2022, 8, 1);
+        Date newEndDate_sprint_A2_2 = createDate(endDate_sprint_A2_2);
 
-        TimePeriod timePeriod_sprint_2A2 = new TimePeriod(newStardDate_sprint_2A2, new Date());
+        TimePeriod timePeriod_sprint_A2_2 = new TimePeriod(newStardDate_sprint_A2_2,
+                newEndDate_sprint_A2_2);
 
-        SprintDTOController sprintDTO_2A2 = new SprintDTOController();
+        SprintDTOController sprintDTO_A2_2 = createSprintDTOController(projectCode_2,
+                sprintNumber_A2_2, timePeriod_sprint_A2_2);
 
-        sprintDTO_2A2.projectCode = projectCode_2;
-        sprintDTO_2A2.sprintNumber = sprintNumber_2A2;
-        sprintDTO_2A2.timePeriod = timePeriod_sprint_2A2;
-
-        sprintService.createSprint(sprintDTO_2A2);
+        sprintService.createSprint(sprintDTO_A2_2);
 
         // Sprint A2-3
 
-        int sprint_3A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_3A2 = new SprintNumber(sprint_3A2);
+        SprintNumber sprintNumber_A2_3 = getNextSprintNumber(projectCode_2);
 
-        LocalDate startDate_sprint_3A2 = LocalDate.of(2022, 8, 2);
-        Date newStardDate_sprint_3A2 = Date.from(startDate_sprint_3A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDate_sprint_A2_3 = LocalDate.of(2022, 8, 2);
+        Date newStardDate_sprint_A2_3 = createDate(startDate_sprint_A2_3);
+        LocalDate endDate_sprint_A2_3 = LocalDate.of(2022, 8, 29);
+        Date newEndDate_sprint_A2_3 = createDate(endDate_sprint_A2_3);
 
-        TimePeriod timePeriod_sprint_3A2 = new TimePeriod(newStardDate_sprint_3A2, new Date());
+        TimePeriod timePeriod_sprint_A2_3 = new TimePeriod(newStardDate_sprint_A2_3,
+                newEndDate_sprint_A2_3);
 
-        SprintDTOController sprintDTO_3A2 = new SprintDTOController();
+        SprintDTOController sprintDTO_A2_3 = createSprintDTOController(projectCode_2,
+                sprintNumber_A2_3, timePeriod_sprint_A2_3);
 
-        sprintDTO_3A2.projectCode = projectCode_2;
-        sprintDTO_3A2.sprintNumber = sprintNumber_3A2;
-        sprintDTO_3A2.timePeriod = timePeriod_sprint_3A2;
+        sprintService.createSprint(sprintDTO_A2_3);
 
-        sprintService.createSprint(sprintDTO_3A2);
+        //LOAD ACCOUNTS
 
-        // Sprint A2-4
+        // Account 1
+        Email email_account_1 = new Email("js@mymail.com");
+        Name name_account_1 = new Name("João Silva");
+        PhoneNumber phone_account_1 = new PhoneNumber("+351915879652");
+        Photo photo_account = new Photo("");
+        ProfileName profile_account = new ProfileName("User");
 
-        int sprint_4A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_4A2 = new SprintNumber(sprint_4A2);
+        NewAccountDTO account_1 = new NewAccountDTO();
+        account_1.email = email_account_1;
+        account_1.name = name_account_1;
+        account_1.phoneNumber = phone_account_1;
+        account_1.photo = photo_account;
+        account_1.profile = profile_account;
 
-        LocalDate startDate_sprint_4A2 = LocalDate.of(2022, 8, 30);
-        Date newStardDate_sprint_4A2 = Date.from(startDate_sprint_4A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        accountService.createAccount(account_1);
 
-        TimePeriod timePeriod_sprint_4A2 = new TimePeriod(newStardDate_sprint_4A2, new Date());
+        // Account 2
+        Email email_account_2 = new Email("ms@mymail.com");
+        Name name_account_2 = new Name("Manel Costa");
+        PhoneNumber phone_account_2 = new PhoneNumber("+351263650520");
 
-        SprintDTOController sprintDTO_4A2 = new SprintDTOController();
+        NewAccountDTO account_2 = new NewAccountDTO();
+        account_2.email = email_account_2;
+        account_2.name = name_account_2;
+        account_2.phoneNumber = phone_account_2;
+        account_2.photo = photo_account;
+        account_2.profile = profile_account;
 
-        sprintDTO_4A2.projectCode = projectCode_2;
-        sprintDTO_4A2.sprintNumber = sprintNumber_4A2;
-        sprintDTO_4A2.timePeriod = timePeriod_sprint_4A2;
+        accountService.createAccount(account_2);
 
-        sprintService.createSprint(sprintDTO_4A2);
+        // Account 3
+        Email email_account_3 = new Email("xf@mymail.com");
+        Name name_account_3 = new Name("Xico Ferreira");
+        PhoneNumber phone_account_3 = new PhoneNumber("+351263650532");
 
-        // Sprint A2-5
+        NewAccountDTO account_3 = new NewAccountDTO();
+        account_3.email = email_account_3;
+        account_3.name = name_account_3;
+        account_3.phoneNumber = phone_account_3;
+        account_3.photo = photo_account;
+        account_3.profile = profile_account;
 
-        int sprint_5A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_5A2 = new SprintNumber(sprint_5A2);
+        accountService.createAccount(account_3);
 
-        LocalDate startDate_sprint_5A2 = LocalDate.of(2022, 9, 27);
-        Date newStardDate_sprint_5A2 = Date.from(startDate_sprint_5A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        // Account 4
+        Email email_account_4 = new Email("qd@mymail.com");
+        Name name_account_4 = new Name("Quim Barreiros");
+        PhoneNumber phone_account_4 = new PhoneNumber("+351921458803");
 
-        TimePeriod timePeriod_sprint_5A2 = new TimePeriod(newStardDate_sprint_5A2, new Date());
+        NewAccountDTO account_4 = new NewAccountDTO();
+        account_4.email = email_account_4;
+        account_4.name = name_account_4;
+        account_4.phoneNumber = phone_account_4;
+        account_4.photo = photo_account;
+        account_4.profile = profile_account;
 
-        SprintDTOController sprintDTO_5A2 = new SprintDTOController();
+        accountService.createAccount(account_4);
 
-        sprintDTO_5A2.projectCode = projectCode_2;
-        sprintDTO_5A2.sprintNumber = sprintNumber_5A2;
-        sprintDTO_5A2.timePeriod = timePeriod_sprint_5A2;
+        //LOAD RESOURCES
 
-        sprintService.createSprint(sprintDTO_5A2);
+        // Resource A1_1
 
-        // Sprint A2-6
+        NewResourceDTO resource_A1_1 = new NewResourceDTO();
+        resource_A1_1.email = email_account_1;
+        resource_A1_1.costPerHour = new CostPerHour(25.00);
+        resource_A1_1.role = new Role("Product Owner");
+        resource_A1_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resource_A1_1.projectCode = projectCode_1;
+        resource_A1_1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 3, 31)),
+                createDate(LocalDate.of(2022, 7, 31)));
 
-        int sprint_6A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_6A2 = new SprintNumber(sprint_6A2);
+        resourceService.createResource(resource_A1_1);
 
-        LocalDate startDate_sprint_6A2 = LocalDate.of(2022, 10, 25);
-        Date newStardDate_sprint_6A2 = Date.from(startDate_sprint_6A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        TimePeriod timePeriod_sprint_6A2 = new TimePeriod(newStardDate_sprint_6A2, new Date());
 
-        SprintDTOController sprintDTO_6A2 = new SprintDTOController();
 
-        sprintDTO_6A2.projectCode = projectCode_2;
-        sprintDTO_6A2.sprintNumber = sprintNumber_6A2;
-        sprintDTO_6A2.timePeriod = timePeriod_sprint_6A2;
 
-        sprintService.createSprint(sprintDTO_6A2);
 
-        // Sprint A2-7
 
-        int sprint_7A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_7A2 = new SprintNumber(sprint_7A2);
 
-        LocalDate startDate_sprint_7A2 = LocalDate.of(2022, 11, 22);
-        Date newStardDate_sprint_7A2 = Date.from(startDate_sprint_7A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        TimePeriod timePeriod_sprint_7A2 = new TimePeriod(newStardDate_sprint_7A2, new Date());
-
-        SprintDTOController sprintDTO_7A2 = new SprintDTOController();
-
-        sprintDTO_7A2.projectCode = projectCode_2;
-        sprintDTO_7A2.sprintNumber = sprintNumber_7A2;
-        sprintDTO_7A2.timePeriod = timePeriod_sprint_7A2;
-
-        sprintService.createSprint(sprintDTO_7A2);
-
-        // Sprint A2-8
-
-        int sprint_8A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_8A2 = new SprintNumber(sprint_8A2);
-
-        LocalDate startDate_sprint_8A2 = LocalDate.of(2022, 12, 13);
-        Date newStardDate_sprint_8A2 = Date.from(startDate_sprint_8A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_8A2 = new TimePeriod(newStardDate_sprint_8A2, new Date());
-
-        SprintDTOController sprintDTO_8A2 = new SprintDTOController();
-
-        sprintDTO_8A2.projectCode = projectCode_2;
-        sprintDTO_8A2.sprintNumber = sprintNumber_8A2;
-        sprintDTO_8A2.timePeriod = timePeriod_sprint_8A2;
-
-        sprintService.createSprint(sprintDTO_8A2);
-
-        // Sprint A2-9
-
-        int sprint_9A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_9A2 = new SprintNumber(sprint_9A2);
-
-        LocalDate startDate_sprint_9A2 = LocalDate.of(2023, 1, 10);
-        Date newStardDate_sprint_9A2 = Date.from(startDate_sprint_9A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_9A2 = new TimePeriod(newStardDate_sprint_9A2, new Date());
-
-        SprintDTOController sprintDTO_9A2 = new SprintDTOController();
-
-        sprintDTO_9A2.projectCode = projectCode_2;
-        sprintDTO_9A2.sprintNumber = sprintNumber_9A2;
-        sprintDTO_9A2.timePeriod = timePeriod_sprint_9A2;
-
-        sprintService.createSprint(sprintDTO_9A2);
-
-        // Sprint A2-10
-
-        int sprint_10A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_10A2 = new SprintNumber(sprint_10A2);
-
-        LocalDate startDate_sprint_10A2 = LocalDate.of(2023, 2, 7);
-        Date newStardDate_sprint_10A2 = Date.from(startDate_sprint_10A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_10A2 = new TimePeriod(newStardDate_sprint_10A2, new Date());
-
-        SprintDTOController sprintDTO_10A2 = new SprintDTOController();
-
-        sprintDTO_10A2.projectCode = projectCode_2;
-        sprintDTO_10A2.sprintNumber = sprintNumber_10A2;
-        sprintDTO_10A2.timePeriod = timePeriod_sprint_10A2;
-
-        sprintService.createSprint(sprintDTO_10A2);
-
-        // Sprint A2-11
-
-        int sprint_11A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_11A2 = new SprintNumber(sprint_11A2);
-
-        LocalDate startDate_sprint_11A2 = LocalDate.of(2023, 3, 7);
-        Date newStardDate_sprint_11A2 = Date.from(startDate_sprint_11A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_11A2 = new TimePeriod(newStardDate_sprint_11A2, new Date());
-
-        SprintDTOController sprintDTO_11A2 = new SprintDTOController();
-
-        sprintDTO_11A2.projectCode = projectCode_2;
-        sprintDTO_11A2.sprintNumber = sprintNumber_11A2;
-        sprintDTO_11A2.timePeriod = timePeriod_sprint_11A2;
-
-        sprintService.createSprint(sprintDTO_11A2);
-
-        // Sprint A2-12
-
-        int sprint_12A2 = sprintService.generateSprintNumber(projectCode_2);
-        SprintNumber sprintNumber_12A2 = new SprintNumber(sprint_12A2);
-
-        LocalDate startDate_sprint_12A2 = LocalDate.of(2023, 4, 4);
-        Date newStardDate_sprint_12A2 = Date.from(startDate_sprint_12A2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        TimePeriod timePeriod_sprint_12A2 = new TimePeriod(newStardDate_sprint_12A2, new Date());
-
-        SprintDTOController sprintDTO_12A2 = new SprintDTOController();
-
-        sprintDTO_12A2.projectCode = projectCode_2;
-        sprintDTO_12A2.sprintNumber = sprintNumber_12A2;
-        sprintDTO_12A2.timePeriod = timePeriod_sprint_12A2;
-
-        sprintService.createSprint(sprintDTO_12A2);
     }
+
+    /**
+     * Generates the sprint number for the sprint instance to be created,
+     * based in the existing sprints already in the database.
+     * @param projectCode project code
+     * @return a SprintNumber, which is the VO to be used.
+     */
+    private SprintNumber getNextSprintNumber(ProjectCode projectCode) {
+        int number = sprintService.generateSprintNumber(projectCode);
+
+        return new SprintNumber(number);
+    }
+
 
     /**
      * Creates a NewProjectDTO to pass on to projectService, to create a new project.
@@ -1176,6 +1024,31 @@ public class DataLoader implements CommandLineRunner {
         userStoryDTO.priority = userStoryPriority;
 
         return userStoryDTO;
+    }
+
+    /**
+     * Converts a date in LocalDate format into Date format, which is used in the application.
+     * @param someLocalDate has the input date to convert;
+     * @return converted date in Date format.
+     */
+    private Date createDate(LocalDate someLocalDate){
+        return Date.from(someLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Creates a SprintDTOController to use in the sprintService.createSprint method.
+     * @param projectCode project code
+     * @param sprintNumber sprint number
+     * @param timePeriod_sprint time period of the sprint
+     * @return a SprintDTOController with the input data.
+     */
+    private static SprintDTOController createSprintDTOController(ProjectCode projectCode, SprintNumber sprintNumber, TimePeriod timePeriod_sprint) {
+        SprintDTOController sprintDTO_A1_1 = new SprintDTOController();
+
+        sprintDTO_A1_1.projectCode = projectCode;
+        sprintDTO_A1_1.sprintNumber = sprintNumber;
+        sprintDTO_A1_1.timePeriod = timePeriod_sprint;
+        return sprintDTO_A1_1;
     }
 
 }

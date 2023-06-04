@@ -12,6 +12,7 @@ import org.switch2022.project.service.irepositories.IAccountRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IResourceRepository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -63,7 +64,6 @@ public class ResourceService {
 
     public NewResourceDTO createResource (NewResourceDTO newResourceDTO) {
         Email email = newResourceDTO.email;
-        Role role = newResourceDTO.role;
         String projectCode = newResourceDTO.projectCode.toString();
 
         //get account with respective email, if it really exists in the accountRepository
@@ -89,15 +89,6 @@ public class ResourceService {
             throw new IllegalArgumentException("This project doesn't exist");
         }
 
-        //only roles named product owner, scrum master and team member can be created
-        boolean roleIsProductOwner = role.toString().equals("Product Owner");
-        boolean roleIsScrumMaster = role.toString().equals("Scrum Master");
-        boolean roleIsTeamMember = role.toString().equals("Team Member");
-
-        if(!roleIsProductOwner && !roleIsScrumMaster && !roleIsTeamMember) {
-            throw new IllegalArgumentException("This role doesn't exist");
-        }
-
         // factory is creating a resource
         ResourceDDD resource = resourceFactory.createResource(newResourceDTO);
 
@@ -113,41 +104,26 @@ public class ResourceService {
         return resourceDTO;
     }
 
+    public ArrayList<NewResourceDTO> getAll() {
+        ArrayList<NewResourceDTO> resources = new ArrayList<>();
+        ArrayList<ResourceDDD> resourceDDD = resourceRepository.getAll();
+
+        for (ResourceDDD resource : resourceDDD) {
+
+            NewResourceDTO resourceDTO = new NewResourceDTO();
+            resourceDTO.resourceID = resource.identity();
+            resourceDTO.email = resource.getEmail();
+            resourceDTO.costPerHour = resource.getCostPerHour();
+            resourceDTO.role = resource.getRole();
+            resourceDTO.percentageOfAllocation = resource.getPercentageOfAllocation();
+            resourceDTO.projectCode = resource.getProjectCode();
+            resourceDTO.timePeriod = resource.getTimePeriod();
+
+            resources.add(resourceDTO);
+        }
+        return resources;
+    }
 
 
 
-
-
-
-
-/*ObjectMapper map = new ObjectMapper();
-
-        if (roleIsProductOwner) {
-            role = map.readValue("{\"role\":\"PRODUCT_OWNER\"}", Role.class);
-
-        }*/
-
-
-
-
-
-
-    //TimePeriod timePeriod = resourceDTO.timePeriod;
-
-    //boolean existsActiveResource = resourceRepository.existsActiveResourceWithAccount(email, projectCode, timePeriod);
-    //boolean roleOccupied = resourceRepository.isRoleOccupied(projectCode, role, timePeriod);
-
-    /*if (roleIsProductOwner || roleIsScrumMaster) {
-            if(existsActiveResource) {
-                throw new IllegalArgumentException("This resource already exists");
-            }
-            if(roleOccupied) {
-                throw new IllegalArgumentException("This role is already occupied");}
-
-        } else if (roleIsTeamMember) {
-            if(existsActiveResource) {
-                throw new IllegalArgumentException("This resource already exists");}
-
-        } else {
-            throw new IllegalArgumentException("This role doesn't exist");}*/
 }

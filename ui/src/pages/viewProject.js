@@ -13,21 +13,21 @@ const ViewProject = () => {
     const { id } = useParams();
     const { state } = useContext(AppContext);
 
-    const project = state.projectList.find((project) => project.id === id);
+    const project = state.projects.data.find((project) => project.projectCode === id);
 
     // Define column labels and their corresponding attributes
     const columnLabels = [
-        { label: "Name:", attribute: "title" },
-        { label: "Code:", attribute: "id" },
+        { label: "Name:", attribute: "projectName" },
+        { label: "Code:", attribute: "projectCode" },
         { label: "Description:", attribute: "description" },
-        { label: "Customer:", attribute: "customer" },
+        { label: "Customer:", attribute: "customerID" },
         { label: "Start date:", attribute: "startDate" },
         { label: "End date:", attribute: "endDate" },
-        { label: "Status:", attribute: "status" },
-        { label: "Typology:", attribute: "typology" },
+        { label: "Status:", attribute: "projectStatus" },
+        { label: "Typology:", attribute: "typologyID" },
         { label: "Sprint duration:", attribute: "sprintDuration" },
-        { label: "Number of planned sprints:", attribute: "numberOfPlannedSprints" },
-        { label: "Budgets:", attribute: "budget" },
+        { label: "Number of planned sprints:", attribute: "projectNumberOfPlannedSprints" },
+        { label: "Budget:", attribute: "projectBudget" },
     ];
 
     return (

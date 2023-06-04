@@ -1,4 +1,16 @@
-import {ADD_RESOURCE, ADD_SPRINT, CHANGE_TEXT} from "./Actions";
+import {
+    ADD_RESOURCE,
+    ADD_SPRINT,
+    CHANGE_TEXT,
+    FETCH_BACKLOG_ERROR,
+    FETCH_BACKLOG_STARTED,
+    FETCH_BACKLOG_SUCCESS,
+    FETCH_PROJECTS_ERROR,
+    FETCH_PROJECTS_STARTED,
+    FETCH_PROJECTS_SUCCESS,
+    FETCH_SPRINTS_ERROR, FETCH_SPRINTS_STARTED,
+    FETCH_SPRINTS_SUCCESS
+} from "./Actions";
 import { ADD_USER_STORY } from "./Actions";
 import {ADD_PROJECT} from "./Actions";
 import {SET_START_DATE} from "./Actions";
@@ -41,8 +53,98 @@ const reducer = (state, action) => {
             return{
                 ...state,
                 resources: [...state.resources, action.payload]
-
             }
+
+        case FETCH_BACKLOG_STARTED:
+            return {
+                ...state,
+                backlogs: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_BACKLOG_SUCCESS:
+            return {
+                ...state,
+                backlogs: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_BACKLOG_ERROR:
+            return {
+                ...state,
+                backlogs: {
+                    loading: false,
+                    error: action.payload,
+                    data: []
+                }
+            }
+
+        case FETCH_PROJECTS_STARTED:
+            return {
+                ...state,
+                projects: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_PROJECTS_SUCCESS:
+            return {
+                ...state,
+                projects: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_PROJECTS_ERROR:
+            return {
+                ...state,
+                projects: {
+                    loading: false,
+                    error: action.payload,
+                    data : []
+                }
+            }
+
+        case FETCH_SPRINTS_STARTED:
+            return {
+                ...state,
+                sprints: {
+                    loading: true,
+                    error: null,
+                    data: []
+                }
+            }
+
+        case FETCH_SPRINTS_SUCCESS:
+            return {
+                ...state,
+                sprints: {
+                    loading: false,
+                    error: null,
+                    data : action.payload
+                }
+            }
+
+        case FETCH_SPRINTS_ERROR:
+            return {
+                ...state,
+                sprints: {
+                    loading: false,
+                    error: action.payload,
+                    data : []
+                }
+            }
+
         default:
             return state;
     }
