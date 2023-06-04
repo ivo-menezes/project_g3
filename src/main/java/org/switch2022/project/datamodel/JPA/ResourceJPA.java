@@ -1,7 +1,5 @@
 package org.switch2022.project.datamodel.JPA;
 
-import org.switch2022.project.model.valueobject.Email;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,7 +15,9 @@ public class ResourceJPA {
     private String role;
     private double percentageOfAllocation;
     private String projectCode;
+    @Temporal(TemporalType.DATE)
     private Date startDate;
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     /**

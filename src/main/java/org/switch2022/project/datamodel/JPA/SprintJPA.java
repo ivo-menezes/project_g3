@@ -14,7 +14,9 @@ public class SprintJPA {
          @AttributeOverride(name = "sprintNumber", column = @Column(name = "SprintNumber")),
  })
     private SprintJpaID sprintID;
+    @Temporal(TemporalType.DATE)
     private Date startDate;
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     protected SprintJPA() {}
