@@ -12,7 +12,7 @@ public class Role implements ValueObject {
         if (role == null || role.isBlank() || role.isEmpty())
             throw new IllegalArgumentException(("roleName cannot be null/blank/empty"));
         if (!role.equals("Product Owner") && !role.equals("Scrum Master") && !role.equals("Team Member")
-                && role.equals("Project Manager")) {
+                && !role.equals("Project Manager")) {
             throw new IllegalArgumentException(("Role is not valid"));
         }
         this.role = role;

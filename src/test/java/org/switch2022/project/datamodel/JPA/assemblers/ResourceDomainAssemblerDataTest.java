@@ -33,7 +33,7 @@ class ResourceDomainAssemblerDataTest {
         when(resourceDDD.getCostPerHour()).thenReturn(costPerHour);
         when(costPerHour.getValue()).thenReturn(10.0);
         when(resourceDDD.getRole()).thenReturn(role);
-        when(role.toString()).thenReturn("PO");
+        when(role.toString()).thenReturn("Product Owner");
         when(resourceDDD.getPercentageOfAllocation()).thenReturn(percentageOfAllocation);
         when(percentageOfAllocation.getValue()).thenReturn(15.0);
         when(resourceDDD.getProjectCode()).thenReturn(projectCode);
@@ -59,7 +59,7 @@ class ResourceDomainAssemblerDataTest {
         //Arrange
         String email = "test@gmail.com";
         double costPerHour = 3.0;
-        String role = "PROJECT_MANAGER";
+        String role = "Product Owner";
         double percentageOfAllocation = 10.0;
         String projectCode = "P26";
         Date startDate = new Date(2021 - 3 - 22);

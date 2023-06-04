@@ -63,7 +63,7 @@ class RoleTest {
     @DisplayName("With same object we should return true")
     @Test
     void shouldReturnTrueEqualsSameObject() {
-        Role role = new Role("User");
+        Role role = new Role("Product Owner");
 
         boolean isEquals = role.equals(role);
 
@@ -73,8 +73,8 @@ class RoleTest {
     @DisplayName("With same role we should return true")
     @Test
     void shouldReturnTrueEqualsSameProfileName() {
-        Role role1 = new Role("Administrator");
-        Role role2 = new Role("Administrator");
+        Role role1 = new Role("Product Owner");
+        Role role2 = new Role("Product Owner");
 
         boolean isEquals = role1.equals(role2);
 
@@ -84,8 +84,8 @@ class RoleTest {
     @DisplayName("With differents roles names we should return false")
     @Test
     void shouldReturnFalseEqualsDifferentProfileName() {
-        Role role1 = new Role("Administrator");
-        Role role2 = new Role("Manager");
+        Role role1 = new Role("Product Owner");
+        Role role2 = new Role("Team Member");
 
         boolean isEquals = role1.equals(role2);
 
@@ -95,8 +95,8 @@ class RoleTest {
     @Test
     @DisplayName("test hash code")
     void testHashCode() {
-        Role role1 = new Role("User");
-        Role role2 = new Role("User");
+        Role role1 = new Role("Product Owner");
+        Role role2 = new Role("Product Owner");
 
         assertEquals(role1.hashCode(), role2.hashCode());
         assertNotEquals(0, role1.hashCode());
