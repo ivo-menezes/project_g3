@@ -65,7 +65,7 @@ const AssociateResource = () => {
         const formattedResource = Object.entries(newResource).map(([key, value]) => {
             return `${key}: ${JSON.stringify(value)}`;
         });
-        alert(formattedResource.join("\n"));
+        /*alert(formattedResource.join("\n"));*/
         navigate(`/listResources/${projectCode}`);
     }
     const role = [

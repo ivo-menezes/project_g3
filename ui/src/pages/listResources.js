@@ -62,7 +62,7 @@ const ResourceList = () => {
                 <Table className="table-c" data={resource} headers={headers} />
             ) : (
                 <div className="string-notification">
-                    <h2>This project has no resources!</h2>
+                    <span className="string-notification"> This project has no resources!</span>
                 </div>
             )}
             </div>
