@@ -87,12 +87,7 @@ const CreateProject = () => {
         "Time and materials",
     ]
 
-    const sprintDuration = [
-        '1 - Week',
-        '2 - Weeks',
-        '3 - Weeks',
-        '4 - Weeks',
-    ]
+    const sprintDuration = ['1', '2', '3', '4',]
 
     return (
         <div>
@@ -171,7 +166,7 @@ const CreateProject = () => {
                     <div className="dropDownList">
                         <DropDownList
                             mandatory={false}
-                            label='Sprint Duration'
+                            label='Sprint Duration (in weeks)'
                             name={'sprintDuration'}
                             items={sprintDuration}
                             onChange={handleChange}

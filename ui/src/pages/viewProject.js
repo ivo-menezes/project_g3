@@ -25,7 +25,8 @@ const ViewProject = () => {
         { label: "End date:", attribute: "endDate" },
         { label: "Status:", attribute: "projectStatus" },
         { label: "Typology:", attribute: "typologyID" },
-        { label: "Sprint duration:", attribute: "sprintDuration" },
+        { label: "Business Sector:", attribute: "businessSectorID"},
+        { label: "Sprint duration in weeks):", attribute: "sprintDuration" },
         { label: "Number of planned sprints:", attribute: "projectNumberOfPlannedSprints" },
         { label: "Budget:", attribute: "projectBudget" },
     ];

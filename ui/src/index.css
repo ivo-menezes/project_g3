@@ -228,14 +228,13 @@ header .logo
 .table.table-b th:first-child,
 .table.table-b td:first-child {
     font-weight: bold;
-    width: 25%;
+    width: 20%;
     padding-left: 20px;
     box-sizing: border-box;
 }
 
 .table.table-b th:not(:first-child),
 .table.table-b td:not(:first-child) {
-    width: 25%;
     text-align: center;
 }
 
