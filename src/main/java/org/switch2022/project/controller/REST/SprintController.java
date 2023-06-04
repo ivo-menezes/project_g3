@@ -34,6 +34,11 @@ public class SprintController {
         this.mapper = mapper;
     }
 
+    /***
+     * Receives a POST request with data to create a sprint
+     * @param sprintDTOFromUI with the data to create a sprint
+     * @return a SprintDTO to send to the UI
+     */
     @PostMapping("")
     public ResponseEntity<SprintDTOUI> createSprint(@RequestBody SprintDTOUI sprintDTOFromUI){
         try{
