@@ -61,10 +61,18 @@ public class UserStoryJpa {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserStoryJpa that = (UserStoryJpa) o;
-        return Objects.equals(id, that.id) && Objects.equals(actor, that.actor) && Objects.equals(description, that.description) && Objects.equals(acceptanceCriteria, that.acceptanceCriteria) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) &&
+               Objects.equals(actor, that.actor) &&
+               Objects.equals(description, that.description) &&
+               Objects.equals(acceptanceCriteria, that.acceptanceCriteria) &&
+               Objects.equals(status, that.status);
     }
 
     @Override
