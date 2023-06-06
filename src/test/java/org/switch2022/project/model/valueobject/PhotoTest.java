@@ -17,6 +17,17 @@ class PhotoTest {
         assertTrue(isEquals);
     }
 
+    @DisplayName("With different objects we should return false")
+    @Test
+    void shouldReturnFalseWithDifferentObjects() {
+        Photo photo = new Photo("Test");
+        String fakePhoto = "Paint";
+
+        boolean isEquals = photo.equals(fakePhoto);
+
+        assertFalse(isEquals);
+    }
+
     @DisplayName("With same profile name we should return true")
     @Test
     void shouldReturnTrueEqualsSameProfileName() {
@@ -28,7 +39,7 @@ class PhotoTest {
         assertTrue(isEquals);
     }
 
-    @DisplayName("With differents photo names we should return false")
+    @DisplayName("With different photo names we should return false")
     @Test
     void shouldReturnFalseEqualsDifferentPhotoName() {
         Photo photo1 = new Photo("Test");

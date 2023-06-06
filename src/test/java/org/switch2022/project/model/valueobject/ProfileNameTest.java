@@ -59,6 +59,23 @@ class ProfileNameTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
+    @DisplayName("creating profileName with value different of requirement names should throw Exception")
+    @Test
+    void createProfileNameWithWithDifferentRequiredNamesValueThrowsException() {
+        // Arrange
+        String profileName = "Scrum Master";
+        String expectedMessage = "ProfileName is not valid";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            new ProfileName(profileName);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
 
     @DisplayName("With same object we should return true")
     @Test
@@ -68,6 +85,17 @@ class ProfileNameTest {
         boolean isEquals = profileName.equals(profileName);
 
         assertTrue(isEquals);
+    }
+
+    @DisplayName("With different objects we should return false")
+    @Test
+    void shouldReturnFalseWithDifferentObjects() {
+        ProfileName profileName = new ProfileName("User");
+        String fakeName = "Ambrosio";
+
+        boolean isEquals = profileName.equals(fakeName);
+
+        assertFalse(isEquals);
     }
 
     @DisplayName("With same profile name we should return true")
@@ -81,7 +109,7 @@ class ProfileNameTest {
         assertTrue(isEquals);
     }
 
-    @DisplayName("With differents profiles names we should return false")
+    @DisplayName("With different profiles names we should return false")
     @Test
     void shouldReturnFalseEqualsDifferentProfileName() {
         ProfileName profileName1 = new ProfileName("Administrator");
@@ -91,6 +119,8 @@ class ProfileNameTest {
 
         assertFalse(isEquals);
     }
+
+
 
     @Test
     @DisplayName("test hash code")
