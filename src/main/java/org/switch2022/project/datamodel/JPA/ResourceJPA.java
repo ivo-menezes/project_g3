@@ -37,42 +37,17 @@ public class ResourceJPA {
      * @param startDate of the resource in the project
      * @param endDate of the resource in the project
      */
-    public ResourceJPA(String email, double costPerHour, String role, double percentageOfAllocation, String projectCode, Date startDate, Date endDate) {
-        if (email != null && !email.isBlank() && !email.isEmpty()) {
+    public ResourceJPA(String email, double costPerHour, String role, double percentageOfAllocation,
+                       String projectCode, Date startDate, Date endDate) {
+
             this.email = email;
-        } else {
-            throw new IllegalArgumentException("Email designation must not be null");
-        }
-        if (costPerHour > 0) {
             this.costPerHour = costPerHour;
-        } else {
-            throw new IllegalArgumentException("CostPerHour designation must not be null");
-        }
-        if (role != null && !role.isBlank() && !role.isEmpty()) {
             this.role = role;
-        } else {
-            throw new IllegalArgumentException("Role designation must not be null");
-        }
-        if (percentageOfAllocation > 0) {
             this.percentageOfAllocation = percentageOfAllocation;
-        } else {
-            throw new IllegalArgumentException("PercentageOfAllocation designation must not be null");
-        }
-        if (projectCode != null && !projectCode.isBlank() && !projectCode.isEmpty()) {
             this.projectCode = projectCode;
-        } else {
-            throw new IllegalArgumentException("ProjectCode designation must not be null");
-        }
-        if (startDate != null) {
             this.startDate = startDate;
-        } else {
-            throw new IllegalArgumentException("StartDate designation must not be null");
-        }
-        if (endDate != null) {
             this.endDate = endDate;
-        } else {
-            throw new IllegalArgumentException("EndDate designation must not be null");
-        }
+
     }
 
     public Long getResourceID() {

@@ -3,8 +3,6 @@ package org.switch2022.project.model.resource;
 import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.*;
 
-import java.util.Objects;
-
 public class ResourceDDD implements AggregateRoot<ResourceID> {
 
     private ResourceID resourceID;
@@ -24,7 +22,9 @@ public class ResourceDDD implements AggregateRoot<ResourceID> {
      * @param percentageOfAllocation of the resource.
      * @param projectCode of the project allocated to the resource.
      */
-    public ResourceDDD(ResourceID resourceID, Email email, CostPerHour costPerHour, Role role, PercentageOfAllocation percentageOfAllocation, ProjectCode projectCode, TimePeriod timePeriod) {
+    public ResourceDDD(ResourceID resourceID, Email email, CostPerHour costPerHour, Role role,
+                       PercentageOfAllocation percentageOfAllocation, ProjectCode projectCode,
+                       TimePeriod timePeriod) {
         this.resourceID = resourceID;
         this.email = email;
         this.costPerHour = costPerHour;
