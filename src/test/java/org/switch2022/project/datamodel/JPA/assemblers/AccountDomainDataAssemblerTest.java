@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.datamodel.JPA.AccountJpa;
 import org.switch2022.project.model.account.AccountDDD;
-import org.switch2022.project.model.profile.Profile;
-import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +52,7 @@ class AccountDomainDataAssemblerTest {
         when(accountJpa.getPhoneNumber()).thenReturn("+351912348573");
         when(accountJpa.getPhoto()).thenReturn(".");
         when(accountJpa.getProfile()).thenReturn("User");
-        when(accountJpa.getAccountStatus()).thenReturn("Active");
+        when(accountJpa.getAccountStatus()).thenReturn("ACTIVE");
 
         AccountDomainDataAssembler assembler = new AccountDomainDataAssembler();
 

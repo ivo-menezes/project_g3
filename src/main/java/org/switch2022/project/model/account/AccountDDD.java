@@ -1,7 +1,6 @@
 package org.switch2022.project.model.account;
 
 import org.switch2022.project.ddd.AggregateRoot;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.valueobject.*;
 
 import java.util.Objects;
@@ -17,11 +16,11 @@ public class AccountDDD implements AggregateRoot<AccountID> {
 
     public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo,
                        ProfileName profile){
-        this(accountID, email, name, phoneNumber, photo, profile, AccountStatus.Active);
+        this(accountID, email, name, phoneNumber, photo, profile, AccountStatus.ACTIVE);
     }
 
     public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, ProfileName profile){
-        this(accountID, email, name, phoneNumber, profile, AccountStatus.Active);
+        this(accountID, email, name, phoneNumber, profile, AccountStatus.ACTIVE);
     }
 
     public AccountDDD (AccountID accountID, Email email, Name name, PhoneNumber phoneNumber, Photo photo,
