@@ -12,8 +12,8 @@ public class Photo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Photo)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof Photo)) {return false;}
         Photo that = (Photo) o;
         return Objects.equals(photo, that.photo);
     }

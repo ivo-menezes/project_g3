@@ -9,8 +9,8 @@ public class ProfileName implements ValueObject {
     private final String profileName;
 
     public ProfileName(String profileName) {
-        if (profileName == null || profileName.isBlank() || profileName.isEmpty())
-            throw new IllegalArgumentException("profileName cannot be null/blank/empty");
+        if (profileName == null || profileName.isBlank() || profileName.isEmpty()) {
+            throw new IllegalArgumentException("profileName cannot be null/blank/empty");}
         if (!profileName.equals("Administrator") && !profileName.equals("Manager") && !profileName.equals("User")) {
             throw new IllegalArgumentException("ProfileName is not valid");
         }
@@ -20,8 +20,8 @@ public class ProfileName implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProfileName)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof ProfileName)) {return false;}
         ProfileName that = (ProfileName) o;
         return Objects.equals(profileName, that.profileName);
     }

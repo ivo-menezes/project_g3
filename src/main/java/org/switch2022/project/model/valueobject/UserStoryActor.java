@@ -17,14 +17,14 @@ public class UserStoryActor implements ValueObject {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object)
-            return true;
+        if (this == object) {
+            return true;}
 
         if (object instanceof UserStoryActor) {
             UserStoryActor userStoryActor1 = (UserStoryActor) object;
 
-            if (this.userStoryActor.equals(userStoryActor1.userStoryActor))
-                return true;
+            if (this.userStoryActor.equals(userStoryActor1.userStoryActor)) {
+                return true;}
         }
         return false;
     }
