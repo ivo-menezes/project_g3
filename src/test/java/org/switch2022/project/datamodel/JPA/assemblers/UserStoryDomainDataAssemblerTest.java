@@ -74,4 +74,28 @@ class UserStoryDomainDataAssemblerTest {
         // Assert
         assertInstanceOf(UserStoryDDD.class, resultingUserStory);
     }
+
+    @DisplayName("ensure convertToJpaId returns a correct UserStoryJpaId")
+    @Test
+    void shouldReturnCorrectUserStoryJpaId() {
+        // Arrange
+        UserStoryID userStoryIdDouble = mock(UserStoryID.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+
+        when(userStoryIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
+        when(projectCodeDouble.toString()).thenReturn("XPTO");
+        when(userStoryIdDouble.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
+        when(userStoryNumberDouble.toString()).thenReturn("US001");
+
+        UserStoryDomainDataAssembler assembler = new UserStoryDomainDataAssembler();
+
+        UserStoryJpaId expected = new UserStoryJpaId("XPTO", "US001");
+
+        // Act
+        UserStoryJpaId result = assembler.convertToJpaId(userStoryIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

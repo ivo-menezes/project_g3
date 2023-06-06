@@ -21,9 +21,7 @@ public class UserStoryDomainDataAssembler {
         String criteria = userStory.getAcceptanceCriteria().toString();
         String status = userStory.getStatus().toString();
 
-        UserStoryJpa userStoryJpa = new UserStoryJpa(userStoryJpaId, actor, description, criteria, status);
-
-        return userStoryJpa;
+        return new UserStoryJpa(userStoryJpaId, actor, description, criteria, status);
     }
 
     public UserStoryDDD toDomain(UserStoryJpa userStoryJpa) {
@@ -35,18 +33,16 @@ public class UserStoryDomainDataAssembler {
 
         UserStoryActor userStoryActor = new UserStoryActor(userStoryJpa.getActor());
         Description description = new Description(userStoryJpa.getDescription());
-        UserStoryAcceptanceCriteria acceptanceCriteria = new UserStoryAcceptanceCriteria(userStoryJpa.getAcceptanceCriteria());
+        UserStoryAcceptanceCriteria acceptanceCriteria =
+                new UserStoryAcceptanceCriteria(userStoryJpa.getAcceptanceCriteria());
         UserStoryStatus status = UserStoryStatus.valueOf(userStoryJpa.getStatus());
 
-        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor, description, acceptanceCriteria, status);
-
-        return userStory;
+        return new UserStoryDDD(userStoryID, userStoryActor, description, acceptanceCriteria, status);
     }
 
     public UserStoryJpaId convertToJpaId(UserStoryID domainId) {
         String projectCode = domainId.getProjectCode().toString();
         String userStoryNumber = domainId.getUserStoryNumber().toString();
-        UserStoryJpaId userStoryJpaId = new UserStoryJpaId(projectCode, userStoryNumber);
-        return userStoryJpaId;
+        return new UserStoryJpaId(projectCode, userStoryNumber);
     }
 }
