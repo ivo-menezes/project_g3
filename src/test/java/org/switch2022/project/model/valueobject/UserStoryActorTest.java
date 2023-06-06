@@ -14,7 +14,11 @@ public class UserStoryActorTest {
 
     @Test
     public void shouldCreateAValidUserStoryActor () {
-        new UserStoryActor(userStoryActor1);
+
+        UserStoryActor userStoryActor = new UserStoryActor(userStoryActor1);
+
+        assertNotNull(userStoryActor);
+        assertEquals(userStoryActor1, userStoryActor.toString());
     }
 
     @Test
