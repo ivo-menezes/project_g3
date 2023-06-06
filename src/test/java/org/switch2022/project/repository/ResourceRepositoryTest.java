@@ -8,6 +8,9 @@ import org.switch2022.project.model.resource.ResourceDDD;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.repository.JPA.ResourceRepositoryJPA;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -78,6 +81,34 @@ class ResourceRepositoryTest {
         assertFalse(result);
     }
 
+    @Test
+    @DisplayName("Check if get all works correctly")
+    void getAllSuccessfullyWorks(){
+        //Arrange
+        ResourceRepositoryJPA resourceRepositoryJPA = mock(ResourceRepositoryJPA.class);
+        ResourceDomainAssemblerData assembler = mock(ResourceDomainAssemblerData.class);
+
+        List<ResourceJPA> resourceJPAList = new ArrayList<>();
+        List<ResourceDDD> resources = new ArrayList<>();
+
+        ResourceJPA resourceJPA = mock(ResourceJPA.class);
+        resourceJPAList.add(resourceJPA);
+
+        ResourceDDD resourceDDD = mock(ResourceDDD.class);
+
+        when(resourceRepositoryJPA.findAll()).thenReturn(resourceJPAList);
+        when(assembler.toDomain(resourceJPA)).thenReturn(resourceDDD);
+
+        resources.add(resourceDDD);
+
+        ResourceRepository resourceRepository = new ResourceRepository(resourceRepositoryJPA, assembler);
+
+        //Act
+        List<ResourceDDD> result = resourceRepository.getAll();
+
+        //Assert
+        assertEquals(resources, result);
+    }
 
 
 

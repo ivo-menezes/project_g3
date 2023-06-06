@@ -2,20 +2,15 @@ package org.switch2022.project.controller.REST;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewAccountDTO;
-import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTOMapper;
-import org.switch2022.project.mapper.REST.ResourceRestDTO;
 import org.switch2022.project.service.AccountService;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,6 +27,42 @@ class AccountControllerTest {
 
     @Autowired
     AccountController controller;
+
+    @DisplayName("ensure that creating an account throws an exception when account service is null")
+    @Test
+    void shouldReturnExceptionWhenAccountServiceIsNull() {
+        //Arrange
+        accountService = null;
+
+        String expectedMessage = "AccountService must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+            new AccountController(accountService, mapper));
+
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("ensure that creating an account throws an exception when mapper is null")
+    @Test
+    void shouldReturnExceptionWhenMapperIsNull() {
+        //Arrange
+        mapper = null;
+
+        String expectedMessage = "AccountRestDTOMapper must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+            new AccountController(accountService, mapper));
+
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
 
     @DisplayName("ensure that create a account correctly and HTTP status 201 - Created")
     @Test
@@ -71,5 +102,4 @@ class AccountControllerTest {
         assertEquals(400, response.getStatusCodeValue());
         assertEquals(restDTO, response.getBody());
     }
-
 }

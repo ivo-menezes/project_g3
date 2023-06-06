@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.NewResourceDTOMapper;
 import org.switch2022.project.model.account.AccountDDD;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.resource.IResourceFactory;
 import org.switch2022.project.model.resource.ResourceDDD;
 import org.switch2022.project.model.valueobject.*;
@@ -13,6 +12,7 @@ import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.IResourceRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +31,7 @@ public class ResourceService {
      * @param resourceRepository injected parameter
      * @param accountRepository injected parameter
      * @param projectRepository injected parameter
-     * @param resourceDTOMapper
+     * @param resourceDTOMapper injected parameter
      */
 
     public ResourceService(IResourceFactory resourceFactory, IResourceRepository resourceRepository,
@@ -104,9 +104,9 @@ public class ResourceService {
         return resourceDTO;
     }
 
-    public ArrayList<NewResourceDTO> getAll() {
-        ArrayList<NewResourceDTO> resources = new ArrayList<>();
-        ArrayList<ResourceDDD> resourceDDD = resourceRepository.getAll();
+    public List<NewResourceDTO> getAllResources() {
+        List<NewResourceDTO> resources = new ArrayList<>();
+        List<ResourceDDD> resourceDDD = resourceRepository.getAll();
 
         for (ResourceDDD resource : resourceDDD) {
 
@@ -123,7 +123,4 @@ public class ResourceService {
         }
         return resources;
     }
-
-
-
 }

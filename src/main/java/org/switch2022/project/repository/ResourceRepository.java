@@ -8,13 +8,14 @@ import org.switch2022.project.repository.JPA.ResourceRepositoryJPA;
 import org.switch2022.project.service.irepositories.IResourceRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ResourceRepository implements IResourceRepository {
 
-    private ResourceRepositoryJPA resourceRepositoryJPA;
+    private final ResourceRepositoryJPA resourceRepositoryJPA;
 
-    private ResourceDomainAssemblerData resourceDomainAssemblerData;
+    private final ResourceDomainAssemblerData resourceDomainAssemblerData;
 
     public ResourceRepository(ResourceRepositoryJPA resourceRepositoryJPA,
                               ResourceDomainAssemblerData resourceDomainAssemblerData) {
@@ -35,8 +36,8 @@ public class ResourceRepository implements IResourceRepository {
         return resourceRepositoryJPA.existsByRole(roleInUse);
     }
 
-    public ArrayList<ResourceDDD> getAll() {
-        ArrayList<ResourceDDD> resources = new ArrayList();
+    public List<ResourceDDD> getAll() {
+        List<ResourceDDD> resources = new ArrayList<>();
 
         Iterable<ResourceJPA> resourceJPA = resourceRepositoryJPA.findAll();
 

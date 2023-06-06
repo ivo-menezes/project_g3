@@ -9,17 +9,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.NewResourceDTOMapper;
 import org.switch2022.project.model.account.AccountDDD;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.resource.IResourceFactory;
 import org.switch2022.project.model.resource.ResourceDDD;
-import org.switch2022.project.model.valueobject.Email;
-import org.switch2022.project.model.valueobject.ProfileName;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.Role;
+import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.repository.ProjectRepositoryForJpa;
 import org.switch2022.project.service.irepositories.IAccountRepository;
 import org.switch2022.project.service.irepositories.IResourceRepository;
-
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -173,9 +171,8 @@ class ResourceServiceTest {
         String expected = "Account with given email doesn't exist";
 
         // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            resourceService.createResource(newResourceDTO);
-        });
+        RuntimeException result = assertThrows(RuntimeException.class, () ->
+            resourceService.createResource(newResourceDTO));
         String resultMessage = result.getMessage();
 
         // Assert
@@ -205,9 +202,8 @@ class ResourceServiceTest {
         String expected = "This account doesn't have an user profile";
 
         // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            resourceService.createResource(newResourceDTO);
-        });
+        RuntimeException result = assertThrows(RuntimeException.class, () ->
+            resourceService.createResource(newResourceDTO));
         String resultMessage = result.getMessage();
 
         // Assert
@@ -238,12 +234,57 @@ class ResourceServiceTest {
         String expected = "This project doesn't exist";
 
         // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            resourceService.createResource(newResourceDTO);
-        });
+        RuntimeException result = assertThrows(RuntimeException.class, () ->
+            resourceService.createResource(newResourceDTO));
         String resultMessage = result.getMessage();
 
         // Assert
         assertEquals(expected, resultMessage);
+    }
+
+    @DisplayName("Ensure that getAll method was successfully returned.")
+    @Test
+    void getAllResourcesSuccess() {
+        //Arrange
+        ResourceID id = new ResourceID(1L);
+        Email email = new Email("xpto@gmail.com");
+        CostPerHour costPerHour = new CostPerHour(10.1);
+        Role role = new Role("Product Owner");
+        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(15.5);
+        ProjectCode projectCode = new ProjectCode("PT5");
+        TimePeriod timePeriod = new TimePeriod(new Date(10 / 3 / 2023),
+                new Date(25 / 3 / 2023));
+
+        NewResourceDTO resourceDTO = new NewResourceDTO();
+
+        resourceDTO.resourceID = id;
+        resourceDTO.email = email;
+        resourceDTO.costPerHour = costPerHour;
+        resourceDTO.role = role;
+        resourceDTO.percentageOfAllocation = percentageOfAllocation;
+        resourceDTO.projectCode = projectCode;
+        resourceDTO.timePeriod = timePeriod;
+
+        ResourceDDD resourceDDD = mock(ResourceDDD.class);
+
+        List<ResourceDDD> resourceDDDList = new ArrayList<>();
+        resourceDDDList.add(resourceDDD);
+
+        List<NewResourceDTO> resourcesList = new ArrayList<>();
+        resourcesList.add(resourceDTO);
+
+        when(resourceRepository.getAll()).thenReturn(resourceDDDList);
+        when(resourceDDD.identity()).thenReturn(id);
+        when(resourceDDD.getEmail()).thenReturn(email);
+        when(resourceDDD.getCostPerHour()).thenReturn(costPerHour);
+        when(resourceDDD.getRole()).thenReturn(role);
+        when(resourceDDD.getProjectCode()).thenReturn(projectCode);
+        when(resourceDDD.getTimePeriod()).thenReturn(timePeriod);
+
+        //Act
+        List<NewResourceDTO> result = resourceService.getAllResources();
+
+        //Assert
+        assertEquals(resourcesList, result);
     }
 }

@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.switch2022.project.mapper.NewAccountDTO;
-import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTOMapper;
-import org.switch2022.project.mapper.REST.ResourceRestDTO;
 import org.switch2022.project.service.AccountService;
 
 @RestController
@@ -37,12 +35,9 @@ public class AccountController {
             NewAccountDTO savedAccountDTO = accountService.createAccount(domainDTO);
             AccountRestDTO savedAccountRestDTO = mapper.toRestDto(savedAccountDTO);
 
-            ResponseEntity<AccountRestDTO> response = new ResponseEntity<>(savedAccountRestDTO, HttpStatus.CREATED);
-            return response;
+            return new ResponseEntity<>(savedAccountRestDTO, HttpStatus.CREATED);
         } catch (Exception e) {
-            e.printStackTrace();
-            ResponseEntity<AccountRestDTO> response = new ResponseEntity<>(restDTO, HttpStatus.BAD_REQUEST);
-            return response;
+            return new ResponseEntity<>(restDTO, HttpStatus.BAD_REQUEST);
         }
     }
 }
