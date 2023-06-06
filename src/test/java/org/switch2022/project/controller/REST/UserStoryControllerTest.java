@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 @ActiveProfiles("test")
 @SpringBootTest
 class UserStoryControllerTest {
@@ -31,6 +33,38 @@ class UserStoryControllerTest {
 
     @Autowired
     UserStoryController controllerUnderTest;
+
+    @DisplayName("ensure instantiating a UserStoryController with null service throws exception")
+    @Test
+    void shouldThrowExceptionWithNullService() {
+        // Arrange
+        String expectedMessage = "UserStoryService must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            new UserStoryController(null, mapperDouble);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("ensure instantiating a UserStoryController with null mapper throws exception")
+    @Test
+    void shouldThrowExceptionWithNullMapper() {
+        // Arrange
+        String expectedMessage = "UserStoryRestDtoMapper must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            new UserStoryController(userStoryServiceDouble, null);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
 
     @DisplayName("ensure creating a user story returns a correct DTO with user story info and HTTP status 201 - Created")
     @Test

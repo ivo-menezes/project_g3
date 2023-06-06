@@ -32,32 +32,26 @@ public class UserStoryController {
     }
 
     @PostMapping("/projects/{projectCode}/productbacklog")
-    public ResponseEntity<?> createUserStory(@RequestBody UserStoryRestDto restDto) {
+    public ResponseEntity<UserStoryRestDto> createUserStory(@RequestBody UserStoryRestDto restDto) {
         try {
             NewUserStoryInfoDTO domainDto = dtoMapper.toDomainDto(restDto);
             NewUserStoryInfoDTO savedUserStoryDto = service.createUserStory(domainDto);
             UserStoryRestDto savedUserStoryRestDto = dtoMapper.toRestDto(savedUserStoryDto);
-            ResponseEntity<UserStoryRestDto> response = new ResponseEntity<>(savedUserStoryRestDto, HttpStatus.CREATED);
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseEntity<UserStoryRestDto> response = new ResponseEntity<>(restDto, HttpStatus.BAD_REQUEST);
-            return response;
+            return new ResponseEntity<>(savedUserStoryRestDto, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(restDto, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/projects/{projectCode}/productbacklog")
-    public ResponseEntity<?> consultBacklog(@PathVariable ProjectCode projectCode) {
+    public ResponseEntity<List<UserStoryRestDto>> consultBacklog(@PathVariable ProjectCode projectCode) {
         try {
             List<NewUserStoryInfoDTO> domainDtoList = service.getProductBacklog(projectCode);
             List<UserStoryRestDto> restDtoList = dtoMapper.toRestDtoList(domainDtoList);
-            ResponseEntity<List<UserStoryRestDto>> response = new ResponseEntity<>(restDtoList, HttpStatus.OK);
-            return response;
+            return new ResponseEntity<>(restDtoList, HttpStatus.OK);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseEntity<Object> response = new ResponseEntity<>( HttpStatus.NOT_FOUND);
-            return response;
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
