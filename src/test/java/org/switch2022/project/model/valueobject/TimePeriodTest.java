@@ -174,5 +174,34 @@ class TimePeriodTest {
         assertNotEquals(true, isNotEqual);
     }
 
+    @Test
+    @DisplayName("Ensure startDate is retrieved")
+    void ensureStartDateIsRetrieved() {
 
+        // Arrange
+        Date expected = new Date(2023-1900,Calendar.JUNE,12);
+        Date endDate = new Date(2023-1900,Calendar.JUNE,21);
+        TimePeriod timePeriod = new TimePeriod(expected, endDate);
+
+        // Act
+        Date result = timePeriod.getStartDate();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+    @Test
+    @DisplayName("Ensure endDate is retrieved")
+    void ensureEndDateIsRetrieved() {
+
+        // Arrange
+        Date startDate = new Date(2023-1900,Calendar.JUNE,21);
+        Date expected = new Date(2023-1900,Calendar.JUNE,30);
+        TimePeriod timePeriod = new TimePeriod(startDate, expected);
+
+        // Act
+        Date result = timePeriod.getEndDate();
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

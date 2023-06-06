@@ -12,11 +12,14 @@ public class TimePeriod implements ValueObject, Serializable {
     final private Date startDate;
 
     final private Date endDate;
+
     public Date getEndDate() {
+
         return endDate;
     }
 
-       public Date getStartDate() {
+    public Date getStartDate() {
+
         return startDate;
     }
 
