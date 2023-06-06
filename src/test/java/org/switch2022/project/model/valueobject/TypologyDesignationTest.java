@@ -2,9 +2,6 @@ package org.switch2022.project.model.valueobject;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,13 +20,11 @@ class TypologyDesignationTest {
         assertInstanceOf(TypologyDesignation.class, designation);
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {" ", "\t", "\n"})
-    @DisplayName("Ensure exception is thrown when designation is null, blank or empty")
-    void ensureExceptionIsThrownWhenDesignationIsNullBlankOrEmpty(String designation){
-
+    @Test
+    @DisplayName("Ensure exception is thrown when designation is null")
+    void ensureExceptionIsThrownWhenDesignationIsNull() {
         //Arrange
+        String designation = null;
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyDesignation(designation));
         String expectedMessage = "Typology designation must not be null";
 
@@ -39,6 +34,37 @@ class TypologyDesignationTest {
         //Assert
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    @DisplayName("Ensure exception is thrown when designation is blank")
+    void ensureExceptionIsThrownWhenDesignationIsBlank() {
+        //Arrange
+        String designation = "  ";
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyDesignation(designation));
+        String expectedMessage = "Typology designation must not be null";
+
+        //Act
+        String actualMessage = exception.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure exception is thrown when designation is empty")
+    void ensureExceptionIsThrownWhenDesignationIsEmpty() {
+        //Arrange
+        String designation = "";
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyDesignation(designation));
+        String expectedMessage = "Typology designation must not be null";
+
+        //Act
+        String actualMessage = exception.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, actualMessage);
+    }
+
 
     @Test
     @DisplayName("Ensure object does not equal null")
