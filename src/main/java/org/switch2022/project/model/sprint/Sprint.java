@@ -1,3 +1,4 @@
+/*
 package org.switch2022.project.model.sprint;
 
 
@@ -35,18 +36,22 @@ public class Sprint {
         return Objects.hash(sprintNumber, startDate, endDate);
     }
 
-    /**
+    */
+/**
      * Get StartDate and EndDate methods
      * @return startDate and endDate respectively
-     */
+     *//*
+
     public Date getStartDate(){return this.startDate;}
     public Date getEndDate(){return this.endDate;}
 
-    /**
+    */
+/**
      * Add a user story to the sprint backlog.
      * @param userStory
      * @return true if the user story was added to the Sprint Backlog, or false otherwise.
-     */
+     *//*
+
     public boolean addUserStoryToSprintBacklog (UserStory userStory) {
         boolean added=false;
 
@@ -57,11 +62,13 @@ public class Sprint {
         return added;
     }
 
-    /**
+    */
+/**
      * Checks if it contains the user story in the sprint backlog.
      * @param userStory
      * @return returns false if the user story does not exist, or true otherwise.
-     */
+     *//*
+
     private boolean existsUserStory (UserStory userStory) {
         boolean exists=false;
 
@@ -77,10 +84,12 @@ public class Sprint {
         return this.sprintNumber;
     }
 
-    /***
+    */
+/***
      * The method will create a list of UserStoryDTOs, where the only data required will be the US ID and respective status.
      * @return a list, containing the UserStoryDTOs in the SprintBacklog belonging to the current sprint.
-     */
+     *//*
+
     public List<UserStoryDTO> viewScrumBoardList(){
         List<UserStoryDTO> scrumBoard = new ArrayList<>();
         UserStoryScrumBoardMapper userStoryScrumBoardMapper = new UserStoryScrumBoardMapper();
@@ -91,23 +100,27 @@ public class Sprint {
         return scrumBoard;
     }
 
-    /**
+    */
+/**
      * Check if the effort value are in the Fibonacci sequence.
      * @param effort of user story in a sprint
      * @return true if effort value are in the Fibonacci sequence.
-     */
+     *//*
+
     public boolean validEffortEstimate (double effort) {
 
         List<Double> validateEffortValues = new ArrayList<>(Arrays.asList(0.0, 0.5, 1.0, 2.0, 3.0, 5.0, 8.0, 13.0, 20.0, 40.0));
         return validateEffortValues.contains(effort);
     }
 
-    /**
+    */
+/**
      * Estimate effort of a user story in a sprint.
      *  @param userStory
      *  @param effort of user story in a sprint
      *  @return a HasMap with a user story id and respective effort value.
-     */
+     *//*
+
     public boolean estimateEffortForUserStory ( UserStory userStory, double effort) {
         boolean effortSaved = false;
         if (!validEffortEstimate(effort)) {
@@ -120,3 +133,4 @@ public class Sprint {
 
         return effortSaved;}
 }
+*/
