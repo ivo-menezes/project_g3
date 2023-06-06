@@ -29,6 +29,12 @@ public class SprintDTOMapper {
         newControllerDTO.timePeriod = new TimePeriod(sprintDTOFromUI.startDate, sprintDTOFromUI.endDate);
         return newControllerDTO;
     }
+
+    /***
+     * Method to convert a primitive String projectCode to the value object
+     * @param sprintDTOFromUI with the primitive value for ProjectCode
+     * @return DTO with the ProjectCode value object
+     */
     public SprintDTOController createProjectCode (SprintDTOUI sprintDTOFromUI){
         SprintDTOController newControllerDTO = new SprintDTOController();
         newControllerDTO.projectCode = new ProjectCode(sprintDTOFromUI.projectCode);
@@ -51,6 +57,13 @@ public class SprintDTOMapper {
 
         return newUiDTO;
     }
+
+    /***
+     * Creates a list of SprintDTOUI, in order to be able to successfully
+     * create the JSON file when the GET request comes.
+     * @param allSprintsFromProject list
+     * @return dtoList with data in primitive values for a correct conversion to JSON
+     */
     public List<SprintDTOUI> getSprintList (List<SprintDTOToController> allSprintsFromProject){
         List<SprintDTOUI> dtoList = new ArrayList<>();
 

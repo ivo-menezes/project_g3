@@ -2,6 +2,7 @@ package org.switch2022.project.controller.REST;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,10 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 @ActiveProfiles("test")
 @SpringBootTest
 class SprintControllerTest {
@@ -41,6 +43,34 @@ class SprintControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+
+    @Test
+    public void ensureControllerHasNoNullServiceInjection(){
+        //arrange
+        String message = "Sprint Service cannot be null/nonexistent";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintController(null, sprintMapper);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureControllerHasNoNullMapperInjection(){
+        //arrange
+        String message = "Sprint Mapper cannot be null/nonexistent";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintController(serviceDDD, null);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
     }
     @Test
     public void ensureControllerReturnsCreatedHTTPStatus(){
@@ -71,6 +101,32 @@ class SprintControllerTest {
         //assert
         assertEquals(201, result.getStatusCodeValue());
         assertEquals(mockSavedDTOUI, result.getBody());
+    }
+    @Test
+    public void ensureControllerDoesNotCreateSprintNumber(){
+        // Arrange
+        SprintDTOUI sprintDTOFromUI = mock(SprintDTOUI.class);
+        sprintDTOFromUI.projectCode = "PROJECT_CODE";
+        ProjectCode mockCode = mock(ProjectCode.class);
+        when(mockCode.toString()).thenReturn("PROJECT_CODE");
+        SprintDTOController toController = new SprintDTOController();
+        toController.projectCode = mockCode;
+        sprintDTOFromUI.sprintNumber = 0;
+
+        // Mock the behavior of the mapper
+        when(sprintMapper.createProjectCode(sprintDTOFromUI)).thenReturn(toController);
+
+        // Mock the behavior of the service
+        when(serviceDDD.generateSprintNumber(mockCode)).thenReturn(0);
+        when(sprintMapper.toDomainDTO(sprintDTOFromUI)).thenThrow(IllegalArgumentException.class);
+        when(serviceDDD.createSprint(toController)).thenReturn(new SprintDTOToController());
+
+        // Act
+        ResponseEntity<SprintDTOUI> result = sprintController.createSprint(sprintDTOFromUI);
+
+        // Assert
+        assertEquals(500, result.getStatusCodeValue());
+
     }
     @Test
     public void ensureControllerReturnsBadResponseHTTPStatus(){

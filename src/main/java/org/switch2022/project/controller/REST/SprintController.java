@@ -1,7 +1,5 @@
 package org.switch2022.project.controller.REST;
 
-import org.hibernate.service.spi.ServiceException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -50,6 +48,9 @@ public class SprintController {
 
             ResponseEntity<SprintDTOUI> response = new ResponseEntity<>(sprintDTOUI, HttpStatus.CREATED);
             return response;
+        }catch (IllegalArgumentException e){
+            ResponseEntity<SprintDTOUI> response = new ResponseEntity<>(sprintDTOFromUI, HttpStatus.INTERNAL_SERVER_ERROR);
+            return response;
         }catch (Exception e){
             ResponseEntity<SprintDTOUI> response = new ResponseEntity<>(sprintDTOFromUI, HttpStatus.BAD_REQUEST);
             return response;
@@ -68,8 +69,6 @@ public class SprintController {
             List<SprintDTOUI> allSprints = mapper.getSprintList(allSprintsFromProject);
             ResponseEntity<List<SprintDTOUI>> response = new ResponseEntity<>(allSprints, HttpStatus.OK);
             return response;
-        } catch (ServiceException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
