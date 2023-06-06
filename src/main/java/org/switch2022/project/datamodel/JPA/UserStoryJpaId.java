@@ -33,7 +33,10 @@ public class UserStoryJpaId implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
             return false;
         }
         UserStoryJpaId that = (UserStoryJpaId) o;

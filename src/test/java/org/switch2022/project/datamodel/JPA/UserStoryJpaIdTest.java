@@ -52,8 +52,12 @@ class UserStoryJpaIdTest {
         String number = "US001";
         UserStoryJpaId userStoryJpaId = new UserStoryJpaId(code, number);
 
-        // Act/Assert
-        assertNotEquals(null, userStoryJpaId);
+
+        // Act
+        boolean result = userStoryJpaId.equals(null);
+
+        // Assert
+        assertFalse(result);
     }
 
     @Test

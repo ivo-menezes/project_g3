@@ -64,7 +64,10 @@ public class UserStoryJpa {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
             return false;
         }
         UserStoryJpa that = (UserStoryJpa) o;

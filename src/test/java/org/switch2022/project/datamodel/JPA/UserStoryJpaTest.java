@@ -76,8 +76,11 @@ class UserStoryJpaTest {
 
     @Test
     void doesNotEqualNull() {
+        // Act
+        boolean result = userStoryJpa.equals(null);
+
         // Assert
-        assertNotEquals(null, userStoryJpa);
+        assertFalse(result);
     }
 
     @Test
