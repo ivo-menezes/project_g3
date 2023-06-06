@@ -30,8 +30,12 @@ public class UserStoryJpaId implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserStoryJpaId that = (UserStoryJpaId) o;
         return Objects.equals(projectCode, that.projectCode) && Objects.equals(userStoryNumber, that.userStoryNumber);
     }
