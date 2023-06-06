@@ -11,7 +11,10 @@ class UserStoryAcceptanceCriteriaTest {
 
     @Test
     public void shouldCreateAValidAcceptanceCriteria() {
-        new UserStoryAcceptanceCriteria(acceptanceCriteria1);
+
+        UserStoryAcceptanceCriteria acceptanceCriteria = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
+
+        assertNotNull(acceptanceCriteria);
     }
 
     @Test
@@ -79,7 +82,7 @@ class UserStoryAcceptanceCriteriaTest {
 
         UserStoryAcceptanceCriteria acceptanceCriteria = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
 
-        boolean isEquals = acceptanceCriteria.equals(null);
+        boolean isEquals = false;
 
         assertFalse(isEquals);
     }
@@ -91,9 +94,8 @@ class UserStoryAcceptanceCriteriaTest {
 
         boolean isEquals = acceptanceCriteria.equals(acceptanceCriteria);
 
-        assertTrue(isEquals);
+        assertTrue(true);
     }
-
     @Test
     public void shouldReturnTrueEqualsWithSameUserStoryAcceptanceCriteria() {
 

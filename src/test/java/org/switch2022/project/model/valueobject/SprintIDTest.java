@@ -91,5 +91,32 @@ class SprintIDTest {
         //Assert
         assertFalse(isEquals);
     }
+    @Test
+    @DisplayName("Ensure projectCode is retrieved")
+    void ensureProjectCodeIsRetrieved() {
+        // Arrange
+        ProjectCode expected = new ProjectCode("A5");
+        SprintNumber sprintNumber = new SprintNumber(1);
+        SprintID sprintID = new SprintID(expected, sprintNumber);
 
+        // Act
+        ProjectCode result = sprintID.getProjectCode();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+    @Test
+    @DisplayName("Ensure SprintNumber is retrieved")
+    void ensureSprintNumberIsRetrieved() {
+        // Arrange
+        ProjectCode projectCode = new ProjectCode("A5");
+        SprintNumber expected = new SprintNumber(1);
+        SprintID sprintID = new SprintID(projectCode, expected);
+
+        // Act
+        SprintNumber result = sprintID.getSprintNumber();
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

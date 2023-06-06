@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class UserStoryAcceptanceCriteria implements ValueObject {
 
-    private String acceptanceCriteria;
+    private final String acceptanceCriteria;
 
     public UserStoryAcceptanceCriteria(String acceptanceCriteria) {
 
@@ -24,8 +24,7 @@ public class UserStoryAcceptanceCriteria implements ValueObject {
         if (object instanceof UserStoryAcceptanceCriteria) {
             UserStoryAcceptanceCriteria acceptanceCriteria1 = (UserStoryAcceptanceCriteria) object;
 
-            if (this.acceptanceCriteria.equals(acceptanceCriteria1.acceptanceCriteria))
-                return true;
+            return this.acceptanceCriteria.equals(acceptanceCriteria1.acceptanceCriteria);
         }
         return false;
     }
