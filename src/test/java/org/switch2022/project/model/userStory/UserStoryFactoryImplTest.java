@@ -166,4 +166,31 @@ class UserStoryFactoryImplTest {
         // assert
         assertInstanceOf(UserStoryDDD.class, userStory);
     }
+
+    @DisplayName("assert that creating UserStory from DTO is not null")
+    @Test
+    void createUserStoryFromDtoNotNull() {
+        // arrange
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        UserStoryID idDouble = mock(UserStoryID.class);
+        UserStoryActor actorDouble = mock(UserStoryActor.class);
+        Description descriptionDouble = mock(Description.class);
+        UserStoryAcceptanceCriteria criteriaDouble = mock(UserStoryAcceptanceCriteria.class);
+
+        dtoDouble.userStoryNumber = userStoryNumberDouble;
+        dtoDouble.projectCode = projectCodeDouble;
+        dtoDouble.actor = actorDouble;
+        dtoDouble.description = descriptionDouble;
+        dtoDouble.acceptanceCriteria = criteriaDouble;
+
+        UserStoryFactoryImpl factory = new UserStoryFactoryImpl();
+
+        // act
+        UserStoryDDD userStory = factory.createUserStory(idDouble, actorDouble, descriptionDouble, criteriaDouble);
+
+        // assert
+        assertNotNull(userStory);
+    }
 }
