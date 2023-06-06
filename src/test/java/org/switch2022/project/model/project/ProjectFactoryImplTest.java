@@ -5,9 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.switch2022.project.mapper.NewProjectDTO;
 import org.switch2022.project.model.valueobject.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class ProjectFactoryImplTest {
 
@@ -60,6 +62,35 @@ class ProjectFactoryImplTest {
         // assert
         assertInstanceOf(ProjectDDD.class, project);
     }
+
+    @Test
+    @DisplayName("Ensure creating a Project from a projectDto succeeds")
+    void ensureProjectIsCreatedFromDto(){
+        //Arrange
+        NewProjectDTO projectDto = mock(NewProjectDTO.class);
+
+        projectDto.projectCode = projectCodeDouble;
+        projectDto.projectName = projectNameDouble;
+        projectDto.description = descriptionDouble;
+        projectDto.timePeriod = timePeriodDouble;
+        projectDto.projectSprintDuration = projectSprintDurationDouble;
+        projectDto.projectNumberOfPlannedSprints = projectNumberOfPlannedSprintsDouble;
+        projectDto.customerID = customerIDDouble;
+        projectDto.businessSectorID = businessSectorIDDouble;
+        projectDto.typologyID = typologyIDDouble;
+        projectDto.projectBudget = projectBudgetDouble;
+
+
+        ProjectFactoryImpl factory = new ProjectFactoryImpl();
+
+        //Act
+        ProjectDDD resultingProject = factory.createProject(projectDto);
+
+        //Assert
+        assertInstanceOf(ProjectDDD.class, resultingProject);
+    }
+
+
     @DisplayName("assert that trying to create project with null code throws Exception")
     @Test
     void createProjectNullCodeThrowsException() {
@@ -69,18 +100,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Project code must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(null,
-                    projectNameDouble,
-                    descriptionDouble,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    customerIDDouble,
-                    businessSectorIDDouble,
-                    typologyIDDouble,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(null,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 
@@ -97,18 +127,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Project name must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(projectCodeDouble,
-                    null,
-                    descriptionDouble,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    customerIDDouble,
-                    businessSectorIDDouble,
-                    typologyIDDouble,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(projectCodeDouble,
+                null,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 
@@ -125,18 +154,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Description must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(projectCodeDouble,
-                    projectNameDouble,
-                    null,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    customerIDDouble,
-                    businessSectorIDDouble,
-                    typologyIDDouble,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(projectCodeDouble,
+                projectNameDouble,
+                null,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 
@@ -154,18 +182,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Customer ID must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(projectCodeDouble,
-                    projectNameDouble,
-                    descriptionDouble,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    null,
-                    businessSectorIDDouble,
-                    typologyIDDouble,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                null,
+                businessSectorIDDouble,
+                typologyIDDouble,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 
@@ -181,18 +208,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Business sector ID must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(projectCodeDouble,
-                    projectNameDouble,
-                    descriptionDouble,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    customerIDDouble,
-                    null,
-                    typologyIDDouble,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                null,
+                typologyIDDouble,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 
@@ -209,18 +235,17 @@ class ProjectFactoryImplTest {
         String expectedMessage = "Typology ID must not be null";
 
         // act
-        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createProject(projectCodeDouble,
-                    projectNameDouble,
-                    descriptionDouble,
-                    timePeriodDouble,
-                    projectSprintDurationDouble,
-                    projectNumberOfPlannedSprintsDouble,
-                    customerIDDouble,
-                    businessSectorIDDouble,
-                    null,
-                    projectBudgetDouble);
-        });
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                factory.createProject(projectCodeDouble,
+                projectNameDouble,
+                descriptionDouble,
+                timePeriodDouble,
+                projectSprintDurationDouble,
+                projectNumberOfPlannedSprintsDouble,
+                customerIDDouble,
+                businessSectorIDDouble,
+                null,
+                projectBudgetDouble));
 
         String resultMessage = result.getMessage();
 

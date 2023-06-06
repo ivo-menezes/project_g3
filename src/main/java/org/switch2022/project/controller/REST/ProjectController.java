@@ -40,18 +40,15 @@ public class ProjectController {
 
 
     @PostMapping("/projects")
-    public ResponseEntity<?> createProject(@RequestBody ProjectRestDto restDto) {
+    public ResponseEntity<ProjectRestDto> createProject(@RequestBody ProjectRestDto restDto) {
         try {
             NewProjectDTO domainDto = dtoMapper.toDomainDto(restDto);
             NewProjectDTO savedProjectDto = projectService.createProject(domainDto);
             ProjectRestDto savedProjectRestDto = dtoMapper.toRestDto(savedProjectDto);
-            ResponseEntity<ProjectRestDto> response = new ResponseEntity<>(savedProjectRestDto, HttpStatus.CREATED);
-            return response;
+            return new ResponseEntity<>(savedProjectRestDto, HttpStatus.CREATED);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseEntity<ProjectRestDto> response = new ResponseEntity<>(restDto, HttpStatus.BAD_REQUEST);
-            return response;
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(restDto, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -64,8 +61,7 @@ public class ProjectController {
                 projectRestDtoList.add(dtoMapper.toRestDto(newProjectDTO));
             }
             return new ResponseEntity<>(projectRestDtoList, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

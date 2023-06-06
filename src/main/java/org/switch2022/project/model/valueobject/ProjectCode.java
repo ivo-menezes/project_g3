@@ -6,28 +6,26 @@ import java.util.Objects;
 
 public class ProjectCode implements DomainId {
 
-    private String projectCode;
+    private final String projectCode;
 
     public ProjectCode(String projectCode) {
 
-        if (projectCode != null && !projectCode.isBlank() && !projectCode.isEmpty()) {
-            this.projectCode = projectCode;
-        } else {
+        if (projectCode == null || projectCode.isEmpty() || projectCode.isBlank()) {
             throw new IllegalArgumentException("Project code must not be null");
+        } else {
+            this.projectCode = projectCode;
         }
     }
-
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-
-        if (object instanceof ProjectCode) {
-            ProjectCode projectCode = (ProjectCode) object;
-
-            if (this.projectCode.equals(projectCode.projectCode))
-                return true;
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
         }
-        return false;
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        ProjectCode that = (ProjectCode) o;
+        return projectCode.equals(that.projectCode);
     }
 
     @Override
@@ -39,4 +37,6 @@ public class ProjectCode implements DomainId {
     public int hashCode() {
         return Objects.hash(projectCode);
     }
+
+
 }
