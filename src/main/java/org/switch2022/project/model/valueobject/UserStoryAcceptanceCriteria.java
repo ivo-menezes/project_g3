@@ -10,16 +10,18 @@ public class UserStoryAcceptanceCriteria implements ValueObject {
 
     public UserStoryAcceptanceCriteria(String acceptanceCriteria) {
 
-        if (acceptanceCriteria != null && !acceptanceCriteria.isBlank() && !acceptanceCriteria.isEmpty())
+        if (acceptanceCriteria != null && !acceptanceCriteria.isBlank() && !acceptanceCriteria.isEmpty()) {
             this.acceptanceCriteria = acceptanceCriteria;
-        else
+        } else {
             throw new IllegalArgumentException("UserStoryAcceptanceCriteria must not be null");
+        }
     }
 
     public boolean equals(Object object) {
 
-        if (this == object)
+        if (this == object) {
             return true;
+        }
 
         if (object instanceof UserStoryAcceptanceCriteria) {
             UserStoryAcceptanceCriteria acceptanceCriteria1 = (UserStoryAcceptanceCriteria) object;
