@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,6 +59,32 @@ class ProjectRepositoryForJpaTest {
 
         //Assert
         assertEquals(savedProject, resultingProject);
+    }
+
+
+    @Test
+    @DisplayName("Ensure project fails to save because there is already a project with that code")
+    void ensureProjectFailsToSave() {
+        //Arrange
+        ProjectDDD project = mock(ProjectDDD.class);
+
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+
+        when(project.identity()).thenReturn(projectCodeDouble);
+        when(projectCodeDouble.toString()).thenReturn("P001");
+
+        when(projectRepository.existsByProjectCode("P001")).thenReturn(true);
+
+        String expectedMessage = "A project with that code already exists";
+
+        //Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                projectRepository.save(project));
+        String resultMessage = result.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+
     }
 
     @DisplayName("ensure getByID returns optional of project that JPA returns")

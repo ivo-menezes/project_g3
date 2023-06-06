@@ -15,8 +15,7 @@ import org.switch2022.project.service.ProjectService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
@@ -118,6 +117,38 @@ class ProjectControllerTest {
         //Assert
         assertEquals(400, response.getStatusCodeValue());
         assertNull(response.getBody());
+    }
+
+    @Test
+    @DisplayName("Ensure project fails to be created with null projectService")
+    void ensureProjectFailsToBeCreatedWithNullService(){
+        //Arrange
+        String expectedMessage = "Project Service must not be null";
+
+        //Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectController(null, dtoMapper));
+
+        String resultMessage = result.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure project fails to be created with null dtoMapper")
+    void ensureProjectFailsToBeCreatedWithNullDtoMapper(){
+        //Arrange
+        String expectedMessage = "Project Rest Dto Mapper must not be null";
+
+        //Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ProjectController(projectService, null));
+
+        String resultMessage = result.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
     }
 }
 
