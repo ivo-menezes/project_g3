@@ -16,7 +16,8 @@ public class ResourceRepository implements IResourceRepository {
 
     private ResourceDomainAssemblerData resourceDomainAssemblerData;
 
-    public ResourceRepository(ResourceRepositoryJPA resourceRepositoryJPA, ResourceDomainAssemblerData resourceDomainAssemblerData) {
+    public ResourceRepository(ResourceRepositoryJPA resourceRepositoryJPA,
+                              ResourceDomainAssemblerData resourceDomainAssemblerData) {
         this.resourceRepositoryJPA = resourceRepositoryJPA;
         this.resourceDomainAssemblerData = resourceDomainAssemblerData;
     }
