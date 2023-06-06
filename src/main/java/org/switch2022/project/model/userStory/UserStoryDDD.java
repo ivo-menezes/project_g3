@@ -26,13 +26,20 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
      * @param userStoryDescription        of user story
      * @param userStoryAcceptanceCriteria of user story
      */
-    public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
+    public UserStoryDDD(UserStoryID userStoryID,
+                        UserStoryActor userStoryActor,
+                        Description userStoryDescription,
+                        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria) {
 
         this(userStoryID, userStoryActor, userStoryDescription, userStoryAcceptanceCriteria, UserStoryStatus.TO_DO);
 
     }
 
-    public UserStoryDDD(UserStoryID userStoryID, UserStoryActor userStoryActor, Description userStoryDescription, UserStoryAcceptanceCriteria userStoryAcceptanceCriteria, UserStoryStatus status) {
+    public UserStoryDDD(UserStoryID userStoryID,
+                        UserStoryActor userStoryActor,
+                        Description userStoryDescription,
+                        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria,
+                        UserStoryStatus status) {
 
         if (userStoryID == null) {
             throw new IllegalArgumentException("User Story ID must not be null");
@@ -58,31 +65,40 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
     }
 
 
-    public UserStoryID identity() { return userStoryID; }
+    public UserStoryID identity() {
+        return userStoryID;
+    }
 
-    public UserStoryActor getActor() { return userStoryActor; }
+    public UserStoryActor getActor() {
+        return userStoryActor;
+    }
 
-    public Description getDescription() { return userStoryDescription; }
+    public Description getDescription() {
+        return userStoryDescription;
+    }
 
-    public UserStoryAcceptanceCriteria getAcceptanceCriteria() { return userStoryAcceptanceCriteria;  }
+    public UserStoryAcceptanceCriteria getAcceptanceCriteria() {
+        return userStoryAcceptanceCriteria;
+    }
 
-    public UserStoryStatus getStatus() { return userStoryStatus; }
+    public UserStoryStatus getStatus() {
+        return userStoryStatus;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserStoryDDD)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         UserStoryDDD that = (UserStoryDDD) o;
-        return userStoryID.equals(that.userStoryID);
+        return Objects.equals(userStoryID, that.userStoryID);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(userStoryID);
     }
-
 }

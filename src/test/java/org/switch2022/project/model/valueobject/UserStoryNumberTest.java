@@ -12,7 +12,7 @@ class UserStoryNumberTest {
     void createUserStoryNumberWithNullThrowsException() {
         // Arrange
         String userStoryNumber = null;
-        String expectedMessage = "userStoryNumber cannot be null/blank/empty";
+        String expectedMessage = "userStoryNumber cannot be null";
 
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
@@ -29,7 +29,7 @@ class UserStoryNumberTest {
     void createUserStoryNumberWithEmptyThrowsException() {
         // Arrange
         String userStoryNumber = "";
-        String expectedMessage = "userStoryNumber cannot be null/blank/empty";
+        String expectedMessage = "userStoryNumber cannot be blank/empty";
 
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
@@ -46,7 +46,7 @@ class UserStoryNumberTest {
     void createUserStoryNumberWithBlankThrowsException() {
         // Arrange
         String userStoryNumber = "       ";
-        String expectedMessage = "userStoryNumber cannot be null/blank/empty";
+        String expectedMessage = "userStoryNumber cannot be blank/empty";
 
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {

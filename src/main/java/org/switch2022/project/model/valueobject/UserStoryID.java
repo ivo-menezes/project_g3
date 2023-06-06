@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class UserStoryID implements DomainId {
 
-    private UserStoryNumber userStoryNumber;
-    private ProjectCode projectCode;
+    private final UserStoryNumber userStoryNumber;
+    private final ProjectCode projectCode;
 
     public UserStoryID (UserStoryNumber userStoryNumber, ProjectCode projectCode) {
         if (userStoryNumber == null) {
@@ -22,31 +22,29 @@ public class UserStoryID implements DomainId {
         this.projectCode = projectCode;
     }
 
-    @Override
-    public boolean equals(Object object) {
-
-        if (this == object)
-            return true;
-
-        if (object instanceof UserStoryID) {
-            UserStoryID userStoryID = (UserStoryID) object;
-
-            if (this.userStoryNumber.equals(userStoryID.userStoryNumber) && this.projectCode.equals(userStoryID.projectCode))
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userStoryNumber, projectCode);
-    }
-
     public UserStoryNumber getUserStoryNumber() {
         return userStoryNumber;
     }
 
     public ProjectCode getProjectCode() {
         return projectCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserStoryID that = (UserStoryID) o;
+        return Objects.equals(userStoryNumber, that.userStoryNumber) &&
+                Objects.equals(projectCode, that.projectCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userStoryNumber, projectCode);
     }
 }

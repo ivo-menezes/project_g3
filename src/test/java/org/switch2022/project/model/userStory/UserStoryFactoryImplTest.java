@@ -2,10 +2,8 @@ package org.switch2022.project.model.userStory;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.valueobject.Description;
-import org.switch2022.project.model.valueobject.UserStoryAcceptanceCriteria;
-import org.switch2022.project.model.valueobject.UserStoryActor;
-import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.model.valueobject.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -124,5 +122,48 @@ class UserStoryFactoryImplTest {
 
         // assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("assert that trying to create UserStory with null Dto throws exception")
+    @Test
+    void createUserStoryNullDtoThrowsException() {
+        UserStoryFactoryImpl factory = new UserStoryFactoryImpl();
+        String expectedMessage = "dto must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            factory.createUserStory(null);
+        });
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("assert that creating UserStory from DTO succeeds")
+    @Test
+    void createUserStoryFromDtoSucceeds() {
+        // arrange
+        NewUserStoryInfoDTO dtoDouble = mock(NewUserStoryInfoDTO.class);
+        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        UserStoryID idDouble = mock(UserStoryID.class);
+        UserStoryActor actorDouble = mock(UserStoryActor.class);
+        Description descriptionDouble = mock(Description.class);
+        UserStoryAcceptanceCriteria criteriaDouble = mock(UserStoryAcceptanceCriteria.class);
+
+        dtoDouble.userStoryNumber = userStoryNumberDouble;
+        dtoDouble.projectCode = projectCodeDouble;
+        dtoDouble.actor = actorDouble;
+        dtoDouble.description = descriptionDouble;
+        dtoDouble.acceptanceCriteria = criteriaDouble;
+
+        UserStoryFactoryImpl factory = new UserStoryFactoryImpl();
+
+        // act
+        UserStoryDDD userStory = factory.createUserStory(idDouble, actorDouble, descriptionDouble, criteriaDouble);
+
+        // assert
+        assertInstanceOf(UserStoryDDD.class, userStory);
     }
 }

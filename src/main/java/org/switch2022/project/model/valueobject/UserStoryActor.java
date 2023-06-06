@@ -6,36 +6,34 @@ import java.util.Objects;
 
 public class UserStoryActor implements ValueObject {
 
-    private String userStoryActor;
+    private final String actor;
 
-    public UserStoryActor (String userStoryActor) {
-        if (userStoryActor == null || userStoryActor.isBlank() || userStoryActor.isEmpty()) {
+    public UserStoryActor (String actor) {
+        if (actor == null || actor.isBlank()) {
             throw new IllegalArgumentException("User Story actor must not be empty");
         }
-        this.userStoryActor = userStoryActor;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;}
-
-        if (object instanceof UserStoryActor) {
-            UserStoryActor userStoryActor1 = (UserStoryActor) object;
-
-            if (this.userStoryActor.equals(userStoryActor1.userStoryActor)) {
-                return true;}
-        }
-        return false;
+        this.actor = actor;
     }
 
     @Override
     public String toString() {
-        return this.userStoryActor;
+        return this.actor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserStoryActor that = (UserStoryActor) o;
+        return Objects.equals(actor, that.actor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userStoryActor);
+        return Objects.hash(actor);
     }
 }

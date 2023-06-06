@@ -11,14 +11,18 @@ import java.util.Objects;
  */
 public class UserStoryNumber implements ValueObject {
 
-    private final String userStoryNumber;
+    private final String number;
 
-    public UserStoryNumber(String userStoryNumber) {
-        if (userStoryNumber == null || userStoryNumber.isBlank() || userStoryNumber.isEmpty()) {
-            throw new IllegalArgumentException("userStoryNumber cannot be null/blank/empty");
+    public UserStoryNumber(String number) {
+        if (number == null) {
+            throw new IllegalArgumentException("userStoryNumber cannot be null");
         }
 
-        this.userStoryNumber = userStoryNumber;
+        if (number.isBlank()) {
+            throw new IllegalArgumentException("userStoryNumber cannot be blank/empty");
+        }
+
+        this.number = number;
     }
 
     @Override
@@ -30,16 +34,16 @@ public class UserStoryNumber implements ValueObject {
             return false;
         }
         UserStoryNumber that = (UserStoryNumber) o;
-        return Objects.equals(userStoryNumber, that.userStoryNumber);
+        return Objects.equals(number, that.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userStoryNumber);
+        return Objects.hash(number);
     }
 
     @Override
     public String toString() {
-        return userStoryNumber;
+        return number;
     }
 }

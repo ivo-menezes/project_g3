@@ -2,7 +2,6 @@ package org.switch2022.project.model.userStory;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.switch2022.project.model.valueobject.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -338,12 +337,20 @@ class UserStoryDDDTest {
     @DisplayName("ensure user story status is returned")
     void ensureUserStoryStatusIsReturned(){
         //Arrange
-        UserStoryDDD userStory = mock(UserStoryDDD.class);
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        UserStoryActor userStoryActor = mock(UserStoryActor.class);
+        Description userStoryDescription = mock(Description.class);
+        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria =
+                mock(UserStoryAcceptanceCriteria.class);
         UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
-        Mockito.when(userStory.getStatus()).thenReturn(userStoryStatus);
-        //Act
+
+        UserStoryDDD userStory = new UserStoryDDD(userStoryID, userStoryActor,
+                userStoryDescription, userStoryAcceptanceCriteria, userStoryStatus);
+
+        // Act
         UserStoryStatus result = userStory.getStatus();
-        //Assert
-        assertNotNull(result);
+
+        // Assert
+        assertEquals(userStoryStatus, result);
     }
 }

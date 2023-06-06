@@ -115,8 +115,11 @@ class UserStoryJpaIdTest {
         UserStoryJpaId userStoryJpaId = new UserStoryJpaId(code, number);
         String blah = "I'm a unique snowflake";
 
+        // Act
+        boolean result = userStoryJpaId.equals(blah);
+
         // Assert
-        assertNotEquals(userStoryJpaId, blah);
+        assertFalse(result);
     }
 
     @Test

@@ -32,9 +32,7 @@ public class UserStoryFactoryImpl implements IUserStoryFactory {
             throw new IllegalArgumentException("acceptanceCriteria cannot be null");
         }
 
-        UserStoryDDD userStory = new UserStoryDDD(userStoryID, actor, description, acceptanceCriteria);
-
-        return userStory;
+        return new UserStoryDDD(userStoryID, actor, description, acceptanceCriteria);
     }
 
     @Override
@@ -45,8 +43,6 @@ public class UserStoryFactoryImpl implements IUserStoryFactory {
         }
 
         UserStoryID id = new UserStoryID(dto.userStoryNumber, dto.projectCode);
-        UserStoryDDD userStory = new UserStoryDDD(id, dto.actor, dto.description, dto.acceptanceCriteria);
-
-        return userStory;
+        return new UserStoryDDD(id, dto.actor, dto.description, dto.acceptanceCriteria);
     }
 }
