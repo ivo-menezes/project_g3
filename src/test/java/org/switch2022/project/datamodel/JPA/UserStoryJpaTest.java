@@ -98,10 +98,10 @@ class UserStoryJpaTest {
     }
 
     @Test
-    void doesNotEqualDifferent() {
-        String anotherActor = "Manager";
-        UserStoryJpa yetAnotherUserStoryJpa = new UserStoryJpa(userStoryJpaId,
-                anotherActor,
+    void doesNotEqualDifferentId() {
+        UserStoryJpaId anotherId = new UserStoryJpaId("XYZ", "US004");
+        UserStoryJpa yetAnotherUserStoryJpa = new UserStoryJpa(anotherId,
+                actor,
                 description,
                 criteria,
                 status);
@@ -136,9 +136,9 @@ class UserStoryJpaTest {
     @Test
     void differentHashCode() {
         // Arrange
-        String anotherActor = "Manager";
-        UserStoryJpa yetAnotherUserStoryJpa = new UserStoryJpa(userStoryJpaId,
-                anotherActor,
+        UserStoryJpaId anotherId = new UserStoryJpaId("XYZ", "US004");
+        UserStoryJpa yetAnotherUserStoryJpa = new UserStoryJpa(anotherId,
+                actor,
                 description,
                 criteria,
                 status);

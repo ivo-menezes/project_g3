@@ -68,15 +68,11 @@ public class UserStoryJpa {
             return false;
         }
         UserStoryJpa that = (UserStoryJpa) o;
-        return Objects.equals(id, that.id) &&
-               Objects.equals(actor, that.actor) &&
-               Objects.equals(description, that.description) &&
-               Objects.equals(acceptanceCriteria, that.acceptanceCriteria) &&
-               Objects.equals(status, that.status);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, actor, description, acceptanceCriteria, status);
+        return Objects.hash(id);
     }
 }
