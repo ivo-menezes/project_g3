@@ -21,7 +21,8 @@ public class UserStoryRepository implements IUserStoryRepository {
     private final UserStoryDomainDataAssembler userStoryDomainDataAssembler;
 
 
-    public UserStoryRepository(UserStoryJpaRepository userStoryJpaRepository, UserStoryDomainDataAssembler userStoryDomainDataAssembler) {
+    public UserStoryRepository(UserStoryJpaRepository userStoryJpaRepository,
+                               UserStoryDomainDataAssembler userStoryDomainDataAssembler) {
         this.userStoryJpaRepository = userStoryJpaRepository;
         this.userStoryDomainDataAssembler = userStoryDomainDataAssembler;
     }
@@ -54,8 +55,7 @@ public class UserStoryRepository implements IUserStoryRepository {
 
         UserStoryJpa userStoryJpa = userStoryDomainDataAssembler.toData(userStory);
         UserStoryJpa savedUserStoryJpa = userStoryJpaRepository.save(userStoryJpa);
-        UserStoryDDD savedUserStory = userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
-        return savedUserStory;
+        return userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
     }
 
     /**

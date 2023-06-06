@@ -53,6 +53,17 @@ class UserStoryIDTest {
     }
 
     @Test
+    public void shouldReturnFalseEqualsWithOtherClass() {
+
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+        String anotherClass = "I'm not a UserStoryID";
+
+        boolean isEquals = userStoryID.equals(anotherClass);
+
+        assertFalse(isEquals);
+    }
+
+    @Test
     public void shouldReturnTrueEqualsWithSameObject() {
 
         UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
@@ -79,6 +90,18 @@ class UserStoryIDTest {
         UserStoryID userStoryID1 = new UserStoryID(userStoryNumber, projectCode);
         UserStoryNumber userStoryNumber2 = mock(UserStoryNumber.class);
         UserStoryID userStoryID2 = new UserStoryID(userStoryNumber2, projectCode);
+
+        boolean isEquals = userStoryID1.equals(userStoryID2);
+
+        assertFalse(isEquals);
+    }
+
+    @Test
+    public void shouldReturnFalseEqualsWithDifferentUserProjectCodes() {
+
+        UserStoryID userStoryID1 = new UserStoryID(userStoryNumber, projectCode);
+        ProjectCode projectCode2 = mock(ProjectCode.class);
+        UserStoryID userStoryID2 = new UserStoryID(userStoryNumber, projectCode2);
 
         boolean isEquals = userStoryID1.equals(userStoryID2);
 
