@@ -17,10 +17,10 @@ public class TypologyDesignation implements ValueObject, Serializable {
      */
     public TypologyDesignation(String designation) {
 
-        if (designation != null && !designation.isBlank() && !designation.isEmpty()) {
-            this.designation = designation;
-        } else {
+        if (designation == null || designation.isBlank() || designation.isEmpty()) {
             throw new IllegalArgumentException("Typology designation must not be null");
+        } else {
+            this.designation = designation;
         }
     }
 

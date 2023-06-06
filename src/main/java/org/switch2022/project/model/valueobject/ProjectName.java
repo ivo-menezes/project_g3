@@ -25,8 +25,12 @@ public class ProjectName implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProjectName)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectName)) {
+            return false;
+        }
         ProjectName that = (ProjectName) o;
         return Objects.equals(projectName, that.projectName);
     }

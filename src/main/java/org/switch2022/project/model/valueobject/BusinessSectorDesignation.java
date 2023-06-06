@@ -15,12 +15,15 @@ public class BusinessSectorDesignation implements ValueObject {
         this.businessSectorDesignation = businessSectorDesignation;
     }
 
-    protected BusinessSectorDesignation (){}
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BusinessSectorDesignation)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof BusinessSectorDesignation)) {
+            return false;
+        }
         BusinessSectorDesignation that = (BusinessSectorDesignation) o;
         return businessSectorDesignation.equals(that.businessSectorDesignation);
     }

@@ -19,13 +19,15 @@ public class CustomerDesignation implements ValueObject {
         this.customerDesignation = customerDesignation;
     }
 
-    protected CustomerDesignation () {}
-
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CustomerDesignation)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CustomerDesignation)) {
+            return false;
+        }
         CustomerDesignation that = (CustomerDesignation) o;
         return customerDesignation.equals(that.customerDesignation);
     }

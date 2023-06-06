@@ -10,8 +10,6 @@ public class CustomerID implements DomainId, Serializable {
         this.id = id;
     }
 
-    protected CustomerID(){}
-
     public long getId() {
         return id;
     }
