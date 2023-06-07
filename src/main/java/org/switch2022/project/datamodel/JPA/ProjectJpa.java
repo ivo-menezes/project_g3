@@ -53,7 +53,13 @@ public class ProjectJpa {
      * @param productBacklog                the list of userStory IDs.
      */
 
-    public ProjectJpa(String projectCode, String projectName, String description, String projectStatus, Date startDate, Date endDate, int sprintDuration, int projectNumberOfPlannedSprints, long customerID, long businessSectorID, long typologyID, float projectBudget, List<String> productBacklog) {
+    public ProjectJpa(String projectCode, String projectName,
+                      String description, String projectStatus,
+                      Date startDate, Date endDate,
+                      int sprintDuration, int projectNumberOfPlannedSprints,
+                      long customerID, long businessSectorID, long typologyID,
+                      float projectBudget, List<String> productBacklog) {
+
         this.projectCode = projectCode;
         this.projectName = projectName;
         this.description = description;

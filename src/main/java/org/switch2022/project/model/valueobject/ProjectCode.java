@@ -10,7 +10,7 @@ public class ProjectCode implements DomainId {
 
     public ProjectCode(String projectCode) {
 
-        if (projectCode == null || projectCode.isEmpty() || projectCode.isBlank()) {
+        if (projectCode == null || projectCode.isBlank()) {
             throw new IllegalArgumentException("Project code must not be null");
         } else {
             this.projectCode = projectCode;

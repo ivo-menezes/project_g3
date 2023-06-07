@@ -35,7 +35,11 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
                       ProjectBudget projectBudget
     ) {
 
-        this(projectCode, projectName, description, ProjectStatus.Planned, timePeriod, projectSprintDuration, projectNumberOfPlannedSprints, customerID, businessSectorID, typologyID, projectBudget, new ArrayList<>());
+        this(projectCode, projectName, description,
+                ProjectStatus.Planned, timePeriod,
+                projectSprintDuration, projectNumberOfPlannedSprints,
+                customerID, businessSectorID, typologyID,
+                projectBudget, new ArrayList<>());
 
     }
 
@@ -155,8 +159,12 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ProjectDDD that = (ProjectDDD) o;
         return projectCode.equals(that.projectCode);
     }

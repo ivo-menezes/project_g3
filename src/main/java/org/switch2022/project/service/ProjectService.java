@@ -19,12 +19,12 @@ import java.util.List;
 @Service
 public class ProjectService {
 
-    private ICustomerRepository customerRepository;
-    private IBusinessSectorRepository businessSectorRepository;
-    private ITypologyRepository typologyRepository;
-    private IProjectFactory projectFactory;
-    private IProjectRepository projectRepository;
-    private NewProjectDTOMapper newProjectDTOMapper;
+    private final ICustomerRepository customerRepository;
+    private final IBusinessSectorRepository businessSectorRepository;
+    private final ITypologyRepository typologyRepository;
+    private final IProjectFactory projectFactory;
+    private final IProjectRepository projectRepository;
+    private final NewProjectDTOMapper newProjectDTOMapper;
 
 
     public ProjectService(ICustomerRepository customerRepository, IBusinessSectorRepository businessSectorRepository, ITypologyRepository typologyRepository, IProjectFactory projectFactory, IProjectRepository projectRepository, NewProjectDTOMapper newProjectDTOMapper) {
@@ -76,9 +76,8 @@ public class ProjectService {
         ProjectDDD projectDDD = projectFactory.createProject(projectDto);
 
         ProjectDDD savedProject = projectRepository.save(projectDDD);
-        NewProjectDTO savedProjectDto = newProjectDTOMapper.toDto(savedProject);
 
-        return savedProjectDto;
+        return newProjectDTOMapper.toDto(savedProject);
     }
 
     public List<NewProjectDTO> getAllProjects() {

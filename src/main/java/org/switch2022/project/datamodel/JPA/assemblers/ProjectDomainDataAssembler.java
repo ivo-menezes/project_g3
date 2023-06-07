@@ -38,11 +38,9 @@ public class ProjectDomainDataAssembler {
             productBacklogJpa.add(userStoryNumber);
         }
 
-        ProjectJpa projectJpa = new ProjectJpa(projectCode, projectName, description, projectStatus,
+        return new ProjectJpa(projectCode, projectName, description, projectStatus,
                 startDate, endDate, sprintDuration, projectNumberOfPlannedSprints,
                 customerID, businessSectorID, typologyID, projectBudget, productBacklogJpa);
-
-        return projectJpa;
     }
 
     public ProjectDDD toDomain(ProjectJpa projectJpa) {
@@ -52,7 +50,8 @@ public class ProjectDomainDataAssembler {
         ProjectStatus projectStatus = ProjectStatus.valueOf(projectJpa.getProjectStatus());
         TimePeriod timePeriod = new TimePeriod(projectJpa.getStartDate(), projectJpa.getEndDate());
         ProjectSprintDuration sprintDuration = new ProjectSprintDuration(projectJpa.getSprintDuration());
-        ProjectNumberOfPlannedSprints numberOfPlannedSprints = new ProjectNumberOfPlannedSprints(projectJpa.getProjectNumberOfPlannedSprints());
+        ProjectNumberOfPlannedSprints numberOfPlannedSprints =
+                new ProjectNumberOfPlannedSprints(projectJpa.getProjectNumberOfPlannedSprints());
         CustomerID customerID = new CustomerID(projectJpa.getCustomerID());
         BusinessSectorID businessSectorID = new BusinessSectorID(projectJpa.getBusinessSectorID());
         TypologyID typologyID = new TypologyID(projectJpa.getTypologyID());

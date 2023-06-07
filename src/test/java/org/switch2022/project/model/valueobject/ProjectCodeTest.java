@@ -14,15 +14,16 @@ class ProjectCodeTest {
 
     @Test
     public void shouldCreateAValidProjectCode(){
-        new ProjectCode(code1);
+        ProjectCode code = new ProjectCode(code1);
+
+        assertInstanceOf(ProjectCode.class, code);
     }
 
     @Test
     public void shouldThrowExceptionWithNullProjectCode(){
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            new ProjectCode(null);
-        });
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectCode(null));
 
         String actualMessage = exception.getMessage();
 
@@ -32,9 +33,8 @@ class ProjectCodeTest {
     @Test
     public void shouldThrowExceptionWithBlankProjectCode(){
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            new ProjectCode(" ");
-        });
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectCode(" "));
 
         String actualMessage = exception.getMessage();
 
@@ -44,9 +44,8 @@ class ProjectCodeTest {
     @Test
     public void shouldThrowExceptionWithEmptyProjectCode(){
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            new ProjectCode("");
-        });
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectCode(""));
 
         String actualMessage = exception.getMessage();
 
@@ -56,9 +55,8 @@ class ProjectCodeTest {
     @Test
     public void shouldThrowExceptionWithATabInProjectCode(){
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            new ProjectCode("\t");
-        });
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectCode("\t"));
 
         String actualMessage = exception.getMessage();
 
@@ -68,9 +66,8 @@ class ProjectCodeTest {
     @Test
     public void shouldThrowExceptionWithReturnInProjectCode(){
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            new ProjectCode("\n");
-        });
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectCode("\n"));
 
         String actualMessage = exception.getMessage();
 

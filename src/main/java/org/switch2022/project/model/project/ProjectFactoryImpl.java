@@ -38,18 +38,16 @@ public class ProjectFactoryImpl implements IProjectFactory {
             throw new IllegalArgumentException("Typology ID must not be null");
         }
 
-        ProjectDDD project = new ProjectDDD(projectCode,
+        return new ProjectDDD(projectCode,
                 projectName, description, timePeriod, projectSprintDuration,
                 projectNumberOfPlannedSprints, customerID, businessSectorID,
                 typologyID, projectBudget);
-
-        return project;
     }
 
     @Override
     public ProjectDDD createProject(NewProjectDTO projectDto) {
 
-        ProjectDDD project = new ProjectDDD(
+        return new ProjectDDD(
                 projectDto.projectCode,
                 projectDto.projectName,
                 projectDto.description,
@@ -60,8 +58,6 @@ public class ProjectFactoryImpl implements IProjectFactory {
                 projectDto.businessSectorID,
                 projectDto.typologyID,
                 projectDto.projectBudget);
-
-        return project;
     }
 }
 

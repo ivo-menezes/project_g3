@@ -20,7 +20,8 @@ public class ProjectRestDtoMapper {
         domainDto.description = new Description(projectRestDto.description);
         domainDto.timePeriod = new TimePeriod(projectRestDto.startDate, projectRestDto.endDate);
         domainDto.projectSprintDuration = new ProjectSprintDuration(projectRestDto.sprintDuration);
-        domainDto.projectNumberOfPlannedSprints = new ProjectNumberOfPlannedSprints(projectRestDto.projectNumberOfPlannedSprints);
+        domainDto.projectNumberOfPlannedSprints =
+                new ProjectNumberOfPlannedSprints(projectRestDto.projectNumberOfPlannedSprints);
         domainDto.customerID = new CustomerID(projectRestDto.customerID);
         domainDto.businessSectorID = new BusinessSectorID(projectRestDto.businessSectorID);
         domainDto.typologyID = new TypologyID(projectRestDto.typologyID);
