@@ -21,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class SprintRepositoryJPATest {
+class SprintRepositoryTest {
 
     @Mock
     private SprintJPARepository sprintJPARepository;
     @Mock
     private SprintAssemblerData sprintAssemblerData;
     @InjectMocks
-    private SprintRepositoryJPA sprintRepositoryJPA;
+    private SprintRepository sprintRepository;
 
 
     @Test
@@ -46,7 +46,7 @@ class SprintRepositoryJPATest {
         when(sprintAssemblerData.toDomain(mockSavedJPA)).thenReturn(mockSavedSprint);
 
         //act
-        SprintDDD result = sprintRepositoryJPA.save(mockSprint);
+        SprintDDD result = sprintRepository.save(mockSprint);
 
         //assert
         assertEquals(mockSavedSprint, result);
@@ -57,7 +57,7 @@ class SprintRepositoryJPATest {
         SprintID sprintIDMock = mock(SprintID.class);
 
         //act
-        boolean result = sprintRepositoryJPA.containsID(sprintIDMock);
+        boolean result = sprintRepository.containsID(sprintIDMock);
 
         //assert
         assertFalse(result);
@@ -72,7 +72,7 @@ class SprintRepositoryJPATest {
         when(sprintAssemblerData.convertToSprintJpaID(mockID)).thenReturn(mockJpaId);
 
         //act
-        boolean result = sprintRepositoryJPA.containsID(mockID);
+        boolean result = sprintRepository.containsID(mockID);
 
         //assert
         assertTrue(result);
@@ -109,7 +109,7 @@ class SprintRepositoryJPATest {
         expectedDDDList.add(mockSprintThree);
 
         //act
-        Iterable<SprintDDD> result = sprintRepositoryJPA.findAll();
+        Iterable<SprintDDD> result = sprintRepository.findAll();
 
         //assert
         assertEquals(expectedDDDList, result);
@@ -144,7 +144,7 @@ class SprintRepositoryJPATest {
         List<SprintDDD> expectedDDDList = new ArrayList<>();
 
         //act
-        Iterable<SprintDDD> result = sprintRepositoryJPA.findAll();
+        Iterable<SprintDDD> result = sprintRepository.findAll();
 
         //assert
         assertNotEquals(expectedDDDList, result);
@@ -160,7 +160,7 @@ class SprintRepositoryJPATest {
 
         //act
         Optional expected = Optional.empty();
-        Optional result = sprintRepositoryJPA.getByID(mockID);
+        Optional result = sprintRepository.getByID(mockID);
 
         //assert
         assertEquals(expected, result);
@@ -182,7 +182,7 @@ class SprintRepositoryJPATest {
         when(sprintAssemblerData.toDomain(mockJPA)).thenReturn(mockSprint);
 
         //act
-        Optional result = sprintRepositoryJPA.getByID(mockID);
+        Optional result = sprintRepository.getByID(mockID);
 
         //assert
         assertEquals(mockSprintOptional, result);
@@ -214,7 +214,7 @@ class SprintRepositoryJPATest {
         expectedDDDList.add(mockSprintTwo);
 
         // Act
-        List<SprintDDD> result = sprintRepositoryJPA.findByProjectCode(mockCode);
+        List<SprintDDD> result = sprintRepository.findByProjectCode(mockCode);
 
         // Assert
         assertEquals(expectedDDDList, result);
@@ -231,7 +231,7 @@ class SprintRepositoryJPATest {
         List<SprintDDD> expectedDDDList = new ArrayList<>();
 
         // Act
-        List<SprintDDD> result = sprintRepositoryJPA.findByProjectCode(mockCode);
+        List<SprintDDD> result = sprintRepository.findByProjectCode(mockCode);
 
         // Assert
         assertEquals(expectedDDDList, result);

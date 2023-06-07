@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class SprintRepositoryJPA implements ISprintRepository {
+public class SprintRepository implements ISprintRepository {
 
     /***
      * Injection of the SprintJPARepository in the Sprint Repository, for persistence
@@ -27,8 +27,8 @@ public class SprintRepositoryJPA implements ISprintRepository {
      */
     private final SprintAssemblerData sprintAssemblerData;
 
-    public SprintRepositoryJPA(SprintJPARepository sprintJpaRepository,
-                               SprintAssemblerData sprintAssemblerData){
+    public SprintRepository(SprintJPARepository sprintJpaRepository,
+                            SprintAssemblerData sprintAssemblerData){
         this.sprintJpaRepository = sprintJpaRepository;
         this.sprintAssemblerData = sprintAssemblerData;
     }
