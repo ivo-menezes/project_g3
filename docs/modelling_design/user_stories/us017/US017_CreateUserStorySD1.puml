@@ -11,28 +11,49 @@ title US017 - As Product Owner, I want to create a user story and add it to the 
 
 participant Client
 participant SpringBoot
-participant "infoDTO : NewUserStoryInfoDTO" as infoDTO
+participant "restDto : UserStoryRestDto" as inRestDTO
 participant ": UserStoryController" as controller
+participant ": UserStoryRestDtoMapper" as mapper
+participant "domainDto : NewUserStoryInfoDto" as inDomainDto
 participant " : UserStoryService" as service
-participant "response : ResponseEntity<>" as response
+participant "savedUserStoryDto : NewUserStoryInfoDto" as outDomainDto
+participant "outRestDto : UserStoryRestDto" as outRestDto
+participant "response : ResponseEntity<UserStoryRestDto>" as response
 
-Client -> SpringBoot : POST /projects/${projectCode}/productbacklog\n{"projectCode": "code",\n"userStoryNumber": "usNumber",\n"userStoryActor":"actor", "description":"description",\n"userStoryAcceptanceCriteria":"criteria",\n"userStoryPriority":"priority"}
+Client -> SpringBoot : POST /projects/{projectCode}/productbacklog\n\n{"projectCode": code,\n"userStoryNumber": usNumber,\n"userStoryActor":actor,\n"description":description,\n"userStoryAcceptanceCriteria":criteria,\n"userStoryPriority":priority}
 activate Client
 
 activate SpringBoot
-SpringBoot --> infoDTO ** : create(projectCode, userStoryNumber,\n         userStoryActor, description,\n         userStoryAcceptanceCriteria,\n         userStoryPriority)
+SpringBoot --> inRestDTO ** : create(code, usNumber,\n         actor, description,\n         criteria, priority)
 SpringBoot -> controller : createUserStory(infoDTO)
+
+activate controller
+controller -> mapper : toDomainDto(restDto)
+activate mapper
+mapper --> inDomainDto ** : create
+mapper --> controller : inDomainDto
 deactivate
 
-controller -> service : createUserStory(infoDTO)
-deactivate
+controller -> service : createUserStory(domainDto)
+
 
 activate service
 ref over service : US017_CreateUserStorySD2
-
-service --> controller : savedUserStory
+service --> controller : savedUserStoryDto
 deactivate
 
-controller --> response ** : create(savedUserStory, HttpStatus.CREATED)
-controller --> Client : response
+controller -> mapper : toRestDto(savedUserStoryDto)
+activate mapper
+mapper --> outRestDto ** : create
+mapper --> controller : outRestDto
+deactivate
+
+controller --> response ** : create(outRestDto, HttpStatus.CREATED)
+controller --> SpringBoot : response
+deactivate
+
+SpringBoot --> Client : 200 OK\n\n{"projectCode": code,\n"userStoryNumber": usNumber,\n"userStoryActor":actor, "description":description,\n"userStoryAcceptanceCriteria":criteria,\n"userStoryPriority":priority,\n"status":"TO_DO"}
+deactivate
+
+deactivate
 @enduml

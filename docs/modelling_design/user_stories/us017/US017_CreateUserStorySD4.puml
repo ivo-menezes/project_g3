@@ -7,29 +7,54 @@ skinparam sequence{
 LifeLineBackgroundColor #FFBBBB
 }
 
-title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(retrieve project from projectRepository)
+title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(saving of user story)
 
-participant ": ProjectRepository" as projectRepository
-participant ": ProjectJpaRepository" as jpa
-participant ": ProjectDataDomainAssembler" as assembler
+participant ": IUserStoryRepository" as usRepository
+participant "userStory : UserStory" as newUserStory
+participant ": UserStoryJpaRepository" as jpa
+participant ": UserStoryDomainDataAssembler" as assembler
+participant ": UserStoryJpa" as userStoryJpa
+participant "savedUserStory : UserStory" as savedUserStory
 
--> projectRepository : getByID(projectCode)
+-> usRepository : save(userStory)
 
-activate projectRepository
-projectRepository -> jpa : findById(projectCode)
+activate usRepository
+usRepository -> newUserStory : identity()
+
+activate newUserStory
+newUserStory --> usRepository: userStoryID
+deactivate
+
+usRepository -> usRepository : containsID(userStoryID)
+activate usRepository #DarkSalmon
+
+usRepository -> jpa :existsById(userStoryID)
 
 activate jpa
-jpa --> projectRepository : projectJpa
+jpa --> usRepository : false
+deactivate
 deactivate
 
-projectRepository -> assembler : toDomain(projectJpa)
+usRepository -> assembler : toData(userStory)
 
 activate assembler
-assembler --> projectRepository: project
+assembler --> userStoryJpa ** : create
+assembler --> usRepository : userStoryJpa
 deactivate
 
-[<-- projectRepository : project
+usRepository -> jpa : save(userStoryJpa)
 
+activate jpa
+'jpa --> savedUserStoryJpa ** : create
+jpa --> usRepository : savedUserStoryJpa
+deactivate
 
+usRepository -> assembler : toDomain(savedUserStoryJpa)
+activate assembler
+assembler --> savedUserStory ** : create
+assembler --> usRepository : savedUserStory
+deactivate
+
+[<-- usRepository : savedUserStory
 
 @enduml

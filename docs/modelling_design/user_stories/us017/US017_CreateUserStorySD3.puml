@@ -10,9 +10,10 @@ LifeLineBackgroundColor #FFBBBB
 title US017 - As Product Owner, I want to create a user story and add it to the Product Backlog\n(creation of user story)
 
 participant ": IUserStoryFactory" as factory
-participant "infoDTO : NewUserStoryInfoDTO" as dto
+participant "domainDto : NewUserStoryInfoDTO" as dto
+participant "userStory : UserStory" as userStory
 
--> factory : createUserStory(infoDTO)
+-> factory : createUserStory(domainDto)
 activate factory
 
 factory -> dto : .userStoryNumber

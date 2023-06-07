@@ -13,20 +13,20 @@ title US017 - As Product Owner, I want to create a user story and add it to the 
 participant ": UserStoryService" as service
 participant " : IUserStoryFactory" as factory
 participant "newUserStory : UserStory" as newUserStory
-participant ": ProjectRepository" as projectRepository
-participant " :UserStoryRepository" as usRepository
-participant " : UserStoryJpaRepository" as jpa
-participant " : UserStoryDataDomainAssembler" as assembler
-participant "userStoryJpa : UserStoryJpa" as userStoryJpa
+participant ": IProjectRepository" as projectRepository
+participant " : IUserStoryRepository" as usRepository
+participant "domaintDto : NewUserStoryInfoDto" as inDto
 participant "savedUserStory : UserStory" as savedUserStory
+participant ": NewUserStoryInfoDtoMapper" as mapper
+participant "savedUserStoryDto : NewUserStoryInfoDto" as outDto
 participant "project : Project" as project
 participant "productBacklog : ProductBacklog" as backlog
 participant "openUserStories : List<UserStoryID>" as uslist
 
 activate service
--> service : createUserStory(infoDTO)
+-> service : createUserStory(domainDto)
 
-service -> factory : createUserStory(infoDTO)
+service -> factory : createUserStory(domainDto)
 activate factory
 ref over factory: US017_CreateUserStorySD3\n(creation of user story)
 factory --> service :newUserStory
@@ -40,61 +40,32 @@ deactivate
 service -> projectRepository: getByID(projectCode)
 
 activate projectRepository
-ref over projectRepository : US017_CreateUserStorySD4\n(retrieve project from projectRepository)
 projectRepository --> service: project
 deactivate
 
-
-
-
 service -> usRepository :save(newUserStory)
-
 activate usRepository
-usRepository -> newUserStory : identity()
-
-activate newUserStory
-newUserStory --> usRepository: userStoryID
-deactivate
-
-usRepository -> usRepository : containsID(userStoryID)
-activate usRepository #DarkSalmon
-
-usRepository -> jpa :existsById(userStoryID)
-
-activate jpa
-jpa --> usRepository : false
-deactivate
-deactivate
-
-usRepository -> assembler : toData(userStory)
-
-activate assembler
-assembler --> userStoryJpa ** : create
-assembler --> usRepository : userStoryJpa
-deactivate
-
-usRepository -> jpa : save(userStoryJpa)
-
-activate jpa
-'jpa --> savedUserStoryJpa ** : create
-jpa --> usRepository : savedUserStoryJpa
-deactivate
-
-usRepository -> assembler : toDomain(savedUserStoryJpa)
-activate assembler
-assembler --> savedUserStory ** : create
-assembler --> usRepository : savedUserStory
-deactivate
-
+ref over usRepository : US017_CreateUserStorySD4\n(saving of user story)
+usRepository --> savedUserStory ** : create
 usRepository --> service: savedUserStory
 deactivate
+
+service -> mapper : toDto(savedUserStory)
+activate mapper
+mapper --> outDto ** : create
+mapper --> service : savedUserStoryDto
 
 service -> newUserStory : identity()
 activate newUserStory
 newUserStory --> service : userStoryID
 deactivate
 
-service -> project :addToProductBacklog(userStoryID, infoDTO.priority)
+service -> inDto : .priority
+activate inDto
+inDto --> service : priority
+deactivate
+
+service -> project :addToProductBacklog(userStoryID, priority)
 
 activate project
 project -> backlog: addUserStory(userStoryID, priority)
@@ -110,17 +81,16 @@ backlog -> uslist : add(priority, userStoryID)
 activate uslist
 deactivate
 
-backlog --> project : true
+backlog --> project : attributedPriority
 deactivate
 
-project --> service : true
+project --> service : attributedPriority
 deactivate
 
-service -> projectRepository : save(project)
+service -> projectRepository : replace(project)
 activate projectRepository
-ref over projectRepository : US017_CreateUserStorySD5\n(save project in projectRepository)
-projectRepository --> service : savedProject
+projectRepository --> service : replacedProject
 deactivate
 
-[<-- service : savedUserStory
+[<-- service : savedUserStoryDto
 @enduml
