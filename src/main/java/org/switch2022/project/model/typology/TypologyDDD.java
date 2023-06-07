@@ -45,15 +45,15 @@ public class TypologyDDD implements AggregateRoot<TypologyID> {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-
-        if (object instanceof TypologyDDD) {
-            TypologyDDD typologyDDD = (TypologyDDD) object;
-            if (this.typologyDesignation.equals(typologyDDD.typologyDesignation))
-                return true;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return false;
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        TypologyDDD that = (TypologyDDD) o;
+        return typologyDesignation.equals(that.typologyDesignation);
     }
 
     @Override
@@ -65,5 +65,7 @@ public class TypologyDDD implements AggregateRoot<TypologyID> {
     public String toString(){
         return this.typologyDesignation.toString();
     }
+
+
 }
 

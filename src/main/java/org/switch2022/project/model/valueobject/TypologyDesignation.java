@@ -17,7 +17,7 @@ public class TypologyDesignation implements ValueObject, Serializable {
      */
     public TypologyDesignation(String designation) {
 
-        if (designation == null || designation.isBlank() || designation.isEmpty()) {
+        if (designation == null || designation.isBlank()) {
             throw new IllegalArgumentException("Typology designation must not be null");
         } else {
             this.designation = designation;
@@ -25,15 +25,14 @@ public class TypologyDesignation implements ValueObject, Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-
-        if (!(object instanceof TypologyDesignation)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TypologyDesignation that = (TypologyDesignation) object;
+        TypologyDesignation that = (TypologyDesignation) o;
         return designation.equals(that.designation);
     }
 
@@ -47,4 +46,6 @@ public class TypologyDesignation implements ValueObject, Serializable {
     public String toString() {
         return this.designation;
     }
+
+
 }

@@ -1,5 +1,7 @@
 package org.switch2022.project.datamodel.JPA;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,13 +25,9 @@ public class TypologyJpa {
      *
      * @param typologyDesignation of the typology
      */
-    public TypologyJpa(String typologyDesignation) {
+    public TypologyJpa(@NonNull String typologyDesignation) {
 
-        if (typologyDesignation != null && !typologyDesignation.isBlank() && !typologyDesignation.isEmpty()) {
             this.typologyDesignation = typologyDesignation;
-        } else {
-            throw new IllegalArgumentException("Typology designation must not be null");
-        }
     }
 
     public Long getId() {

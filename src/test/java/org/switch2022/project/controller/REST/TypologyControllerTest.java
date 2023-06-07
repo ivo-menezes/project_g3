@@ -57,7 +57,7 @@ class TypologyControllerTest {
         ResponseEntity<TypologyOutputDTO> responseEntity = controller.createTypology(typologyDto);
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
+        assertEquals(201, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -78,7 +78,7 @@ class TypologyControllerTest {
         ResponseEntity<TypologyOutputDTO> responseEntity = controller.createTypology(typologyDto);
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(400, responseEntity.getStatusCodeValue());
     }
     @DisplayName("Ensure the getAll method was successfully returned")
     @Test
@@ -97,7 +97,7 @@ class TypologyControllerTest {
         ResponseEntity<ArrayList<TypologyOutputDTO>> responseEntity = controller.getAll();
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @DisplayName("Ensure the getAll method return http status code 400")
@@ -112,6 +112,6 @@ class TypologyControllerTest {
         ResponseEntity<ArrayList<TypologyOutputDTO>> responseEntity = controller.getAll();
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(400, responseEntity.getStatusCodeValue());
     }
 }

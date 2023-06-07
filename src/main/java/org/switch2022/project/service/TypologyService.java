@@ -1,7 +1,6 @@
 package org.switch2022.project.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.switch2022.project.mapper.TypologyDTO;
 import org.switch2022.project.model.typology.ITypologyFactory;
 import org.switch2022.project.model.typology.TypologyDDD;
@@ -14,10 +13,8 @@ import java.util.ArrayList;
 @Service
 public class TypologyService {
 
-    @Autowired
-    private ITypologyFactory typologyFactory;
+    private final ITypologyFactory typologyFactory;
 
-    @Autowired
     private final ITypologyRepository typologyRepository;
 
     /**
@@ -44,7 +41,7 @@ public class TypologyService {
      * @return the updated TypologyDTO with the saved typology id
      */
     public TypologyDTO createTypology(TypologyDTO typologyDTO){
-        //creating the value objects from the DTO
+
         TypologyID typologyID = typologyDTO.typologyID;
         TypologyDesignation typologyDesignation = typologyDTO.typologyDesignation;
         //creating the Typology

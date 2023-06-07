@@ -1,12 +1,13 @@
 package org.switch2022.project.controller.REST;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.switch2022.project.mapper.*;
+import org.switch2022.project.mapper.TypologyDTO;
+import org.switch2022.project.mapper.TypologyMapper;
+import org.switch2022.project.mapper.TypologyOutputDTO;
 import org.switch2022.project.service.TypologyService;
 
 import java.util.ArrayList;
@@ -17,15 +18,14 @@ import java.util.ArrayList;
 
 public class TypologyController {
 
-    @Autowired
-    private TypologyService typologyService;
+    private final TypologyService typologyService;
 
-    @Autowired
-    private TypologyMapper typologyMapper;
+    private final TypologyMapper typologyMapper;
 
 
-    public TypologyController(TypologyService service) {
+    public TypologyController(TypologyService service, TypologyMapper typologyMapper) {
         this.typologyService = service;
+        this.typologyMapper = typologyMapper;
     }
 
     /**

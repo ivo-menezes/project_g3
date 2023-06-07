@@ -21,9 +21,7 @@ public class TypologyFactoryImpl implements ITypologyFactory{
             throw new IllegalArgumentException("Typology designation must not be null");
         }
 
-        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
-
-        return typology;
+        return new TypologyDDD(typologyID, typologyDesignation);
     }
 }
 

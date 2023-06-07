@@ -3,11 +3,8 @@ package org.switch2022.project.datamodel.JPA;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 class TypologyJpaTest {
 
@@ -32,22 +29,6 @@ class TypologyJpaTest {
 
         // Assert
         assertInstanceOf(TypologyJpa.class, typologyJpa);
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = {" ", "\t", "\n"})
-    @DisplayName("Ensure exception is thrown when designation is null, blank or empty")
-    void ensureExceptionIsThrownWhenDesignationIsNullBlankOrEmpty(String typologyDesignation) {
-        //Arrange
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new TypologyJpa(typologyDesignation));
-        String expectedMessage = "Typology designation must not be null";
-
-        //Act
-        String actualMessage = exception.getMessage();
-
-        //Assert
-        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
