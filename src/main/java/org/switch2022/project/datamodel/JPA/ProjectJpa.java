@@ -123,8 +123,12 @@ public class ProjectJpa {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
         ProjectJpa that = (ProjectJpa) o;
         return projectCode.equals(that.projectCode);
     }
