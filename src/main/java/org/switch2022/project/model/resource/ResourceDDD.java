@@ -5,28 +5,28 @@ import org.switch2022.project.model.valueobject.*;
 
 public class ResourceDDD implements AggregateRoot<ResourceID> {
 
-    private ResourceID resourceID;
-    private Email email;
-    private CostPerHour costPerHour;
-    private Role role;
-    private PercentageOfAllocation percentageOfAllocation;
-    private ProjectCode projectCode;
-    private TimePeriod timePeriod;
+    private final ResourceID resourceID;
+    private final AccountID accountID;
+    private final CostPerHour costPerHour;
+    private final Role role;
+    private final PercentageOfAllocation percentageOfAllocation;
+    private final ProjectCode projectCode;
+    private final TimePeriod timePeriod;
     /**
      * Public constructor to instantiate a user story.
      *
      * @param resourceID resource id.
-     * @param email of resource.
+     * @param accountID of resource.
      * @param costPerHour of a resource in a project.
      * @param role of a resource in a project.
      * @param percentageOfAllocation of the resource.
      * @param projectCode of the project allocated to the resource.
      */
-    public ResourceDDD(ResourceID resourceID, Email email, CostPerHour costPerHour, Role role,
+    public ResourceDDD(ResourceID resourceID, AccountID accountID, CostPerHour costPerHour, Role role,
                        PercentageOfAllocation percentageOfAllocation, ProjectCode projectCode,
                        TimePeriod timePeriod) {
         this.resourceID = resourceID;
-        this.email = email;
+        this.accountID = accountID;
         this.costPerHour = costPerHour;
         this.role = role;
         this.percentageOfAllocation = percentageOfAllocation;
@@ -39,8 +39,8 @@ public class ResourceDDD implements AggregateRoot<ResourceID> {
         return resourceID;
     }
 
-    public Email getEmail() {
-        return email;
+    public AccountID getAccountID() {
+        return accountID;
     }
 
     public CostPerHour getCostPerHour() {

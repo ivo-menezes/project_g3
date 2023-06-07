@@ -2,10 +2,11 @@ package org.switch2022.project.repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.datamodel.JPA.AccountJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.AccountDomainDataAssembler;
 import org.switch2022.project.model.account.AccountDDD;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.repository.JPA.AccountJpaRepository;
 
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
+@SpringBootTest
 class AccountRepositoryTest {
 
     @DisplayName("Ensure that account was successfully saved.")
@@ -123,7 +126,7 @@ class AccountRepositoryTest {
         assertEquals(allAccounts, result);
     }
 
-    @DisplayName("ensure getByEmail returns account")
+    @DisplayName("ensure findById returns account")
     @Test
     void shouldReturnAccount() {
         //Arrange
@@ -132,19 +135,19 @@ class AccountRepositoryTest {
         AccountRepository accountRepository = new AccountRepository(accountJpaRepository,assembler);
 
         AccountDDD account = mock(AccountDDD.class);
-        Email email = mock(Email.class);
-        when(account.getEmail()).thenReturn(email);
+        AccountID accountID = mock(AccountID.class);
+        when(account.identity()).thenReturn(accountID);
 
         AccountJpa accountJpa = mock(AccountJpa.class);
         Optional<AccountJpa> accountJpaOptional = Optional.of(accountJpa);
 
-        when(accountJpaRepository.findByEmail(account.getEmail().toString())).thenReturn(accountJpaOptional);
+        when(accountJpaRepository.findById(account.identity().getId())).thenReturn(accountJpaOptional);
         when(assembler.toDomain(accountJpa)).thenReturn(account);
 
         Optional<AccountDDD> accountOptional = Optional.of(account);
 
         //Act
-        Optional<AccountDDD> result = accountRepository.getByEmail(email);
+        Optional<AccountDDD> result = accountRepository.getByID(accountID);
 
         //Assert
         assertEquals(accountOptional,result);
@@ -159,13 +162,13 @@ class AccountRepositoryTest {
         AccountRepository accountRepository = new AccountRepository(accountJpaRepository,assembler);
 
         AccountDDD account = mock(AccountDDD.class);
-        Email email = mock(Email.class);
-        when(account.getEmail()).thenReturn(email);
+        AccountID accountID = mock(AccountID.class);
+        when(account.identity()).thenReturn(accountID);
 
-        when(accountJpaRepository.findByEmail(account.getEmail().toString())).thenReturn(Optional.empty());
+        when(accountJpaRepository.findById(account.identity().getId())).thenReturn(Optional.empty());
 
         //Act
-        Optional<AccountDDD> result = accountRepository.getByEmail(email);
+        Optional<AccountDDD> result = accountRepository.getByID(accountID);
 
         //Assert
         assertEquals(Optional.empty(),result);

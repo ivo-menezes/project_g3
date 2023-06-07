@@ -19,7 +19,7 @@ class ResourceDomainAssemblerDataTest {
     @DisplayName("Ensure Resource is correctly converted to ResourceJpa")
     void ensureResourceIsConvertedToResourceJpa(){
         //Arrange
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -28,8 +28,8 @@ class ResourceDomainAssemblerDataTest {
 
         ResourceDDD resourceDDD = mock(ResourceDDD.class);
 
-        when(resourceDDD.getEmail()).thenReturn(email);
-        when(email.toString()).thenReturn("test@gmail.com");
+        when(resourceDDD.getAccountID()).thenReturn(accountID);
+        when(accountID.getId()).thenReturn(3L);
         when(resourceDDD.getCostPerHour()).thenReturn(costPerHour);
         when(costPerHour.getValue()).thenReturn(10.0);
         when(resourceDDD.getRole()).thenReturn(role);
@@ -57,7 +57,7 @@ class ResourceDomainAssemblerDataTest {
     @DisplayName("Ensure ResourceJPA is correctly converted to Resource")
     void ensureResourceJpaIsConvertedToResource(){
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3.0;
         String role = "Product Owner";
         double percentageOfAllocation = 10.0;
@@ -67,7 +67,7 @@ class ResourceDomainAssemblerDataTest {
 
         ResourceJPA resourceJPA = mock(ResourceJPA.class);
 
-        when(resourceJPA.getEmail()).thenReturn(email);
+        when(resourceJPA.getAccountID()).thenReturn(accountID);
         when(resourceJPA.getCostPerHour()).thenReturn(costPerHour);
         when(resourceJPA.getRole()).thenReturn(role);
         when(resourceJPA.getPercentageOfAllocation()).thenReturn(percentageOfAllocation);

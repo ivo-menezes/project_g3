@@ -11,7 +11,7 @@ public class NewResourceDTOMapper {
         NewResourceDTO resourceDTO = new NewResourceDTO();
 
         resourceDTO.resourceID = resource.identity();
-        resourceDTO.email = resource.getEmail();
+        resourceDTO.accountID = resource.getAccountID();
         resourceDTO.costPerHour = resource.getCostPerHour();
         resourceDTO.role = resource.getRole();
         resourceDTO.percentageOfAllocation = resource.getPercentageOfAllocation();

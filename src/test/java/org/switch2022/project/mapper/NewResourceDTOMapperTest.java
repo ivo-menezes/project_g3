@@ -18,7 +18,7 @@ class NewResourceDTOMapperTest {
         NewResourceDTO dto = mock(NewResourceDTO.class);
 
         when(resource.identity()).thenReturn(dto.resourceID);
-        when(resource.getEmail()).thenReturn(dto.email);
+        when(resource.getAccountID()).thenReturn(dto.accountID);
         when(resource.getCostPerHour()).thenReturn(dto.costPerHour);
         when(resource.getRole()).thenReturn(dto.role);
         when(resource.getPercentageOfAllocation()).thenReturn(dto.percentageOfAllocation);

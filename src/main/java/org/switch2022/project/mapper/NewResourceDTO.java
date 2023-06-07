@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class NewResourceDTO {
     public ResourceID resourceID;
-    public Email email;
+    public AccountID accountID;
     public CostPerHour costPerHour;
     public Role role;
     public PercentageOfAllocation percentageOfAllocation;
@@ -18,11 +18,11 @@ public class NewResourceDTO {
         if (this == o) return true;
         if (!(o instanceof NewResourceDTO)) return false;
         NewResourceDTO that = (NewResourceDTO) o;
-        return Objects.equals(email, that.email) && Objects.equals(role, that.role) && Objects.equals(projectCode, that.projectCode) && Objects.equals(timePeriod, that.timePeriod);
+        return Objects.equals(accountID, that.accountID) && Objects.equals(role, that.role) && Objects.equals(projectCode, that.projectCode) && Objects.equals(timePeriod, that.timePeriod);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, role, projectCode, timePeriod);
+        return Objects.hash(accountID, role, projectCode, timePeriod);
     }
 }

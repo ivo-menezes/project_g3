@@ -15,7 +15,7 @@ class ResourceFactoryImplTest {
     void createResourceSucceeds() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -25,7 +25,7 @@ class ResourceFactoryImplTest {
         ResourceFactoryImpl factory = new ResourceFactoryImpl();
 
         //Act
-        ResourceDDD resource = factory.createResource(resourceID, email, costPerHour, role,
+        ResourceDDD resource = factory.createResource(resourceID, accountID, costPerHour, role,
                 percentageOfAllocation, projectCode, timePeriod);
 
         //Arrange
@@ -37,7 +37,7 @@ class ResourceFactoryImplTest {
     void createResourceNullEmailThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = null;
+        AccountID accountID = null;
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -46,11 +46,11 @@ class ResourceFactoryImplTest {
 
         ResourceFactoryImpl factory = new ResourceFactoryImpl();
 
-        String expectedMessage = "Email cannot be null";
+        String expectedMessage = "AccountID cannot be null";
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 
@@ -65,7 +65,7 @@ class ResourceFactoryImplTest {
     void createResourceNullCostPerHourThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = null;
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -78,7 +78,7 @@ class ResourceFactoryImplTest {
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 
@@ -93,7 +93,7 @@ class ResourceFactoryImplTest {
     void createResourceNullRoleThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = null;
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -106,7 +106,7 @@ class ResourceFactoryImplTest {
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 
@@ -121,7 +121,7 @@ class ResourceFactoryImplTest {
     void createResourceNullPercentageOfAllocationThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = null;
@@ -134,7 +134,7 @@ class ResourceFactoryImplTest {
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 
@@ -149,7 +149,7 @@ class ResourceFactoryImplTest {
     void createResourceNullProjectCodeThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -162,7 +162,7 @@ class ResourceFactoryImplTest {
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 
@@ -177,7 +177,7 @@ class ResourceFactoryImplTest {
     void createResourceNullTimePeriodThrowsException() {
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -190,7 +190,7 @@ class ResourceFactoryImplTest {
 
         //Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
-            factory.createResource(resourceID, email, costPerHour, role, percentageOfAllocation
+            factory.createResource(resourceID, accountID, costPerHour, role, percentageOfAllocation
                     , projectCode, timePeriod);
         });
 

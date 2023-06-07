@@ -6,7 +6,7 @@ import org.switch2022.project.model.valueobject.*;
 
 public interface IResourceFactory {
 
-    ResourceDDD createResource (ResourceID resourceID, Email email, CostPerHour costPerHour, Role role,
+    ResourceDDD createResource (ResourceID resourceID, AccountID accountID, CostPerHour costPerHour, Role role,
                                 PercentageOfAllocation percentageOfAllocation, ProjectCode projectCode,
                                 TimePeriod timePeriod);
 

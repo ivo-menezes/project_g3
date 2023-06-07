@@ -15,7 +15,7 @@ public class ResourceRestDTOMapper {
         NewResourceDTO domainDTO = new NewResourceDTO();
 
         domainDTO.resourceID = new ResourceID(restResourceDto.resourceID);
-        domainDTO.email = new Email(restResourceDto.email);
+        domainDTO.accountID = new AccountID(restResourceDto.accountID);
         domainDTO.costPerHour = new CostPerHour(restResourceDto.costPerHour);
         domainDTO.role = new Role(restResourceDto.role);
         domainDTO.percentageOfAllocation = new PercentageOfAllocation(restResourceDto.percentageOfAllocation);
@@ -33,7 +33,7 @@ public class ResourceRestDTOMapper {
         ResourceRestDTO resourceRestDTO = new ResourceRestDTO();
 
         resourceRestDTO.resourceID = domainDto.resourceID.getId();
-        resourceRestDTO.email = domainDto.email.toString();
+        resourceRestDTO.accountID = domainDto.accountID.getId();
         resourceRestDTO.costPerHour = domainDto.costPerHour.getValue();
         resourceRestDTO.role = domainDto.role.toString();
         resourceRestDTO.percentageOfAllocation = domainDto.percentageOfAllocation.getValue();

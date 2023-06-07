@@ -10,7 +10,7 @@ public class ResourceJPA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resourceID;
-    private String email;
+    private Long accountID;
     private double costPerHour;
     private String role;
     private double percentageOfAllocation;
@@ -29,7 +29,7 @@ public class ResourceJPA {
 
     /**
      * Constructor to instantiate a ResourceJPA
-     * @param email of a resource
+     * @param accountID of a resource
      * @param costPerHour of a resource
      * @param role of a resource
      * @param percentageOfAllocation of a resource
@@ -37,10 +37,10 @@ public class ResourceJPA {
      * @param startDate of the resource in the project
      * @param endDate of the resource in the project
      */
-    public ResourceJPA(String email, double costPerHour, String role, double percentageOfAllocation,
+    public ResourceJPA(long accountID, double costPerHour, String role, double percentageOfAllocation,
                        String projectCode, Date startDate, Date endDate) {
 
-            this.email = email;
+            this.accountID = accountID;
             this.costPerHour = costPerHour;
             this.role = role;
             this.percentageOfAllocation = percentageOfAllocation;
@@ -54,8 +54,8 @@ public class ResourceJPA {
         return resourceID;
     }
 
-    public String getEmail() {
-        return email;
+    public long getAccountID() {
+        return accountID;
     }
 
     public double getCostPerHour() {

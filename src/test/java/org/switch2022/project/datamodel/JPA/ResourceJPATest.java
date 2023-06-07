@@ -15,7 +15,7 @@ class ResourceJPATest {
     @DisplayName("Ensure ResourceJPA is successfully created")
     void ensureResourceJpaIsSuccessfullyCreated() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
@@ -24,7 +24,7 @@ class ResourceJPATest {
         Date endDate = new Date(2023 - 4 - 23);
 
         //Act
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Assert
         assertInstanceOf(ResourceJPA.class, resourceJPA);
@@ -44,34 +44,34 @@ class ResourceJPATest {
     @DisplayName("Ensure resource email is returned")
     void ensureResourceEmailIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
-        String resultEmail = resourceJPA.getEmail();
+        long resultAccountID = resourceJPA.getAccountID();
 
         //Assert
-        assertEquals(email, resultEmail);
+        assertEquals(accountID, resultAccountID);
     }
 
     @Test
     @DisplayName("Ensure resource costPerHour is returned")
     void ensureResourceCostPerHourIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         double resultCostPerHour = resourceJPA.getCostPerHour();
@@ -84,14 +84,14 @@ class ResourceJPATest {
     @DisplayName("Ensure resource role is returned")
     void ensureResourceRoleIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         String resultRole = resourceJPA.getRole();
@@ -104,14 +104,14 @@ class ResourceJPATest {
     @DisplayName("Ensure resource PercentageOfAllocation is returned")
     void ensureResourcePercentageOfAllocationIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         double resultPercentageOfAllocation = resourceJPA.getPercentageOfAllocation();
@@ -124,14 +124,14 @@ class ResourceJPATest {
     @DisplayName("Ensure resource project code is returned")
     void ensureResourceProjectCodeIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         String resultProjectCode = resourceJPA.getProjectCode();
@@ -144,14 +144,14 @@ class ResourceJPATest {
     @DisplayName("Ensure resource StartDate is returned")
     void ensureResourceStartDateIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         Date resultStartDate = resourceJPA.getStartDate();
@@ -164,14 +164,14 @@ class ResourceJPATest {
     @DisplayName("Ensure resource endDate is returned")
     void ensureResourceEndDateIsReturned() {
         //Arrange
-        String email = "test@gmail.com";
+        long accountID = 3L;
         double costPerHour = 3;
         String role = "PO";
         double percentageOfAllocation = 10;
         String projectCode = "P26";
         Date startDate = new Date(2023 - 3 - 23);
         Date endDate = new Date(2023 - 4 - 23);
-        ResourceJPA resourceJPA = new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
+        ResourceJPA resourceJPA = new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode, startDate, endDate);
 
         //Act
         Date resultEndDAte = resourceJPA.getEndDate();

@@ -14,7 +14,7 @@ class ResourceDDDTest {
     void ensureResourceIsSuccessfullyCreated(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
@@ -22,7 +22,7 @@ class ResourceDDDTest {
         TimePeriod timePeriod =  mock(TimePeriod.class);
 
         //Act
-        ResourceDDD resourceDDD = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resourceDDD = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Assert
         assertInstanceOf(ResourceDDD.class, resourceDDD);
@@ -33,13 +33,13 @@ class ResourceDDDTest {
     void ensureResourceIdIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         ResourceID resultId = resource.identity();
@@ -53,19 +53,19 @@ class ResourceDDDTest {
     void ensureResourceEmailIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
-        Email resultEmail = resource.getEmail();
+        AccountID resultAccountID = resource.getAccountID();
 
         //Assert
-        assertEquals(email, resultEmail);
+        assertEquals(accountID, resultAccountID);
     }
 
     @Test
@@ -73,13 +73,13 @@ class ResourceDDDTest {
     void ensureResourceCostPerHourIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         CostPerHour resultCostPerHour = resource.getCostPerHour();
@@ -93,13 +93,13 @@ class ResourceDDDTest {
     void ensureResourceRoleIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         Role resultRole = resource.getRole();
@@ -113,13 +113,13 @@ class ResourceDDDTest {
     void ensureResourcePercentageOfAllocationIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         PercentageOfAllocation resultPercentageOfAllocation = resource.getPercentageOfAllocation();
@@ -133,13 +133,13 @@ class ResourceDDDTest {
     void ensureResourceProjectCodeIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         ProjectCode resultProjectCode = resource.getProjectCode();
@@ -153,13 +153,13 @@ class ResourceDDDTest {
     void ensureResourceTimePeriodIsReturned(){
         //Arrange
         ResourceID resourceID = mock(ResourceID.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         CostPerHour costPerHour = mock(CostPerHour.class);
         Role role = mock(Role.class);
         PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         TimePeriod timePeriod =  mock(TimePeriod.class);
-        ResourceDDD resource = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        ResourceDDD resource = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
 
         //Act
         TimePeriod resultTimePeriod = resource.getTimePeriod();

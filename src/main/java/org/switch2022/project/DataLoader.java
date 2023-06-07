@@ -1069,7 +1069,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_1
 
         NewResourceDTO resource_A1_1 = new NewResourceDTO();
-        resource_A1_1.email = email_account_1; //João Silva, USER
+        resource_A1_1.accountID = new AccountID(1); //João Silva, USER
         resource_A1_1.costPerHour = new CostPerHour(25.00);
         resource_A1_1.role = new Role("Product Owner");
         resource_A1_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
@@ -1082,7 +1082,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_2
 
         NewResourceDTO resource_A1_2 = new NewResourceDTO();
-        resource_A1_2.email = email_account_2; //"Manel Costa" USER
+        resource_A1_2.accountID = new AccountID(2); //"Manel Costa" USER
         resource_A1_2.costPerHour = new CostPerHour(25.00);
         resource_A1_2.role = new Role("Scrum Master");
         resource_A1_2.percentageOfAllocation = new PercentageOfAllocation(0.3);
@@ -1095,7 +1095,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_3
 
         NewResourceDTO resource_A1_3 = new NewResourceDTO();
-        resource_A1_3.email = email_account_3; //"Xico Ferreira" USER
+        resource_A1_3.accountID = new AccountID(3); //"Xico Ferreira" USER
         resource_A1_3.costPerHour = new CostPerHour(20.00);
         resource_A1_3.role = new Role("Team Member");
         resource_A1_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1108,7 +1108,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_4
 
         NewResourceDTO resource_A1_4 = new NewResourceDTO();
-        resource_A1_4.email = email_account_5; //"Tiago Cancado" USER
+        resource_A1_4.accountID = new AccountID(5); //"Tiago Cancado" USER
         resource_A1_4.costPerHour = new CostPerHour(35.00);
         resource_A1_4.role = new Role("Project Manager");
         resource_A1_4.percentageOfAllocation = new PercentageOfAllocation(0.2);
@@ -1121,7 +1121,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_5
 
         NewResourceDTO resource_A1_5 = new NewResourceDTO();
-        resource_A1_5.email = email_account_6; //"Nel Moleiro" USER
+        resource_A1_5.accountID = new AccountID(6); //"Nel Moleiro" USER
         resource_A1_5.costPerHour = new CostPerHour(20.00);
         resource_A1_5.role = new Role("Team Member");
         resource_A1_5.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1135,7 +1135,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_6
 
         NewResourceDTO resource_A1_6 = new NewResourceDTO();
-        resource_A1_6.email = email_account_8; //"Zé do Bento" USER
+        resource_A1_6.accountID = new AccountID(8); //"Zé do Bento" USER
         resource_A1_6.costPerHour = new CostPerHour(20.00);
         resource_A1_6.role = new Role("Team Member");
         resource_A1_6.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1148,7 +1148,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_7
 
         NewResourceDTO resource_A1_7 = new NewResourceDTO();
-        resource_A1_7.email = email_account_9; //"Tó Farrulo" USER
+        resource_A1_7.accountID = new AccountID(9); //"Tó Farrulo" USER
         resource_A1_7.costPerHour = new CostPerHour(20.00);
         resource_A1_7.role = new Role("Team Member");
         resource_A1_7.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1161,7 +1161,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A1_8
 
         NewResourceDTO resource_A1_8 = new NewResourceDTO();
-        resource_A1_8.email = email_account_10; //"Tino das Cruzes" USER
+        resource_A1_8.accountID = new AccountID(10); //"Tino das Cruzes" USER
         resource_A1_8.costPerHour = new CostPerHour(20.00);
         resource_A1_8.role = new Role("Team Member");
         resource_A1_8.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1174,7 +1174,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A2_1
 
         NewResourceDTO resource_A2_1 = new NewResourceDTO();
-        resource_A2_1.email = email_account_4; //"Quim Barreiros" USER
+        resource_A2_1.accountID = new AccountID(4); //"Quim Barreiros" USER
         resource_A2_1.costPerHour = new CostPerHour(42.00);
         resource_A2_1.role = new Role("Project Manager");
         resource_A2_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
@@ -1200,7 +1200,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A2_3
 
         NewResourceDTO resource_A2_3 = new NewResourceDTO();
-        resource_A2_3.email = email_account_11;
+        resource_A2_3.accountID = new AccountID(11);
         resource_A2_3.costPerHour = new CostPerHour(20.00);
         resource_A2_3.role = new Role("Team Member");
         resource_A2_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
@@ -1213,7 +1213,7 @@ public class DataLoader implements CommandLineRunner {
         // Resource A2_4
 
         NewResourceDTO resource_A2_4 = new NewResourceDTO();
-        resource_A2_4.email = email_account_12;
+        resource_A2_4.accountID = new AccountID(12);
         resource_A2_4.costPerHour = new CostPerHour(18.00);
         resource_A2_4.role = new Role("Team Member");
         resource_A2_4.percentageOfAllocation = new PercentageOfAllocation(1.0);

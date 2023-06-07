@@ -50,7 +50,7 @@ class ResourceServiceTest {
     void createResourceSucceedsWhenRoleIsProductOwner() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         ProfileName profile = mock(ProfileName.class);
@@ -60,11 +60,11 @@ class ResourceServiceTest {
         ResourceDDD savedResource = mock(ResourceDDD.class);
         NewResourceDTO resourceDTO = mock(NewResourceDTO.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.of(account));
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(true);
         when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
@@ -86,7 +86,7 @@ class ResourceServiceTest {
     void createResourceSucceedsWhenRoleIsScrumMaster() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         ProfileName profile = mock(ProfileName.class);
@@ -96,11 +96,11 @@ class ResourceServiceTest {
         ResourceDDD savedResource = mock(ResourceDDD.class);
         NewResourceDTO resourceDTO = mock(NewResourceDTO.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.of(account));
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(true);
         when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
@@ -122,7 +122,7 @@ class ResourceServiceTest {
     void createResourceSucceedsWhenRoleIsTeamMember() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         ProfileName profile = mock(ProfileName.class);
@@ -132,11 +132,11 @@ class ResourceServiceTest {
         ResourceDDD savedResource = mock(ResourceDDD.class);
         NewResourceDTO resourceDTO = mock(NewResourceDTO.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.of(account));
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(true);
         when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(true);
@@ -158,15 +158,15 @@ class ResourceServiceTest {
     void createResourceFailsWhenAccountDoesntExist() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.empty());
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.empty());
 
         String expected = "Account with given email doesn't exist";
 
@@ -184,18 +184,18 @@ class ResourceServiceTest {
     void createResourceFailsWhenProfileIsNotUser() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         ProfileName profile = mock(ProfileName.class);
 
         AccountDDD account = mock(AccountDDD.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.of(account));
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(false);
 
@@ -215,18 +215,18 @@ class ResourceServiceTest {
     void createResourceFailsWhenProjectCodeDoesntExist() {
         // Arrange
         NewResourceDTO newResourceDTO = mock(NewResourceDTO.class);
-        Email email = mock(Email.class);
+        AccountID accountID = mock(AccountID.class);
         Role role = mock(Role.class);
         ProjectCode projectCode = mock(ProjectCode.class);
         ProfileName profile = mock(ProfileName.class);
 
         AccountDDD account = mock(AccountDDD.class);
 
-        newResourceDTO.email = email;
+        newResourceDTO.accountID = accountID;
         newResourceDTO.role = role;
         newResourceDTO.projectCode = projectCode;
 
-        when(accountRepository.getByEmail(email)).thenReturn(Optional.of(account));
+        when(accountRepository.getByID(accountID)).thenReturn(Optional.of(account));
         when(account.getProfile()).thenReturn(profile);
         when(account.isUser(profile)).thenReturn(true);
         when(projectRepository.existsByProjectCode(projectCode.toString())).thenReturn(false);
@@ -247,7 +247,7 @@ class ResourceServiceTest {
     void getAllResourcesSuccess() {
         //Arrange
         ResourceID id = new ResourceID(1L);
-        Email email = new Email("xpto@gmail.com");
+        AccountID accountID = new AccountID(2L);
         CostPerHour costPerHour = new CostPerHour(10.1);
         Role role = new Role("Product Owner");
         PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(15.5);
@@ -258,7 +258,7 @@ class ResourceServiceTest {
         NewResourceDTO resourceDTO = new NewResourceDTO();
 
         resourceDTO.resourceID = id;
-        resourceDTO.email = email;
+        resourceDTO.accountID = accountID;
         resourceDTO.costPerHour = costPerHour;
         resourceDTO.role = role;
         resourceDTO.percentageOfAllocation = percentageOfAllocation;
@@ -275,7 +275,7 @@ class ResourceServiceTest {
 
         when(resourceRepository.getAll()).thenReturn(resourceDDDList);
         when(resourceDDD.identity()).thenReturn(id);
-        when(resourceDDD.getEmail()).thenReturn(email);
+        when(resourceDDD.getAccountID()).thenReturn(accountID);
         when(resourceDDD.getCostPerHour()).thenReturn(costPerHour);
         when(resourceDDD.getRole()).thenReturn(role);
         when(resourceDDD.getProjectCode()).thenReturn(projectCode);

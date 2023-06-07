@@ -12,24 +12,23 @@ public class ResourceDomainAssemblerData {
 
     public ResourceJPA toData(ResourceDDD resourceDDD) {
 
-        String email = resourceDDD.getEmail().toString();
+        long accountID = resourceDDD.getAccountID().getId();
         double costPerHour = resourceDDD.getCostPerHour().getValue();
         String role = resourceDDD.getRole().toString();
         double percentageOfAllocation = resourceDDD.getPercentageOfAllocation().getValue();
         String projectCode = resourceDDD.getProjectCode().toString();
-
         TimePeriod timePeriod = resourceDDD.getTimePeriod();
         Date startDate = timePeriod.getStartDate();
         Date endDate = timePeriod.getEndDate();
 
-        return new ResourceJPA(email, costPerHour, role, percentageOfAllocation, projectCode,startDate, endDate);
+        return new ResourceJPA(accountID, costPerHour, role, percentageOfAllocation, projectCode,startDate, endDate);
     }
 
     public ResourceDDD toDomain(ResourceJPA resourceJPA) {
         Long id = resourceJPA.getResourceID();
         ResourceID resourceID = new ResourceID(id);
-        String resourceEmail = resourceJPA.getEmail();
-        Email email = new Email(resourceEmail);
+        long resourceAccountID = resourceJPA.getAccountID();
+        AccountID accountID = new AccountID(resourceAccountID);
         double resourceCostPerHour = resourceJPA.getCostPerHour();
         CostPerHour costPerHour = new CostPerHour(resourceCostPerHour);
         String resourceRole = resourceJPA.getRole();
@@ -38,12 +37,11 @@ public class ResourceDomainAssemblerData {
         PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(resourcePercentageOfAllocation);
         String resourceProjectCode = resourceJPA.getProjectCode();
         ProjectCode projectCode = new ProjectCode(resourceProjectCode);
-
         Date resourceStartDate = resourceJPA.getStartDate();
         Date resourceEndDate = resourceJPA.getEndDate();
         TimePeriod timePeriod = new TimePeriod(resourceStartDate, resourceEndDate);
 
-        return new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
+        return new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation, projectCode, timePeriod);
     }
 
 

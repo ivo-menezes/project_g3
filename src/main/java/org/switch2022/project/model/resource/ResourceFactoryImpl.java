@@ -8,11 +8,11 @@ import org.switch2022.project.model.valueobject.*;
 public class ResourceFactoryImpl implements IResourceFactory{
 
     @Override
-    public ResourceDDD createResource(ResourceID resourceID, Email email, CostPerHour costPerHour, Role role,
+    public ResourceDDD createResource(ResourceID resourceID, AccountID accountID, CostPerHour costPerHour, Role role,
                                       PercentageOfAllocation percentageOfAllocation, ProjectCode projectCode,
                                       TimePeriod timePeriod) {
-        if (email == null) {
-            throw new IllegalArgumentException("Email cannot be null");
+        if (accountID == null) {
+            throw new IllegalArgumentException("AccountID cannot be null");
         }
         if (costPerHour == null) {
             throw new IllegalArgumentException("CostPerHour cannot be null");
@@ -29,7 +29,7 @@ public class ResourceFactoryImpl implements IResourceFactory{
         if (timePeriod == null) {
             throw new IllegalArgumentException("TimePeriod cannot be null");
         }
-        ResourceDDD resourceDDD = new ResourceDDD(resourceID, email, costPerHour, role, percentageOfAllocation,
+        ResourceDDD resourceDDD = new ResourceDDD(resourceID, accountID, costPerHour, role, percentageOfAllocation,
                 projectCode, timePeriod);
         return resourceDDD;
     }
@@ -40,7 +40,7 @@ public class ResourceFactoryImpl implements IResourceFactory{
             throw new IllegalArgumentException("Dto must not be null");
         }
 
-        ResourceDDD resource = new ResourceDDD(newResourceDTO.resourceID, newResourceDTO.email,
+        ResourceDDD resource = new ResourceDDD(newResourceDTO.resourceID, newResourceDTO.accountID,
                 newResourceDTO.costPerHour, newResourceDTO.role, newResourceDTO.percentageOfAllocation,
                 newResourceDTO.projectCode, newResourceDTO.timePeriod);
 

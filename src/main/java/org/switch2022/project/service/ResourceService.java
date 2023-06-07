@@ -63,11 +63,11 @@ public class ResourceService {
      */
 
     public NewResourceDTO createResource (NewResourceDTO newResourceDTO) {
-        Email email = newResourceDTO.email;
+        AccountID accountID = newResourceDTO.accountID;
         String projectCode = newResourceDTO.projectCode.toString();
 
         //get account with respective email, if it really exists in the accountRepository
-        Optional<AccountDDD> accountOptional = accountRepository.getByEmail(email);
+        Optional<AccountDDD> accountOptional = accountRepository.getByID(accountID);
 
         if (accountOptional.isEmpty()) {
             throw new RuntimeException("Account with given email doesn't exist");
@@ -112,7 +112,7 @@ public class ResourceService {
 
             NewResourceDTO resourceDTO = new NewResourceDTO();
             resourceDTO.resourceID = resource.identity();
-            resourceDTO.email = resource.getEmail();
+            resourceDTO.accountID = resource.getAccountID();
             resourceDTO.costPerHour = resource.getCostPerHour();
             resourceDTO.role = resource.getRole();
             resourceDTO.percentageOfAllocation = resource.getPercentageOfAllocation();
