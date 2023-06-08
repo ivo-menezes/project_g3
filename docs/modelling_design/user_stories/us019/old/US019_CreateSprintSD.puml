@@ -1,0 +1,89 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+title "US019 - As Project Manager, I want to create a sprint."
+
+participant Client as client
+participant "Springboot" as springboot
+participant "sprintDTO : SprintDTO" as DTO
+participant ": CreateSprintController" as Controller
+participant ": SprintService" as Services
+participant "projectCodeVO : ProjectCode" as ProjecCode
+participant ": ProjectRepository" as ProjectRepository
+participant "sprintNumberVO : SprintNumber" as SprintNumber
+participant "sprintID : SprintID" as SprintID
+participant "timePeriod : TimePeriod" as TimePeriod
+participant "factorySprint :FactorySprintImpl" as Factory
+participant "sprint : Sprint" as Sprint
+participant "sprint : Sprint" as Sprint
+participant ": SprintRepository" as Repository
+participant ": SprintAssemblerData" as Assembler
+participant "sprintRepositoryJPA: ISprintRepositoryJPA" as RepositoryJPA
+participant ":SprintDTOMapper" as Mapper
+participant "response : ResponseEntity<sprintDTOUI>" as response
+
+activate client #FFBBBB
+client ->  springboot: POST /projects/${projectCode}/sprints \n{"projectCode":"code", "startDate": "startDate"\n "endDate": "endDate"}
+
+activate springboot #FFBBBB
+springboot --> DTO **: create(projectCode, \n sprintNumber,\n startDate, endDate)
+springboot -> Controller: createSprint(sprintDTO)
+deactivate springboot
+
+activate Controller #FFBBBB
+Controller -> Services: createSprint(sprintDTO)
+
+activate Services #FFBBBB
+Services --> ProjecCode ** : create(sprintDTO.projectCode)
+Services -> ProjectRepository: containsID(projectCodeVO)
+
+activate ProjectRepository #FFBBBB
+ProjectRepository -->Services: savedSprint
+deactivate
+
+Services --> SprintNumber ** : create(sprintDTO.sprintNumber)
+Services --> SprintID ** : create(projectCodeVO, sprintNumberVO)
+Services --> TimePeriod ** : create (newSprintDTO.startDate, sprintDTO.endDate)
+Services -> Factory: createSprint(sprintID, timePeriod)
+
+activate Factory #FFBBBB
+Factory --> Sprint ** : create (sprintID, \n timePeriod)
+Factory --> Services : sprint
+deactivate
+
+Services -> Repository :save(sprint)
+
+activate Repository #FFBBBB
+Repository -> Assembler : toData(sprint)
+activate Assembler #FFBBBB
+Assembler --> "sprintJPA :SprintJPA" ** :Create(sprint)
+Assembler --> Repository: sprintJPA
+deactivate Assembler
+
+Repository -> RepositoryJPA : save(sprintJPA)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository : savedSprintJPA
+deactivate RepositoryJPA
+Repository -> Assembler : toDomain(savedSprintJPA)
+activate Assembler #FFBBBB
+Assembler --> "sprint :Sprint" ** :Create(sprintJPA)
+Assembler --> Repository : savedSprint
+deactivate Assembler
+
+Repository --> Services: savedSprint
+deactivate
+
+Services --> Controller: SprintDTOToController
+deactivate
+Controller -> Mapper :toRestDTO(toControllerDTO)
+activate Mapper #FFBBBB
+Mapper -->"SprintDTOUI:SprintDTOUI" ** :Create(sprintDTO)
+Mapper --> Controller :sprintDTOUI
+deactivate Mapper
+Controller --> response ** : create(sprintDTOUI, HttpStatus.CREATED)
+Controller --> client: Confirms created Sprint
+deactivate
+
+deactivate client #FFBBBB
+@enduml

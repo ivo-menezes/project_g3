@@ -2,88 +2,110 @@
 !theme plain
 hide footbox
 autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
 title "US019 - As Project Manager, I want to create a sprint."
 
-participant Client as client
-participant "Springboot" as springboot
-participant "sprintDTO : SprintDTO" as DTO
-participant ": CreateSprintController" as Controller
-participant ": SprintService" as Services
-participant "projectCodeVO : ProjectCode" as ProjecCode
-participant ": ProjectRepository" as ProjectRepository
-participant "sprintNumberVO : SprintNumber" as SprintNumber
+participant Client
+participant "Springboot"
+participant "sprintRestDto : SprintRestDto" as restDto
+participant ": SprintController" as Controller
+participant ": SprintRestDtoMapper" as RestMapper
+participant ": SprintService" as Service
+participant ": IFactorySprint" as Factory
 participant "sprintID : SprintID" as SprintID
-participant "timePeriod : TimePeriod" as TimePeriod
-participant "factorySprint :FactorySprintImpl" as Factory
 participant "sprint : Sprint" as Sprint
-participant "sprint : Sprint" as Sprint
-participant ": SprintRepository" as Repository
+participant ": ISprintRepository" as Repository
 participant ": SprintAssemblerData" as Assembler
-participant "sprintRepositoryJPA: ISprintRepositoryJPA" as RepositoryJPA
-participant ":SprintDTOMapper" as Mapper
-participant "response : ResponseEntity<sprintDTOUI>" as response
+participant ": ISprintRepositoryJPA" as RepositoryJPA
+participant ": NewSprintDtoMapper" as NewMapper
+participant "sprintJpa : SprintJpa" as SprintJpa
+participant "savedSprint : Sprint" as savedSprint
+participant "sprintRestDtoOut : SprintRestDto" as sprintRestDtoOut
+participant "response : ResponseEntity<sprintRestDto>" as response
 
-activate client #FFBBBB
-client ->  springboot: POST /projects/${projectCode}/sprints \n{"projectCode":"code", "startDate": "startDate"\n "endDate": "endDate"}
+activate Client
+Client ->  Springboot: POST sprints/{projectCode} \n{"projectCode":"code", "startDate": "startDate"\n "endDate": "endDate"}
 
-activate springboot #FFBBBB
-springboot --> DTO **: create(projectCode, \n sprintNumber,\n startDate, endDate)
-springboot -> Controller: createSprint(sprintDTO)
-deactivate springboot
+activate Springboot
+Springboot --> restDto **: create(projectCode,\n startDate, endDate)
+Springboot -> Controller: createSprint(sprintRestDto)
+deactivate Springboot
+activate Controller
 
-activate Controller #FFBBBB
-Controller -> Services: createSprint(sprintDTO)
+Controller -> RestMapper : toDomainDto(sprintRestDto)
+activate RestMapper
+RestMapper --> Controller : sprintDto
+deactivate RestMapper
+Controller -> Service : createSprint(sprintDto)
+activate Service
 
-activate Services #FFBBBB
-Services --> ProjecCode ** : create(sprintDTO.projectCode)
-Services -> ProjectRepository: containsID(projectCodeVO)
+Service -> Repository : getNewSprintNumber(projectCode)
+activate Repository
 
-activate ProjectRepository #FFBBBB
-ProjectRepository -->Services: savedSprint
+Repository -> RepositoryJPA : findProjectCode(projectCode)
+activate RepositoryJPA
+RepositoryJPA --> Repository: sprints
+Repository -> RepositoryJPA : count()
+RepositoryJPA --> Repository: numberOfSprints
+deactivate RepositoryJPA
+
+Repository --> Service : newSprintNumber
+deactivate Repository
+
+Service -> Factory: createSprint(sprintDto)
+activate Factory
+
+Factory --> SprintID ** : create(projectCode, newSprintNumber)
+
+Factory --> Sprint ** : create (sprintID, timePeriod)
+Factory --> Service : sprint
 deactivate
 
-Services --> SprintNumber ** : create(sprintDTO.sprintNumber)
-Services --> SprintID ** : create(projectCodeVO, sprintNumberVO)
-Services --> TimePeriod ** : create (newSprintDTO.startDate, sprintDTO.endDate)
-Services -> Factory: createSprint(sprintID, timePeriod)
+Service -> Repository :save(sprint)
+activate Repository
 
-activate Factory #FFBBBB
-Factory --> Sprint ** : create (sprintID, \n timePeriod)
-Factory --> Services : sprint
-deactivate
+Repository -> Repository : !hasDateOverlap(projectCode,\n newStartDate)
+activate Repository #Darksalmon
+Repository -> RepositoryJPA : findLastSprintByProjectCode(projectCode)
+activate RepositoryJPA
+RepositoryJPA --> Repository : lastSprint
+deactivate Repository
+deactivate RepositoryJPA
 
-Services -> Repository :save(sprint)
-
-activate Repository #FFBBBB
 Repository -> Assembler : toData(sprint)
-activate Assembler #FFBBBB
-Assembler --> "sprintJPA :SprintJPA" ** :Create(sprint)
-Assembler --> Repository: sprintJPA
+activate Assembler
+Assembler --> SprintJpa ** :Create(sprint)
+Assembler --> Repository: sprintJpa
 deactivate Assembler
 
-Repository -> RepositoryJPA : save(sprintJPA)
+Repository -> RepositoryJPA : save(sprintJpa)
 activate RepositoryJPA #FFBBBB
-RepositoryJPA --> Repository : savedSprintJPA
+RepositoryJPA --> Repository : savedSprintJpa
 deactivate RepositoryJPA
-Repository -> Assembler : toDomain(savedSprintJPA)
+Repository -> Assembler : toDomain(savedSprintJpa)
 activate Assembler #FFBBBB
-Assembler --> "sprint :Sprint" ** :Create(sprintJPA)
+Assembler --> savedSprint ** :Create(savedSprintJpa)
 Assembler --> Repository : savedSprint
 deactivate Assembler
 
-Repository --> Services: savedSprint
+Repository --> Service: savedSprint
+deactivate Repository
+Service -> NewMapper : convertToDto(savedSprint)
+activate NewMapper
+NewMapper --> Service : savedSprintDto
 deactivate
 
-Services --> Controller: SprintDTOToController
+Service --> Controller: savedSprintDto
 deactivate
-Controller -> Mapper :toRestDTO(toControllerDTO)
-activate Mapper #FFBBBB
-Mapper -->"SprintDTOUI:SprintDTOUI" ** :Create(sprintDTO)
-Mapper --> Controller :sprintDTOUI
-deactivate Mapper
-Controller --> response ** : create(sprintDTOUI, HttpStatus.CREATED)
-Controller --> client: Confirms created Sprint
-deactivate
-
-deactivate client #FFBBBB
+Controller -> RestMapper :toRestDto(savedSprintDto)
+activate RestMapper
+RestMapper --> sprintRestDtoOut ** :Create(savedSprintDto)
+RestMapper --> Controller :sprintRestDtoOut
+deactivate RestMapper
+Controller --> response ** : create(sprintRestDtoOut, HttpStatus.CREATED)
+Controller --> Client: Confirms created Sprint
+deactivate Controller
+deactivate Client
 @enduml
