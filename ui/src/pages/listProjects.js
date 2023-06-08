@@ -41,7 +41,7 @@ const ListProjects = () => {
         view: ( <>
                 <img
                     className="button-view"
-                    src="Eye icon.svg"
+                    src="Eye_icon.svg"
                     alt="View"
                     onClick={() => handleRowClick(project.projectCode)}
                 />
