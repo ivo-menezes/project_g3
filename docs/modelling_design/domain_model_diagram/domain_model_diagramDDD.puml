@@ -27,9 +27,10 @@ Object AccountStatus <<VO>>
 Object TimePeriod <<VO>>
 Object PercentageOfAllocation <<VO>>
 Object CostPerHour <<VO>>
+Object Description <<VO>>
 Object Role <<VO>>
 Object UserStoryActor <<VO>>
-Object Description <<VO>>
+Object BusinessSectorDesignation <<VO>>
 Object UserStoryAcceptanceCriteria <<VO>>
 Object ProjectName <<VO>>
 Object SprintDuration <<VO>>
@@ -41,15 +42,20 @@ Object UserStoryEffortEstimate <<VO>>
 Object UserStoryStatus <<VO>>
 Object UserStoryPriority <<VO>>
 Object UserStoryNumber <<VO>>
-Object Designation <<VO>>
+Object TypologyDesignation <<VO>>
+Object ProfileName <<VO>>
+Object Email <<VO>>
+Object CustomerNIF <<VO>>
+Object CustomerDesignation <<VO>>
+Object UserStoryDescription <<VO>>
 
 ' -- DomainID VOs
 Object ProjectCode <<VO>> <<ID>>
 Object UserStoryID <<VO>> <<ID>>
 Object UserStoryInSprintID <<VO>> <<ID>>
 Object SprintID <<VO>> <<ID>>
-Object Email <<VO>> <<ID>>
-Object ProfileName <<VO>> <<ID>>
+Object AccountID <<VO>> <<ID>>
+Object ResourceID <<VO>> <<ID>>
 Object TypologyID <<VO>> <<ID>>
 Object BusinessSectorID <<VO>> <<ID>>
 Object CustomerID <<VO>> <<ID>>
@@ -97,11 +103,10 @@ UserStoryID --> "1" ProjectCode
 UserStoryID --> "1" UserStoryNumber
 UserStory --> "1" UserStoryID
 UserStory --> "1" UserStoryActor
-UserStory --> "1" Description
+UserStory --> "1" UserStoryDescription
 UserStory --> "1" UserStoryAcceptanceCriteria
 UserStory --> "1" UserStoryStatus
 UserStory --> "1" UserStoryPriority
-
 
 package "Account" as Acc {
     Object Account <<Entity>> <<Root>>
@@ -109,10 +114,10 @@ package "Account" as Acc {
 
 Account --> "1" Name
 Account -->  "1" PhoneNumber
-Account --> "1" Email
+Account --> "1" AccountID
 Account --> "1" Photo
 Account --> "1" AccountStatus
-
+Account --> "1" Email
 
 package "Resource" as Res {
     Object Resource <<Entity>> <<Root>>
@@ -123,13 +128,14 @@ Resource --> "1" PercentageOfAllocation
 Resource --> "1" CostPerHour
 Resource --> "1" Role
 Resource --> "1" ProjectCode
-Resource --> "1" Email
+Resource --> "1" AccountID
+Resource --> "1" ResourceID
 
 package Typology as Typo {
     Object Typology <<Entity>>
     }
 
-Typology -up-> "1" Designation
+Typology -up-> "1" TypologyDesignation
 Typology --> "1" TypologyID
 Project -up-> "1" TypologyID
 
@@ -137,7 +143,7 @@ package BusinessSector as Bus {
     Object BusinessSector <<Entity>>
             }
 
-BusinessSector -up-> "1" Designation
+BusinessSector -up-> "1" BusinessSectorDesignation
 BusinessSector --> "1" BusinessSectorID
 Project -up-> "1" BusinessSectorID
 
@@ -145,16 +151,10 @@ package Customer as Cost {
     Object Customer <<Entity>>
     }
 
-Customer -up-> "1" Designation
+Customer -up-> "1" CustomerDesignation
 Customer --> "1" CustomerID
+Customer -up-> "1" CustomerNIF
 Project -up-> "1" CustomerID
-
-package "Profile" as Prof {
-    Object Profile <<Entity>> <<Root>>
-    }
-
-Profile -up-> "1" ProfileName
-
 Account -up-> "1" ProfileName
 
 @enduml
