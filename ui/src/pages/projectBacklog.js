@@ -7,7 +7,6 @@ import Button from "../components/button";
 import {fetchBacklog} from "../context/Actions";
 
 const headers = [
-    {label: "Project Code", key: "projectCode"},
     {label: "Number", key: "number"},
     {label: "Actor", key: "actor"},
     {label: "Description", key: "description"},
@@ -16,7 +15,7 @@ const headers = [
     {label: "Acceptance Criteria", key: "ac"},
 ]
 
-const ConsultBacklog = () => {
+const ProjectBacklog = () => {
 
     const {state, dispatch} = useContext(AppContext);
 
@@ -37,6 +36,16 @@ const ConsultBacklog = () => {
     // to match the headers, need to sort the object properties
     const sortedBacklog = JSON.parse(JSON.stringify(backlogForProject, ["projectCode", "userStoryNumber", "actor", "description", "status", "priority", "acceptanceCriteria"]))
 
+    const finalBacklog = sortedBacklog.map((backlogForProject) => ({
+        number: backlogForProject.userStoryNumber,
+        actor: backlogForProject.actor,
+        description: backlogForProject.description,
+        status: backlogForProject.status,
+        priority: backlogForProject.priority,
+        ac: backlogForProject.acceptanceCriteria,
+
+    }));
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -49,10 +58,6 @@ const ConsultBacklog = () => {
         navigate(`/viewProject/${id}`);
     };
 
-
-    /*const backlogForProject = state.backlogs.find(project => project.projectCode === projectCode);
-    const backlog = backlogForProject ? backlogForProject : undefined;*/
-
     return (
         <div>
             <Header/>
@@ -63,7 +68,7 @@ const ConsultBacklog = () => {
             />
             <div className="table-container-a">
                 {backlogForProject.length > 0 ? (
-                    <Table className="table-b" data={sortedBacklog} headers={headers}/>
+                    <Table className="table-b" data={finalBacklog} headers={headers}/>
                 ) : (
                     <div className="string-notification">
                         <span className="string-notification">This project has an empty backlog!</span>
@@ -87,15 +92,5 @@ const ConsultBacklog = () => {
     )
 }
 
-export default ConsultBacklog;
+export default ProjectBacklog;
 
-
-// getting headers for table
-// Table component expects headers formatted as an object in a specific way
-
-/* const headers = Object.keys(backlog[0]);
- const headersArray = headers.map((header_string, index) => {
-     return {["header"+index] : {label : header_string}}
- })
- var formattedHeaders = Object.assign({}, ...headersArray)
- formattedHeaders = {...formattedHeaders, header4 : {label : ""}} */

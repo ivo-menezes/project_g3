@@ -7,10 +7,11 @@ import AppContext from "../context/AppContext";
 import {fetchSprints} from "../context/Actions";
 
 const headers = [
-    { label: "Project code", key: "projectCode"},
-    { label: "ID", key: "id"},
+    { label: "Sprint Number", key: "sprintNumber"},
     { label: "Start Date", key: "startDate"},
     { label: "End Date", key: "endDate" },
+    { label: "Status", key: "status"},
+    { label: "Backlog", key: "view"},
 ];
 
 const ListSprints = () => {
@@ -26,12 +27,33 @@ const ListSprints = () => {
         fetchSprints(dispatch, projectCode)
     }, []);
 
-
-
     const navigate = useNavigate();
+
     const location = useLocation();
 
     const sprintInProject = state.sprints.data.filter((sprint) => sprint.projectCode === projectCode);
+
+    const handleViewSprintBacklog = (sprintNumber) => {
+        navigate(`/sprintBacklog/${projectCode}/${sprintNumber}`);
+    };
+
+    const sprints = sprintInProject.map((sprint) => ({
+        sprintNumber: sprint.sprintNumber,
+        startDate: sprint.startDate,
+        endDate: sprint.endDate,
+        status: "status",
+        view: ( <>
+                <img
+                    className="button-view"
+                    src = "http://localhost:3000/Eye_icon.svg"
+                    alt ="View"
+                    onClick={() => handleViewSprintBacklog(sprint.sprintNumber)}
+                />
+            </>
+        ),
+    }));
+
+
 
     const handleCreateSprint = () => {
         const from = location.pathname;
@@ -51,7 +73,7 @@ const ListSprints = () => {
             />
             <div className="table-container-b">
             {sprintInProject.length > 0 ? (
-                <Table className="table-b" data={sprintInProject} headers={headers} />
+                <Table className="table-b" data={sprints} headers={headers} />
             ) : (
                 <div className="string-notification">
                     <span className="string-notification"> This project has an empty sprint list!</span>

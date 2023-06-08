@@ -178,7 +178,6 @@ header .logo
 
 .table th,
 .table td {
-    padding: 8px;
     text-align: left;
     border-bottom: 1px solid #2F3DA9;
     height: 50px; /* Set the desired height for th and td rows */
@@ -443,6 +442,7 @@ a:link {
 /* For project view: */
 .button-view {
     width: 30px;
+    height: 30px;
     display: table;
     margin-left: 60%;
     background-color: rgba(73, 176, 215, 0.3);

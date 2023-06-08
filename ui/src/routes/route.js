@@ -8,13 +8,14 @@ import CreateProject from "../pages/createProject";
 import ViewProject from "../pages/viewProject";
 import CreateUserStory from '../pages/createUserStory';
 import ListSprints from '../pages/listSprint';
-import ConsultBacklog from '../pages/consultBacklog';
+import ProjectBacklog from '../pages/projectBacklog';
 import CreateSprint from '../pages/createSprint';
 import ViewSprint from "../pages/viewSprintPage";
 import PageUnderConstruction from "../pages/pageUnderConstruction";
 import ListResources from "../pages/listResources";
 import AssociateResource from "../pages/associateResource";
 import AboutUs from "../pages/aboutUs";
+import SprintBacklog from "../pages/sprintBacklog"; // Import the SprintBacklog component
 
 
 const Router= createBrowserRouter([
@@ -49,7 +50,7 @@ const Router= createBrowserRouter([
     },
     {
         path: "/backlog/:projectCode",
-        element: <ConsultBacklog />
+        element: <ProjectBacklog />
     },
     {
         path: "/viewSprintPage",
@@ -74,6 +75,11 @@ const Router= createBrowserRouter([
     {
         path: "/aboutUs",
         element: <AboutUs/>
+    },
+    // Add the new route for the sprintBacklog page
+    {
+        path: "/sprintBacklog/:projectCode/:sprintNumber",
+        element: <SprintBacklog />,
     }
 ]);
 export default Router;

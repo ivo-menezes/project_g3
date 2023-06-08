@@ -1,0 +1,98 @@
+import React, {useContext, useEffect} from "react";
+import AppContext from '../context/AppContext';
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import Header from "../components/header";
+import Table from "../components/table";
+import Button from "../components/button";
+import {fetchBacklog} from "../context/Actions";
+
+const headers = [
+    {label: "Number", key: "number"},
+    {label: "Actor", key: "actor"},
+    {label: "Description", key: "description"},
+    {label: "Status", key: "status"},
+    {label: "Priority", key: "priority"},
+    {label: "Acceptance Criteria", key: "ac"},
+]
+
+const SprintBacklog = () => {
+
+    const {state, dispatch} = useContext(AppContext);
+
+    // getting the projectCode and sprintNumber from the URL match (this is a function of react-router-dom)
+    const { projectCode, sprintNumber } = useParams();
+
+    //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
+    //of the content are visible when rendering the page.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+
+        // calling the fetchBacklog action that fetches the backlog for the given project from backend
+        fetchBacklog(dispatch, sprintNumber);
+    }, []);
+
+    const backlogForSprint = state.backlogs.data;
+    // table component renders columns in the same order as the object properties...
+    // to match the headers, need to sort the object properties
+    const sortedBacklog = JSON.parse(JSON.stringify(backlogForSprint, ["projectCode", "userStoryNumber", "actor", "description", "status", "priority", "acceptanceCriteria"]))
+
+    const finalBacklog = sortedBacklog.map((backlogForSprint) => ({
+        number: backlogForSprint.userStoryNumber,
+        actor: backlogForSprint.actor,
+        description: backlogForSprint.description,
+        status: backlogForSprint.status,
+        priority: backlogForSprint.priority,
+        ac: backlogForSprint.acceptanceCriteria,
+
+    }));
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    /*Update this to handleAddUserStory (from product backlog to sprint backlog), once the backend is implemented*/
+    const handleCreateUS = () => {
+        const from = location.pathname;
+        navigate(`/createUserStory/${sprintNumber}`, {state: {from}});
+    }
+
+    const handleRowClick = (projectCode) => {
+        navigate(`/listSprints/${projectCode}`)
+    };
+
+
+    return (
+        <div>
+            <Header/>
+            <div className="header-background-container"/>
+            <Header
+                className='header-list'
+                text={`Sprint backlog - Sprint ${sprintNumber}`}
+            />
+            <div className="table-container-a">
+                {backlogForSprint.length > 0 ? (
+                    <Table className="table-b" data={finalBacklog} headers={headers}/>
+                ) : (
+                    <div className="string-notification">
+                        <span className="string-notification">This sprint has an empty backlog!</span>
+                    </div>
+                )}
+            </div>
+            <div className="bt-container">
+                <Button
+                    className='button-edit-stuff'
+                    name='Add UserStory'
+                    onClick={handleCreateUS}
+                />
+                <Button
+                    className='button-edit-stuff'
+                    name="Back to Sprint"
+                    onClick={() => handleRowClick(projectCode)}
+                />
+            </div>
+        </div>
+
+    )
+}
+
+export default SprintBacklog;
+
