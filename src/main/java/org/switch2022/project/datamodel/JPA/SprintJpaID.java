@@ -38,7 +38,8 @@ public class SprintJpaID implements Serializable {
             return false;
         }
         SprintJpaID that = (SprintJpaID) o;
-        return Objects.equals(projectCode, that.projectCode) && Objects.equals(sprintNumber, that.sprintNumber);
+        return Objects.equals(projectCode, that.projectCode) &&
+                Objects.equals(sprintNumber, that.sprintNumber);
     }
 
     @Override

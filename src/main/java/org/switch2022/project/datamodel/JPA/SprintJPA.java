@@ -49,7 +49,9 @@ public class SprintJPA {
             return false;
         }
         SprintJPA that = (SprintJPA) o;
-        return Objects.equals(sprintID, that.sprintID) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
+        return Objects.equals(sprintID, that.sprintID) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate);
     }
 
     @Override
