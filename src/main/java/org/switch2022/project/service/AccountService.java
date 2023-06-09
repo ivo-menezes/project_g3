@@ -19,7 +19,7 @@ public class AccountService {
      * Constructor for AccountRepository.
      * @param accountFactory injected parameter
      * @param accountRepository injected parameter
-     * @param accountDTOMapper
+     * @param accountDTOMapper injected parameter
      */
 
 
@@ -65,9 +65,12 @@ public class AccountService {
         //saving the account in the repository
         AccountDDD savedAccount = accountRepository.save(account);
 
-        //update the accountID
-        newAccountDTO.accountID = savedAccount.identity();
+        // transforming the savedAccount to a dto
+        NewAccountDTO accountDTO = accountDTOMapper.toDTO(savedAccount);
 
-        return newAccountDTO;
+        //update the accountID
+        accountDTO.accountID = savedAccount.identity();
+
+        return accountDTO;
     }
 }

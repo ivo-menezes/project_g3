@@ -76,6 +76,7 @@ class AccountServiceTest {
         ProfileName profile = mock(ProfileName.class);
         AccountDDD account = mock(AccountDDD.class);
         AccountDDD savedAccount = mock(AccountDDD.class);
+        NewAccountDTO accountDTO = mock(NewAccountDTO.class);
 
         newAccountDTO.accountID = accountID;
         newAccountDTO.email = email;
@@ -88,12 +89,13 @@ class AccountServiceTest {
         when(accountFactory.createAccount(accountID, email, name, phoneNumber, photo, profile)).
                 thenReturn(account);
         when(accountRepository.save(account)).thenReturn(savedAccount);
+        when(accountDTOMapper.toDTO(savedAccount)).thenReturn(accountDTO);
 
         // Act
         NewAccountDTO result = accountService.createAccount(newAccountDTO);
 
         // Assert
-        assertEquals(newAccountDTO, result);
+        assertEquals(accountDTO, result);
     }
 
     @DisplayName("assert that creating a account fails when email exists")
