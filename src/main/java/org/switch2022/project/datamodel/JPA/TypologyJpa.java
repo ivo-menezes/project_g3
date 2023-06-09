@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 
 @Entity
-@Table(name="typologies")
+@Table(name = "typologies")
 public class TypologyJpa {
 
     @Id
@@ -27,7 +27,7 @@ public class TypologyJpa {
      */
     public TypologyJpa(@NonNull String typologyDesignation) {
 
-            this.typologyDesignation = typologyDesignation;
+        this.typologyDesignation = typologyDesignation;
     }
 
     public Long getId() {

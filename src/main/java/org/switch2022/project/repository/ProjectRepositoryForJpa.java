@@ -20,7 +20,8 @@ public class ProjectRepositoryForJpa implements IProjectRepository {
 
     private final ProjectDomainDataAssembler projectDomainDataAssembler;
 
-    public ProjectRepositoryForJpa(ProjectJpaRepository projectJpaRepository, ProjectDomainDataAssembler projectDomainDataAssembler) {
+    public ProjectRepositoryForJpa(ProjectJpaRepository projectJpaRepository,
+                                   ProjectDomainDataAssembler projectDomainDataAssembler) {
         this.projectJpaRepository = projectJpaRepository;
         this.projectDomainDataAssembler = projectDomainDataAssembler;
     }
@@ -36,9 +37,8 @@ public class ProjectRepositoryForJpa implements IProjectRepository {
 
         ProjectJpa projectJpa = projectDomainDataAssembler.toData(project);
         ProjectJpa savedProjectJpa = projectJpaRepository.save(projectJpa);
-        ProjectDDD savedProject = projectDomainDataAssembler.toDomain(savedProjectJpa);
 
-        return savedProject;
+        return projectDomainDataAssembler.toDomain(savedProjectJpa);
     }
 
     @Override

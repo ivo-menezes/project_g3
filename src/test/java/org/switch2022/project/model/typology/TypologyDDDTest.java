@@ -118,6 +118,23 @@ class TypologyDDDTest {
     }
 
     @Test
+    @DisplayName("Ensure object does not equal object of a different class")
+    void objectDoesNotEqualObjectOfADifferentClass(){
+        //Arrange
+        TypologyID typologyID = mock(TypologyID.class);
+        TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
+
+        TypologyDDD typology = new TypologyDDD(typologyID, typologyDesignation);
+        String fakeTypology = "FakeTypology";
+
+        //Act
+        boolean result = typology.equals(fakeTypology);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
     @DisplayName("Ensure object does not equal object with different TypologyDesignation")
     void objectNotEqualToObjectWithDifferentTypologyDesignation(){
         //Arrange

@@ -107,6 +107,21 @@ class TypologyDesignationTest {
     }
 
     @Test
+    @DisplayName("Ensure object does not equal object of a different class")
+    void objectDoesNotEqualObjectOfADifferentClass(){
+        //Assert
+        TypologyDesignation designation = new TypologyDesignation("Fixed cost");
+        String fakeDesignation = "FakeDesignation";
+
+        //Act
+        boolean result = designation.equals(fakeDesignation);
+
+        //Assert
+        assertFalse(result);
+
+    }
+
+    @Test
     @DisplayName("Ensure object does not equal object with different designation")
     void ensureObjectDoesNotEqualObjectWithDifferentDesignation(){
         //Arrange
