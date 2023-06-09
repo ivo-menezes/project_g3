@@ -45,6 +45,74 @@ class ResourceServiceTest {
     @Autowired
     ResourceService resourceService;
 
+    @Test
+    @DisplayName("Ensure exception is returned when resourceFactory is null")
+    void ensureExceptionWhenResourceFactoryNull() {
+        // arrange
+        String expectedMessage = "ResourceFactory must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ResourceService(null, resourceRepository,
+                        accountRepository, projectRepository, resourceDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure exception is returned when resourceRepository is null")
+    void ensureExceptionWhenResourceRepositoryNull() {
+        // arrange
+        String expectedMessage = "ResourceRepository must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ResourceService(resourceFactory, null,
+                        accountRepository, projectRepository, resourceDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure exception is returned when accountRepository is null")
+    void ensureExceptionWhenAccountRepositoryNull() {
+        // arrange
+        String expectedMessage = "AccountRepository must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ResourceService(resourceFactory, resourceRepository,
+                        null, projectRepository, resourceDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure exception is returned when projectRepository is null")
+    void ensureExceptionWhenProjectRepositoryNull() {
+        // arrange
+        String expectedMessage = "ProjectRepository must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ResourceService(resourceFactory, resourceRepository,
+                        accountRepository, null, resourceDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
     @DisplayName("assert that creating a resource succeeds when role is product owner")
     @Test
     void createResourceSucceedsWhenRoleIsProductOwner() {

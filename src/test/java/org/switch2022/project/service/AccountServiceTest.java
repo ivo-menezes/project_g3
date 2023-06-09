@@ -8,15 +8,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewAccountDTO;
 import org.switch2022.project.mapper.NewAccountDTOMapper;
-import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.account.IAccountFactory;
-import org.switch2022.project.model.profile.Profile;
-import org.switch2022.project.model.resource.ResourceDDD;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IAccountRepository;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -35,7 +30,39 @@ class AccountServiceTest {
     @Autowired
     AccountService accountService;
 
-    @DisplayName("assert that creating a account succeedsr")
+    @Test
+    @DisplayName("Ensure exception is returned when accountFactory is null")
+    void ensureExceptionWhenAccountFactoryNull() {
+        // arrange
+        String expectedMessage = "AccountFactory must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new AccountService(null, accountRepository, accountDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure exception is returned when accountRepository is null")
+    void ensureExceptionWhenAccountRepositoryNull() {
+        // arrange
+        String expectedMessage = "AccountRepository must not be null.";
+
+        // act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new AccountService(accountFactory, null, accountDTOMapper));
+
+        String resultMessage = result.getMessage();
+
+        // assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("assert that creating a account succeeds")
     @Test
     void createAccountSucceeds() {
         // Arrange
@@ -94,9 +121,8 @@ class AccountServiceTest {
         String expected = "Account with given email already exists";
 
         // Act
-        RuntimeException result = assertThrows(RuntimeException.class, () -> {
-            accountService.createAccount(newAccountDTO);
-        });
+        RuntimeException result = assertThrows(RuntimeException.class, () ->
+            accountService.createAccount(newAccountDTO));
         String resultMessage = result.getMessage();
 
         // Assert

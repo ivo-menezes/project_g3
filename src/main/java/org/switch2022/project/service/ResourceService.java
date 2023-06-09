@@ -38,16 +38,16 @@ public class ResourceService {
                            IAccountRepository accountRepository, IProjectRepository projectRepository,
                            NewResourceDTOMapper resourceDTOMapper) {
         if (resourceFactory == null) {
-            throw new IllegalArgumentException("ResourceFactory must not be null");
+            throw new IllegalArgumentException("ResourceFactory must not be null.");
         }
         if (resourceRepository == null) {
-            throw new IllegalArgumentException("ResourceRepository must not be null");
+            throw new IllegalArgumentException("ResourceRepository must not be null.");
         }
         if (accountRepository == null) {
-            throw new IllegalArgumentException("AccountRepository must not be null");
+            throw new IllegalArgumentException("AccountRepository must not be null.");
         }
         if (projectRepository == null) {
-            throw new IllegalArgumentException("ProjectRepository must not be null");
+            throw new IllegalArgumentException("ProjectRepository must not be null.");
         }
         this.resourceFactory = resourceFactory;
         this.resourceRepository = resourceRepository;

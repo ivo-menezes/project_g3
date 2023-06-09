@@ -5,7 +5,6 @@ import org.switch2022.project.mapper.NewAccountDTO;
 import org.switch2022.project.mapper.NewAccountDTOMapper;
 import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.account.IAccountFactory;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IAccountRepository;
 
@@ -26,10 +25,10 @@ public class AccountService {
 
     public AccountService(IAccountFactory accountFactory, IAccountRepository accountRepository, NewAccountDTOMapper accountDTOMapper) {
         if (accountFactory == null) {
-            throw new IllegalArgumentException("AccountFactory must not be null");
+            throw new IllegalArgumentException("AccountFactory must not be null.");
         }
         if (accountRepository == null) {
-            throw new IllegalArgumentException("AccountRepository must not be null");
+            throw new IllegalArgumentException("AccountRepository must not be null.");
         }
         this.accountFactory = accountFactory;
         this.accountRepository = accountRepository;
