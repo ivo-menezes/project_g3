@@ -15,7 +15,8 @@ import PageUnderConstruction from "../pages/pageUnderConstruction";
 import ListResources from "../pages/listResources";
 import AssociateResource from "../pages/associateResource";
 import AboutUs from "../pages/aboutUs";
-import SprintBacklog from "../pages/sprintBacklog"; // Import the SprintBacklog component
+import SprintBacklog from "../pages/sprintBacklog";
+import AddUserStory from "../pages/addUserStoryToSprintBacklog"; // Import the SprintBacklog component
 
 
 const Router= createBrowserRouter([
@@ -76,10 +77,16 @@ const Router= createBrowserRouter([
         path: "/aboutUs",
         element: <AboutUs/>
     },
-    // Add the new route for the sprintBacklog page
+    // Add new route for the sprintBacklog page
     {
         path: "/sprintBacklog/:projectCode/:sprintNumber",
         element: <SprintBacklog />,
+    },
+    // Add new route for the addUserStoryToSprintBacklog page
+    {
+        path: "/addUserStoryToSprintBacklog/:projectCode/:sprintNumber",
+        element: <AddUserStory />,
     }
+
 ]);
 export default Router;

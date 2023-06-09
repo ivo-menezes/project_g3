@@ -27,7 +27,7 @@ const SprintBacklog = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        // calling the fetchBacklog action that fetches the backlog for the given project from backend
+        // calling the fetchBacklog action that fetches the backlog for the given sprint from backend
         fetchBacklog(dispatch, sprintNumber);
     }, []);
 
@@ -49,11 +49,17 @@ const SprintBacklog = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    /*Update this to handleAddUserStory (from product backlog to sprint backlog), once the backend is implemented*/
+    /*
     const handleCreateUS = () => {
         const from = location.pathname;
         navigate(`/createUserStory/${sprintNumber}`, {state: {from}});
-    }
+    }*/
+
+    const handleAddUserStory = () => {
+        const from = location.pathname;
+        const addUserStoryUrl = `/addUserStoryToSprintBacklog/${projectCode}/${sprintNumber}`;
+        navigate(addUserStoryUrl, { state: { from } });
+    };
 
     const handleRowClick = (projectCode) => {
         navigate(`/listSprints/${projectCode}`)
@@ -81,7 +87,7 @@ const SprintBacklog = () => {
                 <Button
                     className='button-edit-stuff'
                     name='Add UserStory'
-                    onClick={handleCreateUS}
+                    onClick={handleAddUserStory}
                 />
                 <Button
                     className='button-edit-stuff'
