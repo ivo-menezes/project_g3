@@ -10,19 +10,19 @@ const AboutUs = () => {
                     <div className="grid-container">
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="André_crop.jpg" alt="André" />
+                            <img src="http://localhost:3000/images/André_crop.jpg" alt="André" />
                             <div className="caption">André Campos</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="Cristina_crop.jpg" alt="Cristina" />
+                            <img src="http://localhost:3000/images/Cristina_crop.jpg" alt="Cristina" />
                             <div className="caption">Cristina Teixeira</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="Deborah_crop.jpg" alt="Deborah" />
+                            <img src="http://localhost:3000/images/Deborah_crop.jpg" alt="Deborah" />
                             <div className="caption">Deborah Oliveira</div>
                             </div>
                         </div>
@@ -34,43 +34,43 @@ const AboutUs = () => {
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="Ivo_crop.jpg" alt="Ivo" />
+                            <img src="http://localhost:3000/images/Ivo_crop.jpg" alt="Ivo" />
                             <div className="caption">Ivo Menezes</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="Joana_crop.jpg" alt="Joana" />
+                            <img src="http://localhost:3000/images/Joana_crop.jpg" alt="Joana" />
                             <div className="caption">Joana Fonseca</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                            <img src="Marisa_crop.jpg" alt="Marisa" />
+                            <img src="http://localhost:3000/images/Marisa_crop.jpg" alt="Marisa" />
                             <div className="caption">Marisa Graça</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                                <img src="Pedro_crop.jpg" alt="Pedro" />
+                                <img src="http://localhost:3000/images/Pedro_crop.jpg" alt="Pedro" />
                                 <div className="caption">Pedro Silva</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                                <img src="Ricardo_crop.jpg" alt="Ricardo" />
+                                <img src="http://localhost:3000/images/Ricardo_crop.jpg" alt="Ricardo" />
                                 <div className="caption">Ricardo Tavares</div>
                             </div>
                         </div>
                         <div className="grid-item">
                             <div className="image-box">
-                                <img src="Tiago_crop.jpg" alt="Tiago" />
+                                <img src="http://localhost:3000/images/Tiago_crop.jpg" alt="Tiago" />
                                 <div className="caption">Tiago Silva</div>
                             </div>
                         </div>
                         <div className="grid-item logo">
                             <div className="image-box">
-                                <img src="GoScrum_logo.svg" alt="Logo" className="logo-image" />
+                                <img src="http://localhost:3000/images/GoScrum_logo.svg" alt="Logo" className="logo-image" />
                             </div>
                         </div>
                     </div>

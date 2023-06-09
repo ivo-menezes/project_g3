@@ -45,7 +45,7 @@ const ListSprints = () => {
         view: ( <>
                 <img
                     className="button-view"
-                    src = "http://localhost:3000/Eye_icon.svg"
+                    src = "http://localhost:3000/images/Eye_icon.svg"
                     alt ="View"
                     onClick={() => handleViewSprintBacklog(sprint.sprintNumber)}
                 />
