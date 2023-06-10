@@ -5,7 +5,6 @@ import org.switch2022.project.model.valueobject.TypologyDesignation;
 import org.switch2022.project.model.valueobject.TypologyID;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public interface ITypologyRepository {
 
@@ -14,8 +13,6 @@ public interface ITypologyRepository {
     boolean containsTypologyDesignation(TypologyDesignation typologyDesignation);
 
     boolean containsID(TypologyID typologyID);
-
-    Optional<TypologyDDD> getByDesignation(TypologyDesignation typologyDesignation);
 
     ArrayList<TypologyDDD> getAll();
 }

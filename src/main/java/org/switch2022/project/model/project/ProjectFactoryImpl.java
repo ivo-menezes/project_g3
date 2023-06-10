@@ -8,40 +8,40 @@ import org.switch2022.project.model.valueobject.*;
 @Component
 public class ProjectFactoryImpl implements IProjectFactory {
     @Override
-    public ProjectDDD createProject(ProjectCode projectCode,
-                                    ProjectName projectName,
+    public ProjectDDD createProject(ProjectCode code,
+                                    ProjectName name,
                                     Description description,
                                     TimePeriod timePeriod,
-                                    ProjectSprintDuration projectSprintDuration,
-                                    ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints,
-                                    CustomerID customerID,
-                                    BusinessSectorID businessSectorID,
-                                    TypologyID typologyID,
+                                    ProjectSprintDuration sprintDuration,
+                                    ProjectNumberOfPlannedSprints numberOfPlannedSprints,
+                                    CustomerID customerId,
+                                    BusinessSectorID businessSectorId,
+                                    TypologyID typologyId,
                                     ProjectBudget projectBudget) {
 
-        if (projectCode == null) {
-            throw new IllegalArgumentException("Project code must not be null");
+        if (code == null) {
+            throw new IllegalArgumentException("Code must not be null");
         }
-        if (projectName == null) {
-            throw new IllegalArgumentException("Project name must not be null");
+        if (name == null) {
+            throw new IllegalArgumentException("Name must not be null");
         }
         if (description == null) {
             throw new IllegalArgumentException("Description must not be null");
         }
-        if (customerID == null) {
-            throw new IllegalArgumentException("Customer ID must not be null");
+        if (customerId == null) {
+            throw new IllegalArgumentException("CustomerId must not be null");
         }
-        if (businessSectorID == null) {
-            throw new IllegalArgumentException("Business sector ID must not be null");
+        if (businessSectorId == null) {
+            throw new IllegalArgumentException("BusinessSectorId must not be null");
         }
-        if (typologyID == null) {
-            throw new IllegalArgumentException("Typology ID must not be null");
+        if (typologyId == null) {
+            throw new IllegalArgumentException("TypologyId must not be null");
         }
 
-        return new ProjectDDD(projectCode,
-                projectName, description, timePeriod, projectSprintDuration,
-                projectNumberOfPlannedSprints, customerID, businessSectorID,
-                typologyID, projectBudget);
+        return new ProjectDDD(code,
+                name, description, timePeriod, sprintDuration,
+                numberOfPlannedSprints, customerId, businessSectorId,
+                typologyId, projectBudget);
     }
 
     @Override

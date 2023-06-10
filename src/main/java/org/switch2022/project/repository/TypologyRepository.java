@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.datamodel.JPA.TypologyJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.TypologyDomainDataAssembler;
-import org.switch2022.project.model.typology.*;
+import org.switch2022.project.model.typology.TypologyDDD;
 import org.switch2022.project.model.valueobject.TypologyDesignation;
 import org.switch2022.project.model.valueobject.TypologyID;
 import org.switch2022.project.repository.JPA.TypologyJpaRepository;
 import org.switch2022.project.service.irepositories.ITypologyRepository;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 
 @Repository
@@ -64,27 +63,6 @@ public class TypologyRepository implements ITypologyRepository {
         return typologyJpaRepository.existsById(typologyID.getId());
     }
 
-
-    /**
-     * Retrieves a TypologyDDD object from the repository based on the specified typology designation
-     *
-     * @param typologyDesignation of the object to retrieve
-     * @return an Optional containing the TypologyDDD object if found, or an empty Optional otherwise.
-     */
-
-    public Optional<TypologyDDD> getByDesignation(TypologyDesignation typologyDesignation) {
-        String designation = typologyDesignation.toString();
-        Optional<TypologyJpa> oTypologyJpa = typologyJpaRepository.getByTypologyDesignation(designation);
-
-        if (oTypologyJpa.isPresent()) {
-            TypologyJpa typologyDDDJpa = oTypologyJpa.get();
-
-            TypologyDDD typology = typologyDomainDataAssembler.toDomain(typologyDDDJpa);
-            return Optional.of(typology);
-        } else {
-            return Optional.empty();
-        }
-    }
 
     /**
      * Method responsible for return all Typologies from database.
