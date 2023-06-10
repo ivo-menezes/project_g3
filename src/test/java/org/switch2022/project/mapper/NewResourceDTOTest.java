@@ -137,6 +137,13 @@ class NewResourceDTOTest {
 
         assertNotEquals(dto1, dto2);
     }
+    @DisplayName("different objects returns false")
+    @Test
+    public void testEqualsWithDifferentObjectType() {
+        Object object = new Object();
+        NewResourceDTO newResourceDTO = new NewResourceDTO();
+        assertNotEquals(newResourceDTO, object);
+    }
 
     @Test
     @DisplayName("Test hashCode method")
@@ -168,5 +175,4 @@ class NewResourceDTOTest {
         // Act and Assert
         assertEquals(hashCode1, hashCode2);
     }
-
 }
