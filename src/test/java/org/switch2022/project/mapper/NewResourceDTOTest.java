@@ -3,6 +3,9 @@ package org.switch2022.project.mapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.valueobject.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,4 +137,36 @@ class NewResourceDTOTest {
 
         assertNotEquals(dto1, dto2);
     }
+
+    @Test
+    @DisplayName("Test hashCode method")
+    void testHashCode() throws ParseException {
+        //Arrange
+        AccountID id = new AccountID(1L);
+        Role role = new Role("Scrum Master");
+        ProjectCode projectCode = new ProjectCode("1XX");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = dateFormat.parse("2023-10-10");
+        Date endDate = dateFormat.parse("2023-11-11");
+        TimePeriod timePeriod = new TimePeriod(startDate,endDate);
+
+        NewResourceDTO dto1 = new NewResourceDTO();
+        dto1.accountID = id;
+        dto1.role = role;
+        dto1.projectCode = projectCode;
+        dto1.timePeriod = timePeriod;
+
+        NewResourceDTO dto2 = new NewResourceDTO();
+        dto2.accountID = id;
+        dto2.role = role;
+        dto2.projectCode = projectCode;
+        dto2.timePeriod = timePeriod;
+
+        int hashCode1 = dto1.hashCode();
+        int hashCode2 = dto2.hashCode();
+
+        // Act and Assert
+        assertEquals(hashCode1, hashCode2);
+    }
+
 }

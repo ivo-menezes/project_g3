@@ -6,8 +6,6 @@ import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.valueobject.AccountID;
 import org.switch2022.project.repository.JPA.AccountJpaRepository;
 import org.switch2022.project.service.irepositories.IAccountRepository;
-
-import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +23,6 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public AccountDDD save(AccountDDD account) {
-        String emailJPA = account.getEmail().toString();
-        boolean existAccount = accountJpaRepository.existsByEmail(emailJPA);
-
-        if (existAccount) {
-            throw new KeyAlreadyExistsException("Already exists an account with the provided email");
-        }
 
         AccountJpa accountJpa = accountDomainDataAssembler.toData(account);
         AccountJpa savedAccountJpa = accountJpaRepository.save(accountJpa);

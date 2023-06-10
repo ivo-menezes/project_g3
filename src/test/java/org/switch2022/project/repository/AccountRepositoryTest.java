@@ -60,33 +60,6 @@ class AccountRepositoryTest {
         assertEquals(account,resultingAccount);
     }
 
-    @DisplayName("Ensure exception is thrown while saving already existing account.")
-    @Test
-    void ensureExistingAccountThrownExceptionWhenAddingAnotherAccountWithSameEmail() {
-        //Arrange
-        AccountDDD account = mock(AccountDDD.class);
-        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
-        AccountDomainDataAssembler accountDomainDataAssembler = mock(AccountDomainDataAssembler.class);
-        AccountRepository accountRepository = new AccountRepository(accountJpaRepository, accountDomainDataAssembler);
-
-        Email email = mock(Email.class);
-        String designation = "xpto@gmail.com";
-
-        when(account.getEmail()).thenReturn(email);
-        when(email.toString()).thenReturn(designation);
-
-        when(accountJpaRepository.existsByEmail(account.getEmail().toString())).thenReturn(true);
-        String expected = "Already exists an account with the provided email";
-
-        //Act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                accountRepository.save(account));
-        String actualMessage = exception.getMessage();
-
-        //Assert
-        assertEquals(expected, actualMessage);
-    }
-
     @DisplayName("ensure findAll accounts returns a correct collection of accounts")
     @Test
     void shouldReturnAListOfAccounts() {

@@ -15,10 +15,11 @@ public class NewResourceDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof NewResourceDTO)) return false;
+        if (this == o){ return true; }
+        if (!(o instanceof NewResourceDTO)) { return false; }
         NewResourceDTO that = (NewResourceDTO) o;
-        return Objects.equals(accountID, that.accountID) && Objects.equals(role, that.role) && Objects.equals(projectCode, that.projectCode) && Objects.equals(timePeriod, that.timePeriod);
+        return Objects.equals(accountID, that.accountID) && Objects.equals(role, that.role) &&
+                Objects.equals(projectCode, that.projectCode) && Objects.equals(timePeriod, that.timePeriod);
     }
 
     @Override
