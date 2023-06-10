@@ -36,7 +36,7 @@ class TypologyMapperTest {
     }
 
     @Test
-    @DisplayName("Ensure TypologyDTO is converted to TypologyOutputDTO correctly with customerID equals null")
+    @DisplayName("Ensure TypologyDTO is converted to TypologyOutputDTO correctly with typologyID equals null")
     void toOutputDTOWithIDNull() {
         //Arrange
         TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
