@@ -12,9 +12,7 @@ Each project must have at least the following information:[…] Business Sector;
 
 - **From the client clarifications:**
 
-*Question: 
-
-*Answer: 
+No clarification was needed from the client.
 
 ### **1.3 – Acceptance criteria**
 
@@ -26,8 +24,8 @@ Each project must have at least the following information:[…] Business Sector;
 
 **Input Data:**
 
-- Add a new business sector in project.
+- businessSectorDesignation
 
 **Output Data:**
 
-- New business sector added successfully.
+- Confirms business sector creation.

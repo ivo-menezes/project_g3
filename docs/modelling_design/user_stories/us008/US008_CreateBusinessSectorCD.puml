@@ -1,0 +1,103 @@
+@startuml
+skinparam linetype ortho
+
+class BusinessSectorID {
+id :long
+}
+
+class BusinessSectorDesignation {
+BusinessSectorDesignation :String
+}
+
+class BusinessSectorDDD {
+BusinessSectorID :BusinessSectorID
+BusinessSectorDesignation :BusinessSectorDesignation
+}
+
+class BusinessSectorFactoryImpl{
+createBusinessSector(BusinessSectorID, BusinessSectorDesignation)
+}
+
+interface IBusinessSectorFactory{
+createBusinessSector(BusinessSectorID, BusinessSectorDesignation)
+}
+
+class BusinessSectorDTO{
+BusinessSectorID :BusinessSectorID
+BusinessSectorDesignation :BusinessSectorDesignation
+}
+
+class BusinessSectorMapper {
+toOutputDTO(BusinessSector)
+}
+
+class BusinessSectorOutputDTO {
+BusinessSectorID :Long
+BusinessSectorDesignation :String
+}
+
+class BusinessSectorJpa{
+BusinessSectorDesignation :String
+}
+
+class BusinessSectorDomainDataAssembler {
+toData (BusinessSector)
+toDomain(BusinessSectorJPA)
+}
+
+class BusinessSectorController {
+BusinessSectorService :BusinessSectorService
+createBusinessSector(BusinessSectorDTO)
+}
+
+interface BusinessSectorRepositoryJPA {
+existsByBusinessSectorDesignation(designation)
+}
+
+class BusinessSectorRepository {
+BusinessSectorRepositoryJPA :BusinessSectorRepositoryJPA
+BusinessSectorDomainDataAssembler :BusinessSectorDomainDataAssembler
+save(BusinessSector)
+}
+
+interface IBusinessSectorRepository {
+save (BusinessSector)
+}
+
+class BusinessSectorService {
+BusinessSectorFactory :IBusinessSectorFactory
+BusinessSectorRepository :IBusinessSectorRepository
+createBusinessSector (BusinessSectorDTO)
+}
+
+interface AggregateRoot{
+}
+interface DomainEntity{
+}
+interface DomainId{
+}
+interface ValueObject{
+}
+
+AggregateRoot --|> DomainId
+AggregateRoot --|> DomainEntity
+DomainId --|> ValueObject
+BusinessSectorDesignation -..|> ValueObject
+BusinessSectorID -..|> DomainId
+BusinessSectorRepository -..|> IBusinessSectorRepository
+BusinessSectorRepository "1" *-- "1" BusinessSectorRepositoryJPA
+BusinessSectorRepository "1" *-- "1" BusinessSectorDomainDataAssembler
+BusinessSectorDDD -..|> AggregateRoot
+BusinessSectorFactoryImpl -..|> IBusinessSectorFactory
+BusinessSectorFactoryImpl ..> BusinessSectorDDD
+BusinessSectorController "1" *-- "1" BusinessSectorService
+BusinessSectorDDD "1" *-- "1" BusinessSectorID
+BusinessSectorDDD "1" *-- "1" BusinessSectorDesignation
+BusinessSectorController "1" *-- "1" BusinessSectorMapper
+BusinessSectorController ..> BusinessSectorDTO
+BusinessSectorMapper ..> BusinessSectorOutputDTO
+BusinessSectorService "1" *-- "1" IBusinessSectorFactory
+BusinessSectorService "1" *-- "1" IBusinessSectorRepository
+BusinessSectorService "1" *-- "1" BusinessSectorDTO
+BusinessSectorDomainDataAssembler ..> BusinessSectorJpa
+@enduml
