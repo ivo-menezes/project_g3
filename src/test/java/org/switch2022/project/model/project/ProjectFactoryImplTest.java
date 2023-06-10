@@ -26,11 +26,11 @@ class ProjectFactoryImplTest {
     @Mock
     private ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsDouble;
     @Mock
-    private CustomerID customerIDDouble;
+    private CustomerID customerIdDouble;
     @Mock
-    private BusinessSectorID businessSectorIDDouble;
+    private BusinessSectorID businessSectorIdDouble;
     @Mock
-    private TypologyID typologyIDDouble;
+    private TypologyID typologyIdDouble;
     @Mock
     private ProjectBudget projectBudgetDouble;
 
@@ -53,9 +53,9 @@ class ProjectFactoryImplTest {
                                                    timePeriodDouble,
                                                    projectSprintDurationDouble,
                                                    projectNumberOfPlannedSprintsDouble,
-                                                   customerIDDouble,
-                                                   businessSectorIDDouble,
-                                                   typologyIDDouble,
+                                                   customerIdDouble,
+                                                   businessSectorIdDouble,
+                                                   typologyIdDouble,
                                                    projectBudgetDouble
                 );
 
@@ -75,9 +75,9 @@ class ProjectFactoryImplTest {
         projectDto.timePeriod = timePeriodDouble;
         projectDto.projectSprintDuration = projectSprintDurationDouble;
         projectDto.projectNumberOfPlannedSprints = projectNumberOfPlannedSprintsDouble;
-        projectDto.customerID = customerIDDouble;
-        projectDto.businessSectorID = businessSectorIDDouble;
-        projectDto.typologyID = typologyIDDouble;
+        projectDto.customerID = customerIdDouble;
+        projectDto.businessSectorID = businessSectorIdDouble;
+        projectDto.typologyID = typologyIdDouble;
         projectDto.projectBudget = projectBudgetDouble;
 
 
@@ -97,7 +97,7 @@ class ProjectFactoryImplTest {
         // arrange
         ProjectFactoryImpl factory = new ProjectFactoryImpl();
 
-        String expectedMessage = "Project code must not be null";
+        String expectedMessage = "Code must not be null";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
@@ -107,9 +107,9 @@ class ProjectFactoryImplTest {
                 timePeriodDouble,
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
-                customerIDDouble,
-                businessSectorIDDouble,
-                typologyIDDouble,
+                customerIdDouble,
+                businessSectorIdDouble,
+                typologyIdDouble,
                 projectBudgetDouble));
 
         String resultMessage = result.getMessage();
@@ -124,7 +124,7 @@ class ProjectFactoryImplTest {
         // arrange
         ProjectFactoryImpl factory = new ProjectFactoryImpl();
 
-        String expectedMessage = "Project name must not be null";
+        String expectedMessage = "Name must not be null";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
@@ -134,9 +134,9 @@ class ProjectFactoryImplTest {
                 timePeriodDouble,
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
-                customerIDDouble,
-                businessSectorIDDouble,
-                typologyIDDouble,
+                customerIdDouble,
+                businessSectorIdDouble,
+                typologyIdDouble,
                 projectBudgetDouble));
 
         String resultMessage = result.getMessage();
@@ -161,9 +161,9 @@ class ProjectFactoryImplTest {
                 timePeriodDouble,
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
-                customerIDDouble,
-                businessSectorIDDouble,
-                typologyIDDouble,
+                customerIdDouble,
+                businessSectorIdDouble,
+                typologyIdDouble,
                 projectBudgetDouble));
 
         String resultMessage = result.getMessage();
@@ -179,7 +179,7 @@ class ProjectFactoryImplTest {
         // arrange
         ProjectFactoryImpl factory = new ProjectFactoryImpl();
 
-        String expectedMessage = "Customer ID must not be null";
+        String expectedMessage = "CustomerId must not be null";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
@@ -190,8 +190,8 @@ class ProjectFactoryImplTest {
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
                 null,
-                businessSectorIDDouble,
-                typologyIDDouble,
+                businessSectorIdDouble,
+                typologyIdDouble,
                 projectBudgetDouble));
 
         String resultMessage = result.getMessage();
@@ -205,7 +205,7 @@ class ProjectFactoryImplTest {
         // arrange
         ProjectFactoryImpl factory = new ProjectFactoryImpl();
 
-        String expectedMessage = "Business sector ID must not be null";
+        String expectedMessage = "BusinessSectorId must not be null";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
@@ -215,9 +215,9 @@ class ProjectFactoryImplTest {
                 timePeriodDouble,
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
-                customerIDDouble,
+                customerIdDouble,
                 null,
-                typologyIDDouble,
+                typologyIdDouble,
                 projectBudgetDouble));
 
         String resultMessage = result.getMessage();
@@ -232,7 +232,7 @@ class ProjectFactoryImplTest {
         // arrange
         ProjectFactoryImpl factory = new ProjectFactoryImpl();
 
-        String expectedMessage = "Typology ID must not be null";
+        String expectedMessage = "TypologyId must not be null";
 
         // act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
@@ -242,8 +242,8 @@ class ProjectFactoryImplTest {
                 timePeriodDouble,
                 projectSprintDurationDouble,
                 projectNumberOfPlannedSprintsDouble,
-                customerIDDouble,
-                businessSectorIDDouble,
+                customerIdDouble,
+                businessSectorIdDouble,
                 null,
                 projectBudgetDouble));
 

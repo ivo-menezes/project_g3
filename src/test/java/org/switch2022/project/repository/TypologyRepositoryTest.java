@@ -17,7 +17,6 @@ import org.switch2022.project.repository.JPA.TypologyJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -122,30 +121,6 @@ class TypologyRepositoryTest {
         assertFalse(result);
     }
 
-    @Test
-    @DisplayName("Ensure typology is retrieved given a TypologyDesignation, when it exists in the persistence")
-    void ensureTypologyIsRetrieved (){
-        //Arrange
-        TypologyDesignation typologyDesignation = mock(TypologyDesignation.class);
-
-        TypologyDDD expectedTypology = mock(TypologyDDD.class);
-        Optional<TypologyDDD> oTypology = Optional.of(expectedTypology);
-
-        TypologyJpa typologyJpa = mock(TypologyJpa.class);
-        Optional<TypologyJpa> oTypologyJpa = Optional.of(typologyJpa);
-
-        String designation = "Fixed cost";
-
-        when(typologyDesignation.toString()).thenReturn(designation);
-        when(typologyJpaRepository.getByTypologyDesignation(designation)).thenReturn(oTypologyJpa);
-        when(typologyDomainDataAssembler.toDomain(typologyJpa)).thenReturn(expectedTypology);
-
-        //Act
-        Optional<TypologyDDD> result = typologyRepository.getByDesignation(typologyDesignation);
-
-        //Assert
-        assertEquals(oTypology, result);
-    }
 
     @DisplayName("Ensure that getAll method was successfully returned.")
     @Test
