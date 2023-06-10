@@ -1,0 +1,93 @@
+@startuml
+!theme plain
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+hide footbox
+title "US031 - As Project Manager, I want to start the next sprint of a project in the web UI. "
+
+participant Client as client
+participant Springboot
+participant "updateSprintInputDTO : UpdateSprintDTO" as inputDTO
+participant ":SprintController" as controller
+participant ":SprintMapper" as mapper
+participant "updateSprintDomainDTO : UpdateSprintDomainDTO" as DTO
+participant "updateSprintOutputDTO : UpdateSprintDTO" as outputDTO
+participant ":SprintService" as service
+participant ":SprintRepository" as repository
+participant ":AssemblerData" as assembler
+participant ":ISprintRepositoryJPA" as repositoryJPA
+participant "sprint:Sprint" as sprint
+participant "response : ResponseEntity<updateSprintOutputDTO>" as response
+
+client -> Springboot : PATCH /sprints /{projectCode}/{sprintNumber} \n{"projectCode" : "projectCode" \n"sprintNumber" : "sprintNumber" \n"sprintStatus" : "sprintStatus"}
+activate client #FFBBBB
+
+activate Springboot #FFBBBB
+Springboot --> inputDTO ** :create(projectCode, sprintNumber, sprintStatus)
+Springboot -> controller :updateStatusSprint(updateSprintInputDTO)
+deactivate Springboot
+
+activate controller #FFBBBB
+controller -> mapper :toDomainDto(updateSprintInputDTO)
+activate mapper #FFBBBB
+mapper --> DTO **:create(updateSprintInputDTO)
+mapper --> controller :updateSprintDomainDTO
+deactivate mapper
+controller -> service : updateStatusSprint\n(updateSprintDomainDTO)
+
+activate service #FFBBBB
+service -> repository :getByID(sprintID)
+activate repository #FFBBBB
+repository -> assembler :convertIDJpa(sprintID)
+activate assembler #FFBBBB
+assembler --> repository :sprintIDJpa
+deactivate assembler
+repository -> repositoryJPA :getByID(sprintIDJpa)
+activate repositoryJPA #FFBBBB
+repositoryJPA --> repository :sprintJPA
+deactivate repositoryJPA
+repository -> assembler :toDomain(sprintJPA)
+activate assembler #FFBBBB
+assembler --> repository :sprint
+deactivate assembler
+repository --> service :sprint
+deactivate repository
+service -> sprint :setStatus\n(sprintStatus)
+activate sprint #FFBBBB
+deactivate sprint
+
+
+service -> repository :replace(sprint)
+activate repository #FFBBBB
+repository -> assembler :toData(sprint)
+activate assembler #FFBBBB
+assembler --> "sprintJPA :SprintJPA" ** :create(sprint)
+assembler --> repository :sprintJPA
+deactivate assembler
+
+repository -> repositoryJPA :save(sprintJPA)
+activate repositoryJPA #FFBBBB
+repositoryJPA --> repository :savedSprintJPA
+deactivate repositoryJPA
+
+repository ->assembler :toDomain(savedSprintJPA)
+activate assembler #FFBBBB
+assembler --> "sprint: Sprint" ** :create(sprintJPA)
+assembler --> repository :savedSprint
+deactivate assembler
+repository --> service :savedSprint
+deactivate repository
+service --> controller :updateSprintDomainDTO
+deactivate service
+controller -> mapper :toDataDTO(updateSprintDomainDTO)
+
+activate mapper #FFBBBB
+mapper --> outputDTO **:create(updateSprintDomainDTO)
+mapper --> controller :updateSprintOutputDTO
+deactivate  mapper
+controller --> response ** : create(updateSprintOutputDTO, HttpStatus.OK)
+controller --> client : updated status sprint
+deactivate controller
+@enduml
