@@ -1,7 +1,6 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-Administrator -> System: Requests to add a customer to system
-Administrator <-- System: Costumer successfully added
+Administrator -> System: Selects project and inserts customer\n(customerNIF, customerDesignation)
+Administrator <-- System: Confirms customer creation
 
 @enduml

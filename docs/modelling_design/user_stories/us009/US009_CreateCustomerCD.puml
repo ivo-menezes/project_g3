@@ -1,0 +1,118 @@
+@startuml
+skinparam linetype ortho
+
+class CustomerID {
+id :long
+}
+
+class CustomerNIF {
+CustomerNIF :String
+isValidPortugal(nif)
+isValidSpain(nif)
+isValidOtherCountries(number)
+}
+
+class CustomerDesignation {
+CustomerDesignation :String
+}
+
+class CustomerDDD {
+CustomerID :CustomerID
+CustomerNIF :CustomerNIF
+CustomerDesignation :CustomerDesignation
+}
+
+class CustomerFactoryImpl{
+createCustomer(CustomerID, CustomerNIF, CustomerDesignation)
+}
+
+interface ICustomerFactory{
+createCustomer(CustomerID, CustomerNIF, CustomerDesignation)
+}
+
+class CustomerDTO{
+CustomerID :CustomerID
+CustomerNIF :CustomerNIF
+CustomerDesignation :CustomerDesignation
+}
+
+class CustomerMapper {
+toOutputDTO(Customer)
+}
+
+class CustomerOutputDTO {
+CustomerID :Long
+CustomerNIF :String
+CustomerDesignation :String
+}
+
+class CustomerJpa{
+CustomerNIF :String
+CustomerDesignation :String
+}
+
+class CustomerDomainDataAssembler {
+toData (Customer)
+toDomain(CustomerJPA)
+}
+
+class CustomerController {
+CustomerService :CustomerService
+createCustomer(CustomerDTO)
+}
+
+interface CustomerRepositoryJPA {
+existsByCustomerNIF(nif)
+}
+
+class CustomerRepository {
+CustomerRepositoryJPA :CustomerRepositoryJPA
+CustomerDomainDataAssembler :CustomerDomainDataAssembler
+save(Customer)
+}
+
+interface ICustomerRepository {
+save (Customer)
+}
+
+class CustomerService {
+CustomerFactory :ICustomerFactory
+CustomerRepository :ICustomerRepository
+createCustomer (CustomerDTO)
+}
+
+interface AggregateRoot{
+}
+interface DomainEntity{
+}
+interface DomainId{
+}
+
+interface ValueObject{
+}
+
+AggregateRoot --|> DomainId
+AggregateRoot --|> DomainEntity
+DomainId --|> ValueObject
+CustomerNIF -..|> ValueObject
+CustomerDesignation -..|> ValueObject
+CustomerID -..|> DomainId
+CustomerRepository -..|> ICustomerRepository
+CustomerRepository "1" *-- "1" CustomerRepositoryJPA
+CustomerRepository "1" *-- "1" CustomerDomainDataAssembler
+CustomerDDD -..|> AggregateRoot
+CustomerFactoryImpl -..|> ICustomerFactory
+CustomerFactoryImpl ..> CustomerDDD
+CustomerDDD "1" *-- "1" CustomerID
+CustomerDDD "1" *-- "1" CustomerDesignation
+CustomerDDD "1" *-- "1" CustomerNIF
+CustomerController "1" *-- "1" CustomerService
+CustomerController "1" *-- "1" CustomerMapper
+CustomerController ..> CustomerDTO
+CustomerMapper ..> CustomerOutputDTO
+CustomerService "1" *-- "1" ICustomerFactory
+CustomerService "1" *-- "1" ICustomerRepository
+CustomerService "1" *-- "1" CustomerDTO
+CustomerDomainDataAssembler ..> CustomerJpa
+
+@enduml
