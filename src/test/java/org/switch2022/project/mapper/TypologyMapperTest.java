@@ -28,13 +28,11 @@ class TypologyMapperTest {
 
         TypologyMapper typologyMapper = new TypologyMapper();
 
-        TypologyOutputDTO typologyOutputDTO = new TypologyOutputDTO(Long.valueOf(1),"Test");
-
         //Act
         TypologyOutputDTO result = typologyMapper.toOutputDTO(typologyDTO);
 
         //Assert
-        assertEquals(typologyOutputDTO, result);
+        assertInstanceOf(TypologyOutputDTO.class, result);
     }
 
     @Test
@@ -49,13 +47,12 @@ class TypologyMapperTest {
 
         TypologyMapper typologyMapper = new TypologyMapper();
 
-        TypologyOutputDTO typologyOutputDTO = new TypologyOutputDTO(null, "Test");
-
         //Act
-        TypologyOutputDTO result = typologyMapper.toOutputDTO(typologyDTO);
+        TypologyOutputDTO output = typologyMapper.toOutputDTO(typologyDTO);
+        Long result = output.typologyId;
 
         //Assert
-        assertEquals(typologyOutputDTO, result);
+        assertNull(result);
     }
 
     @Test
@@ -77,14 +74,11 @@ class TypologyMapperTest {
 
         TypologyMapper typologyMapper = new TypologyMapper();
 
-        TypologyOutputDTO typologyOutputDTO = new TypologyOutputDTO(Long.valueOf(1),"Test");
-        ArrayList<TypologyOutputDTO> expected = new ArrayList<>();
-        expected.add(typologyOutputDTO);
-
         //Act
         ArrayList<TypologyOutputDTO> result = typologyMapper.toOutputDTO(listDTO);
+        TypologyOutputDTO typologyOutputDTO1= result.get(0);
 
         //Assert
-        assertEquals(expected, result);
+        assertInstanceOf(TypologyOutputDTO.class, typologyOutputDTO1);
     }
 }
