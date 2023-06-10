@@ -8,7 +8,7 @@ As Administrator, I want to create a new project typology.
 
 - **From the specifications document:**
 
-Each project must have at least the following information:[…] Typology (Fixed Cost/Time and materials);
+Each project must have at least the following information: […] Typology (Fixed Cost/Time and materials);
 
 - **From the client clarifications:**
 
@@ -27,8 +27,8 @@ Each project must have at least the following information:[…] Typology (Fixed 
 
 **Input Data:**
 
-- Add new project typology.
+- typologyDesignation.
 
 **Output Data:**
 
-- New typology added successfully.
+- Confirms typology creation.

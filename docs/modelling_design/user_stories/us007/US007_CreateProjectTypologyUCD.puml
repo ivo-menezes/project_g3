@@ -4,7 +4,7 @@ left to right direction
 "Administrator"
 
 rectangle "Project Management System"{
-Administrator -- (Create Project Typology)
+Administrator -- (Create Typology)
 }
 
 @enduml

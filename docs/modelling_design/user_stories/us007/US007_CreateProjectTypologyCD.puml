@@ -1,0 +1,109 @@
+@startuml
+skinparam linetype ortho
+
+class TypologyID {
+id :long
+}
+
+class TypologyDesignation {
+TypologyDesignation :String
+}
+
+class TypologyDDD {
+TypologyID :typologyID
+TypologyDesignation :typologyDesignation
+}
+
+class TypologyFactoryImpl{
+createTypology(typologyID, typologyDesignation)
+}
+
+interface ITypologyFactory{
+createTypology(typologyID, typologyDesignation)
+}
+
+class TypologyDTO{
+TypologyID :typologyID
+TypologyDesignation :TypologyDesignation
+}
+
+class TypologyMapper {
+toOutputDTO(typology)
+}
+
+class TypologyOutputDTO {
+TypologyID :Long
+TypologyDesignation :String
+}
+
+class TypologyJpa{
+TypologyDesignation :String
+}
+
+class TypologyDomainDataAssembler {
+toData (typology)
+toDomain(typologyJPA)
+}
+
+class TypologyController {
+TypologyService :typologyService
+TypologyMapper :typologyMapper
+createTypology(typologyDTO)
+}
+
+interface TypologyJpaRepository {
+existsByTypologyDesignation(designation)
+getByTypologyDesignation(designation)
+}
+
+class TypologyRepository {
+TypologyRepositoryJPA :typologyRepositoryJPA
+TypologyDomainDataAssembler :typologyDomainDataAssembler
+containsTypologyDesignation(typologyDesignation)
+containsID(typologyID)
+getByDesignation(typologyDesignation)
+save(typology)
+}
+
+interface ITypologyRepository {
+save (typology)
+}
+
+class TypologyService {
+TypologyFactory :ITypologyFactory
+TypologyRepository :ITypologyRepository
+createTypology (typologyDTO)
+}
+
+interface AggregateRoot{
+}
+interface DomainEntity{
+}
+interface DomainId{
+}
+interface ValueObject{
+}
+
+AggregateRoot --|> DomainId
+AggregateRoot --|> DomainEntity
+DomainId --|> ValueObject
+TypologyDesignation -..|> ValueObject
+TypologyID -..|> DomainId
+TypologyRepository -..|> ITypologyRepository
+TypologyRepository "1" *-- "1" TypologyJpaRepository
+TypologyRepository "1" *-- "1" TypologyDomainDataAssembler
+TypologyDDD -..|> AggregateRoot
+TypologyFactoryImpl -..|> ITypologyFactory
+TypologyFactoryImpl ..> TypologyDDD
+TypologyController "1" *-- "1" TypologyService
+TypologyController ..> TypologyDTO
+TypologyController "1" *-- "1" TypologyMapper
+TypologyDDD "1" *-- "1" TypologyID
+TypologyDDD "1" *-- "1" TypologyDesignation
+TypologyMapper ..> TypologyOutputDTO
+TypologyService "1" *-- "1" ITypologyFactory
+TypologyService "1" *-- "1" ITypologyRepository
+TypologyService "1" *-- "1" TypologyDTO
+TypologyDomainDataAssembler ..> TypologyJpa
+
+@enduml
