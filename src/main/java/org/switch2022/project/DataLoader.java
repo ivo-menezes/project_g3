@@ -86,9 +86,9 @@ public class DataLoader implements CommandLineRunner {
         customerThree.customerNIF = customerNIFThree;
         customerThree.customerDesignation = customerDesignationThree;
 
-        CustomerID customerID_1 = new CustomerID(customerService.createCustomer(customerOne).customerID.getId());
-        CustomerID customerID_2 = new CustomerID(customerService.createCustomer(customerTwo).customerID.getId());
-        CustomerID customerID_3 = new CustomerID(customerService.createCustomer(customerThree).customerID.getId());
+        CustomerID customerID1 = new CustomerID(customerService.createCustomer(customerOne).customerID.getId());
+        CustomerID customerID2 = new CustomerID(customerService.createCustomer(customerTwo).customerID.getId());
+        CustomerID customerID3 = new CustomerID(customerService.createCustomer(customerThree).customerID.getId());
 
         //Load Business Sectors
         BusinessSectorDesignation businessSectorDesignationOne = new BusinessSectorDesignation("It doesn't matter");
@@ -100,9 +100,9 @@ public class DataLoader implements CommandLineRunner {
         BusinessSectorDTO businessSectorTwo = new BusinessSectorDTO();
         businessSectorTwo.businessSectorDesignation = businessSectorDesignationTwo;
 
-        BusinessSectorID businessSectorID_1 = new BusinessSectorID
+        BusinessSectorID businessSectorID1 = new BusinessSectorID
                 (businessSectorService.createBusinessSector(businessSectorOne).businessSectorID.getId());
-        BusinessSectorID businessSectorID_2 = new BusinessSectorID
+        BusinessSectorID businessSectorID2 = new BusinessSectorID
                 (businessSectorService.createBusinessSector(businessSectorTwo).businessSectorID.getId());
 
         //Load Typologies
@@ -115,1128 +115,1125 @@ public class DataLoader implements CommandLineRunner {
         TypologyDTO typologyTwo = new TypologyDTO();
         typologyTwo.typologyDesignation = typologyDesignationTwo;
 
-        TypologyID typologyID_1 = new TypologyID(typologyService.createTypology(typologyOne).typologyID.getId());
-        TypologyID typologyID_2 = new TypologyID(typologyService.createTypology(typologyTwo).typologyID.getId());
+        TypologyID typologyID1 = new TypologyID(typologyService.createTypology(typologyOne).typologyID.getId());
+        TypologyID typologyID2 = new TypologyID(typologyService.createTypology(typologyTwo).typologyID.getId());
 
         //LOAD PROJECTS
 
         //Project 1
-        ProjectCode projectCode_1 = new ProjectCode("A1");
-        ProjectName projectName_1 = new ProjectName("Dummy01");
-        Description description_1 = new Description("Just a dummy project");
-        LocalDate startDate_project_1 = LocalDate.of(2022, 3, 1);
-        Date newStardDate_project_1 = Date.from(startDate_project_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        LocalDate endDate_project_1 = LocalDate.of(2022, 7, 31);
-        Date newEndDate_project_1 = Date.from(endDate_project_1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        ProjectCode projectCode1 = new ProjectCode("A1");
+        ProjectName projectName1 = new ProjectName("Dummy01");
+        Description description1 = new Description("Just a dummy project");
+        LocalDate startDateProject1 = LocalDate.of(2022, 3, 1);
+        Date newStardDateProject1 = Date.from(startDateProject1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate endDateProject1 = LocalDate.of(2022, 7, 31);
+        Date newEndDateProject1 = Date.from(endDateProject1.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        TimePeriod timePeriod_1 = new TimePeriod(newStardDate_project_1, newEndDate_project_1);
-        //ProjectStatus projectStatus_1 = new ProjectStatus();
-        int sprintTime_1 = 2;
-        ProjectSprintDuration projectSprintDuration_1 = new ProjectSprintDuration(sprintTime_1);
-        int totalSprints_1 = 8;
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_1 =
-                new ProjectNumberOfPlannedSprints(totalSprints_1);
-        float totalBudget_1 = 150000F;
-        ProjectBudget projectBudget_1 = new ProjectBudget(totalBudget_1);
+        TimePeriod timePeriod_1 = new TimePeriod(newStardDateProject1, newEndDateProject1);
+        //ProjectStatus projectStatus1 = new ProjectStatus();
+        int sprintTime1 = 2;
+        ProjectSprintDuration projectSprintDuration1 = new ProjectSprintDuration(sprintTime1);
+        int totalSprints1 = 8;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints1 =
+                new ProjectNumberOfPlannedSprints(totalSprints1);
+        float totalBudget1 = 150000F;
+        ProjectBudget projectBudget1 = new ProjectBudget(totalBudget1);
 
-        NewProjectDTO project_1 = createProjectDTO(customerID_1, businessSectorID_1,
-                typologyID_1, projectCode_1, projectName_1, description_1, timePeriod_1,
-                projectSprintDuration_1, projectNumberOfPlannedSprints_1, projectBudget_1);
+        NewProjectDTO project1 = createProjectDTO(customerID1, businessSectorID1,
+                typologyID1, projectCode1, projectName1, description1, timePeriod_1,
+                projectSprintDuration1, projectNumberOfPlannedSprints1, projectBudget1);
 
-        projectService.createProject(project_1);
+        projectService.createProject(project1);
 
         //Project 2
-        ProjectCode projectCode_2 = new ProjectCode("A2");
-        ProjectName projectName_2 = new ProjectName("Dummy02");
-        Description description_2 = new Description("Just another dummy project");
+        ProjectCode projectCode2 = new ProjectCode("A2");
+        ProjectName projectName2 = new ProjectName("Dummy02");
+        Description description2 = new Description("Just another dummy project");
 
-        LocalDate startDate_project_2 = LocalDate.of(2022, 5, 31);
-        Date newStardDate_project_2 = Date.from(startDate_project_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        LocalDate endDate_project_2 = LocalDate.of(2023, 4, 29);
-        Date newEndDate_project_2 = Date.from(endDate_project_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDateProject2 = LocalDate.of(2022, 5, 31);
+        Date newStardDateProject2 = Date.from(startDateProject2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate endDateProject2 = LocalDate.of(2023, 4, 29);
+        Date newEndDateProject2 = Date.from(endDateProject2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        TimePeriod timePeriod_2 = new TimePeriod(newStardDate_project_2, newEndDate_project_2);
-        int sprintTime_2 = 4;
-        ProjectSprintDuration projectSprintDuration_2 = new ProjectSprintDuration(sprintTime_2);
-        int totalSprints_2 = 12;
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_2 =
-                new ProjectNumberOfPlannedSprints(totalSprints_2);
-        float totalBudget_2 = 350000F;
-        ProjectBudget projectBudget_2 = new ProjectBudget(totalBudget_2);
+        TimePeriod timePeriod2 = new TimePeriod(newStardDateProject2, newEndDateProject2);
+        int sprintTime2 = 4;
+        ProjectSprintDuration projectSprintDuration2 = new ProjectSprintDuration(sprintTime2);
+        int totalSprints2 = 12;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints2 =
+                new ProjectNumberOfPlannedSprints(totalSprints2);
+        float totalBudget2 = 350000F;
+        ProjectBudget projectBudget2 = new ProjectBudget(totalBudget2);
 
-        NewProjectDTO project_2 = createProjectDTO(customerID_2, businessSectorID_1,
-                typologyID_1, projectCode_2, projectName_2, description_2, timePeriod_2,
-                projectSprintDuration_2, projectNumberOfPlannedSprints_2,
-                projectBudget_2);
+        NewProjectDTO project2 = createProjectDTO(customerID2, businessSectorID1,
+                typologyID1, projectCode2, projectName2, description2, timePeriod2,
+                projectSprintDuration2, projectNumberOfPlannedSprints2,
+                projectBudget2);
 
-        projectService.createProject(project_2);
+        projectService.createProject(project2);
 
         //Project 3
-        ProjectCode projectCode_3 = new ProjectCode("666");
-        ProjectName projectName_3 = new ProjectName("Inevitable nightmare");
-        Description description_3 = new Description("Doomed from the start");
+        ProjectCode projectCode3 = new ProjectCode("666");
+        ProjectName projectName3 = new ProjectName("Inevitable nightmare");
+        Description description3 = new Description("Doomed from the start");
 
-        LocalDate startDate_project_3 = LocalDate.of(2023, 3, 10);
-        Date newStardDate_project_3 = Date.from(startDate_project_3.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate startDateProject3 = LocalDate.of(2023, 3, 10);
+        Date newStardDateProject3 = Date.from(startDateProject3.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        TimePeriod timePeriod_3 = new TimePeriod(newStardDate_project_3, new Date());
-        int sprintTime_3 = 3;
-        ProjectSprintDuration projectSprintDuration_3 = new ProjectSprintDuration(sprintTime_3);
-        int totalSprints_3 = 15;
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_3 =
-                new ProjectNumberOfPlannedSprints(totalSprints_3);
-        float totalBudget_3 = 750000F;
-        ProjectBudget projectBudget_3 = new ProjectBudget(totalBudget_3);
+        TimePeriod timePeriod3 = new TimePeriod(newStardDateProject3, new Date());
+        int sprintTime3 = 3;
+        ProjectSprintDuration projectSprintDuration3 = new ProjectSprintDuration(sprintTime3);
+        int totalSprints3 = 15;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints3 =
+                new ProjectNumberOfPlannedSprints(totalSprints3);
+        float totalBudget3 = 750000F;
+        ProjectBudget projectBudget3 = new ProjectBudget(totalBudget3);
 
-        NewProjectDTO project_3 = createProjectDTO(customerID_3, businessSectorID_2,
-                typologyID_2, projectCode_3, projectName_3, description_3, timePeriod_3,
-                projectSprintDuration_3, projectNumberOfPlannedSprints_3,
-                projectBudget_3);
+        NewProjectDTO project3 = createProjectDTO(customerID3, businessSectorID2,
+                typologyID2, projectCode3, projectName3, description3, timePeriod3,
+                projectSprintDuration3, projectNumberOfPlannedSprints3,
+                projectBudget3);
 
-        projectService.createProject(project_3);
+        projectService.createProject(project3);
 
         //LOAD USERSTORIES
 
-        // User story A1_1
-        UserStoryNumber userStoryNumberA1_1 = new UserStoryNumber("US01");
-        UserStoryActor actorA1_1 = new UserStoryActor("Team member");
-        Description usDescriptionA1_1 = new Description("Dummy 01");
-        UserStoryAcceptanceCriteria acceptanceCriteriaA1_1 = new UserStoryAcceptanceCriteria("To be defined");
-        UserStoryPriority userStoryPriorityA1_1 = new UserStoryPriority(3);
+        // User story A1_1 (named A1N1)
+        UserStoryNumber userStoryNumberA1N1 = new UserStoryNumber("US01");
+        UserStoryActor actorA1N1 = new UserStoryActor("Team member");
+        Description usDescriptionA1N1 = new Description("Dummy 01");
+        UserStoryAcceptanceCriteria acceptanceCriteriaA1N1 = new UserStoryAcceptanceCriteria("To be defined");
+        UserStoryPriority userStoryPriorityA1N1 = new UserStoryPriority(3);
 
-        NewUserStoryInfoDTO userStoryDTOA1_1 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_1,
-                usDescriptionA1_1, userStoryPriorityA1_1);
+        NewUserStoryInfoDTO userStoryDTOA1N1 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N1,
+                usDescriptionA1N1, userStoryPriorityA1N1);
 
-        userStoryService.createUserStory(userStoryDTOA1_1);
+        userStoryService.createUserStory(userStoryDTOA1N1);
 
-        // User story A1_2
-        UserStoryNumber userStoryNumberA1_2 = new UserStoryNumber("US02");
-        Description usDescriptionA1_2 = new Description("Dummy 02");
-        UserStoryPriority userStoryPriorityA1_2 = new UserStoryPriority(2);
+        // User story A1_2 (named A1N2)
+        UserStoryNumber userStoryNumberA1N2 = new UserStoryNumber("US02");
+        Description usDescriptionA1N2 = new Description("Dummy 02");
+        UserStoryPriority userStoryPriorityA1N2 = new UserStoryPriority(2);
 
-        NewUserStoryInfoDTO userStoryInfoDTOA1_2 = createUserStoryDTO(projectCode_1, actorA1_1,
-                acceptanceCriteriaA1_1, userStoryNumberA1_2, usDescriptionA1_2, userStoryPriorityA1_2);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N2 = createUserStoryDTO(projectCode1, actorA1N1,
+                acceptanceCriteriaA1N1, userStoryNumberA1N2, usDescriptionA1N2, userStoryPriorityA1N2);
 
-        userStoryService.createUserStory(userStoryInfoDTOA1_2);
+        userStoryService.createUserStory(userStoryInfoDTOA1N2);
 
-        // User story A1_3
-        UserStoryNumber userStoryNumberA1_3 = new UserStoryNumber("US03");
-        Description usDescriptionA1_3 = new Description("Dummy 03");
-        UserStoryPriority userStoryPriorityA1_3 = new UserStoryPriority(1);
+        // User story A1_3 (named A1N3)
+        UserStoryNumber userStoryNumberA1N3 = new UserStoryNumber("US03");
+        Description usDescriptionA1N3 = new Description("Dummy 03");
+        UserStoryPriority userStoryPriorityA1N3 = new UserStoryPriority(1);
 
-        NewUserStoryInfoDTO userStoryInfoDTOA1_3 = createUserStoryDTO(projectCode_1, actorA1_1,
-                acceptanceCriteriaA1_1, userStoryNumberA1_3, usDescriptionA1_3, userStoryPriorityA1_3);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N3 = createUserStoryDTO(projectCode1, actorA1N1,
+                acceptanceCriteriaA1N1, userStoryNumberA1N3, usDescriptionA1N3, userStoryPriorityA1N3);
 
-        userStoryService.createUserStory(userStoryInfoDTOA1_3);
+        userStoryService.createUserStory(userStoryInfoDTOA1N3);
 
-        // User story A1_4
-        UserStoryNumber userStoryNumberA1_4 = new UserStoryNumber("US04");
-        Description usDescriptionA1_4 = new Description("Dummy 04");
-        UserStoryPriority userStoryPriorityA1_4 = new UserStoryPriority(4);
+        // User story A1_4 (named A1N4)
+        UserStoryNumber userStoryNumberA1N4 = new UserStoryNumber("US04");
+        Description usDescriptionA1N4 = new Description("Dummy 04");
+        UserStoryPriority userStoryPriorityA1N4 = new UserStoryPriority(4);
 
-        NewUserStoryInfoDTO userStoryInfoDTOA1_4 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_4, usDescriptionA1_4,
-                userStoryPriorityA1_4);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N4 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N4, usDescriptionA1N4,
+                userStoryPriorityA1N4);
 
-        userStoryService.createUserStory(userStoryInfoDTOA1_4);
+        userStoryService.createUserStory(userStoryInfoDTOA1N4);
 
-        // User story A1_5
-        UserStoryNumber userStoryNumberA1_5 = new UserStoryNumber("US05");
-        Description usDescriptionA1_5 = new Description("Dummy 05");
-        UserStoryPriority userStoryPriorityA1_5 = new UserStoryPriority(5);
+        // User story A1_5 (named A1N5)
+        UserStoryNumber userStoryNumberA1N5 = new UserStoryNumber("US05");
+        Description usDescriptionA1N5 = new Description("Dummy 05");
+        UserStoryPriority userStoryPriorityA1N5 = new UserStoryPriority(5);
 
-        NewUserStoryInfoDTO userStoryInfoDTOA1_5 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumberA1_5, usDescriptionA1_5,
-                userStoryPriorityA1_5);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N5 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N5, usDescriptionA1N5,
+                userStoryPriorityA1N5);
 
-        userStoryService.createUserStory(userStoryInfoDTOA1_5);
+        userStoryService.createUserStory(userStoryInfoDTOA1N5);
 
-        // User story 6
-        UserStoryNumber userStoryNumber_6 = new UserStoryNumber("US06");
-        Description usDescription_6 = new Description("Dummy 06");
-        UserStoryPriority userStoryPriority_6 = new UserStoryPriority(6);
+        // User story A1_6 (named A1N6)
+        UserStoryNumber userStoryNumberA1N6 = new UserStoryNumber("US06");
+        Description usDescriptionA1N6 = new Description("Dummy 06");
+        UserStoryPriority userStoryPriorityA1N6 = new UserStoryPriority(6);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_6 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_6, usDescription_6,
-        userStoryPriority_6);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N6 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N6, usDescriptionA1N6,
+        userStoryPriorityA1N6);
 
-        userStoryService.createUserStory(userStoryInfoDTO_6);
+        userStoryService.createUserStory(userStoryInfoDTOA1N6);
 
-        // User story 7
-        UserStoryNumber userStoryNumber_7 = new UserStoryNumber("US07");
-        Description usDescription_7 = new Description("Dummy 07");
-        UserStoryPriority userStoryPriority_7 = new UserStoryPriority(7);
+        // User story A1_7 (named A1N7)
+        UserStoryNumber userStoryNumberA1N7 = new UserStoryNumber("US07");
+        Description usDescriptionA1N7 = new Description("Dummy 07");
+        UserStoryPriority userStoryPriorityA1N7 = new UserStoryPriority(7);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_7 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_7, usDescription_7,
-        userStoryPriority_7);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N7 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N7, usDescriptionA1N7,
+        userStoryPriorityA1N7);
 
-        userStoryService.createUserStory(userStoryInfoDTO_7);
+        userStoryService.createUserStory(userStoryInfoDTOA1N7);
 
-        // User story 8
-        UserStoryNumber userStoryNumber_8 = new UserStoryNumber("US08");
-        Description usDescription_8 = new Description("Dummy 08");
-        UserStoryPriority userStoryPriority_8 = new UserStoryPriority(8);
+        // User story A1_8 (named A1N8)
+        UserStoryNumber userStoryNumberA1N8 = new UserStoryNumber("US08");
+        Description usDescriptionA1N8 = new Description("Dummy 08");
+        UserStoryPriority userStoryPriorityA1N8 = new UserStoryPriority(8);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_8 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_8, usDescription_8,
-        userStoryPriority_8);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N8 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N8, usDescriptionA1N8,
+        userStoryPriorityA1N8);
 
-        userStoryService.createUserStory(userStoryInfoDTO_8);
+        userStoryService.createUserStory(userStoryInfoDTOA1N8);
 
-        // User story 9
-        UserStoryNumber userStoryNumber_9 = new UserStoryNumber("US09");
-        Description usDescription_9 = new Description("Dummy 09");
-        UserStoryPriority userStoryPriority_9 = new UserStoryPriority(9);
+        // User story A1_9 (named A1N9)
+        UserStoryNumber userStoryNumberA1N9 = new UserStoryNumber("US09");
+        Description usDescriptionA1N9 = new Description("Dummy 09");
+        UserStoryPriority userStoryPriorityA1N9 = new UserStoryPriority(9);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_9 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_9, usDescription_9,
-        userStoryPriority_9);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N9 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N9, usDescriptionA1N9,
+        userStoryPriorityA1N9);
 
-        userStoryService.createUserStory(userStoryInfoDTO_9);
+        userStoryService.createUserStory(userStoryInfoDTOA1N9);
 
-        // User story 10
-        UserStoryNumber userStoryNumber_10 = new UserStoryNumber("US10");
-        Description usDescription_10 = new Description("Dummy 10");
-        UserStoryPriority userStoryPriority_10 = new UserStoryPriority(10);
+        // User story A1_10 (named A1N10)
+        UserStoryNumber userStoryNumberA1N10 = new UserStoryNumber("US10");
+        Description usDescriptionA1N10 = new Description("Dummy 10");
+        UserStoryPriority userStoryPriorityA1N10 = new UserStoryPriority(10);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_10 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_10, usDescription_10,
-        userStoryPriority_10);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N10 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N10, usDescriptionA1N10,
+        userStoryPriorityA1N10);
 
-        userStoryService.createUserStory(userStoryInfoDTO_10);
+        userStoryService.createUserStory(userStoryInfoDTOA1N10);
 
-        // User story 11
-        UserStoryNumber userStoryNumber_11 = new UserStoryNumber("US11");
-        Description usDescription_11 = new Description("Dummy 11");
-        UserStoryPriority userStoryPriority_11 = new UserStoryPriority(11);
+        // User story A1_11 (named A1N11)
+        UserStoryNumber userStoryNumberA1N11 = new UserStoryNumber("US11");
+        Description usDescriptionA1N11 = new Description("Dummy 11");
+        UserStoryPriority userStoryPriorityA1N11 = new UserStoryPriority(11);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_11 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_11, usDescription_11,
-        userStoryPriority_11);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N11 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N11, usDescriptionA1N11,
+        userStoryPriorityA1N11);
 
-        userStoryService.createUserStory(userStoryInfoDTO_11);
+        userStoryService.createUserStory(userStoryInfoDTOA1N11);
 
-        // User story 12
-        UserStoryNumber userStoryNumber_12 = new UserStoryNumber("US12");
-        Description usDescription_12 = new Description("Dummy 12");
-        UserStoryPriority userStoryPriority_12 = new UserStoryPriority(12);
+        // User story A1_12 (named A1N12)
+        UserStoryNumber userStoryNumberA1N12 = new UserStoryNumber("US12");
+        Description usDescriptionA1N12 = new Description("Dummy 12");
+        UserStoryPriority userStoryPriorityA1N12 = new UserStoryPriority(12);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_12 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_12, usDescription_12,
-        userStoryPriority_12);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N12 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N12, usDescriptionA1N12,
+        userStoryPriorityA1N12);
 
-        userStoryService.createUserStory(userStoryInfoDTO_12);
+        userStoryService.createUserStory(userStoryInfoDTOA1N12);
 
-        // User story 13
-        UserStoryNumber userStoryNumber_13 = new UserStoryNumber("US13");
-        Description usDescription_13 = new Description("Dummy 13");
-        UserStoryPriority userStoryPriority_13 = new UserStoryPriority(13);
+        // User story A1_13 (named A1N13)
+        UserStoryNumber userStoryNumberA1N13 = new UserStoryNumber("US13");
+        Description usDescriptionA1N13 = new Description("Dummy 13");
+        UserStoryPriority userStoryPriorityA1N13 = new UserStoryPriority(13);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_13 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_13, usDescription_13,
-        userStoryPriority_13);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N13 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N13, usDescriptionA1N13,
+        userStoryPriorityA1N13);
 
-        userStoryService.createUserStory(userStoryInfoDTO_13);
+        userStoryService.createUserStory(userStoryInfoDTOA1N13);
 
-        // User story 14
-        UserStoryNumber userStoryNumber_14 = new UserStoryNumber("US14");
-        Description usDescription_14 = new Description("Dummy 14");
-        UserStoryPriority userStoryPriority_14 = new UserStoryPriority(14);
+        // User story A1_14 (named A1N14)
+        UserStoryNumber userStoryNumberA1N14 = new UserStoryNumber("US14");
+        Description usDescriptionA1N14 = new Description("Dummy 14");
+        UserStoryPriority userStoryPriorityA1N14 = new UserStoryPriority(14);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_14 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_14, usDescription_14,
-        userStoryPriority_14);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N14 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N14, usDescriptionA1N14,
+        userStoryPriorityA1N14);
 
-        userStoryService.createUserStory(userStoryInfoDTO_14);
+        userStoryService.createUserStory(userStoryInfoDTOA1N14);
 
-        // User story 14
-        UserStoryNumber userStoryNumber_15 = new UserStoryNumber("US15");
-        Description usDescription_15 = new Description("Dummy 15");
-        UserStoryPriority userStoryPriority_15 = new UserStoryPriority(15);
+        // User story 15 (named A1N15)
+        UserStoryNumber userStoryNumberA1N15 = new UserStoryNumber("US15");
+        Description usDescriptionA1N15 = new Description("Dummy 15");
+        UserStoryPriority userStoryPriorityA1N15 = new UserStoryPriority(15);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_15 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_15, usDescription_15,
-        userStoryPriority_15);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N15 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N15, usDescriptionA1N15,
+        userStoryPriorityA1N15);
 
-        userStoryService.createUserStory(userStoryInfoDTO_15);
+        userStoryService.createUserStory(userStoryInfoDTOA1N15);
 
-        // User story 16
-        UserStoryNumber userStoryNumber_16 = new UserStoryNumber("US16");
-        Description usDescription_16 = new Description("Dummy 16");
-        UserStoryPriority userStoryPriority_16 = new UserStoryPriority(16);
+        // User story A1_16 (named A1N16)
+        UserStoryNumber userStoryNumberA1N16 = new UserStoryNumber("US16");
+        Description usDescriptionA1N16 = new Description("Dummy 16");
+        UserStoryPriority userStoryPriorityA1N16 = new UserStoryPriority(16);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_16 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_16, usDescription_16,
-        userStoryPriority_16);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N16 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N16, usDescriptionA1N16,
+        userStoryPriorityA1N16);
 
-        userStoryService.createUserStory(userStoryInfoDTO_16);
+        userStoryService.createUserStory(userStoryInfoDTOA1N16);
 
-        // User story 17
-        UserStoryNumber userStoryNumber_17 = new UserStoryNumber("US17");
-        Description usDescription_17 = new Description("Dummy 17");
-        UserStoryPriority userStoryPriority_17 = new UserStoryPriority(17);
+        // User story A1_17 (named A1N17)
+        UserStoryNumber userStoryNumberA1N17 = new UserStoryNumber("US17");
+        Description usDescriptionA1N17 = new Description("Dummy 17");
+        UserStoryPriority userStoryPriorityA1N17 = new UserStoryPriority(17);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_17 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_17, usDescription_17,
-        userStoryPriority_17);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N17 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N17, usDescriptionA1N17,
+        userStoryPriorityA1N17);
 
-        userStoryService.createUserStory(userStoryInfoDTO_17);
+        userStoryService.createUserStory(userStoryInfoDTOA1N17);
 
-        // User story 18
-        UserStoryNumber userStoryNumber_18 = new UserStoryNumber("US18");
-        Description usDescription_18 = new Description("Dummy 18");
-        UserStoryPriority userStoryPriority_18 = new UserStoryPriority(18);
+        // User story A1_18 (named A1N18)
+        UserStoryNumber userStoryNumberA1N18 = new UserStoryNumber("US18");
+        Description usDescriptionA1N18 = new Description("Dummy 18");
+        UserStoryPriority userStoryPriorityA1N18 = new UserStoryPriority(18);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_18 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_18, usDescription_18,
-        userStoryPriority_18);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N18 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N18, usDescriptionA1N18,
+        userStoryPriorityA1N18);
 
-        userStoryService.createUserStory(userStoryInfoDTO_18);
+        userStoryService.createUserStory(userStoryInfoDTOA1N18);
 
-        // User story 19
-        UserStoryNumber userStoryNumber_19 = new UserStoryNumber("US19");
-        Description usDescription_19 = new Description("Dummy 19");
-        UserStoryPriority userStoryPriority_19 = new UserStoryPriority(19);
+        // User story A1_19 (named A1N19)
+        UserStoryNumber userStoryNumberA1N19 = new UserStoryNumber("US19");
+        Description usDescriptionA1N19 = new Description("Dummy 19");
+        UserStoryPriority userStoryPriorityA1N19 = new UserStoryPriority(19);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_19 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_19, usDescription_19,
-        userStoryPriority_19);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N19 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N19, usDescriptionA1N19,
+        userStoryPriorityA1N19);
 
-        userStoryService.createUserStory(userStoryInfoDTO_19);
+        userStoryService.createUserStory(userStoryInfoDTOA1N19);
 
-        // User story 20
-        UserStoryNumber userStoryNumber_20 = new UserStoryNumber("US20");
-        Description usDescription_20 = new Description("Dummy 20");
-        UserStoryPriority userStoryPriority_20 = new UserStoryPriority(20);
+        // User story A1_20 (named A1N20)
+        UserStoryNumber userStoryNumberA1N20 = new UserStoryNumber("US20");
+        Description usDescriptionA1N20 = new Description("Dummy 20");
+        UserStoryPriority userStoryPriorityA1N20 = new UserStoryPriority(20);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_20 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_20, usDescription_20,
-        userStoryPriority_20);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N20 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N20, usDescriptionA1N20,
+        userStoryPriorityA1N20);
 
-        userStoryService.createUserStory(userStoryInfoDTO_20);
+        userStoryService.createUserStory(userStoryInfoDTOA1N20);
 
-        // User story 21
-        UserStoryNumber userStoryNumber_21 = new UserStoryNumber("US21");
-        Description usDescription_21 = new Description("Dummy 21");
-        UserStoryPriority userStoryPriority_21 = new UserStoryPriority(21);
+        // User story A1_21 (named A1N21)
+        UserStoryNumber userStoryNumberA1N21 = new UserStoryNumber("US21");
+        Description usDescriptionA1N21 = new Description("Dummy 21");
+        UserStoryPriority userStoryPriorityA1N21 = new UserStoryPriority(21);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_21 = createUserStoryDTO(projectCode_1,
-                actorA1_1, acceptanceCriteriaA1_1, userStoryNumber_21, usDescription_21,
-        userStoryPriority_21);
+        NewUserStoryInfoDTO userStoryInfoDTOA1N21 = createUserStoryDTO(projectCode1,
+                actorA1N1, acceptanceCriteriaA1N1, userStoryNumberA1N21, usDescriptionA1N21,
+        userStoryPriorityA1N21);
 
-        userStoryService.createUserStory(userStoryInfoDTO_21);
+        userStoryService.createUserStory(userStoryInfoDTOA1N21);
 
 
         // User story 1 P2
-        UserStoryNumber userStoryNumber_1P2 = new UserStoryNumber("US001");
-        UserStoryActor actor_2 = new UserStoryActor("Project Manager");
-        Description usDescription_1P2 = new Description("A2 dummy 01");
-        UserStoryAcceptanceCriteria acceptanceCriteria_2 = new UserStoryAcceptanceCriteria("To be defined");
-        UserStoryPriority userStoryPriority_1P2 = new UserStoryPriority(3);
+        UserStoryNumber userStoryNumber1P2 = new UserStoryNumber("US001");
+        UserStoryActor actor2 = new UserStoryActor("Project Manager");
+        Description usDescription1P2 = new Description("A2 dummy 01");
+        UserStoryAcceptanceCriteria acceptanceCriteria1P2 = new UserStoryAcceptanceCriteria("To be defined");
+        UserStoryPriority userStoryPriority1P2 = new UserStoryPriority(3);
 
-        NewUserStoryInfoDTO userStoryDTO_1P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_1P2,
-        usDescription_1P2, userStoryPriority_1P2);
+        NewUserStoryInfoDTO userStoryDTO1P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber1P2,
+        usDescription1P2, userStoryPriority1P2);
 
-        userStoryService.createUserStory(userStoryDTO_1P2);
+        userStoryService.createUserStory(userStoryDTO1P2);
 
         // User story 2 P2
-        UserStoryNumber userStoryNumber_2P2 = new UserStoryNumber("US002");
-        Description usDescription_2P2 = new Description("A2 dummy 02");
-        UserStoryPriority userStoryPriority_2P2 = new UserStoryPriority(2);
+        UserStoryNumber userStoryNumber2P2 = new UserStoryNumber("US002");
+        Description usDescription2P2 = new Description("A2 dummy 02");
+        UserStoryPriority userStoryPriority2P2 = new UserStoryPriority(2);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_2P2 = createUserStoryDTO(projectCode_2, actor_2,
-        acceptanceCriteria_2, userStoryNumber_2P2, usDescription_2P2, userStoryPriority_2P2);
+        NewUserStoryInfoDTO userStoryInfoDTO2P2 = createUserStoryDTO(projectCode2, actor2,
+        acceptanceCriteria1P2, userStoryNumber2P2, usDescription2P2, userStoryPriority2P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_2P2);
+        userStoryService.createUserStory(userStoryInfoDTO2P2);
 
         // User story 3 P2
-        UserStoryNumber userStoryNumber_3P2 = new UserStoryNumber("US003");
-        Description usDescription_3P2 = new Description("A2 dummy 03");
-        UserStoryPriority userStoryPriority_3P2 = new UserStoryPriority(1);
+        UserStoryNumber userStoryNumber3P2 = new UserStoryNumber("US003");
+        Description usDescription3P2 = new Description("A2 dummy 03");
+        UserStoryPriority userStoryPriority3P2 = new UserStoryPriority(1);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_3P2 = createUserStoryDTO(projectCode_2, actor_2,
-        acceptanceCriteria_2, userStoryNumber_3P2, usDescription_3P2, userStoryPriority_3P2);
+        NewUserStoryInfoDTO userStoryInfoDTO3P2 = createUserStoryDTO(projectCode2, actor2,
+        acceptanceCriteria1P2, userStoryNumber3P2, usDescription3P2, userStoryPriority3P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_3P2);
+        userStoryService.createUserStory(userStoryInfoDTO3P2);
 
         // User story 4 P2
-        UserStoryNumber userStoryNumber_4P2 = new UserStoryNumber("US004");
-        Description usDescription_4P2 = new Description("A2 dummy 04");
-        UserStoryPriority userStoryPriority_4P2 = new UserStoryPriority(4);
+        UserStoryNumber userStoryNumber4P2 = new UserStoryNumber("US004");
+        Description usDescription4P2 = new Description("A2 dummy 04");
+        UserStoryPriority userStoryPriority4P2 = new UserStoryPriority(4);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_4P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_4P2, usDescription_4P2,
-        userStoryPriority_4P2);
+        NewUserStoryInfoDTO userStoryInfoDTO4P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber4P2, usDescription4P2,
+        userStoryPriority4P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_4P2);
+        userStoryService.createUserStory(userStoryInfoDTO4P2);
 
         // User story 5 P2
-        UserStoryNumber userStoryNumber_5P2 = new UserStoryNumber("US005");
-        Description usDescription_5P2 = new Description("A2 dummy 05");
-        UserStoryPriority userStoryPriority_5P2 = new UserStoryPriority(5);
+        UserStoryNumber userStoryNumber5P2 = new UserStoryNumber("US005");
+        Description usDescription5P2 = new Description("A2 dummy 05");
+        UserStoryPriority userStoryPriority5P2 = new UserStoryPriority(5);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_5P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_5P2, usDescription_5P2,
-        userStoryPriority_5P2);
+        NewUserStoryInfoDTO userStoryInfoDTO5P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber5P2, usDescription5P2,
+        userStoryPriority5P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_5P2);
+        userStoryService.createUserStory(userStoryInfoDTO5P2);
 
         // User story 6 P2
-        UserStoryNumber userStoryNumber_6P2 = new UserStoryNumber("US006");
-        Description usDescription_6P2 = new Description("A2 dummy 06");
-        UserStoryPriority userStoryPriority_6P2 = new UserStoryPriority(6);
+        UserStoryNumber userStoryNumber6P2 = new UserStoryNumber("US006");
+        Description usDescription6P2 = new Description("A2 dummy 06");
+        UserStoryPriority userStoryPriority6P2 = new UserStoryPriority(6);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_6P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_6P2, usDescription_6P2,
-        userStoryPriority_6P2);
+        NewUserStoryInfoDTO userStoryInfoDTO6P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber6P2, usDescription6P2,
+        userStoryPriority6P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_6P2);
+        userStoryService.createUserStory(userStoryInfoDTO6P2);
 
         // User story 7 P2
-        UserStoryNumber userStoryNumber_7P2 = new UserStoryNumber("US007");
-        Description usDescription_7P2 = new Description("A2 dummy 07");
-        UserStoryPriority userStoryPriority_7P2 = new UserStoryPriority(7);
+        UserStoryNumber userStoryNumber7P2 = new UserStoryNumber("US007");
+        Description usDescription7P2 = new Description("A2 dummy 07");
+        UserStoryPriority userStoryPriority7P2 = new UserStoryPriority(7);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_7P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_7P2, usDescription_7P2,
-        userStoryPriority_7P2);
+        NewUserStoryInfoDTO userStoryInfoDTO7P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber7P2, usDescription7P2,
+        userStoryPriority7P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_7P2);
+        userStoryService.createUserStory(userStoryInfoDTO7P2);
 
         // User story 8 P2
-        UserStoryNumber userStoryNumber_8P2 = new UserStoryNumber("US008");
-        Description usDescription_8P2 = new Description("A2 dummy 08");
-        UserStoryPriority userStoryPriority_8P2 = new UserStoryPriority(8);
+        UserStoryNumber userStoryNumber8P2 = new UserStoryNumber("US008");
+        Description usDescription8P2 = new Description("A2 dummy 08");
+        UserStoryPriority userStoryPriority8P2 = new UserStoryPriority(8);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_8P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_8P2, usDescription_8P2,
-        userStoryPriority_8P2);
+        NewUserStoryInfoDTO userStoryInfoDTO8P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber8P2, usDescription8P2,
+        userStoryPriority8P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_8P2);
+        userStoryService.createUserStory(userStoryInfoDTO8P2);
 
         // User story 9 P2
-        UserStoryNumber userStoryNumber_9P2 = new UserStoryNumber("US009");
-        Description usDescription_9P2 = new Description("A2 dummy 09");
-        UserStoryPriority userStoryPriority_9P2 = new UserStoryPriority(9);
+        UserStoryNumber userStoryNumber9P2 = new UserStoryNumber("US009");
+        Description usDescription9P2 = new Description("A2 dummy 09");
+        UserStoryPriority userStoryPriority9P2 = new UserStoryPriority(9);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_9P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_9P2, usDescription_9P2,
-        userStoryPriority_9P2);
+        NewUserStoryInfoDTO userStoryInfoDTO9P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber9P2, usDescription9P2,
+        userStoryPriority9P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_9P2);
+        userStoryService.createUserStory(userStoryInfoDTO9P2);
 
         // User story 10 P2
-        UserStoryNumber userStoryNumber_10P2 = new UserStoryNumber("US010");
-        Description usDescription_10P2 = new Description("A2 dummy 10");
-        UserStoryPriority userStoryPriority_10P2 = new UserStoryPriority(10);
+        UserStoryNumber userStoryNumber10P2 = new UserStoryNumber("US010");
+        Description usDescription10P2 = new Description("A2 dummy 10");
+        UserStoryPriority userStoryPriority10P2 = new UserStoryPriority(10);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_10P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_10P2, usDescription_10P2,
-        userStoryPriority_10P2);
+        NewUserStoryInfoDTO userStoryInfoDTO10P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber10P2, usDescription10P2,
+        userStoryPriority10P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_10P2);
+        userStoryService.createUserStory(userStoryInfoDTO10P2);
 
         // User story 11 P2
-        UserStoryNumber userStoryNumber_11P2 = new UserStoryNumber("US011");
-        Description usDescription_11P2 = new Description("A2 dummy 11");
-        UserStoryPriority userStoryPriority_11P2 = new UserStoryPriority(11);
+        UserStoryNumber userStoryNumber11P2 = new UserStoryNumber("US011");
+        Description usDescription11P2 = new Description("A2 dummy 11");
+        UserStoryPriority userStoryPriority11P2 = new UserStoryPriority(11);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_11P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_11P2, usDescription_11P2,
-        userStoryPriority_11P2);
+        NewUserStoryInfoDTO userStoryInfoDTO11P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber11P2, usDescription11P2,
+        userStoryPriority11P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_11P2);
+        userStoryService.createUserStory(userStoryInfoDTO11P2);
 
         // User story 12 P2
-        UserStoryNumber userStoryNumber_12P2 = new UserStoryNumber("US012");
-        Description usDescription_12P2 = new Description("A2 dummy 12");
-        UserStoryPriority userStoryPriority_12P2 = new UserStoryPriority(12);
+        UserStoryNumber userStoryNumber12P2 = new UserStoryNumber("US012");
+        Description usDescription12P2 = new Description("A2 dummy 12");
+        UserStoryPriority userStoryPriority12P2 = new UserStoryPriority(12);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_12P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_12P2, usDescription_12P2,
-        userStoryPriority_12P2);
+        NewUserStoryInfoDTO userStoryInfoDTO12P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber12P2, usDescription12P2,
+        userStoryPriority12P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_12P2);
+        userStoryService.createUserStory(userStoryInfoDTO12P2);
 
         // User story 13 P2
-        UserStoryNumber userStoryNumber_13P2 = new UserStoryNumber("US013");
-        Description usDescription_13P2 = new Description("A2 dummy 13");
-        UserStoryPriority userStoryPriority_13P2 = new UserStoryPriority(13);
+        UserStoryNumber userStoryNumber13P2 = new UserStoryNumber("US013");
+        Description usDescription13P2 = new Description("A2 dummy 13");
+        UserStoryPriority userStoryPriority13P2 = new UserStoryPriority(13);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_13P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_13P2, usDescription_13P2,
-        userStoryPriority_13P2);
+        NewUserStoryInfoDTO userStoryInfoDTO13P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber13P2, usDescription13P2,
+        userStoryPriority13P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_13P2);
-
-        // User story 14 P2
-        UserStoryNumber userStoryNumber_14P2 = new UserStoryNumber("US014");
-        Description usDescription_14P2 = new Description("A2 dummy 14");
-        UserStoryPriority userStoryPriority_14P2 = new UserStoryPriority(14);
-
-        NewUserStoryInfoDTO userStoryInfoDTO_14P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_14P2, usDescription_14P2,
-        userStoryPriority_14P2);
-
-        userStoryService.createUserStory(userStoryInfoDTO_14P2);
+        userStoryService.createUserStory(userStoryInfoDTO13P2);
 
         // User story 14 P2
-        UserStoryNumber userStoryNumber_15P2 = new UserStoryNumber("US015");
-        Description usDescription_15P2 = new Description("A2 dummy 15");
-        UserStoryPriority userStoryPriority_15P2 = new UserStoryPriority(15);
+        UserStoryNumber userStoryNumber14P2 = new UserStoryNumber("US014");
+        Description usDescription14P2 = new Description("A2 dummy 14");
+        UserStoryPriority userStoryPriority14P2 = new UserStoryPriority(14);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_15P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_15P2, usDescription_15P2,
-        userStoryPriority_15P2);
+        NewUserStoryInfoDTO userStoryInfoDTO14P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber14P2, usDescription14P2,
+        userStoryPriority14P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_15P2);
+        userStoryService.createUserStory(userStoryInfoDTO14P2);
+
+        // User story 15 P2
+        UserStoryNumber userStoryNumber15P2 = new UserStoryNumber("US015");
+        Description usDescription15P2 = new Description("A2 dummy 15");
+        UserStoryPriority userStoryPriority15P2 = new UserStoryPriority(15);
+
+        NewUserStoryInfoDTO userStoryInfoDTO15P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber15P2, usDescription15P2,
+        userStoryPriority15P2);
+
+        userStoryService.createUserStory(userStoryInfoDTO15P2);
 
         // User story 16 P2
-        UserStoryNumber userStoryNumber_16P2 = new UserStoryNumber("US016");
-        Description usDescription_16P2 = new Description("A2 dummy 16");
-        UserStoryPriority userStoryPriority_16P2 = new UserStoryPriority(16);
+        UserStoryNumber userStoryNumber16P2 = new UserStoryNumber("US016");
+        Description usDescription16P2 = new Description("A2 dummy 16");
+        UserStoryPriority userStoryPriority16P2 = new UserStoryPriority(16);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_16P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_16P2, usDescription_16P2,
-        userStoryPriority_16P2);
+        NewUserStoryInfoDTO userStoryInfoDTO16P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber16P2, usDescription16P2,
+        userStoryPriority16P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_16P2);
+        userStoryService.createUserStory(userStoryInfoDTO16P2);
 
         // User story 17 P2
-        UserStoryNumber userStoryNumber_17P2 = new UserStoryNumber("US017");
-        Description usDescription_17P2 = new Description("A2 dummy 17");
-        UserStoryPriority userStoryPriority_17P2 = new UserStoryPriority(17);
+        UserStoryNumber userStoryNumber17P2 = new UserStoryNumber("US017");
+        Description usDescription17P2 = new Description("A2 dummy 17");
+        UserStoryPriority userStoryPriority17P2 = new UserStoryPriority(17);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_17P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_17P2, usDescription_17P2,
-        userStoryPriority_17P2);
+        NewUserStoryInfoDTO userStoryInfoDTO17P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber17P2, usDescription17P2,
+        userStoryPriority17P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_17P2);
+        userStoryService.createUserStory(userStoryInfoDTO17P2);
 
         // User story 18 P2
-        UserStoryNumber userStoryNumber_18P2 = new UserStoryNumber("US018");
-        Description usDescription_18P2 = new Description("A2 dummy 18");
-        UserStoryPriority userStoryPriority_18P2 = new UserStoryPriority(18);
+        UserStoryNumber userStoryNumber18P2 = new UserStoryNumber("US018");
+        Description usDescription18P2 = new Description("A2 dummy 18");
+        UserStoryPriority userStoryPriority18P2 = new UserStoryPriority(18);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_18P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_18P2, usDescription_18P2,
-        userStoryPriority_18P2);
+        NewUserStoryInfoDTO userStoryInfoDTO18P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber18P2, usDescription18P2,
+        userStoryPriority18P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_18P2);
+        userStoryService.createUserStory(userStoryInfoDTO18P2);
 
         // User story 19 P2
-        UserStoryNumber userStoryNumber_19P2 = new UserStoryNumber("US019");
-        Description usDescription_19P2 = new Description("A2 dummy 19");
-        UserStoryPriority userStoryPriority_19P2 = new UserStoryPriority(19);
+        UserStoryNumber userStoryNumber19P2 = new UserStoryNumber("US019");
+        Description usDescription19P2 = new Description("A2 dummy 19");
+        UserStoryPriority userStoryPriority19P2 = new UserStoryPriority(19);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_19P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_19P2, usDescription_19P2,
-        userStoryPriority_19P2);
+        NewUserStoryInfoDTO userStoryInfoDTO19P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber19P2, usDescription19P2,
+        userStoryPriority19P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_19P2);
+        userStoryService.createUserStory(userStoryInfoDTO19P2);
 
         // User story 20 P2
-        UserStoryNumber userStoryNumber_20P2 = new UserStoryNumber("US020");
-        Description usDescription_20P2 = new Description("A2 dummy 20");
-        UserStoryPriority userStoryPriority_20P2 = new UserStoryPriority(20);
+        UserStoryNumber userStoryNumber20P2 = new UserStoryNumber("US020");
+        Description usDescription20P2 = new Description("A2 dummy 20");
+        UserStoryPriority userStoryPriority20P2 = new UserStoryPriority(20);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_20P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_20P2, usDescription_20P2,
-        userStoryPriority_20P2);
+        NewUserStoryInfoDTO userStoryInfoDTO20P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber20P2, usDescription20P2,
+        userStoryPriority20P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_20P2);
+        userStoryService.createUserStory(userStoryInfoDTO20P2);
 
         // User story 21 P2
-        UserStoryNumber userStoryNumber_21P2 = new UserStoryNumber("US021");
-        Description usDescription_21P2 = new Description("A2 dummy 21");
-        UserStoryPriority userStoryPriority_21P2 = new UserStoryPriority(21);
+        UserStoryNumber userStoryNumber21P2 = new UserStoryNumber("US021");
+        Description usDescription21P2 = new Description("A2 dummy 21");
+        UserStoryPriority userStoryPriority21P2 = new UserStoryPriority(21);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_21P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_21P2, usDescription_21P2,
-        userStoryPriority_21P2);
+        NewUserStoryInfoDTO userStoryInfoDTO21P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber21P2, usDescription21P2,
+        userStoryPriority21P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_21P2);
+        userStoryService.createUserStory(userStoryInfoDTO21P2);
 
         // User story 22 P2
-        UserStoryNumber userStoryNumber_22P2 = new UserStoryNumber("US022");
-        Description usDescription_22P2 = new Description("A2 dummy 22");
-        UserStoryPriority userStoryPriority_22P2 = new UserStoryPriority(22);
+        UserStoryNumber userStoryNumber22P2 = new UserStoryNumber("US022");
+        Description usDescription22P2 = new Description("A2 dummy 22");
+        UserStoryPriority userStoryPriority22P2 = new UserStoryPriority(22);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_22P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_22P2, usDescription_22P2,
-        userStoryPriority_22P2);
+        NewUserStoryInfoDTO userStoryInfoDTO22P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber22P2, usDescription22P2,
+        userStoryPriority22P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_22P2);
+        userStoryService.createUserStory(userStoryInfoDTO22P2);
 
         // User story 23 P2
-        UserStoryNumber userStoryNumber_23P2 = new UserStoryNumber("US023");
-        Description usDescription_23P2 = new Description("A2 dummy 23");
-        UserStoryPriority userStoryPriority_23P2 = new UserStoryPriority(23);
+        UserStoryNumber userStoryNumber23P2 = new UserStoryNumber("US023");
+        Description usDescription23P2 = new Description("A2 dummy 23");
+        UserStoryPriority userStoryPriority23P2 = new UserStoryPriority(23);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_23P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_23P2, usDescription_23P2,
-        userStoryPriority_23P2);
+        NewUserStoryInfoDTO userStoryInfoDTO23P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber23P2, usDescription23P2,
+        userStoryPriority23P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_23P2);
+        userStoryService.createUserStory(userStoryInfoDTO23P2);
 
         // User story 24 P2
-        UserStoryNumber userStoryNumber_24P2 = new UserStoryNumber("US024");
-        Description usDescription_24P2 = new Description("A2 dummy 24");
-        UserStoryPriority userStoryPriority_24P2 = new UserStoryPriority(24);
+        UserStoryNumber userStoryNumber24P2 = new UserStoryNumber("US024");
+        Description usDescription24P2 = new Description("A2 dummy 24");
+        UserStoryPriority userStoryPriority24P2 = new UserStoryPriority(24);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_24P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_24P2, usDescription_24P2,
-        userStoryPriority_24P2);
+        NewUserStoryInfoDTO userStoryInfoDTO24P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber24P2, usDescription24P2,
+        userStoryPriority24P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_24P2);
+        userStoryService.createUserStory(userStoryInfoDTO24P2);
 
         // User story 25 P2
-        UserStoryNumber userStoryNumber_25P2 = new UserStoryNumber("US025");
-        Description usDescription_25P2 = new Description("A2 dummy 25");
-        UserStoryPriority userStoryPriority_25P2 = new UserStoryPriority(25);
+        UserStoryNumber userStoryNumber25P2 = new UserStoryNumber("US025");
+        Description usDescription25P2 = new Description("A2 dummy 25");
+        UserStoryPriority userStoryPriority25P2 = new UserStoryPriority(25);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_25P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_25P2, usDescription_25P2,
-        userStoryPriority_25P2);
+        NewUserStoryInfoDTO userStoryInfoDTO25P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber25P2, usDescription25P2,
+        userStoryPriority25P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_25P2);
+        userStoryService.createUserStory(userStoryInfoDTO25P2);
 
         // User story 26 P2
-        UserStoryNumber userStoryNumber_26P2 = new UserStoryNumber("US026");
-        Description usDescription_26P2 = new Description("A2 dummy 26");
-        UserStoryPriority userStoryPriority_26P2 = new UserStoryPriority(26);
+        UserStoryNumber userStoryNumber26P2 = new UserStoryNumber("US026");
+        Description usDescription26P2 = new Description("A2 dummy 26");
+        UserStoryPriority userStoryPriority26P2 = new UserStoryPriority(26);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_26P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_26P2, usDescription_26P2,
-        userStoryPriority_26P2);
+        NewUserStoryInfoDTO userStoryInfoDTO26P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber26P2, usDescription26P2,
+        userStoryPriority26P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_26P2);
+        userStoryService.createUserStory(userStoryInfoDTO26P2);
 
         // User story 27 P2
-        UserStoryNumber userStoryNumber_27P2 = new UserStoryNumber("US027");
-        Description usDescription_27P2 = new Description("A2 dummy 27");
-        UserStoryPriority userStoryPriority_27P2 = new UserStoryPriority(27);
+        UserStoryNumber userStoryNumber27P2 = new UserStoryNumber("US027");
+        Description usDescription27P2 = new Description("A2 dummy 27");
+        UserStoryPriority userStoryPriority27P2 = new UserStoryPriority(27);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_27P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_27P2, usDescription_27P2,
-        userStoryPriority_27P2);
+        NewUserStoryInfoDTO userStoryInfoDTO27P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber27P2, usDescription27P2,
+        userStoryPriority27P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_27P2);
+        userStoryService.createUserStory(userStoryInfoDTO27P2);
 
         // User story 28 P2
-        UserStoryNumber userStoryNumber_28P2 = new UserStoryNumber("US028");
-        Description usDescription_28P2 = new Description("A2 dummy 28");
-        UserStoryPriority userStoryPriority_28P2 = new UserStoryPriority(28);
+        UserStoryNumber userStoryNumber28P2 = new UserStoryNumber("US028");
+        Description usDescription28P2 = new Description("A2 dummy 28");
+        UserStoryPriority userStoryPriority28P2 = new UserStoryPriority(28);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_28P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_28P2, usDescription_28P2,
-        userStoryPriority_28P2);
+        NewUserStoryInfoDTO userStoryInfoDTO28P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber28P2, usDescription28P2,
+        userStoryPriority28P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_28P2);
+        userStoryService.createUserStory(userStoryInfoDTO28P2);
 
         // User story 29 P2
-        UserStoryNumber userStoryNumber_29P2 = new UserStoryNumber("US029");
-        Description usDescription_29P2 = new Description("A2 dummy 29");
-        UserStoryPriority userStoryPriority_29P2 = new UserStoryPriority(29);
+        UserStoryNumber userStoryNumber29P2 = new UserStoryNumber("US029");
+        Description usDescription29P2 = new Description("A2 dummy 29");
+        UserStoryPriority userStoryPriority29P2 = new UserStoryPriority(29);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_29P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_29P2, usDescription_29P2,
-        userStoryPriority_29P2);
+        NewUserStoryInfoDTO userStoryInfoDTO29P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber29P2, usDescription29P2,
+        userStoryPriority29P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_29P2);
+        userStoryService.createUserStory(userStoryInfoDTO29P2);
 
         // User story 30 P2
-        UserStoryNumber userStoryNumber_30P2 = new UserStoryNumber("US030");
-        Description usDescription_30P2 = new Description("A2 dummy 30");
-        UserStoryPriority userStoryPriority_30P2 = new UserStoryPriority(30);
+        UserStoryNumber userStoryNumber30P2 = new UserStoryNumber("US030");
+        Description usDescription30P2 = new Description("A2 dummy 30");
+        UserStoryPriority userStoryPriority30P2 = new UserStoryPriority(30);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_30P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_30P2, usDescription_30P2,
-        userStoryPriority_30P2);
+        NewUserStoryInfoDTO userStoryInfoDTO30P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber30P2, usDescription30P2,
+        userStoryPriority30P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_30P2);
+        userStoryService.createUserStory(userStoryInfoDTO30P2);
 
         // User story 31 P2
-        UserStoryNumber userStoryNumber_31P2 = new UserStoryNumber("US031");
-        Description usDescription_31P2 = new Description("A2 dummy 31");
-        UserStoryPriority userStoryPriority_31P2 = new UserStoryPriority(31);
+        UserStoryNumber userStoryNumber31P2 = new UserStoryNumber("US031");
+        Description usDescription31P2 = new Description("A2 dummy 31");
+        UserStoryPriority userStoryPriority31P2 = new UserStoryPriority(31);
 
-        NewUserStoryInfoDTO userStoryInfoDTO_31P2 = createUserStoryDTO(projectCode_2,
-        actor_2, acceptanceCriteria_2, userStoryNumber_31P2, usDescription_31P2,
-        userStoryPriority_31P2);
+        NewUserStoryInfoDTO userStoryInfoDTO31P2 = createUserStoryDTO(projectCode2,
+        actor2, acceptanceCriteria1P2, userStoryNumber31P2, usDescription31P2,
+        userStoryPriority31P2);
 
-        userStoryService.createUserStory(userStoryInfoDTO_31P2);
+        userStoryService.createUserStory(userStoryInfoDTO31P2);
 
         //LOAD SPRINTS
 
-        // Sprint A1-1
+        // Sprint A1-1 (named A1N1)
+        SprintNumber sprintNumberA1N1 = getNextSprintNumber(projectCode1);
 
-        SprintNumber sprintNumber_A1_1 = getNextSprintNumber(projectCode_1);
+        LocalDate startDatesprintA1N1 = LocalDate.of(2022, 3, 22);
+        Date newStardDateSprintA1N1 = createDate(startDatesprintA1N1);
+        LocalDate endDateSprintA1N1 = LocalDate.of(2022, 4, 4);
+        Date newEndDateSprintA1N1 = createDate(endDateSprintA1N1);
 
-        LocalDate startDate_sprint_A1_1 = LocalDate.of(2022, 3, 22);
-        Date newStardDate_sprint_A1_1 = createDate(startDate_sprint_A1_1);
-        LocalDate endDate_sprint_A1_1 = LocalDate.of(2022, 4, 4);
-        Date newEndDate_sprint_A1_1 = createDate(endDate_sprint_A1_1);
+        TimePeriod timePeriodSprintA1N1 = new TimePeriod(newStardDateSprintA1N1,
+                newEndDateSprintA1N1);
 
-        TimePeriod timePeriod_sprint_A1_1 = new TimePeriod(newStardDate_sprint_A1_1,
-                newEndDate_sprint_A1_1);
+        SprintDTOController sprintDTOA1N1 = createSprintDTOController(projectCode1,
+                sprintNumberA1N1, timePeriodSprintA1N1);
 
-        SprintDTOController sprintDTO_A1_1 = createSprintDTOController(projectCode_1,
-                sprintNumber_A1_1, timePeriod_sprint_A1_1);
-
-        sprintService.createSprint(sprintDTO_A1_1);
+        sprintService.createSprint(sprintDTOA1N1);
 
         // Sprint A1-2
         // This line is duplicated because it needs to. Each time a sprint is created, a
         // different sprintNumber will be generated here, depending on how many sprints
         // already exist (autonumber feature)
-        SprintNumber sprintNumber_A1_2 = getNextSprintNumber(projectCode_1);
+        SprintNumber sprintNumberA1N2 = getNextSprintNumber(projectCode1);
 
-        LocalDate startDate_sprint_A1_2 = LocalDate.of(2022, 4, 5);
-        Date newStardDate_sprint_A1_2 = createDate(startDate_sprint_A1_2);
-        LocalDate endDate_sprint_A1_2 = LocalDate.of(2022, 4, 25);
-        Date newEndDate_sprint_A1_2 = createDate(endDate_sprint_A1_2);
+        LocalDate startDateSprintA1N2 = LocalDate.of(2022, 4, 5);
+        Date newStardDateSprintA1N2 = createDate(startDateSprintA1N2);
+        LocalDate endDateSprintA1N2 = LocalDate.of(2022, 4, 25);
+        Date newEndDateSprintA1N2 = createDate(endDateSprintA1N2);
 
-        TimePeriod timePeriod_sprint_A1_2 = new TimePeriod(newStardDate_sprint_A1_2,
-                newEndDate_sprint_A1_2);
+        TimePeriod timePeriodSprintA1N2 = new TimePeriod(newStardDateSprintA1N2,
+                newEndDateSprintA1N2);
 
-        SprintDTOController sprintDTO_A1_2 = createSprintDTOController(projectCode_1,
-                sprintNumber_A1_2, timePeriod_sprint_A1_2);
+        SprintDTOController sprintDTOA1N2 = createSprintDTOController(projectCode1,
+                sprintNumberA1N2, timePeriodSprintA1N2);
 
-        sprintService.createSprint(sprintDTO_A1_2);
+        sprintService.createSprint(sprintDTOA1N2);
 
         // Sprint A1-3
+        SprintNumber sprintNumberA1N3 = getNextSprintNumber(projectCode1);
 
-        SprintNumber sprintNumber_A1_3 = getNextSprintNumber(projectCode_1);
+        LocalDate startDateSprintA1N3 = LocalDate.of(2022, 4, 26);
+        Date newStardDateSprintA1N3 = createDate(startDateSprintA1N3);
+        LocalDate endDateSprintA1N3 = LocalDate.of(2022, 5, 9);
+        Date newEndDateSprintA1N3 = createDate(endDateSprintA1N3);
 
-        LocalDate startDate_sprint_A1_3 = LocalDate.of(2022, 4, 26);
-        Date newStardDate_sprint_A1_3 = createDate(startDate_sprint_A1_3);
-        LocalDate endDate_sprint_A1_3 = LocalDate.of(2022, 5, 9);
-        Date newEndDate_sprint_A1_3 = createDate(endDate_sprint_A1_3);
+        TimePeriod timePeriodSprintA1N3 = new TimePeriod(newStardDateSprintA1N3,
+                newEndDateSprintA1N3);
 
-        TimePeriod timePeriod_sprint_A1_3 = new TimePeriod(newStardDate_sprint_A1_3,
-                newEndDate_sprint_A1_3);
+        SprintDTOController sprintDTOA1N3 = createSprintDTOController(projectCode1,
+                sprintNumberA1N3, timePeriodSprintA1N3);
 
-        SprintDTOController sprintDTO_A1_3 = createSprintDTOController(projectCode_1,
-                sprintNumber_A1_3, timePeriod_sprint_A1_3);
-
-        sprintService.createSprint(sprintDTO_A1_3);
+        sprintService.createSprint(sprintDTOA1N3);
 
         // Sprint A2-1
+        SprintNumber sprintNumberA2N1 = getNextSprintNumber(projectCode2);
 
-        SprintNumber sprintNumber_A2_1 = getNextSprintNumber(projectCode_2);
+        LocalDate startDateSprintA2N1 = LocalDate.of(2022, 6, 7);
+        Date newStardDateSprintA2N1 = createDate(startDateSprintA2N1);
+        LocalDate endDateSprintA2N1 = LocalDate.of(2022, 7,4);
+        Date newEndDateSprintA2N1 = createDate(endDateSprintA2N1);
 
-        LocalDate startDate_sprint_A2_1 = LocalDate.of(2022, 6, 7);
-        Date newStardDate_sprint_A2_1 = createDate(startDate_sprint_A2_1);
-        LocalDate endDate_sprint_A2_1 = LocalDate.of(2022, 7,4);
-        Date newEndDate_sprint_A2_1 = createDate(endDate_sprint_A2_1);
+        TimePeriod timePeriodSprintA2N1 = new TimePeriod(newStardDateSprintA2N1,
+                newEndDateSprintA2N1);
 
-        TimePeriod timePeriod_sprint_A2_1 = new TimePeriod(newStardDate_sprint_A2_1,
-                newEndDate_sprint_A2_1);
+        SprintDTOController sprintDTOA2N1 = createSprintDTOController(projectCode2,
+                sprintNumberA2N1, timePeriodSprintA2N1);
 
-        SprintDTOController sprintDTO_A2_1 = createSprintDTOController(projectCode_2,
-                sprintNumber_A2_1, timePeriod_sprint_A2_1);
-
-        sprintService.createSprint(sprintDTO_A2_1);
+        sprintService.createSprint(sprintDTOA2N1);
 
         // Sprint A2-2
 
-        SprintNumber sprintNumber_A2_2 = getNextSprintNumber(projectCode_2);
+        SprintNumber sprintNumberA2N2 = getNextSprintNumber(projectCode2);
 
-        LocalDate startDate_sprint_A2_2 = LocalDate.of(2022, 7, 5);
-        Date newStardDate_sprint_A2_2 = createDate(startDate_sprint_A2_2);
-        LocalDate endDate_sprint_A2_2 = LocalDate.of(2022, 8, 1);
-        Date newEndDate_sprint_A2_2 = createDate(endDate_sprint_A2_2);
+        LocalDate startDateSprintA2N2 = LocalDate.of(2022, 7, 5);
+        Date newStardDateSprintA2N2 = createDate(startDateSprintA2N2);
+        LocalDate endDateSprintA2N2 = LocalDate.of(2022, 8, 1);
+        Date newEndDateSprintA2N2 = createDate(endDateSprintA2N2);
 
-        TimePeriod timePeriod_sprint_A2_2 = new TimePeriod(newStardDate_sprint_A2_2,
-                newEndDate_sprint_A2_2);
+        TimePeriod timePeriodSprintA2N2 = new TimePeriod(newStardDateSprintA2N2,
+                newEndDateSprintA2N2);
 
-        SprintDTOController sprintDTO_A2_2 = createSprintDTOController(projectCode_2,
-                sprintNumber_A2_2, timePeriod_sprint_A2_2);
+        SprintDTOController sprintDTOA2N2 = createSprintDTOController(projectCode2,
+                sprintNumberA2N2, timePeriodSprintA2N2);
 
-        sprintService.createSprint(sprintDTO_A2_2);
+        sprintService.createSprint(sprintDTOA2N2);
 
         // Sprint A2-3
 
-        SprintNumber sprintNumber_A2_3 = getNextSprintNumber(projectCode_2);
+        SprintNumber sprintNumberA2N3 = getNextSprintNumber(projectCode2);
 
-        LocalDate startDate_sprint_A2_3 = LocalDate.of(2022, 8, 2);
-        Date newStardDate_sprint_A2_3 = createDate(startDate_sprint_A2_3);
-        LocalDate endDate_sprint_A2_3 = LocalDate.of(2022, 8, 29);
-        Date newEndDate_sprint_A2_3 = createDate(endDate_sprint_A2_3);
+        LocalDate startDateSprintA2N3 = LocalDate.of(2022, 8, 2);
+        Date newStardDateSprintA2N3 = createDate(startDateSprintA2N3);
+        LocalDate endDateSprintA2N3 = LocalDate.of(2022, 8, 29);
+        Date newEndDateSprintA2N3 = createDate(endDateSprintA2N3);
 
-        TimePeriod timePeriod_sprint_A2_3 = new TimePeriod(newStardDate_sprint_A2_3,
-                newEndDate_sprint_A2_3);
+        TimePeriod timePeriodSprintA2N3 = new TimePeriod(newStardDateSprintA2N3,
+                newEndDateSprintA2N3);
 
-        SprintDTOController sprintDTO_A2_3 = createSprintDTOController(projectCode_2,
-                sprintNumber_A2_3, timePeriod_sprint_A2_3);
+        SprintDTOController sprintDTOA2N3 = createSprintDTOController(projectCode2,
+                sprintNumberA2N3, timePeriodSprintA2N3);
 
-        sprintService.createSprint(sprintDTO_A2_3);
+        sprintService.createSprint(sprintDTOA2N3);
 
         //LOAD ACCOUNTS
 
         // Account 1
-        Email email_account_1 = new Email("js@mymail.com");
-        Name name_account_1 = new Name("João Silva");
-        PhoneNumber phone_account_1 = new PhoneNumber("+351915879652");
-        Photo photo_account = new Photo("");
-        ProfileName profile_account = new ProfileName("User");
+        Email emailAccount1 = new Email("js@mymail.com");
+        Name nameAccount1 = new Name("João Silva");
+        PhoneNumber phoneAccount1 = new PhoneNumber("+351915879652");
+        Photo photoAccount = new Photo("");
+        ProfileName profileAccount = new ProfileName("User");
 
-        NewAccountDTO account_1 = new NewAccountDTO();
-        account_1.email = email_account_1;
-        account_1.name = name_account_1;
-        account_1.phoneNumber = phone_account_1;
-        account_1.photo = photo_account;
-        account_1.profile = profile_account;
+        NewAccountDTO account1 = new NewAccountDTO();
+        account1.email = emailAccount1;
+        account1.name = nameAccount1;
+        account1.phoneNumber = phoneAccount1;
+        account1.photo = photoAccount;
+        account1.profile = profileAccount;
 
-        accountService.createAccount(account_1);
+        accountService.createAccount(account1);
 
         // Account 2
-        Email email_account_2 = new Email("ms@mymail.com");
-        Name name_account_2 = new Name("Manel Costa");
-        PhoneNumber phone_account_2 = new PhoneNumber("+351263650520");
+        Email emailAccount2 = new Email("ms@mymail.com");
+        Name nameAccount2 = new Name("Manel Costa");
+        PhoneNumber phoneAccount2 = new PhoneNumber("+351263650520");
 
-        NewAccountDTO account_2 = new NewAccountDTO();
-        account_2.email = email_account_2;
-        account_2.name = name_account_2;
-        account_2.phoneNumber = phone_account_2;
-        account_2.photo = photo_account;
-        account_2.profile = profile_account;
+        NewAccountDTO account2 = new NewAccountDTO();
+        account2.email = emailAccount2;
+        account2.name = nameAccount2;
+        account2.phoneNumber = phoneAccount2;
+        account2.photo = photoAccount;
+        account2.profile = profileAccount;
 
-        accountService.createAccount(account_2);
+        accountService.createAccount(account2);
 
         // Account 3
-        Email email_account_3 = new Email("xf@mymail.com");
-        Name name_account_3 = new Name("Xico Ferreira");
-        PhoneNumber phone_account_3 = new PhoneNumber("+351263650532");
+        Email emailAccount3 = new Email("xf@mymail.com");
+        Name nameAccount3 = new Name("Xico Ferreira");
+        PhoneNumber phoneAccount3 = new PhoneNumber("+351263650532");
 
-        NewAccountDTO account_3 = new NewAccountDTO();
-        account_3.email = email_account_3;
-        account_3.name = name_account_3;
-        account_3.phoneNumber = phone_account_3;
-        account_3.photo = photo_account;
-        account_3.profile = profile_account;
+        NewAccountDTO account3 = new NewAccountDTO();
+        account3.email = emailAccount3;
+        account3.name = nameAccount3;
+        account3.phoneNumber = phoneAccount3;
+        account3.photo = photoAccount;
+        account3.profile = profileAccount;
 
-        accountService.createAccount(account_3);
+        accountService.createAccount(account3);
 
         // Account 4
-        Email email_account_4 = new Email("qd@mymail.com");
-        Name name_account_4 = new Name("Quim Barreiros");
-        PhoneNumber phone_account_4 = new PhoneNumber("+351921458803");
+        Email emailAccount4 = new Email("qd@mymail.com");
+        Name nameAccount4 = new Name("Quim Barreiros");
+        PhoneNumber phoneAccount4 = new PhoneNumber("+351921458803");
 
-        NewAccountDTO account_4 = new NewAccountDTO();
-        account_4.email = email_account_4;
-        account_4.name = name_account_4;
-        account_4.phoneNumber = phone_account_4;
-        account_4.photo = photo_account;
-        account_4.profile = profile_account;
+        NewAccountDTO account4 = new NewAccountDTO();
+        account4.email = emailAccount4;
+        account4.name = nameAccount4;
+        account4.phoneNumber = phoneAccount4;
+        account4.photo = photoAccount;
+        account4.profile = profileAccount;
 
-        accountService.createAccount(account_4);
+        accountService.createAccount(account4);
 
         // Account 5
-        Email email_account_5 = new Email("tc@mymail.com");
-        Name name_account_5 = new Name("Tiago Cancado");
-        PhoneNumber phone_account_5 = new PhoneNumber("+351263650345");
+        Email emailAccount5 = new Email("tc@mymail.com");
+        Name nameAccount5 = new Name("Tiago Cancado");
+        PhoneNumber phoneAccount5 = new PhoneNumber("+351263650345");
 
-        NewAccountDTO account_5 = new NewAccountDTO();
-        account_5.email = email_account_5;
-        account_5.name = name_account_5;
-        account_5.phoneNumber = phone_account_5;
-        account_5.photo = photo_account;
-        account_5.profile = profile_account;
+        NewAccountDTO account5 = new NewAccountDTO();
+        account5.email = emailAccount5;
+        account5.name = nameAccount5;
+        account5.phoneNumber = phoneAccount5;
+        account5.photo = photoAccount;
+        account5.profile = profileAccount;
 
-        accountService.createAccount(account_5);
+        accountService.createAccount(account5);
 
         // Account 6
-        Email email_account_6 = new Email("nel.m@mymail.com");
-        Name name_account_6 = new Name("Nel Moleiro");
-        PhoneNumber phone_account_6 = new PhoneNumber("+351930123456");
+        Email emailAccount6 = new Email("nel.m@mymail.com");
+        Name nameAccount6 = new Name("Nel Moleiro");
+        PhoneNumber phoneAccount6 = new PhoneNumber("+351930123456");
 
-        NewAccountDTO account_6 = new NewAccountDTO();
-        account_6.email = email_account_6;
-        account_6.name = name_account_6;
-        account_6.phoneNumber = phone_account_6;
-        account_6.photo = photo_account;
-        account_6.profile = profile_account;
+        NewAccountDTO account6 = new NewAccountDTO();
+        account6.email = emailAccount6;
+        account6.name = nameAccount6;
+        account6.phoneNumber = phoneAccount6;
+        account6.photo = photoAccount;
+        account6.profile = profileAccount;
 
-        accountService.createAccount(account_6);
+        accountService.createAccount(account6);
 
         // Account 7
-        Email email_account_7 = new Email("ze@mymail.com");
-        Name name_account_7 = new Name("Ze da Esquina");
-        PhoneNumber phone_account_7 = new PhoneNumber("+351212349016");
-        ProfileName profile_account_2 = new ProfileName("Manager");
+        Email emailAccount7 = new Email("ze@mymail.com");
+        Name nameAccount7 = new Name("Ze da Esquina");
+        PhoneNumber phoneAccount7 = new PhoneNumber("+351212349016");
+        ProfileName profileAccount2 = new ProfileName("Manager");
 
-        NewAccountDTO account_7 = new NewAccountDTO();
-        account_7.email = email_account_7;
-        account_7.name = name_account_7;
-        account_7.phoneNumber = phone_account_7;
-        account_7.photo = photo_account;
-        account_7.profile = profile_account_2;
+        NewAccountDTO account7 = new NewAccountDTO();
+        account7.email = emailAccount7;
+        account7.name = nameAccount7;
+        account7.phoneNumber = phoneAccount7;
+        account7.photo = photoAccount;
+        account7.profile = profileAccount2;
 
-        accountService.createAccount(account_7);
+        accountService.createAccount(account7);
 
         // Account 8
-        Email email_account_8 = new Email("zb@mymail.com");
-        Name name_account_8 = new Name("Zé do Bento");
-        PhoneNumber phone_account_8 = new PhoneNumber("+351921458791");
+        Email emailAccount8 = new Email("zb@mymail.com");
+        Name nameAccount8 = new Name("Zé do Bento");
+        PhoneNumber phoneAccount8 = new PhoneNumber("+351921458791");
 
-        NewAccountDTO account_8 = new NewAccountDTO();
-        account_8.email = email_account_8;
-        account_8.name = name_account_8;
-        account_8.phoneNumber = phone_account_8;
-        account_8.photo = photo_account;
-        account_8.profile = profile_account;
+        NewAccountDTO account8 = new NewAccountDTO();
+        account8.email = emailAccount8;
+        account8.name = nameAccount8;
+        account8.phoneNumber = phoneAccount8;
+        account8.photo = photoAccount;
+        account8.profile = profileAccount;
 
-        accountService.createAccount(account_8);
+        accountService.createAccount(account8);
 
         // Account 9
-        Email email_account_9 = new Email("to.f@mymail.com");
-        Name name_account_9 = new Name("Tó Farrulo");
-        PhoneNumber phone_account_9 = new PhoneNumber("+351921458795");
+        Email emailAccount9 = new Email("to.f@mymail.com");
+        Name nameAccount9 = new Name("Tó Farrulo");
+        PhoneNumber phoneAccount9 = new PhoneNumber("+351921458795");
 
-        NewAccountDTO account_9 = new NewAccountDTO();
-        account_9.email = email_account_9;
-        account_9.name = name_account_9;
-        account_9.phoneNumber = phone_account_9;
-        account_9.photo = photo_account;
-        account_9.profile = profile_account;
+        NewAccountDTO account9 = new NewAccountDTO();
+        account9.email = emailAccount9;
+        account9.name = nameAccount9;
+        account9.phoneNumber = phoneAccount9;
+        account9.photo = photoAccount;
+        account9.profile = profileAccount;
 
-        accountService.createAccount(account_9);
+        accountService.createAccount(account9);
 
         // Account 10
-        Email email_account_10 = new Email("tdc@mymail.com");
-        Name name_account_10 = new Name("Tino das Cruzes");
-        PhoneNumber phone_account_10 = new PhoneNumber("+351921458799");
+        Email emailAccount10 = new Email("tdc@mymail.com");
+        Name nameAccount10 = new Name("Tino das Cruzes");
+        PhoneNumber phoneAccount10 = new PhoneNumber("+351921458799");
 
-        NewAccountDTO account_10 = new NewAccountDTO();
-        account_10.email = email_account_10;
-        account_10.name = name_account_10;
-        account_10.phoneNumber = phone_account_10;
-        account_10.photo = photo_account;
-        account_10.profile = profile_account;
+        NewAccountDTO account10 = new NewAccountDTO();
+        account10.email = emailAccount10;
+        account10.name = nameAccount10;
+        account10.phoneNumber = phoneAccount10;
+        account10.photo = photoAccount;
+        account10.profile = profileAccount;
 
-        accountService.createAccount(account_10);
+        accountService.createAccount(account10);
 
         // Account 11
-        Email email_account_11 = new Email("zm@mymail.com");
-        Name name_account_11 = new Name("Zé Manel");
-        PhoneNumber phone_account_11 = new PhoneNumber("+351921458811");
+        Email emailAccount11 = new Email("zm@mymail.com");
+        Name nameAccount11 = new Name("Zé Manel");
+        PhoneNumber phoneAccount11 = new PhoneNumber("+351921458811");
 
-        NewAccountDTO account_11 = new NewAccountDTO();
-        account_11.email = email_account_11;
-        account_11.name = name_account_11;
-        account_11.phoneNumber = phone_account_11;
-        account_11.photo = photo_account;
-        account_11.profile = profile_account;
+        NewAccountDTO account11 = new NewAccountDTO();
+        account11.email = emailAccount11;
+        account11.name = nameAccount11;
+        account11.phoneNumber = phoneAccount11;
+        account11.photo = photoAccount;
+        account11.profile = profileAccount;
 
-        accountService.createAccount(account_11);
+        accountService.createAccount(account11);
 
         // Account 12
-        Email email_account_12 = new Email("as@mymail.com");
-        Name name_account_12 = new Name("Antonio Silva");
-        PhoneNumber phone_account_12 = new PhoneNumber("+351921458815");
+        Email emailAccount12 = new Email("as@mymail.com");
+        Name nameAccount12 = new Name("Antonio Silva");
+        PhoneNumber phoneAccount12 = new PhoneNumber("+351921458815");
 
-        NewAccountDTO account_12 = new NewAccountDTO();
-        account_12.email = email_account_12;
-        account_12.name = name_account_12;
-        account_12.phoneNumber = phone_account_12;
-        account_12.photo = photo_account;
-        account_12.profile = profile_account;
+        NewAccountDTO account12 = new NewAccountDTO();
+        account12.email = emailAccount12;
+        account12.name = nameAccount12;
+        account12.phoneNumber = phoneAccount12;
+        account12.photo = photoAccount;
+        account12.profile = profileAccount;
 
-        accountService.createAccount(account_12);
+        accountService.createAccount(account12);
 
         // Account 13
-        Email email_account_13 = new Email("tg@mymail.com");
-        Name name_account_13 = new Name("Tiago Geringonca");
-        PhoneNumber phone_account_13 = new PhoneNumber("+351921458807");
+        Email emailAccount13 = new Email("tg@mymail.com");
+        Name nameAccount13 = new Name("Tiago Geringonca");
+        PhoneNumber phoneAccount13 = new PhoneNumber("+351921458807");
 
-        NewAccountDTO account_13 = new NewAccountDTO();
-        account_13.email = email_account_13;
-        account_13.name = name_account_13;
-        account_13.phoneNumber = phone_account_13;
-        account_13.photo = photo_account;
-        account_13.profile = profile_account_2;
+        NewAccountDTO account13 = new NewAccountDTO();
+        account13.email = emailAccount13;
+        account13.name = nameAccount13;
+        account13.phoneNumber = phoneAccount13;
+        account13.photo = photoAccount;
+        account13.profile = profileAccount2;
 
-        accountService.createAccount(account_13);
+        accountService.createAccount(account13);
 
         // Account 14
-        Email email_account_14 = new Email("udu@mymail.com");
-        Name name_account_14 = new Name("Urbino das Urzes");
-        PhoneNumber phone_account_14 = new PhoneNumber("+351962547891");
-        ProfileName profile_account_3 = new ProfileName("Administrator");
+        Email emailAccount14 = new Email("udu@mymail.com");
+        Name nameAccount14 = new Name("Urbino das Urzes");
+        PhoneNumber phoneAccount14 = new PhoneNumber("+351962547891");
+        ProfileName profileAccount3 = new ProfileName("Administrator");
 
-        NewAccountDTO account_14 = new NewAccountDTO();
-        account_14.email = email_account_14;
-        account_14.name = name_account_14;
-        account_14.phoneNumber = phone_account_14;
-        account_14.photo = photo_account;
-        account_14.profile = profile_account_3;
+        NewAccountDTO account14 = new NewAccountDTO();
+        account14.email = emailAccount14;
+        account14.name = nameAccount14;
+        account14.phoneNumber = phoneAccount14;
+        account14.photo = photoAccount;
+        account14.profile = profileAccount3;
 
-        accountService.createAccount(account_14);
+        accountService.createAccount(account14);
 
 
         //LOAD RESOURCES
 
         // Resource A1_1
 
-        NewResourceDTO resource_A1_1 = new NewResourceDTO();
-        resource_A1_1.accountID = new AccountID(1); //João Silva, USER
-        resource_A1_1.costPerHour = new CostPerHour(25.00);
-        resource_A1_1.role = new Role("Product Owner");
-        resource_A1_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
-        resource_A1_1.projectCode = projectCode_1;
-        resource_A1_1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 3, 31)),
+        NewResourceDTO resourceA1N1 = new NewResourceDTO();
+        resourceA1N1.accountID = new AccountID(1); //João Silva, USER
+        resourceA1N1.costPerHour = new CostPerHour(25.00);
+        resourceA1N1.role = new Role("Product Owner");
+        resourceA1N1.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resourceA1N1.projectCode = projectCode1;
+        resourceA1N1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 3, 31)),
                 createDate(LocalDate.of(2022, 7, 31)));
 
-        resourceService.createResource(resource_A1_1);
+        resourceService.createResource(resourceA1N1);
 
         // Resource A1_2
 
-        NewResourceDTO resource_A1_2 = new NewResourceDTO();
-        resource_A1_2.accountID = new AccountID(2); //"Manel Costa" USER
-        resource_A1_2.costPerHour = new CostPerHour(25.00);
-        resource_A1_2.role = new Role("Scrum Master");
-        resource_A1_2.percentageOfAllocation = new PercentageOfAllocation(0.3);
-        resource_A1_2.projectCode = projectCode_1;
-        resource_A1_2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 4)),
+        NewResourceDTO resourceA1N2 = new NewResourceDTO();
+        resourceA1N2.accountID = new AccountID(2); //"Manel Costa" USER
+        resourceA1N2.costPerHour = new CostPerHour(25.00);
+        resourceA1N2.role = new Role("Scrum Master");
+        resourceA1N2.percentageOfAllocation = new PercentageOfAllocation(0.3);
+        resourceA1N2.projectCode = projectCode1;
+        resourceA1N2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 4)),
                 createDate(LocalDate.of(2022, 7, 31)));
 
-        resourceService.createResource(resource_A1_2);
+        resourceService.createResource(resourceA1N2);
 
         // Resource A1_3
 
-        NewResourceDTO resource_A1_3 = new NewResourceDTO();
-        resource_A1_3.accountID = new AccountID(3); //"Xico Ferreira" USER
-        resource_A1_3.costPerHour = new CostPerHour(20.00);
-        resource_A1_3.role = new Role("Team Member");
-        resource_A1_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A1_3.projectCode = projectCode_1;
-        resource_A1_3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 5)),
+        NewResourceDTO resourceA1N3 = new NewResourceDTO();
+        resourceA1N3.accountID = new AccountID(3); //"Xico Ferreira" USER
+        resourceA1N3.costPerHour = new CostPerHour(20.00);
+        resourceA1N3.role = new Role("Team Member");
+        resourceA1N3.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA1N3.projectCode = projectCode1;
+        resourceA1N3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 5)),
                 createDate(LocalDate.of(2022, 7, 31)));
 
-        resourceService.createResource(resource_A1_3);
+        resourceService.createResource(resourceA1N3);
 
         // Resource A1_4
 
-        NewResourceDTO resource_A1_4 = new NewResourceDTO();
-        resource_A1_4.accountID = new AccountID(5); //"Tiago Cancado" USER
-        resource_A1_4.costPerHour = new CostPerHour(35.00);
-        resource_A1_4.role = new Role("Project Manager");
-        resource_A1_4.percentageOfAllocation = new PercentageOfAllocation(0.2);
-        resource_A1_4.projectCode = projectCode_1;
-        resource_A1_4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 2)),
+        NewResourceDTO resourceA1N4 = new NewResourceDTO();
+        resourceA1N4.accountID = new AccountID(5); //"Tiago Cancado" USER
+        resourceA1N4.costPerHour = new CostPerHour(35.00);
+        resourceA1N4.role = new Role("Project Manager");
+        resourceA1N4.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resourceA1N4.projectCode = projectCode1;
+        resourceA1N4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 2)),
                 createDate(LocalDate.of(2022, 7, 31)));
 
-        resourceService.createResource(resource_A1_4);
+        resourceService.createResource(resourceA1N4);
 
         // Resource A1_5
 
-        NewResourceDTO resource_A1_5 = new NewResourceDTO();
-        resource_A1_5.accountID = new AccountID(6); //"Nel Moleiro" USER
-        resource_A1_5.costPerHour = new CostPerHour(20.00);
-        resource_A1_5.role = new Role("Team Member");
-        resource_A1_5.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A1_5.projectCode = projectCode_1;
-        resource_A1_5.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 7)),
+        NewResourceDTO resourceA1N5 = new NewResourceDTO();
+        resourceA1N5.accountID = new AccountID(6); //"Nel Moleiro" USER
+        resourceA1N5.costPerHour = new CostPerHour(20.00);
+        resourceA1N5.role = new Role("Team Member");
+        resourceA1N5.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA1N5.projectCode = projectCode1;
+        resourceA1N5.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 7)),
                 createDate(LocalDate.of(2022, 7, 31)));
 
-        resourceService.createResource(resource_A1_5);
+        resourceService.createResource(resourceA1N5);
 
 
         // Resource A1_6
 
-        NewResourceDTO resource_A1_6 = new NewResourceDTO();
-        resource_A1_6.accountID = new AccountID(8); //"Zé do Bento" USER
-        resource_A1_6.costPerHour = new CostPerHour(20.00);
-        resource_A1_6.role = new Role("Team Member");
-        resource_A1_6.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A1_6.projectCode = projectCode_1;
-        resource_A1_6.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
+        NewResourceDTO resourceA1N6 = new NewResourceDTO();
+        resourceA1N6.accountID = new AccountID(8); //"Zé do Bento" USER
+        resourceA1N6.costPerHour = new CostPerHour(20.00);
+        resourceA1N6.role = new Role("Team Member");
+        resourceA1N6.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA1N6.projectCode = projectCode1;
+        resourceA1N6.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
                 createDate(LocalDate.of(2022, 6, 20)));
 
-        resourceService.createResource(resource_A1_6);
+        resourceService.createResource(resourceA1N6);
 
         // Resource A1_7
 
-        NewResourceDTO resource_A1_7 = new NewResourceDTO();
-        resource_A1_7.accountID = new AccountID(9); //"Tó Farrulo" USER
-        resource_A1_7.costPerHour = new CostPerHour(20.00);
-        resource_A1_7.role = new Role("Team Member");
-        resource_A1_7.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A1_7.projectCode = projectCode_1;
-        resource_A1_7.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
+        NewResourceDTO resourceA1N7 = new NewResourceDTO();
+        resourceA1N7.accountID = new AccountID(9); //"Tó Farrulo" USER
+        resourceA1N7.costPerHour = new CostPerHour(20.00);
+        resourceA1N7.role = new Role("Team Member");
+        resourceA1N7.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA1N7.projectCode = projectCode1;
+        resourceA1N7.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 8)),
                 createDate(LocalDate.of(2022, 6, 20)));
 
-        resourceService.createResource(resource_A1_7);
+        resourceService.createResource(resourceA1N7);
 
         // Resource A1_8
 
-        NewResourceDTO resource_A1_8 = new NewResourceDTO();
-        resource_A1_8.accountID = new AccountID(10); //"Tino das Cruzes" USER
-        resource_A1_8.costPerHour = new CostPerHour(20.00);
-        resource_A1_8.role = new Role("Team Member");
-        resource_A1_8.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A1_8.projectCode = projectCode_1;
-        resource_A1_8.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 10)),
+        NewResourceDTO resourceA1N8 = new NewResourceDTO();
+        resourceA1N8.accountID = new AccountID(10); //"Tino das Cruzes" USER
+        resourceA1N8.costPerHour = new CostPerHour(20.00);
+        resourceA1N8.role = new Role("Team Member");
+        resourceA1N8.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA1N8.projectCode = projectCode1;
+        resourceA1N8.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 1, 10)),
                 createDate(LocalDate.of(2022, 6, 20)));
 
-        resourceService.createResource(resource_A1_8);
+        resourceService.createResource(resourceA1N8);
 
         // Resource A2_1
 
-        NewResourceDTO resource_A2_1 = new NewResourceDTO();
-        resource_A2_1.accountID = new AccountID(4); //"Quim Barreiros" USER
-        resource_A2_1.costPerHour = new CostPerHour(42.00);
-        resource_A2_1.role = new Role("Project Manager");
-        resource_A2_1.percentageOfAllocation = new PercentageOfAllocation(0.2);
-        resource_A2_1.projectCode = projectCode_2;
-        resource_A2_1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
+        NewResourceDTO resourceA2N1 = new NewResourceDTO();
+        resourceA2N1.accountID = new AccountID(4); //"Quim Barreiros" USER
+        resourceA2N1.costPerHour = new CostPerHour(42.00);
+        resourceA2N1.role = new Role("Project Manager");
+        resourceA2N1.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resourceA2N1.projectCode = projectCode2;
+        resourceA2N1.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
                 createDate(LocalDate.of(2023, 4, 30)));
 
-        resourceService.createResource(resource_A2_1);
+        resourceService.createResource(resourceA2N1);
 
         /*// Resource A2_2
 
-        NewResourceDTO resource_A2_2 = new NewResourceDTO();
-        resource_A2_2.email = email_account_13; //"Tiago Geringonca" MANAGER (Bate nas validações)
-        resource_A2_2.costPerHour = new CostPerHour(30.00);
-        resource_A2_2.role = new Role("Product Owner");
-        resource_A2_2.percentageOfAllocation = new PercentageOfAllocation(0.2);
-        resource_A2_2.projectCode = projectCode_2;
-        resource_A2_2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
+        NewResourceDTO resourceA2N2 = new NewResourceDTO();
+        resourceA2N2.email = email_account_13; //"Tiago Geringonca" MANAGER (Bate nas validações)
+        resourceA2N2.costPerHour = new CostPerHour(30.00);
+        resourceA2N2.role = new Role("Product Owner");
+        resourceA2N2.percentageOfAllocation = new PercentageOfAllocation(0.2);
+        resourceA2N2.projectCode = projectCode2;
+        resourceA2N2.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 15)),
                 createDate(LocalDate.of(2023, 4, 30)));
 
-        resourceService.createResource(resource_A2_2);*/
+        resourceService.createResource(resourceA2N2);*/
 
         // Resource A2_3
 
-        NewResourceDTO resource_A2_3 = new NewResourceDTO();
-        resource_A2_3.accountID = new AccountID(11);
-        resource_A2_3.costPerHour = new CostPerHour(20.00);
-        resource_A2_3.role = new Role("Team Member");
-        resource_A2_3.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A2_3.projectCode = projectCode_2;
-        resource_A2_3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
+        NewResourceDTO resourceA2N3 = new NewResourceDTO();
+        resourceA2N3.accountID = new AccountID(11);
+        resourceA2N3.costPerHour = new CostPerHour(20.00);
+        resourceA2N3.role = new Role("Team Member");
+        resourceA2N3.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA2N3.projectCode = projectCode2;
+        resourceA2N3.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
                 createDate(LocalDate.of(2023, 4, 30)));
 
-        resourceService.createResource(resource_A2_3);
+        resourceService.createResource(resourceA2N3);
 
         // Resource A2_4
 
-        NewResourceDTO resource_A2_4 = new NewResourceDTO();
-        resource_A2_4.accountID = new AccountID(12);
-        resource_A2_4.costPerHour = new CostPerHour(18.00);
-        resource_A2_4.role = new Role("Team Member");
-        resource_A2_4.percentageOfAllocation = new PercentageOfAllocation(1.0);
-        resource_A2_4.projectCode = projectCode_2;
-        resource_A2_4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
+        NewResourceDTO resourceA2N4 = new NewResourceDTO();
+        resourceA2N4.accountID = new AccountID(12);
+        resourceA2N4.costPerHour = new CostPerHour(18.00);
+        resourceA2N4.role = new Role("Team Member");
+        resourceA2N4.percentageOfAllocation = new PercentageOfAllocation(1.0);
+        resourceA2N4.projectCode = projectCode2;
+        resourceA2N4.timePeriod = new TimePeriod(createDate(LocalDate.of(2022, 5, 31)),
                 createDate(LocalDate.of(2023, 4, 30)));
 
-        resourceService.createResource(resource_A2_4);
+        resourceService.createResource(resourceA2N4);
 
 
 
@@ -1339,12 +1336,12 @@ public class DataLoader implements CommandLineRunner {
      * @return a SprintDTOController with the input data.
      */
     private static SprintDTOController createSprintDTOController(ProjectCode projectCode, SprintNumber sprintNumber, TimePeriod timePeriod_sprint) {
-        SprintDTOController sprintDTO_A1_1 = new SprintDTOController();
+        SprintDTOController sprintDTO = new SprintDTOController();
 
-        sprintDTO_A1_1.projectCode = projectCode;
-        sprintDTO_A1_1.sprintNumber = sprintNumber;
-        sprintDTO_A1_1.timePeriod = timePeriod_sprint;
-        return sprintDTO_A1_1;
+        sprintDTO.projectCode = projectCode;
+        sprintDTO.sprintNumber = sprintNumber;
+        sprintDTO.timePeriod = timePeriod_sprint;
+        return sprintDTO;
     }
 
 }
