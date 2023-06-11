@@ -5,15 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.switch2022.project.mapper.sprintDTOs.SprintDTOController;
-import org.switch2022.project.mapper.sprintDTOs.SprintDTOToController;
-import org.switch2022.project.mapper.sprintDTOs.SprintDTOToControllerMapper;
+import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
+import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
+import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.SprintID;
-import org.switch2022.project.model.valueobject.SprintNumber;
-import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 
 import java.util.ArrayList;
@@ -33,83 +31,114 @@ public class SprintServiceDDDTest {
     @MockBean
     ISprintRepository sprintRepository;
     @MockBean
-    SprintDTOToControllerMapper toControllerMapper;
+    NewSprintDTOMapper toControllerMapper;
+    @MockBean
+    IProjectRepository projectRepository;
     @Autowired
     SprintServiceDDD sprintService;
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper);
+        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository);
     }
-
     @Test
-    public void ensureServiceThrowsExceptionWhenSprintRepositoryIsNull(){
+    public void ensureServiceThrowsExceptionForFactory(){
         //arrange
-        String message = "sprintRepository cannot be null.";
+        String message = "SprintFactory cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
-            new SprintServiceDDD(sprintFactory, null, toControllerMapper));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureServiceThrowsExceptionForSprintRepository(){
+        //arrange
+        String message = "SprintRepository cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureServiceThrowsExceptionForMapper(){
+        //arrange
+        String message = "NewSprintDTOMapper cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureServiceThrowsExceptionForProjectRepository(){
+        //arrange
+        String message = "ProjectRepository cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null);
+        });
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
     }
 
-    @Test
-    public void ensureServiceThrowsExceptionWhenToControllerMapperIsNull(){
-        //arrange
-        String message = "toControllerMapper cannot be null.";
-
-        // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
-            new SprintServiceDDD(sprintFactory, sprintRepository, null));
-        String result = exception.getMessage();
-        // assert
-        assertEquals(message, result);
-    }
-
-    @Test
-    public void ensureServiceThrowsExceptionWhenSprintFactoryIsNull(){
-        //arrange
-        String message = "sprintFactory cannot be null.";
-
-        // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
-            new SprintServiceDDD(null, sprintRepository, toControllerMapper));
-        String result = exception.getMessage();
-        // assert
-        assertEquals(message, result);
-    }
     @Test
     public void ensureServiceCreatesSprintSuccessfully() {
-        //Arrange
+        //arrange
         //Create sprintDTO:
-        SprintDTOController sprintDTO = new SprintDTOController();
-        SprintDTOToController toControllerDTO = new SprintDTOToController();
+        NewSprintDTO sprintDTO = new NewSprintDTO();
+        NewSprintDTO toControllerDTO = new NewSprintDTO();
+
         //Create VO from sprintDTO and toControllerDTO:
+
         ProjectCode projectCode = new ProjectCode("AAA");
-        sprintDTO.projectCode = projectCode;
         SprintNumber sprintNumber = new SprintNumber(1);
         SprintID sprintID = new SprintID(projectCode, sprintNumber);
+        SprintStatus status = SprintStatus.Planned;
         TimePeriod timePeriod = new TimePeriod(new Date(10 / 3 / 2023),
                 new Date(25 / 3 / 2023));
-        toControllerDTO.sprintID = sprintID;
+
+        toControllerDTO.sprintID = new SprintID(projectCode, sprintNumber);
         toControllerDTO.timePeriod = timePeriod;
+        toControllerDTO.status = status;
+
+        sprintDTO.projectCode = projectCode;
         sprintDTO.timePeriod = timePeriod;
         sprintDTO.sprintNumber = sprintNumber;
+        sprintDTO.sprintID = sprintID;
+
         //Create a mock sprint:
         SprintDDD sprint = mock(SprintDDD.class);
+        when(sprint.identity()).thenReturn(sprintID);
+        when(sprint.getTimePeriod()).thenReturn(timePeriod);
+        when(sprint.getSprintStatus()).thenReturn(status);
+
         //Mock and train a sprint factory:
-        when(sprintFactory.createSprint(sprintID, timePeriod)).thenReturn(sprint);
+        when(sprintFactory.newSprintID(sprintDTO.projectCode, sprintDTO.sprintNumber)).thenReturn(sprintID);
+        when(sprintFactory.createSprint(sprintDTO)).thenReturn(sprint);
+
         //Mock and train repository of sprints:
         when(sprintRepository.save(sprint)).thenReturn(sprint);
+
         //Mock and train mapper:
         when(toControllerMapper.convertToDTO(sprint)).thenReturn(toControllerDTO);
 
-        //Act
-        SprintDTOToController result = sprintService.createSprint(sprintDTO);
+        //act
+        NewSprintDTO result = sprintService.createSprint(sprintDTO);
 
-        //Assert
+        //assert
         assertEquals(toControllerDTO, result);
     }
     @Test
@@ -119,8 +148,8 @@ public class SprintServiceDDDTest {
         SprintDDD mockSprintTwo = mock(SprintDDD.class);
         ProjectCode mockCode = mock(ProjectCode.class);
         when(mockCode.toString()).thenReturn("P1");
-        SprintDTOToController mockToController = mock(SprintDTOToController.class);
-        SprintDTOToController mockToControllerTwo = mock(SprintDTOToController.class);
+        NewSprintDTO mockToController = mock(NewSprintDTO.class);
+        NewSprintDTO mockToControllerTwo = mock(NewSprintDTO.class);
 
         List<SprintDDD> mockList = new ArrayList<>();
         mockList.add(mockSprint);
@@ -130,12 +159,12 @@ public class SprintServiceDDDTest {
         when(toControllerMapper.convertToDTO(mockSprint)).thenReturn(mockToController);
         when(toControllerMapper.convertToDTO(mockSprintTwo)).thenReturn(mockToControllerTwo);
 
-        List<SprintDTOToController> expectedDDDList = new ArrayList<>();
+        List<NewSprintDTO> expectedDDDList = new ArrayList<>();
         expectedDDDList.add(mockToController);
         expectedDDDList.add(mockToControllerTwo);
 
         // act
-        List<SprintDTOToController> result = sprintService.sprintList(mockCode);
+        List<NewSprintDTO> result = sprintService.sprintList(mockCode);
 
         // assert
         assertEquals(expectedDDDList, result);
@@ -145,7 +174,7 @@ public class SprintServiceDDDTest {
         // arrange
         ProjectCode mockCode = mock(ProjectCode.class);
         when(mockCode.toString()).thenReturn("P1");
-        SprintDTOToController mockToController = mock(SprintDTOToController.class);
+        NewSprintDTO mockToController = mock(NewSprintDTO.class);
         SprintDDD mockSprint = mock(SprintDDD.class);
 
         List<SprintDDD> mockList = new ArrayList<>();
@@ -153,12 +182,53 @@ public class SprintServiceDDDTest {
         when(sprintRepository.findByProjectCode(mockCode)).thenReturn(mockList);
         when(toControllerMapper.convertToDTO(mockSprint)).thenReturn(mockToController);
 
-        List<SprintDTOToController> expectedDDDList = new ArrayList<>();
+        List<NewSprintDTO> expectedDDDList = new ArrayList<>();
 
         // act
-        List<SprintDTOToController> result = sprintService.sprintList(mockCode);
+        List<NewSprintDTO> result = sprintService.sprintList(mockCode);
 
         // assert
         assertEquals(expectedDDDList, result);
+    }
+    @Test
+    public void ensureServicesCreateSprintNumber(){
+        //arrange
+        ProjectCode mockCode = mock(ProjectCode.class);
+
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        SprintDDD mockSprintTwo = mock(SprintDDD.class);
+        SprintDDD mockSprintThree = mock(SprintDDD.class);
+
+        List<SprintDDD> mockList = new ArrayList<>();
+        mockList.add(mockSprint);
+        mockList.add(mockSprintTwo);
+        mockList.add(mockSprintThree);
+
+        when(projectRepository.existsByProjectCode(mockCode.toString())).thenReturn(true);
+        when(sprintRepository.findByProjectCode(mockCode)).thenReturn(mockList);
+
+        //act
+        int result = sprintService.getNewSprintNumber(mockCode);
+
+        //assert
+        assertEquals(4, result);
+    }
+    @Test
+    public void ensureServicesCanNotFindProject(){
+        //arrange
+        ProjectCode mockCode = mock(ProjectCode.class);
+
+        when(projectRepository.existsByProjectCode(mockCode.toString())).thenReturn(false);
+
+        String expectedMessage = "There is no project with this code.";
+
+        //act
+        RuntimeException exception = assertThrows(RuntimeException.class, ()-> {
+            sprintService.getNewSprintNumber(mockCode);
+        });
+        String result = exception.getMessage();
+
+        //assert
+        assertEquals(expectedMessage, result);
     }
 }

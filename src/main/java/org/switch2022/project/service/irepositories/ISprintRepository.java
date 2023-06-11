@@ -10,5 +10,4 @@ import java.util.List;
 public interface ISprintRepository extends RepositoryNew<SprintID, SprintDDD> {
 
     List<SprintDDD> findByProjectCode(ProjectCode projectCode);
-    int findLastSprintNumber(ProjectCode projectCode);
 }

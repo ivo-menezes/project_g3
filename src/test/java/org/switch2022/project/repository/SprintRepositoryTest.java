@@ -52,6 +52,29 @@ class SprintRepositoryTest {
         assertEquals(mockSavedSprint, result);
     }
     @Test
+    public void ensureThatRepositoryContainsID(){
+        //arrange
+        SprintDDD mockSprint = mock(SprintDDD.class);
+        SprintID mockID = mock(SprintID.class);
+        when(mockSprint.identity()).thenReturn(mockID);
+        SprintJpaID mockJpaId = mock(SprintJpaID.class);
+
+        when(sprintAssemblerData.convertToSprintJpaID(mockID)).thenReturn(mockJpaId);
+        when(sprintJPARepository.existsById(mockJpaId)).thenReturn(true);
+
+        String expectedMessage = "Sprint already exists with this ID";
+        //act
+
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () -> {
+            sprintRepository.save(mockSprint);
+        });
+
+        String resultMessage = result.getMessage();
+
+        //assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+    @Test
     public void ensureThatRepositoryDoesNotContainID(){
         //arrange
         SprintID sprintIDMock = mock(SprintID.class);

@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,6 +28,7 @@ public class SprintAssemblerDataTest {
         ProjectCode projectCodeDouble = mock(ProjectCode.class);
         SprintNumber sprintNumberDouble = mock(SprintNumber.class);
         TimePeriod timePeriodDouble = mock(TimePeriod.class);
+        SprintStatus sprintStatus = mock(SprintStatus.class);
 
         when(sprintDouble.identity()).thenReturn(sprintIdDouble);
         when(sprintIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
@@ -38,9 +38,11 @@ public class SprintAssemblerDataTest {
         when(sprintDouble.getTimePeriod()).thenReturn(timePeriodDouble);
         when(timePeriodDouble.getStartDate()).thenReturn(formatter.parse("01/01/2023"));
         when(timePeriodDouble.getEndDate()).thenReturn(formatter.parse("31/01/2023"));
+        when(sprintDouble.getSprintStatus()).thenReturn(sprintStatus);
+        when(sprintStatus.toString()).thenReturn("Planned");
 
         SprintJpaID expectedSprintJpaId = new SprintJpaID("PJ1", 1);
-        SprintJPA expectedSprintJpa = new SprintJPA(expectedSprintJpaId, formatter.parse("01/01/2023"), formatter.parse("31/01/2023"));
+        SprintJPA expectedSprintJpa = new SprintJPA(expectedSprintJpaId, formatter.parse("01/01/2023"), formatter.parse("31/01/2023"), "Planned");
 
         SprintAssemblerData assembler = new SprintAssemblerData();
 
@@ -65,12 +67,14 @@ public class SprintAssemblerDataTest {
         when(sprintJpaIdDouble.getProjectCode()).thenReturn("XPTO");
         when(sprintJPADouble.getStartDate()).thenReturn(startDateDouble);
         when(sprintJPADouble.getEndDate()).thenReturn(endDateDouble);
+        when(sprintJPADouble.getSprintStatus()).thenReturn("Open");
 
         ProjectCode expectedProjectCode = new ProjectCode("XPTO");
         SprintNumber expectedSprintNumber = new SprintNumber(1);
         SprintID expectedSprintId = new SprintID(expectedProjectCode, expectedSprintNumber);
         TimePeriod expectedTimePeriod = new TimePeriod(startDateDouble, endDateDouble);
-        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod);
+        SprintStatus expectedStatus = SprintStatus.Open;
+        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod, expectedStatus);
 
         SprintAssemblerData assembler = new SprintAssemblerData();
 

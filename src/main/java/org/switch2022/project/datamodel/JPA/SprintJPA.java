@@ -19,13 +19,16 @@ public class SprintJPA {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
+    private String sprintStatus;
+
     protected SprintJPA() {
     }
 
-    public SprintJPA(SprintJpaID sprintID, Date startDate, Date endDate) {
+    public SprintJPA(SprintJpaID sprintID, Date startDate, Date endDate, String sprintStatus) {
         this.sprintID = sprintID;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.sprintStatus = sprintStatus;
     }
 
     public SprintJpaID getSprintID() {
@@ -40,6 +43,8 @@ public class SprintJPA {
         return endDate;
     }
 
+    public String getSprintStatus(){ return sprintStatus; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,13 +56,14 @@ public class SprintJPA {
         SprintJPA that = (SprintJPA) o;
         return Objects.equals(sprintID, that.sprintID) &&
                 Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate);
+                Objects.equals(endDate, that.endDate) &&
+                Objects.equals(sprintStatus, that.sprintStatus);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(sprintID, startDate, endDate);
+        return Objects.hash(sprintID, startDate, endDate, sprintStatus);
     }
 }
 

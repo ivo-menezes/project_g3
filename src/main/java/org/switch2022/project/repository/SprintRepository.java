@@ -44,11 +44,6 @@ public class SprintRepository implements ISprintRepository {
         SprintJpaID jpaID = sprintAssemblerData.convertToSprintJpaID(id);
         return sprintJpaRepository.existsById(jpaID);
     }
-    public int findLastSprintNumber(ProjectCode projectCode) {
-        String code = projectCode.toString();
-        Integer lastSprintNumber = sprintJpaRepository.findMaxSprintNumberByProjectCode(code);
-        return lastSprintNumber != null ? lastSprintNumber : 0;
-    }
 
     /***
      * This method will get the identity of the sprint object and save it in the

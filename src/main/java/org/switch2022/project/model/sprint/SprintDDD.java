@@ -3,10 +3,9 @@ package org.switch2022.project.model.sprint;
 
 import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.TimePeriod;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class SprintDDD implements AggregateRoot<SprintID> {
@@ -14,7 +13,10 @@ public class SprintDDD implements AggregateRoot<SprintID> {
     private final SprintID sprintID;
     private final TimePeriod timePeriod;
 
-    private final List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
+    private SprintStatus status;
+
+
+    //private final List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
 
     /**
      * Public constructor to instantiate a sprint.
@@ -22,12 +24,17 @@ public class SprintDDD implements AggregateRoot<SprintID> {
      * @param sprintID   contains projectCode and sprintNumber;
      * @param timePeriod contains startDate and endDate.
      */
-    public SprintDDD(SprintID sprintID, TimePeriod timePeriod) {
-        if (sprintID == null || timePeriod == null) {
+    public SprintDDD(SprintID sprintID, TimePeriod timePeriod){
+        this(sprintID, timePeriod, SprintStatus.Planned);
+    }
+
+    public SprintDDD(SprintID sprintID, TimePeriod timePeriod, SprintStatus status) {
+        if(sprintID == null || timePeriod == null || status == null){
             throw new IllegalArgumentException("Missing value, please try again.");
         }
         this.sprintID = sprintID;
         this.timePeriod = timePeriod;
+        this.status = status;
     }
 
     public SprintID identity() {
@@ -37,6 +44,10 @@ public class SprintDDD implements AggregateRoot<SprintID> {
     public TimePeriod getTimePeriod() {
         return timePeriod;
     }
+    public SprintStatus getSprintStatus(){
+        return status;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -62,7 +73,7 @@ public class SprintDDD implements AggregateRoot<SprintID> {
      * @param userStoryInSprint relates a specific US to a specific sprint.
      * @return true if the userStoryInSprint was added to the Sprint Backlog, or false otherwise.
      */
-    public boolean addUserStoryToSprintBacklog(UserStoryInSprint userStoryInSprint) {
+/*    public boolean addUserStoryToSprintBacklog(UserStoryInSprint userStoryInSprint) {
         boolean added = false;
 
         if (!this.existsUserStory(userStoryInSprint)) {
@@ -78,7 +89,7 @@ public class SprintDDD implements AggregateRoot<SprintID> {
      * @param userStoryInSprint relates a specific US to a specific sprint.
      * @return returns false if the user story does not exist, or true otherwise.
      */
-    private boolean existsUserStory(UserStoryInSprint userStoryInSprint) {
+   /* private boolean existsUserStory(UserStoryInSprint userStoryInSprint) {
         boolean exists = false;
 
         if (userStoryInSprint == null) {
@@ -88,6 +99,6 @@ public class SprintDDD implements AggregateRoot<SprintID> {
             exists = true;
         }
         return exists;
-    }
+    }*/
 
 }

@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.*;
-import org.switch2022.project.mapper.sprintDTOs.SprintDTOController;
+import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.*;
 
@@ -772,7 +772,7 @@ public class DataLoader implements CommandLineRunner {
 
         //LOAD SPRINTS
 
-        // Sprint A1-1 (named A1N1)
+       // Sprint A1-1 (named A1N1)
         SprintNumber sprintNumberA1N1 = getNextSprintNumber(projectCode1);
 
         LocalDate startDatesprintA1N1 = LocalDate.of(2022, 3, 22);
@@ -782,9 +782,10 @@ public class DataLoader implements CommandLineRunner {
 
         TimePeriod timePeriodSprintA1N1 = new TimePeriod(newStardDateSprintA1N1,
                 newEndDateSprintA1N1);
+        SprintStatus status = SprintStatus.Closed;
 
-        SprintDTOController sprintDTOA1N1 = createSprintDTOController(projectCode1,
-                sprintNumberA1N1, timePeriodSprintA1N1);
+        NewSprintDTO sprintDTOA1N1 = createNewSprintDTO(projectCode1,
+                sprintNumberA1N1, timePeriodSprintA1N1, status);
 
         sprintService.createSprint(sprintDTOA1N1);
 
@@ -802,8 +803,8 @@ public class DataLoader implements CommandLineRunner {
         TimePeriod timePeriodSprintA1N2 = new TimePeriod(newStardDateSprintA1N2,
                 newEndDateSprintA1N2);
 
-        SprintDTOController sprintDTOA1N2 = createSprintDTOController(projectCode1,
-                sprintNumberA1N2, timePeriodSprintA1N2);
+        NewSprintDTO sprintDTOA1N2 = createNewSprintDTO(projectCode1,
+                sprintNumberA1N2, timePeriodSprintA1N2, status);
 
         sprintService.createSprint(sprintDTOA1N2);
 
@@ -815,11 +816,13 @@ public class DataLoader implements CommandLineRunner {
         LocalDate endDateSprintA1N3 = LocalDate.of(2022, 5, 9);
         Date newEndDateSprintA1N3 = createDate(endDateSprintA1N3);
 
+        SprintStatus status2 = SprintStatus.Open;
+
         TimePeriod timePeriodSprintA1N3 = new TimePeriod(newStardDateSprintA1N3,
                 newEndDateSprintA1N3);
 
-        SprintDTOController sprintDTOA1N3 = createSprintDTOController(projectCode1,
-                sprintNumberA1N3, timePeriodSprintA1N3);
+        NewSprintDTO sprintDTOA1N3 = createNewSprintDTO(projectCode1,
+                sprintNumberA1N3, timePeriodSprintA1N3, status2);
 
         sprintService.createSprint(sprintDTOA1N3);
 
@@ -834,8 +837,8 @@ public class DataLoader implements CommandLineRunner {
         TimePeriod timePeriodSprintA2N1 = new TimePeriod(newStardDateSprintA2N1,
                 newEndDateSprintA2N1);
 
-        SprintDTOController sprintDTOA2N1 = createSprintDTOController(projectCode2,
-                sprintNumberA2N1, timePeriodSprintA2N1);
+        NewSprintDTO sprintDTOA2N1 = createNewSprintDTO(projectCode2,
+                sprintNumberA2N1, timePeriodSprintA2N1, status);
 
         sprintService.createSprint(sprintDTOA2N1);
 
@@ -851,8 +854,8 @@ public class DataLoader implements CommandLineRunner {
         TimePeriod timePeriodSprintA2N2 = new TimePeriod(newStardDateSprintA2N2,
                 newEndDateSprintA2N2);
 
-        SprintDTOController sprintDTOA2N2 = createSprintDTOController(projectCode2,
-                sprintNumberA2N2, timePeriodSprintA2N2);
+        NewSprintDTO sprintDTOA2N2 = createNewSprintDTO(projectCode2,
+                sprintNumberA2N2, timePeriodSprintA2N2, status);
 
         sprintService.createSprint(sprintDTOA2N2);
 
@@ -868,8 +871,8 @@ public class DataLoader implements CommandLineRunner {
         TimePeriod timePeriodSprintA2N3 = new TimePeriod(newStardDateSprintA2N3,
                 newEndDateSprintA2N3);
 
-        SprintDTOController sprintDTOA2N3 = createSprintDTOController(projectCode2,
-                sprintNumberA2N3, timePeriodSprintA2N3);
+        NewSprintDTO sprintDTOA2N3 = createNewSprintDTO(projectCode2,
+                sprintNumberA2N3, timePeriodSprintA2N3, status2);
 
         sprintService.createSprint(sprintDTOA2N3);
 
@@ -1246,7 +1249,7 @@ public class DataLoader implements CommandLineRunner {
      * @return a SprintNumber, which is the VO to be used.
      */
     private SprintNumber getNextSprintNumber(ProjectCode projectCode) {
-        int number = sprintService.generateSprintNumber(projectCode);
+        int number = sprintService.getNewSprintNumber(projectCode);
 
         return new SprintNumber(number);
     }
@@ -1329,18 +1332,20 @@ public class DataLoader implements CommandLineRunner {
     }
 
     /**
-     * Creates a SprintDTOController to use in the sprintService.createSprint method.
+     * Creates a NewSprintDTO to use in the sprintService.createSprint method.
      * @param projectCode project code
      * @param sprintNumber sprint number
      * @param timePeriod_sprint time period of the sprint
-     * @return a SprintDTOController with the input data.
+     * @param status the status of each Sprint
+     * @return a NewSprintDTO with the input data.
      */
-    private static SprintDTOController createSprintDTOController(ProjectCode projectCode, SprintNumber sprintNumber, TimePeriod timePeriod_sprint) {
-        SprintDTOController sprintDTO = new SprintDTOController();
+    private static NewSprintDTO createNewSprintDTO(ProjectCode projectCode, SprintNumber sprintNumber, TimePeriod timePeriod_sprint, SprintStatus status) {
+        NewSprintDTO sprintDTO = new NewSprintDTO();
 
         sprintDTO.projectCode = projectCode;
         sprintDTO.sprintNumber = sprintNumber;
         sprintDTO.timePeriod = timePeriod_sprint;
+        sprintDTO.status = status;
         return sprintDTO;
     }
 

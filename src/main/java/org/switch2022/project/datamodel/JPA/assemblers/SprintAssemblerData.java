@@ -14,6 +14,7 @@ import java.util.Date;
 
         SprintID sprintID = sprintDDD.identity();
         String projectCode = sprintID.getProjectCode().toString();
+        String sprintStatus = sprintDDD.getSprintStatus().toString();
         int sprintNumber = sprintID.getSprintNumber().getSprintNumber(); // Get the underlying int value
         SprintJpaID sprintJpaID = new SprintJpaID(projectCode, sprintNumber);
 
@@ -21,7 +22,7 @@ import java.util.Date;
         Date startDate = timePeriod.getStartDate();
         Date endDate = timePeriod.getEndDate();
 
-        SprintJPA sprintJPA = new SprintJPA(sprintJpaID, startDate, endDate);
+        SprintJPA sprintJPA = new SprintJPA(sprintJpaID, startDate, endDate, sprintStatus);
 
         return sprintJPA;
         }
@@ -31,11 +32,12 @@ import java.util.Date;
         SprintJpaID sprintJpaID = sprintJPA.getSprintID();
         SprintNumber sprintNumber = new SprintNumber(sprintJpaID.getSprintNumber());
         ProjectCode projectCode = new ProjectCode(sprintJpaID.getProjectCode());
+        SprintStatus sprintStatus = SprintStatus.valueOf(sprintJPA.getSprintStatus());
         SprintID sprintID = new SprintID(projectCode, sprintNumber);
 
         TimePeriod timePeriod = new TimePeriod(sprintJPA.getStartDate(), sprintJPA.getEndDate());
 
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
+        SprintDDD sprint = new SprintDDD(sprintID, timePeriod, sprintStatus);
 
         return sprint;
         }

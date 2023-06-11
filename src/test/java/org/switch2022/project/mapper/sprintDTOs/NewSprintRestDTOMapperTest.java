@@ -3,15 +3,16 @@ package org.switch2022.project.mapper.sprintDTOs;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.TimePeriod;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class SprintDTOToControllerMapperTest {
+class NewSprintRestDTOMapperTest {
 
-    SprintDTOToControllerMapper mapper = new SprintDTOToControllerMapper();
+    NewSprintDTOMapper mapper = new NewSprintDTOMapper();
 
     @Test
     public void ensureThatMapperCreatesInstanceOfDTOClass(){
@@ -19,17 +20,20 @@ class SprintDTOToControllerMapperTest {
         SprintDDD mockSprint = mock(SprintDDD.class);
         SprintID mockID = mock(SprintID.class);
         TimePeriod mockPeriod = mock(TimePeriod.class);
+        SprintStatus status = SprintStatus.Planned;
 
-        SprintDTOToController mockDTOToController = mock(SprintDTOToController.class);
+        NewSprintDTO mockDTOToController = mock(NewSprintDTO.class);
         mockDTOToController.sprintID = mockID;
         mockDTOToController.timePeriod = mockPeriod;
+        mockDTOToController.status = status;
         when(mockSprint.identity()).thenReturn(mockID);
         when(mockSprint.getTimePeriod()).thenReturn(mockPeriod);
+        when(mockSprint.getSprintStatus()).thenReturn(status);
 
         //act
-        SprintDTOToController result = mapper.convertToDTO(mockSprint);
+        NewSprintDTO result = mapper.convertToDTO(mockSprint);
 
         //assert
-        assertInstanceOf(SprintDTOToController.class, result);
+        assertInstanceOf(NewSprintDTO.class, result);
     }
 }
