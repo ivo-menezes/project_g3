@@ -41,15 +41,41 @@ public class SprintServiceDDDTest {
     public void ensureServiceIsInstantiated(){
         new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper);
     }
+
     @Test
-    public void ensureServiceThrowsException(){
+    public void ensureServiceThrowsExceptionWhenSprintRepositoryIsNull(){
+        //arrange
+        String message = "sprintRepository cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+            new SprintServiceDDD(sprintFactory, null, toControllerMapper));
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+
+    @Test
+    public void ensureServiceThrowsExceptionWhenToControllerMapperIsNull(){
+        //arrange
+        String message = "toControllerMapper cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+            new SprintServiceDDD(sprintFactory, sprintRepository, null));
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+
+    @Test
+    public void ensureServiceThrowsExceptionWhenSprintFactoryIsNull(){
         //arrange
         String message = "sprintFactory cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(null, sprintRepository, toControllerMapper);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+            new SprintServiceDDD(null, sprintRepository, toControllerMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
