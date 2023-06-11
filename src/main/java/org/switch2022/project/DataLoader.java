@@ -100,8 +100,10 @@ public class DataLoader implements CommandLineRunner {
         BusinessSectorDTO businessSectorTwo = new BusinessSectorDTO();
         businessSectorTwo.businessSectorDesignation = businessSectorDesignationTwo;
 
-        BusinessSectorID businessSectorID_1 = new BusinessSectorID(businessSectorService.createBusinessSector(businessSectorOne).businessSectorID.getId());
-        BusinessSectorID businessSectorID_2 = new BusinessSectorID(businessSectorService.createBusinessSector(businessSectorTwo).businessSectorID.getId());
+        BusinessSectorID businessSectorID_1 = new BusinessSectorID
+                (businessSectorService.createBusinessSector(businessSectorOne).businessSectorID.getId());
+        BusinessSectorID businessSectorID_2 = new BusinessSectorID
+                (businessSectorService.createBusinessSector(businessSectorTwo).businessSectorID.getId());
 
         //Load Typologies
         TypologyDesignation typologyDesignationOne = new TypologyDesignation("Fixed cost");
@@ -129,12 +131,17 @@ public class DataLoader implements CommandLineRunner {
 
         TimePeriod timePeriod_1 = new TimePeriod(newStardDate_project_1, newEndDate_project_1);
         //ProjectStatus projectStatus_1 = new ProjectStatus();
-        ProjectSprintDuration projectSprintDuration_1 = new ProjectSprintDuration(2);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_1 = new ProjectNumberOfPlannedSprints(8);
-        ProjectBudget projectBudget_1 = new ProjectBudget(150000.00F);
+        int sprintTime_1 = 2;
+        ProjectSprintDuration projectSprintDuration_1 = new ProjectSprintDuration(sprintTime_1);
+        int totalSprints_1 = 8;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_1 =
+                new ProjectNumberOfPlannedSprints(totalSprints_1);
+        float totalBudget_1 = 150000F;
+        ProjectBudget projectBudget_1 = new ProjectBudget(totalBudget_1);
 
-        NewProjectDTO project_1 = createProjectDTO(customerID_1, businessSectorID_1, typologyID_1, projectCode_1, projectName_1,
-                description_1, timePeriod_1, projectSprintDuration_1, projectNumberOfPlannedSprints_1, projectBudget_1);
+        NewProjectDTO project_1 = createProjectDTO(customerID_1, businessSectorID_1,
+                typologyID_1, projectCode_1, projectName_1, description_1, timePeriod_1,
+                projectSprintDuration_1, projectNumberOfPlannedSprints_1, projectBudget_1);
 
         projectService.createProject(project_1);
 
@@ -149,9 +156,13 @@ public class DataLoader implements CommandLineRunner {
         Date newEndDate_project_2 = Date.from(endDate_project_2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         TimePeriod timePeriod_2 = new TimePeriod(newStardDate_project_2, newEndDate_project_2);
-        ProjectSprintDuration projectSprintDuration_2 = new ProjectSprintDuration(4);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_2 = new ProjectNumberOfPlannedSprints(12);
-        ProjectBudget projectBudget_2 = new ProjectBudget(350000.00F);
+        int sprintTime_2 = 4;
+        ProjectSprintDuration projectSprintDuration_2 = new ProjectSprintDuration(sprintTime_2);
+        int totalSprints_2 = 12;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_2 =
+                new ProjectNumberOfPlannedSprints(totalSprints_2);
+        float totalBudget_2 = 350000F;
+        ProjectBudget projectBudget_2 = new ProjectBudget(totalBudget_2);
 
         NewProjectDTO project_2 = createProjectDTO(customerID_2, businessSectorID_1,
                 typologyID_1, projectCode_2, projectName_2, description_2, timePeriod_2,
@@ -169,9 +180,13 @@ public class DataLoader implements CommandLineRunner {
         Date newStardDate_project_3 = Date.from(startDate_project_3.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         TimePeriod timePeriod_3 = new TimePeriod(newStardDate_project_3, new Date());
-        ProjectSprintDuration projectSprintDuration_3 = new ProjectSprintDuration(3);
-        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_3 = new ProjectNumberOfPlannedSprints(15);
-        ProjectBudget projectBudget_3 = new ProjectBudget(750000.00F);
+        int sprintTime_3 = 3;
+        ProjectSprintDuration projectSprintDuration_3 = new ProjectSprintDuration(sprintTime_3);
+        int totalSprints_3 = 15;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints_3 =
+                new ProjectNumberOfPlannedSprints(totalSprints_3);
+        float totalBudget_3 = 750000F;
+        ProjectBudget projectBudget_3 = new ProjectBudget(totalBudget_3);
 
         NewProjectDTO project_3 = createProjectDTO(customerID_3, businessSectorID_2,
                 typologyID_2, projectCode_3, projectName_3, description_3, timePeriod_3,
@@ -1255,7 +1270,7 @@ public class DataLoader implements CommandLineRunner {
      * @param projectBudget project budget
      * @return NewProjectDTO
      */
-    private NewProjectDTO createProjectDTO(CustomerID customerID, BusinessSectorID businessSectorID,
+    private static NewProjectDTO createProjectDTO(CustomerID customerID, BusinessSectorID businessSectorID,
                                            TypologyID typologyID, ProjectCode projectCode,
                                            ProjectName projectName, Description description,
                                            TimePeriod timePeriod,
@@ -1290,7 +1305,7 @@ public class DataLoader implements CommandLineRunner {
      * @param userStoryPriority user story priority
      * @return NewUserStoryInfoDTO
      */
-    private NewUserStoryInfoDTO createUserStoryDTO(ProjectCode projectCode, UserStoryActor actor,
+    private static NewUserStoryInfoDTO createUserStoryDTO(ProjectCode projectCode, UserStoryActor actor,
                                                    UserStoryAcceptanceCriteria acceptanceCriteria,
                                                    UserStoryNumber userStoryNumber, Description usDescription,
                                                    UserStoryPriority userStoryPriority) {
