@@ -19,7 +19,8 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
      * @param userStoryInSprintID encapsulates a UserStoryID and a SprintID;
      * @param userStoryEffortEstimate encapsulates the effort associated to the UserStoryInSprint.
      */
-    protected UserStoryInSprint(UserStoryInSprintID userStoryInSprintID, UserStoryEffortEstimate userStoryEffortEstimate) {
+    protected UserStoryInSprint(UserStoryInSprintID userStoryInSprintID,
+                                UserStoryEffortEstimate userStoryEffortEstimate) {
         if (userStoryInSprintID == null) {
             throw new IllegalArgumentException("ID for User Story in Sprint cannot be null");
         }
@@ -35,11 +36,15 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
      * Retrieves the ID for UserStoryInSprint.
      * @return userStoryInSprintID
      */
-    public UserStoryInSprintID identity() {return userStoryInSprintID; }
+    public UserStoryInSprintID identity() {
+        return userStoryInSprintID;
+    }
 
     /**
      * Retrieves the effort associated to the UserStoryInSprint.
      * @return userStoryEffortEstimate.
      */
-    protected UserStoryEffortEstimate getUserStoryEffortEstimate() {return userStoryEffortEstimate; }
+    protected UserStoryEffortEstimate getUserStoryEffortEstimate() {
+        return userStoryEffortEstimate;
+    }
 }
