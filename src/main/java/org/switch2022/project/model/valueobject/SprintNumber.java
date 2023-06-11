@@ -2,8 +2,10 @@ package org.switch2022.project.model.valueobject;
 
 import org.switch2022.project.ddd.ValueObject;
 
+import java.io.Serializable;
 
-public class SprintNumber implements ValueObject {
+
+public class SprintNumber implements ValueObject, Serializable {
 
     final private int sprintNumber;
 
