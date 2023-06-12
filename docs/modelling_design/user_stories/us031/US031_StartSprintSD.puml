@@ -11,17 +11,17 @@ participant Client as client
 participant Springboot
 participant "updateSprintInputDTO : UpdateSprintDTO" as inputDTO
 participant ":SprintController" as controller
-participant ":SprintMapper" as mapper
+participant ":SprintRestDTOMapper" as mapper
 participant "updateSprintDomainDTO : UpdateSprintDomainDTO" as DTO
 participant "updateSprintOutputDTO : UpdateSprintDTO" as outputDTO
 participant ":SprintService" as service
 participant ":SprintRepository" as repository
 participant ":AssemblerData" as assembler
-participant ":ISprintRepositoryJPA" as repositoryJPA
+participant ":ISprintJPARepository" as repositoryJPA
 participant "sprint:Sprint" as sprint
 participant "response : ResponseEntity<updateSprintOutputDTO>" as response
 
-client -> Springboot : PATCH /sprints /{projectCode}/{sprintNumber} \n{"projectCode" : "projectCode" \n"sprintNumber" : "sprintNumber" \n"sprintStatus" : "sprintStatus"}
+client -> Springboot : PATCH /sprints \n{"projectCode" : "projectCode" \n"sprintNumber" : "sprintNumber" \n"sprintStatus" : "sprintStatus"}
 activate client #FFBBBB
 
 activate Springboot #FFBBBB
@@ -40,11 +40,11 @@ controller -> service : updateStatusSprint\n(updateSprintDomainDTO)
 activate service #FFBBBB
 service -> repository :getByID(sprintID)
 activate repository #FFBBBB
-repository -> assembler :convertIDJpa(sprintID)
+repository -> assembler :convertToSprintJpaID(sprintID)
 activate assembler #FFBBBB
-assembler --> repository :sprintIDJpa
+assembler --> repository :sprintJpaID
 deactivate assembler
-repository -> repositoryJPA :getByID(sprintIDJpa)
+repository -> repositoryJPA :findByID(sprintJpaID)
 activate repositoryJPA #FFBBBB
 repositoryJPA --> repository :sprintJPA
 deactivate repositoryJPA
