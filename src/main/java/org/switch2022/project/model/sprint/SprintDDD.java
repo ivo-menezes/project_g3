@@ -48,6 +48,9 @@ public class SprintDDD implements AggregateRoot<SprintID> {
         return status;
     }
 
+    public void setStatus(SprintStatus status) {
+        this.status = status;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -247,4 +247,21 @@ class SprintDDDTest {
         //assert
         assertEquals(SprintStatus.Planned, resultStatus);
     }
+
+    @Test
+    @DisplayName("Ensure the sprint status has been successfully changed")
+    void setStatus(){
+        //Arrange
+        SprintID sprintID = mock(SprintID.class);
+        TimePeriod timePeriod = mock(TimePeriod.class);
+
+        SprintDDD sprint = new SprintDDD(sprintID,timePeriod,SprintStatus.Open);
+
+        //act
+        sprint.setStatus(SprintStatus.Closed);
+        SprintStatus result = sprint.getSprintStatus();
+
+        //assert
+        assertEquals(SprintStatus.Closed, result);
+    }
 }

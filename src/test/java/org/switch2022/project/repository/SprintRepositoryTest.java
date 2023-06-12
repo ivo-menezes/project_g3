@@ -1,5 +1,6 @@
 package org.switch2022.project.repository;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -258,5 +259,26 @@ class SprintRepositoryTest {
 
         // Assert
         assertEquals(expectedDDDList, result);
+    }
+
+    @Test
+    @DisplayName("Ensure sprint is successfully replaced")
+    void ensureProjectIsReplaced(){
+        //Arrange
+        SprintDDD sprint = mock(SprintDDD.class);
+        SprintDDD savedSprint = mock(SprintDDD.class);
+
+        SprintJPA sprintJPA = mock(SprintJPA.class);
+        SprintJPA savedSprintJpa = mock(SprintJPA.class);
+
+        when(sprintAssemblerData.toData(sprint)).thenReturn(sprintJPA);
+        when(sprintJPARepository.save(sprintJPA)).thenReturn(savedSprintJpa);
+        when(sprintAssemblerData.toDomain(savedSprintJpa)).thenReturn(savedSprint);
+
+        //Act
+        SprintDDD result = sprintRepository.replace(sprint);
+
+        //Assert
+        assertEquals(savedSprint, result);
     }
 }

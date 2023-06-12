@@ -1,13 +1,14 @@
 package org.switch2022.project.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
-import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.*;
@@ -17,8 +18,10 @@ import org.switch2022.project.service.irepositories.ISprintRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -230,5 +233,54 @@ public class SprintServiceDDDTest {
 
         //assert
         assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    @DisplayName("Ensure that the sprint status has been successfully changed.")
+    public void updateStatusSprintSuccess(){
+        //Arrange
+        SprintID sprintID = mock(SprintID.class);
+        SprintStatus sprintStatus = mock(SprintStatus.class);
+        UpdateSprintDomainDTO sprintDomainDTO = mock(UpdateSprintDomainDTO.class);
+        sprintDomainDTO.sprintID = sprintID;
+        sprintDomainDTO.sprintStatus = sprintStatus;
+
+        SprintDDD sprint = mock(SprintDDD.class);
+
+        Optional<SprintDDD> sprintOptional = mock(Optional.class);
+        when(sprintRepository.getByID(any())).thenReturn(sprintOptional);
+        when(sprintOptional.isEmpty()).thenReturn(false);
+        when(sprintOptional.get()).thenReturn(sprint);
+        when(sprintRepository.replace(sprint)).thenReturn(sprint);
+
+        //Act
+        UpdateSprintDomainDTO result = sprintService.updateStatusSprint(sprintDomainDTO);
+
+        //Assert
+        assertEquals(sprintDomainDTO,result);
+    }
+
+    @Test
+    @DisplayName("Ensure that an exception is thrown when the sprintID does not exist.")
+    public void updateStatusSprintThrowsException(){
+        //Arrange
+        SprintStatus sprintStatus = mock(SprintStatus.class);
+        UpdateSprintDomainDTO sprintDomainDTO = mock(UpdateSprintDomainDTO.class);
+        sprintDomainDTO.sprintStatus = sprintStatus;
+
+        Optional<SprintDDD> sprintOptional = mock(Optional.class);
+        when(sprintRepository.getByID(any())).thenReturn(sprintOptional);
+        when(sprintOptional.isEmpty()).thenReturn(true);
+
+        String expectedMessage = "Sprint id does not exist";
+
+        //Act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->{
+            sprintService.updateStatusSprint(sprintDomainDTO);
+        });
+        String result = exception.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage,result);
     }
 }

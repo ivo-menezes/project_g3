@@ -121,4 +121,18 @@ public class SprintRepository implements ISprintRepository {
         }
         return allSprints;
     }
+
+    /**
+     * Method responsible for replacing a sprint with new changes in the repository.
+     * @param sprint
+     * @return sprint object
+     */
+    @Override
+    public SprintDDD replace(SprintDDD sprint) {
+        SprintJPA sprintJPA = sprintAssemblerData.toData(sprint);
+        SprintJPA savedSprintJpa = sprintJpaRepository.save(sprintJPA);
+        SprintDDD savedSprint = sprintAssemblerData.toDomain(savedSprintJpa);
+
+        return savedSprint;
+    }
 }

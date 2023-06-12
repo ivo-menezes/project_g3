@@ -1,6 +1,7 @@
 package org.switch2022.project.service;
 
 import org.springframework.stereotype.Service;
+import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.sprint.ISprintFactory;
@@ -11,6 +12,7 @@ import org.switch2022.project.service.irepositories.ISprintRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SprintServiceDDD {
@@ -95,4 +97,16 @@ public class SprintServiceDDD {
         return newDTOList;
     }
 
+    public UpdateSprintDomainDTO updateStatusSprint(UpdateSprintDomainDTO updateSprintDomainDTO) {
+        Optional<SprintDDD> sprintOptional = iSprintRepository.getByID(updateSprintDomainDTO.sprintID);
+        if (sprintOptional.isEmpty()){
+            throw new IllegalArgumentException("Sprint id does not exist");
+        }
+
+        SprintDDD sprint = sprintOptional.get();
+        sprint.setStatus(updateSprintDomainDTO.sprintStatus);
+        iSprintRepository.replace(sprint);
+
+        return updateSprintDomainDTO;
+    }
 }
