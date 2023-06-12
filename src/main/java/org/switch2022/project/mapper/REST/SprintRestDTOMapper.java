@@ -1,10 +1,10 @@
 package org.switch2022.project.mapper.REST;
 
 import org.springframework.stereotype.Component;
+import org.switch2022.project.mapper.UpdateSprintDTO;
+import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
-import org.switch2022.project.model.valueobject.ProjectCode;
-import org.switch2022.project.model.valueobject.SprintNumber;
-import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.model.valueobject.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +72,38 @@ public class SprintRestDTOMapper {
             dtoList.add(sprintRestDTO);
         }
         return dtoList;
+    }
+
+    /**
+     * Method responsible for converting a primitive data DTO to a domain DTO
+     * @param updateSprintInputDTO
+     * @return domain DTO
+     */
+    public UpdateSprintDomainDTO toDomainDTO(UpdateSprintDTO updateSprintInputDTO) {
+        ProjectCode projectCode = new ProjectCode(updateSprintInputDTO.projectCode);
+        SprintNumber sprintNumber =  new SprintNumber(updateSprintInputDTO.sprintNumber);
+
+        SprintID sprintID = new SprintID(projectCode,sprintNumber);
+        SprintStatus sprintStatus = SprintStatus.valueOf(updateSprintInputDTO.sprintStatus);
+
+        UpdateSprintDomainDTO updateSprintDomainDTO = new UpdateSprintDomainDTO();
+        updateSprintDomainDTO.sprintID = sprintID;
+        updateSprintDomainDTO.sprintStatus = sprintStatus;
+
+        return updateSprintDomainDTO;
+    }
+
+    /**
+     * Method responsible for converting a domain DTO into a primitive data DTO.
+     * @param updateSprintDomainDTO
+     * @return primitive data DTO
+     */
+    public UpdateSprintDTO toDataDTO(UpdateSprintDomainDTO updateSprintDomainDTO){
+        UpdateSprintDTO updateSprintOutputDTO = new UpdateSprintDTO();
+        updateSprintOutputDTO.sprintNumber = updateSprintDomainDTO.sprintID.getSprintNumber().getSprintNumber();
+        updateSprintOutputDTO.projectCode = updateSprintDomainDTO.sprintID.getProjectCode().toString();
+        updateSprintOutputDTO.sprintStatus = updateSprintDomainDTO.sprintStatus.toString();
+
+        return updateSprintOutputDTO;
     }
 }

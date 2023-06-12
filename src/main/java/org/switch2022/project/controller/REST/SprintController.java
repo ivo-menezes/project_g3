@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.mapper.REST.SprintRestDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
+import org.switch2022.project.mapper.UpdateSprintDTO;
+import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.service.SprintServiceDDD;
 
@@ -68,6 +70,21 @@ public class SprintController {
             return response;
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @PatchMapping("")
+    public ResponseEntity<UpdateSprintDTO> updateStatusSprint(@RequestBody UpdateSprintDTO updateSprintInputDTO) {
+
+        try {
+            UpdateSprintDomainDTO updateSprintDomainDTO = mapper.toDomainDTO(updateSprintInputDTO);
+            UpdateSprintDomainDTO changedDomainDTO = service.updateStatusSprint(updateSprintDomainDTO);
+            UpdateSprintDTO outputDTO = mapper.toDataDTO(changedDomainDTO);
+
+            return new ResponseEntity<>(outputDTO, HttpStatus.OK);
+
+        } catch (IllegalArgumentException exception) {
+            return new ResponseEntity<>(updateSprintInputDTO, HttpStatus.BAD_REQUEST);
         }
     }
 }

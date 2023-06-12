@@ -1,6 +1,9 @@
 package org.switch2022.project.mapper.REST;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.mapper.UpdateSprintDTO;
+import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 
@@ -12,8 +15,7 @@ import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SprintRestDTOMapperTest {
 
@@ -163,5 +165,52 @@ class SprintRestDTOMapperTest {
 
         //Assert
         assertEquals(dtoList.size(), result.size());
+    }
+    @Test
+    @DisplayName("Ensure UpdateSprintDTO is converted to UpdateSprintDomainDTO correctly.")
+    void updateSprintDomainDTOSuccess() {
+        //Arrange
+        UpdateSprintDTO updateSprintDTO = mock(UpdateSprintDTO.class);
+        updateSprintDTO.projectCode = "A1";
+        updateSprintDTO.sprintNumber= 1;
+        updateSprintDTO.sprintStatus= "Open";
+
+        SprintRestDTOMapper mapperDouble = new SprintRestDTOMapper();
+
+        //Act
+        UpdateSprintDomainDTO result = mapperDouble.toDomainDTO(updateSprintDTO);
+
+        //Assert
+        assertInstanceOf(UpdateSprintDomainDTO.class, result);
+    }
+
+    @Test
+    @DisplayName("Ensure UpdateSprintDomainDTO is converted to UpdateSprintDTO correctly.")
+    void updateSprintToDataDTOSuccess() {
+        //Arrange
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        when(sprintNumber.getSprintNumber()).thenReturn(1);
+
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(projectCode.toString()).thenReturn("A1");
+
+        SprintStatus sprintStatus = mock(SprintStatus.class);
+        when(sprintStatus.toString()).thenReturn("Open");
+
+        SprintID sprintID = mock(SprintID.class);
+        when(sprintID.getSprintNumber()).thenReturn(sprintNumber);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+
+        UpdateSprintDomainDTO updateSprintDomainDTO = mock(UpdateSprintDomainDTO.class);
+        updateSprintDomainDTO.sprintID = sprintID;
+        updateSprintDomainDTO.sprintStatus = sprintStatus;
+
+        SprintRestDTOMapper mapperDouble = new SprintRestDTOMapper();
+
+        //Act
+        UpdateSprintDTO result = mapperDouble.toDataDTO(updateSprintDomainDTO);
+
+        //Assert
+        assertInstanceOf(UpdateSprintDTO.class, result);
     }
 }
