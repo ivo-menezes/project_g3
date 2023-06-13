@@ -1,0 +1,121 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US036 - As a PO/SM/Team Member, I want to consult the Sprint Backlog of a chosen sprint in the web UI."
+
+participant Client
+participant SpringBoot
+'participant "restDto : SprintBacklogRestDto" as sbRestDTO
+participant ": SprintController" as Controller
+participant "response:\n : ResponseEntity\n<SprintBacklogDTO>" as response
+participant ": SprintRestDtoMapper" as Mapper
+'participant "domainDto : BackLogInfoDto" as inDomainDto
+'participant "SprintBacklogRestDtoList:\n : List<SprintBacklogRestDto>" as sprintBacklogRestDtoList
+participant ": SprintService" as Service
+participant "sprintBacklog: SprintBacklog" as backlog
+participant "userStoriesInSprint : \n List<userStoriesInSprint>" as usinsprintlist
+participant " : UserStoryService" as USservice
+participant "userStoriesInSprintList :\n List<UserStory>" as USList
+participant ": IUserStoryRepository" as usRepository
+participant ": UserStoryJpaRepository" as jpa
+participant ": UserStoryAssemblerData" as Assembler
+participant ": UserStoryRestDtoMapper" as USMapper
+'participant "SprintJpaRepository" as SprintJpaRepository
+'participant "sprintBacklogJpaList:\n : List<sprintBacklogJpa>" as SprintJpaList
+'participant "sprintBacklogList:\n : List<sprintBacklogList>" as springBackLogList
+'participant ":NewSprintBacklogListDtoMapper" as NewMapper
+'participant "sprintBacklogDtoList:\n : List<NewSprintBacklogListDtoMapper>" as springBackLogDtoList
+
+
+
+Client ->  SpringBoot: GET /sprints/sprintBacklog/\n{projectCode}/{sprintNumber}/\n
+activate SpringBoot
+
+SpringBoot -> Controller: getSpringBacklog(projectCode,sprintNumber)
+
+activate Controller
+
+Controller -> Mapper: toDomainDTO (projectCode,sprintNumber)
+activate Mapper
+Mapper -> Controller: sprintIdDTO
+deactivate Mapper
+Controller -> Service: getSpringBacklog(sprintIdDTO)
+activate Service
+
+
+Service -> backlog : getByID(sprintIdDTO)
+activate backlog
+
+backlog -> usinsprintlist : getByID(sprintIdDTO)
+activate usinsprintlist
+
+usinsprintlist --> backlog : userStoryInSprintList
+
+deactivate usinsprintlist
+
+backlog --> Service : userStoryInSprintIdList
+deactivate backlog
+
+
+Service --> Controller : userStoryInSprintIdList
+deactivate Service
+
+Controller -> USservice: getByID (userStoryInSprintIdList)
+
+activate USservice
+USservice -> USList ** : Create
+
+loop for each userStoryId in userStoryInSprintList
+
+USservice -> usRepository: getByID (USId)
+activate usRepository
+usRepository -> jpa: getByID (USId)
+activate jpa
+jpa --> usRepository: userStoryJpa
+deactivate jpa
+
+usRepository -> Assembler: toDomain(userStoryJpa)
+activate Assembler
+Assembler --> usRepository: userStory
+deactivate Assembler
+
+usRepository --> USservice: userStory
+deactivate usRepository
+
+USservice -> USList: add (userStory)
+activate USList #FFBBBB
+deactivate USList
+end
+
+USservice -> USMapper: toRestDto(userStoryInSprintIdList,userStoryInSprintList)
+activate USMapper
+
+USMapper -> SprintBacklogDtoList ** : create
+
+loop for each userStory in userStoryInSprintIdList
+USMapper -> USMapper : toDTO(userStory)
+USMapper -> SprintBacklogDtoList: add(userStoryDTO)
+activate SprintBacklogDtoList #FFBBBB
+deactivate SprintBacklogDtoList
+end
+
+USMapper --> USservice: SprintBacklogDtoList
+deactivate USMapper
+
+USservice --> Controller: SprintBacklogDtoList
+deactivate USservice
+
+Controller --> response ** : create(SprintBacklogDtoListtHtttpStatus.OK)
+Controller --> SpringBoot : Display Sprint Backlog
+
+deactivate Controller
+
+SpringBoot--> Client : Display Sprint Backlog
+deactivate SpringBoot
+
+
+@enduml
