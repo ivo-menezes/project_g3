@@ -138,4 +138,10 @@ class UserStoryPriorityTest {
         assertNotEquals(true, isNotEqual);
     }
 
+    @Test
+    @DisplayName(("Test for creation of Priority with zero"))
+    public void checkIfClassCreatesPriorityWithZero() {
+        UserStoryPriority userStoryPriorityOne = new UserStoryPriority(priorityZero);
+    }
+
 }

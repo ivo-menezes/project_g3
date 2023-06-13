@@ -137,4 +137,36 @@ class PercentageOfAllocationTest {
         assertNotEquals(hashCode1, hashCode2, "hashCode() should return a different value for different objects");
     }
 
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        PercentageOfAllocation p = new PercentageOfAllocation(percentageAlloc1);
+
+        //Act
+
+        boolean isEqual = p.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that two equals object are equal")
+    public void checkIfPercentageOfAllocationEqualItselfWillNotReturnFalse() {
+
+        //Arrange
+
+        PercentageOfAllocation p1 = new PercentageOfAllocation(percentageAlloc1);
+        PercentageOfAllocation p2 = p1;
+
+        //Act
+
+        boolean isEqual = p1.equals(p2);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
 }

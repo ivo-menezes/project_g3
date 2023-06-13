@@ -59,4 +59,16 @@ class PhotoTest {
         assertEquals(photo1.hashCode(), photo2.hashCode());
         assertNotEquals(0, photo1.hashCode());
     }
+
+    @DisplayName("toString returns the Photo String ")
+    @Test
+    public void toStringShouldPhotoString(){
+
+        // Arrange
+        Photo photo = new Photo("Test");
+
+        // Act & Assert
+        assertEquals(photo.toString(), "Test");
+    }
+
 }

@@ -59,6 +59,7 @@ class CostPerHourTest {
         CostPerHour costPerHour2 = new CostPerHour(cost1);
 
         assertEquals(costPerHour1, costPerHour2);
+        assertTrue(costPerHour1.equals(costPerHour2));
     }
 
     @Test
@@ -141,4 +142,37 @@ class CostPerHourTest {
 
         assertNotEquals(hashCode1, hashCode2, "hashCode() should return a different value for different objects");
     }
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        CostPerHour costPerHour = new CostPerHour(cost1);
+
+        //Act
+
+        boolean isEqual = costPerHour.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that two equals object are equal")
+    public void checkIfCostPerHourEqualsItselfWillNotReturnFalse() {
+
+        //Arrange
+
+        CostPerHour costPerHour1 = new CostPerHour(cost1);
+        CostPerHour costPerHour2 = costPerHour1;
+
+        //Act
+
+        boolean isEqual = costPerHour1.equals(costPerHour2);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
 }

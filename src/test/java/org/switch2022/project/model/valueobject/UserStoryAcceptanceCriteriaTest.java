@@ -1,6 +1,7 @@
 package org.switch2022.project.model.valueobject;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.*;
 class UserStoryAcceptanceCriteriaTest {
@@ -124,6 +125,52 @@ class UserStoryAcceptanceCriteriaTest {
         UserStoryAcceptanceCriteria acceptanceCriteria = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
 
         assertEquals(acceptanceCriteria.toString(), acceptanceCriteria1);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that two Email with same name are equal")
+    public void checkIfEmailIsEqualsWithSameEmailAreEqual() {
+
+        //Arrange
+        UserStoryAcceptanceCriteria acceptanceCriteriaOne = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
+        UserStoryAcceptanceCriteria acceptanceCriteriaTwo = acceptanceCriteriaOne;
+
+        //Act
+
+        boolean isEqual = acceptanceCriteriaOne.equals(acceptanceCriteriaTwo);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        UserStoryAcceptanceCriteria acceptanceCriteriaOne = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
+
+        //Act
+
+        boolean isEqual = acceptanceCriteriaOne.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        UserStoryAcceptanceCriteria acceptanceCriteriaOne = new UserStoryAcceptanceCriteria(acceptanceCriteria1);
+        UserStoryAcceptanceCriteria acceptanceCriteriaTwo = new UserStoryAcceptanceCriteria(acceptanceCriteria2);
+        //Act
+        int hashCode1 = acceptanceCriteriaOne.hashCode();
+        int hashCode2 = acceptanceCriteriaTwo.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
     }
 
 }

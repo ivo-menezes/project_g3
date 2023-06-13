@@ -11,6 +11,7 @@ class SprintIDTest {
     final String expectedMessage1 = "Project code must not be null";
     final String expectedMessage2 = "Sprint number must not be null";
     final ProjectCode projectCode = mock(ProjectCode.class);
+    final ProjectCode projectCodeTwo = mock(ProjectCode.class);
     final SprintNumber sprintNumber = mock(SprintNumber.class);
 
     @Test
@@ -119,4 +120,20 @@ class SprintIDTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        SprintID sprintIDOne = new SprintID(projectCode, sprintNumber);
+        SprintID sprintIDTwo = new SprintID(projectCodeTwo, sprintNumber);
+        //Act
+        int hashCode1 = sprintIDOne.hashCode();
+        int hashCode2 = sprintIDTwo.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
+
+
 }

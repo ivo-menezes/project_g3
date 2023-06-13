@@ -101,4 +101,49 @@ class RoleTest {
         assertEquals(role1.hashCode(), role2.hashCode());
         assertNotEquals(0, role1.hashCode());
     }
+
+
+    @DisplayName("creating role with not valid value  should throw Exception")
+    @Test
+    void createRoleNameWithNotValidValueThrowsException() {
+        // Arrange
+        String role = "Not Valid";
+        String expectedMessage = "Role is not valid";
+
+        // Act
+        IllegalArgumentException result =assertThrows(IllegalArgumentException.class, () -> {
+            new Role(role);
+        });
+
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        Role role = new Role("Product Owner");
+
+        //Act
+
+        boolean isEqual = role.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @DisplayName("toString returns the Role String ")
+    @Test
+    public void toStringShouldReturnRoleString(){
+
+        // Arrange
+        Role role = new Role("Product Owner");
+
+        // Act & Assert
+        assertEquals(role.toString(), "Product Owner");
+    }
 }

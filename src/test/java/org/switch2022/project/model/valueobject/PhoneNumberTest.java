@@ -200,6 +200,17 @@ class PhoneNumberTest {
         assertNotEquals(hashCode1, hashCode2);
     }
 
+    @DisplayName("toString returns the Phone Number String ")
+    @Test
+    public void toStringShouldPhoneNumberString(){
+
+        // Arrange
+        PhoneNumber phoneNumber = new PhoneNumber("+351961234567");
+
+        // Act & Assert
+        assertEquals(phoneNumber.toString(), "+351961234567");
+    }
+
 
 
 }

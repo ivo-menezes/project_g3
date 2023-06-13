@@ -84,4 +84,50 @@ class UserStoryEffortEstimateTest {
         //Assert
         assertFalse(result);
     }
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        UserStoryEffortEstimate userStoryEffortEstimate = new UserStoryEffortEstimate(0.2);
+
+        //Act
+
+        boolean isEqual = userStoryEffortEstimate.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure that US Effort Estimate with same number are equal")
+    public void checkIfUSeffortEstimateWithSameEstimateAreEqual() {
+
+        //Arrange
+        UserStoryEffortEstimate userStoryEffortEstimate_1 = new UserStoryEffortEstimate(0.2);
+        UserStoryEffortEstimate userStoryEffortEstimate_2 = new UserStoryEffortEstimate(0.2);
+
+        //Act
+
+        boolean isEqual = userStoryEffortEstimate_1.equals(userStoryEffortEstimate_2);
+
+        // Assert
+        assertTrue(isEqual);
+    }
+
+    @Test
+    @DisplayName("Test to ensure the return won't be true for different objects")
+    public void checkIfWillNotReturnEqualsWithDifferentEmails() {
+        //Arrange
+        UserStoryEffortEstimate userStoryEffortEstimate_1 = new UserStoryEffortEstimate(0.2);
+        UserStoryEffortEstimate userStoryEffortEstimate_2 = new UserStoryEffortEstimate(0.4);
+
+        //Act
+
+        boolean isNotEqual = userStoryEffortEstimate_1.equals(userStoryEffortEstimate_2);
+
+        // Assert
+        assertNotEquals(true, isNotEqual);
+    }
 }

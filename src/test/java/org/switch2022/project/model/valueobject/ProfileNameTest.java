@@ -132,5 +132,16 @@ class ProfileNameTest {
         assertNotEquals(0, profileName.hashCode());
     }
 
+    @DisplayName("toString returns the Profile Name String ")
+    @Test
+    public void toStringShouldProfileNameString(){
+
+        // Arrange
+        ProfileName profileName = new ProfileName("User");
+
+        // Act & Assert
+        assertEquals(profileName.toString(), "User");
+    }
+
 
 }

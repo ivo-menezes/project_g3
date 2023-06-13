@@ -143,6 +143,16 @@ class NameTest {
         //Assert
         assertNotEquals(hashCode1, hashCode2);
     }
+    @DisplayName("toString returns the name String ")
+    @Test
+    public void toStringShouldReturnNameString(){
+
+        // Arrange
+        Name name = new Name("Name");
+
+        // Act & Assert
+        assertEquals(name.toString(), "Name");
+    }
 
 
 }

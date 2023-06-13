@@ -156,4 +156,15 @@ class CustomerDesignationTest {
         //Assert
         assertNotEquals(hashCode1, hashCode2);
     }
+
+    @DisplayName("toString returns the Customer Designation String ")
+    @Test
+    public void toStringShouldReturnTheCustomerDesignationString(){
+
+        // Arrange
+        CustomerDesignation customerDesignation = new CustomerDesignation("TheBoss");
+
+        // Act & Assert
+        assertEquals(customerDesignation.toString(), "TheBoss");
+    }
 }

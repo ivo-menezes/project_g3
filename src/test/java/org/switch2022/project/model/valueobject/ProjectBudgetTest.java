@@ -25,6 +25,7 @@ class ProjectBudgetTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
+
     @DisplayName("Ensure that two projectBudget objects are the same.")
     @Test
     void projectBudgetEqualsSelf() {
@@ -60,6 +61,41 @@ class ProjectBudgetTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        ProjectBudget projectBudgetOne = new ProjectBudget(1200.0f);
+        ProjectBudget projectBudgetTwo = new ProjectBudget(2000.0f);
+        //Act
+        int hashCode1 = projectBudgetOne.hashCode();
+        int hashCode2 = projectBudgetTwo.hashCode();
 
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        float expected = 3000.5f;
+        ProjectBudget projectBudget = new ProjectBudget(expected);
+
+        //Act
+
+        boolean isEqual = projectBudget.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName(("Test for creation of budget"))
+    public void checkIfClassCreatesValidBudget() {
+        float budget = 0;
+        ProjectBudget projectBudget = new ProjectBudget(budget);
+    }
 
 }

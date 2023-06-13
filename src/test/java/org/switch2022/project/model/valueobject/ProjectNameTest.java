@@ -158,4 +158,15 @@ class ProjectNameTest {
         assertNotEquals(hashCode1, hashCode2);
     }
 
+
+    @DisplayName("toString returns the Project Name String ")
+    @Test
+    public void toStringShouldReturnProjectNameString(){
+
+        // Arrange
+        ProjectName projectName = new ProjectName("My Project");
+        // Act & Assert
+        assertEquals(projectName.toString(), "My Project");
+    }
+
 }

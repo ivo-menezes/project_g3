@@ -61,4 +61,36 @@ class ProjectNumberOfPlannedSprintsTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        int numberOfPlannedSprints = 0;
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprints = new ProjectNumberOfPlannedSprints(numberOfPlannedSprints);
+
+        //Act
+
+        boolean isEqual = projectNumberOfPlannedSprints.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsOne = new ProjectNumberOfPlannedSprints(1);
+        ProjectNumberOfPlannedSprints projectNumberOfPlannedSprintsTwo = new ProjectNumberOfPlannedSprints(2);
+        //Act
+        int hashCode1 = projectNumberOfPlannedSprintsOne.hashCode();
+        int hashCode2 = projectNumberOfPlannedSprintsTwo.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
+
+
+
 }

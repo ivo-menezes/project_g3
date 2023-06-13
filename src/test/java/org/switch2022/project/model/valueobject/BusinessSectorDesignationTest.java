@@ -157,4 +157,15 @@ class BusinessSectorDesignationTest {
         //Assert
         assertNotEquals(hashCode1, hashCode2);
     }
+
+    @DisplayName("toString returns the Business Sector Designation String ")
+    @Test
+    public void toStringShouldReturnTheBusinessSectorDesignationString(){
+
+        // Arrange
+        BusinessSectorDesignation businessSectorDesignation = new BusinessSectorDesignation("IT");
+
+        // Act & Assert
+        assertEquals(businessSectorDesignation.toString(), "IT");
+    }
 }

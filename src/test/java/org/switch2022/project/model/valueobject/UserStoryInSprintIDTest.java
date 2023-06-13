@@ -105,4 +105,19 @@ class UserStoryInSprintIDTest {
         assertFalse(isEquals);
     }
 
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        UserStoryInSprintID userStoryInSprintID1 = new UserStoryInSprintID(sprintID, userStoryID);
+        SprintID sprintID2 = mock(SprintID.class);
+        UserStoryInSprintID userStoryInSprintID2 = new UserStoryInSprintID(sprintID2, userStoryID);
+        //Act
+        int hashCode1 = userStoryInSprintID1.hashCode();
+        int hashCode2 = userStoryInSprintID2.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
+
 }

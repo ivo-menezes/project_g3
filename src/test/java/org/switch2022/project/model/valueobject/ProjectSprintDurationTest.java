@@ -80,4 +80,36 @@ class ProjectSprintDurationTest {
         assertEquals(expected, result);
     }
 
+
+    @Test
+    @DisplayName("Return false in equals with null")
+    public void returnFalseEqualsWithNull() {
+
+        //Arrange
+        int sprintDuration = 0;
+        ProjectSprintDuration projectSprintDuration = new ProjectSprintDuration(sprintDuration);
+
+        //Act
+
+        boolean isEqual = projectSprintDuration.equals(null);
+
+        // Assert
+        assertFalse(isEqual);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        ProjectSprintDuration projectSprintDurationOne = new ProjectSprintDuration(1);
+        ProjectSprintDuration projectSprintDurationTwo = new ProjectSprintDuration(2);
+        //Act
+        int hashCode1 = projectSprintDurationOne.hashCode();
+        int hashCode2 = projectSprintDurationTwo.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
+    }
+
+
 }

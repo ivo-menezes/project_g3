@@ -1,5 +1,6 @@
 package org.switch2022.project.model.valueobject;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -123,6 +124,20 @@ class DescriptionTest {
         Description description = new Description(description1);
 
         assertEquals(description.toString(), description1);
+    }
+
+    @Test
+    @DisplayName("Ensure different objects have different hashcode")
+    void ensureDifferentObjectsHaveDifferentHashcode() {
+        //Arrange
+        Description descriptionOne = new Description(description1);
+        Description descriptionTwo = new Description(description2);
+        //Act
+        int hashCode1 = descriptionOne.hashCode();
+        int hashCode2 = descriptionTwo.hashCode();
+
+        //Assert
+        assertNotEquals(hashCode1, hashCode2);
     }
 
 }

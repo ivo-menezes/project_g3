@@ -120,7 +120,7 @@ class EmailTest {
     }
 
     @Test
-    @DisplayName("Test to ensure that two phone number with same number are equal")
+    @DisplayName("Test to ensure that two Email with same name are equal")
     public void checkIfEmailIsEqualsWithSameEmailAreEqual() {
 
         //Arrange
@@ -137,7 +137,7 @@ class EmailTest {
 
     @Test
     @DisplayName("Test to ensure the return won't be true for different objects")
-    public void checkIfWillNoReturnEquals() {
+    public void checkIfWillNotReturnEqualsWithDifferentEmails() {
         //Arrange
         Email emailOne = new Email("test@gmail.com");
         Email emailTwo = new Email("testtwo@gmail.com");
@@ -163,5 +163,18 @@ class EmailTest {
         //Assert
         assertNotEquals(hashCode1, hashCode2);
     }
+
+    @DisplayName("toString returns the Email String ")
+    @Test
+    public void toStringShouldEmailString(){
+
+        // Arrange
+        Email email = new Email("test@gmail.com");
+
+        // Act & Assert
+        assertEquals(email.toString(), "test@gmail.com");
+    }
+
+
 
 }

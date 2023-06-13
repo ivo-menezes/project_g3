@@ -95,6 +95,19 @@ class SprintNumberTest {
         assertNotEquals(true, isNotEqual);
     }
 
+    @Test
+    @DisplayName("Ensure Sprint Number is returned")
+    void ensureSprintNumberIsReturned(){
+        //Arrange
+        int expected = 1;
+        SprintNumber sprintNumber = new SprintNumber(expected);
+
+        //Act
+        long result = sprintNumber.getSprintNumber();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
 
 }
