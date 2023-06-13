@@ -1,0 +1,95 @@
+@startuml
+skinparam linetype ortho
+
+class UserStoryController
+
+class UserStoryRestDtoMapper
+
+class UserStoryService
+
+class UserStoryRestDto
+
+class NewUserStoryInfoDto
+
+class UserStory
+
+class UserStoryJpa
+
+class NewUserStoryInfoDtoMapper
+
+class Project
+
+class ProjectJpa
+
+class ProductBacklog
+
+interface UserStoryJpaRepository
+
+class UserStoryDomainDataAssembler
+
+interface ProjectJpaRepository
+
+class ProjectDomainDataAssembler
+
+interface CrudRepository
+
+UserStoryController o-- UserStoryService
+UserStoryController o-- UserStoryRestDtoMapper
+
+UserStoryController ..> UserStoryRestDto
+UserStoryRestDtoMapper ..> UserStoryRestDto
+UserStoryRestDtoMapper ..> NewUserStoryInfoDto
+
+UserStoryService ..> NewUserStoryInfoDto
+
+interface IUserStoryFactory
+class UserStoryFactoryImpl
+UserStoryFactoryImpl .up.|> IUserStoryFactory
+UserStoryFactoryImpl ..> UserStory
+
+interface IProjectRepository
+class ProjectRepository
+ProjectRepository .up.|> IProjectRepository
+
+interface IUserStoryRepository
+class UserStoryRepository
+UserStoryRepository .up.|> IUserStoryRepository
+
+
+UserStoryService o-- NewUserStoryInfoDtoMapper
+UserStoryService o-- IUserStoryFactory
+UserStoryService o-- IProjectRepository
+UserStoryService o-- IUserStoryRepository
+
+NewUserStoryInfoDtoMapper ..> NewUserStoryInfoDto
+NewUserStoryInfoDtoMapper ..> UserStory
+
+UserStoryService ..> UserStory
+UserStoryService ..> Project
+
+Project *-- ProductBacklog
+
+UserStoryRepository ..> UserStory
+ProjectRepository ..> Project
+
+UserStoryRepository o-- UserStoryJpaRepository
+UserStoryRepository o-- UserStoryDomainDataAssembler
+
+UserStoryDomainDataAssembler ..> UserStory
+UserStoryDomainDataAssembler ..> UserStoryJpa
+
+UserStoryJpaRepository ..> UserStoryJpa
+
+UserStoryJpaRepository --|> CrudRepository
+
+ProjectRepository o-- ProjectJpaRepository
+ProjectRepository o-- ProjectDomainDataAssembler
+
+ProjectDomainDataAssembler ..> Project
+ProjectDomainDataAssembler ..> ProjectJpa
+
+ProjectJpaRepository ..> ProjectJpa
+
+ProjectJpaRepository --|> CrudRepository
+
+@enduml

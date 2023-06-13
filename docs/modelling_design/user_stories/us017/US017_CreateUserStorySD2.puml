@@ -54,6 +54,7 @@ service -> mapper : toDto(savedUserStory)
 activate mapper
 mapper --> outDto ** : create
 mapper --> service : savedUserStoryDto
+deactivate
 
 service -> newUserStory : identity()
 activate newUserStory
