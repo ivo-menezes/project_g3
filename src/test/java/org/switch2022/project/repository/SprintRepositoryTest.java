@@ -281,4 +281,48 @@ class SprintRepositoryTest {
         //Assert
         assertEquals(savedSprint, result);
     }
+
+    @Test
+    @DisplayName("Ensure project's last sprint is retrieved")
+    void ensureProjectsLastSprintIsRetrieved(){
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        SprintJPA sprintJpaDouble = mock(SprintJPA.class);
+        Optional<SprintJPA> sprintJpaOptional = Optional.of(sprintJpaDouble);
+        SprintDDD sprintDouble = mock(SprintDDD.class);
+        Optional<SprintDDD> sprintOptional = Optional.of(sprintDouble);
+
+
+        when(projectCodeDouble.toString()).thenReturn("P001");
+        when(sprintJPARepository.
+                findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc("P001")).
+                thenReturn(sprintJpaOptional);
+
+        when(sprintAssemblerData.toDomain(sprintJpaDouble)).thenReturn(sprintDouble);
+
+        //Act
+        Optional<SprintDDD> result = sprintRepository.findLastSprintByProjectCode(projectCodeDouble);
+
+        //Assert
+        assertEquals(sprintOptional, result);
+    }
+
+    @Test
+    @DisplayName("Ensure optional empty is returned when no sprints found for project code")
+    void ensureNoSprintReturnedWhenNoSprintsFound() {
+        //Arrange
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+
+        when(projectCodeDouble.toString()).thenReturn("P001");
+        when(sprintJPARepository.
+                findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc("P001")).
+                thenReturn(Optional.empty());
+
+        //Act
+        Optional<SprintDDD> result = sprintRepository.findLastSprintByProjectCode(projectCodeDouble);
+
+        //Assert
+        assertEquals(Optional.empty(), result);
+    }
+
 }
