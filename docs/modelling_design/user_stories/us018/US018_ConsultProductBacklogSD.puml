@@ -1,91 +1,86 @@
 @startuml
 !theme plain
-autonumber
 hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
 title "US018 - As Product Owner/Scrum Master/Team Member, I want to consult the product backlog, \n i.e. to get the list of user stories sorted by priority."
 
-actor "Product Owner/\n/Scrum Master/\n/Team Member" as user
-participant ": ConsultProductBacklogUI" as UI
-participant ": ConsultProductBacklogController" as Controller
-participant ": UserStoryService" as Service
-participant ": ProjectRepository" as ProjRepository
-participant "project : Project" as Project
-participant "productBacklog : ProductBacklog" as backlog
-participant "openUserStoryList :\n List<UserStory>" as USList
-participant ": UserStoryRepository" as USRepository
-participant "DATA : HashMap" as hashmap
-participant ": UserStoryMapper" as Mapper
-participant "productBacklog :\n List<UserStoryDTO>" as DTOList
-participant "openUserStoryIDs: List<UserStoryID>"
+participant ": UserStoryController" as controller
+participant ": UserStoryService" as service
+participant ": ProjectRepository" as projectRepo
+participant "project : Project" as project
+participant ": ProductBacklog" as pb
+participant "openUserStoryIDs : List<UserStoryID>" as openUserStoryIDs
+participant "openUserStoryList : List<UserStory>" as openUserStoryList
+participant ": UserStoryRepository" as usRepo
+participant ": NewUserStoryInfoDTOMapper" as domainMapper
+participant "productBacklog : List<NewUserStoryInfoDTO>" as dtoList
+participant ": UserStoryRestDtoMapper" as restMapper
+participant "restDtoList : List<UserStoryRestDto>" as restDtoList
+participant "response : ResponseEntity<>" as response
 
-activate user #FFBBBB
-user -> UI: Requests product backlog(projectCode)
+-> controller: GET /projects/{projectCode}/productBacklog
 
-activate UI #FFBBBB
-UI-> Controller:getProductBacklog(projectCode)
+activate controller
+controller -> service : getProductBacklog(projectCode)
 
-activate Controller #FFBBBB
-Controller -> Service: getProductBacklog(projectCode)
-activate Service #FFBBBB
+activate service
+service -> projectRepo : getByID(projectCode)
 
-Service --> "projectCodeVO : ProjectCode" **: create(projectCode)
-Service -> ProjRepository: getByID(projectCodeVO)
-activate ProjRepository #FFBBBB
-ProjRepository --> Service: project
-deactivate ProjRepository
-Service -> Project : getProductBacklog()
+activate projectRepo
+projectRepo --> service : project
+deactivate projectRepo
 
-activate Project #FFBBBB
-Project -> backlog : getOpenUserStoryIDs()
-activate backlog #FFBBBB
-backlog -> Project: openUserStoryIDs
-deactivate backlog
+service -> project : getProductBacklog()
 
-Project --> Service: openUserStoryIDs
-deactivate Project
-Service --> USList ** : create
+activate project
+project -> pb : getOpenUserStories()
 
-loop for each userStoryID in openUserStoryIDs
-Service -> USRepository: containsID(id)
-activate USRepository #FFBBBB
-USRepository -> hashmap: containsKey(id)
-activate hashmap #FFBBBB
-hashmap --> USRepository: true
-USRepository--> Service: true
-Service -> USRepository: getByID(id)
-USRepository -> hashmap: get(id)
-hashmap --> USRepository: userStory
-deactivate hashmap
-USRepository --> Service: userStory
-deactivate USRepository
-Service -> USList: add(userStory)
-activate USList #FFBBBB
-deactivate USList
+activate pb
+pb --> project : openUserStoryIDs
+deactivate pb
+
+project --> service : openUserStoryIDs
+
+service --> openUserStoryList ** : create
+
+loop for userStoryID in openUserStoryIDs
+service -> usRepo : getByID(userStoryID)
+
+activate usRepo
+usRepo --> service : userStory
+deactivate usRepo
+
+service -> openUserStoryList : add(userStory)
+activate openUserStoryList
+deactivate
 end
 
+service -> domainMapper : toDtoList(openUserStoryList)
 
-Service -> Mapper: toDTOList(openUserStoryList)
-activate Mapper #FFBBBB
+activate domainMapper
+domainMapper --> service : dtoList
+deactivate domainMapper
 
-Mapper --> DTOList ** : create
+service -> service : addPriorities(productBacklog)
+activate service
+deactivate service
 
-loop for each userStory in openUserStoryList
-Mapper -> Mapper : toDTO(userStory)
-Mapper -> DTOList: add(userStoryDTO)
-activate DTOList #FFBBBB
-deactivate DTOList
-end
+service --> controller : productBacklog
+deactivate service
 
-Mapper --> Service : productBacklog
-deactivate Mapper
+controller -> restMapper : toRestDtoList(productBacklog)
 
-Service --> Controller : productBacklog
-deactivate Service
+activate restMapper
+restMapper --> controller : restDtoList
+deactivate restMapper
 
-Controller --> UI: productBacklog
-deactivate Controller
-
-UI --> user: Displays product backlog
-deactivate UI
+controller --> response ** : create(restDtoList, HttpStatus.OK)
+[<-- controller : response
+deactivate controller
 
 @enduml
