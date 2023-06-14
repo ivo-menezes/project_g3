@@ -128,14 +128,18 @@ public class UserStoryService {
         List<NewUserStoryInfoDTO> productBacklog = this.userStoryInfoDTOMapper.toDtoList(openUserStoryList);
 
         // setting the priorities as the order in which US appear (+1 to be human-readable)
+        addPrioritiesInOrder(productBacklog);
+
+        return productBacklog;
+    }
+
+    private void addPrioritiesInOrder(List<NewUserStoryInfoDTO> productBacklog) {
         int priorityValue = 0;
         for (NewUserStoryInfoDTO dto : productBacklog) {
             UserStoryPriority priority = new UserStoryPriority(priorityValue + 1);
             dto.priority = priority;
             priorityValue += 1;
         }
-
-        return productBacklog;
     }
 }
 
