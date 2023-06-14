@@ -1,0 +1,142 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US036 - As a PO/SM/Team Member, I want to consult the Sprint Backlog of a chosen sprint in the web UI."
+
+participant Client
+participant SpringBoot
+participant ": SprintController" as Controller
+participant "response:\n : ResponseEntity\n<SprintBacklogDTO>" as response
+participant ": SprintRestDtoMapper" as Mapper
+participant ": SprintService" as Service
+participant ": Sprint" as Sprint
+participant "sprintBacklog: SprintBacklog" as backlog
+participant "userStoriesInSprint : \n List<userStoriesInSprint>" as usinsprintlist
+participant "userStoryInSprintIDList :\n List<UserStoryInSprintID>" as List
+participant "userStoryList :\n List<UserStory>" as USList
+participant ": IUserStoryRepository" as usRepository
+participant ": UserStoryDomainDataAssembler" as Assembler
+participant ": UserStoryJpaRepository" as jpa
+participant ": AssembledUSListAssembler" as PBLAssembler
+participant "assembledUSList:\n : List<AssembledUS>" as AssembledUSList
+participant ": UserStoryRestDtoMapper" as USMapper
+participant "userStoryAssembledDtoList:\n List<userStoryAssembledDto>" as userStoryAssembledDtoList
+
+
+
+
+
+Client ->  SpringBoot: GET /sprints/sprintBacklog/\n{projectCode}/{sprintNumber}/\n
+activate SpringBoot
+
+SpringBoot -> Controller: getSpringBacklog(projectCode,sprintNumber)
+
+activate Controller
+
+Controller -> Mapper: toDomainDTO (projectCode,sprintNumber)
+activate Mapper
+Mapper -> Controller: sprintIdDTO
+deactivate Mapper
+Controller -> Service: getSprintBacklog(sprintIdDTO)
+activate Service
+
+
+Service -> Sprint: getSprintBacklog(sprintIdDTO)
+activate Sprint
+Sprint -> backlog : getSprintBacklog(sprintIdDTO)
+activate backlog
+
+backlog -> usinsprintlist : getSprintBacklog(sprintIdDTO)
+activate usinsprintlist
+
+usinsprintlist --> backlog : userStoryInSprintList
+
+deactivate usinsprintlist
+
+backlog --> Sprint : userStoryInSprintList
+deactivate backlog
+Sprint --> Service : userStoryInSprintList
+deactivate Sprint
+
+Service -> List ** : create
+Service -> usinsprintlist: userStoryInSprintList.stream().map
+activate usinsprintlist
+usinsprintlist --> Service: userStoryIdList : List<userStoryId>
+deactivate usinsprintlist
+
+
+Service -> USList ** : create
+
+
+
+loop for each userStoryId in userStoryIdList
+
+Service -> usRepository: getByID (userStoryId)
+activate usRepository
+
+
+usRepository -> Assembler: toData(USId)
+activate Assembler
+Assembler --> usRepository: USJpaId
+deactivate Assembler
+
+usRepository -> jpa: getByID (USJpaId)
+activate jpa
+jpa --> usRepository: userStoryJpa
+deactivate jpa
+
+usRepository -> Assembler: toDomain(userStoryJpa)
+activate Assembler
+Assembler --> usRepository: userStory
+deactivate Assembler
+
+usRepository --> Service: userStory
+deactivate usRepository
+
+Service -> USList: add (userStory)
+activate USList #FFBBBB
+deactivate USList
+end
+
+Service -> PBLAssembler: createListOfAssembledUS(UserStoryInSprintList,userStoryList)
+activate PBLAssembler
+
+PBLAssembler -> AssembledUSList **:create
+loop for each userStory in userStoryInSprintList
+PBLAssembler -> PBLAssembler: createAssembledUS\n(userStoryInSprint,userStory)
+PBLAssembler -> AssembledUSList: add(createAssembledUS)
+end
+PBLAssembler --> Service : userStoryAssembledList
+
+deactivate PBLAssembler
+
+Service -> USMapper: toRestDto(userStoryAssembledList)
+activate USMapper
+
+USMapper -> userStoryAssembledDtoList ** : create
+
+loop for each userStoryAssembled in userStoryAssembledList
+USMapper -> USMapper : toDTO(userStoryAssembled)
+USMapper -> userStoryAssembledDtoList: add(userStoryAssembledDTO)
+
+end
+
+USMapper --> Service: userStoryAssembledDtoList
+deactivate USMapper
+
+Service --> Controller: userStoryAssembledDtoList
+'deactivate USservice
+
+Controller --> response ** : create(userStoryAssembledDtoList, HtttpStatus.OK)
+Controller --> SpringBoot : Display User Story Assembled
+deactivate Controller
+
+SpringBoot--> Client : Display User Story Assembled
+deactivate SpringBoot
+
+
+@enduml
