@@ -1,0 +1,118 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title "US035 - As Project Manager, I want the Product Backlog to be updated when a sprint is closed"
+
+participant Client
+participant ": SprintController" as Controller
+participant ": SprintService" as Service
+participant ": ProjectRepository" as PR
+participant ": SprintRepository" as SprintRepo
+participant " sprint : Sprint" as Sprint
+participant ": SprintBacklog" as SB
+participant ": UserStoryRepository" as USRepo
+participant ": UserStory" as US
+participant ": Project" as Project
+participant ": ProductBacklog" as PB
+participant ": UserStoryAssemblerData" as UserStoryAssembler
+participant ": IUserStoryJPARepository" as USJPARepo
+participant ": ProjectDomainDataAssembler" as ProjectAssembler
+participant ": IProjectJPARepository" as ProjectJPARepo
+
+activate Client
+Client -> Controller
+activate Controller
+ref over Client: US034_CloseCurrentSprint\n(close the current/active sprint\n of a project)
+
+Controller -> Service: checkUserStoriesWithStatusDone (sprintID)
+activate Service
+
+Service -> PR: getByID(projectCode)
+activate PR
+PR --> Service: project
+deactivate PR
+
+Service -> SprintRepo: getByID(sprintID)
+activate SprintRepo
+SprintRepo --> Service: sprint
+deactivate SprintRepo
+
+Service -> Sprint: checkUserStoriesWithStatusDone()
+activate Sprint
+
+Sprint -> SB: checkUserStoriesWithStatusDone()
+activate SB
+
+SB --> Sprint: List<UserStoryID>
+deactivate SB
+Sprint --> Service: List<UserStoryID>
+deactivate Sprint
+
+loop for each userStoryID in List<UserStoryID>
+Service -> USRepo: getByID(userStoryID)
+activate USRepo
+USRepo --> Service: userStory
+Service -> US: setUserStoryStatus(UserStoryStatus.DONE)
+activate US
+US --> Service: userStoryStatusUpdated
+deactivate US
+Service -> USRepo: replace(userStory)
+USRepo -> UserStoryAssembler: toData(userStory)
+activate UserStoryAssembler
+UserStoryAssembler --> "userStoryJPA :UserStoryJPA" ** :create(userStory)
+UserStoryAssembler --> USRepo: userStoryJPA
+UserStoryAssembler -> USJPARepo: save(userStoryJPA)
+activate USJPARepo
+USJPARepo --> UserStoryAssembler: savedUserStoryJPA
+deactivate USJPARepo
+UserStoryAssembler --> USRepo: savedUserStoryJPA
+USRepo -> UserStoryAssembler: toDomain(savedUserStoryJPA)
+UserStoryAssembler --> "userStory :UserStory" **: create(savedUserStoryJPA)
+UserStoryAssembler --> USRepo: savedUserStory
+deactivate UserStoryAssembler
+USRepo --> Service: savedUserStory
+deactivate USRepo
+end
+
+Service -> Project: removeUserStoryIDs \n(List<UserStoryID>)
+activate Project
+
+Project -> PB: removeUserStoryIDs \n(List<UserStoryID>)
+activate PB
+
+loop for each userStoryID in List<UserStoryID>
+PB -> PB: remove(userStoryID)
+end
+PB --> Project: true
+deactivate PB
+Project --> Service: true
+deactivate Project
+
+Service -> PR: replace(project)
+activate PR
+PR -> ProjectAssembler: toData(project)
+activate ProjectAssembler
+ProjectAssembler --> "projectJPA :ProjectJPA" ** :create(project)
+ProjectAssembler --> PR: projectJPA
+PR -> ProjectJPARepo: save(projectJPA)
+activate ProjectJPARepo
+ProjectJPARepo --> PR: savedProjectJPA
+deactivate ProjectJPARepo
+PR -> ProjectAssembler: toDomain(savedProjectJPA)
+ProjectAssembler --> "project :Project" ** :create(savedProjectJPA)
+ProjectAssembler --> PR: savedProject
+deactivate ProjectAssembler
+PR --> Service: savedProject
+deactivate PR
+
+Service --> Controller: OK
+
+ref over Client: US034_CloseCurrentSprint\n(close the current/active sprint\n of a project)
+Controller --> Client
+deactivate Controller
+
+@enduml
