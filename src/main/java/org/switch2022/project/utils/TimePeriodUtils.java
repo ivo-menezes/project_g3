@@ -22,4 +22,22 @@ public class TimePeriodUtils {
         return firstStartDate.before(secondEndDate) && firstEndDate.after(secondStartDate);
     }
 
+    /**
+     * Checks if a given time period is contained within another time period.
+     * @param largestTimePeriod the largest time period
+     * @param smallestSprintTimePeriod the smallest time period
+     * @return true if the smaller time period is fully contained within the larger time period, false otherwise.
+     */
+
+    public static boolean timePeriodContainsTimePeriod(TimePeriod largestTimePeriod, TimePeriod smallestSprintTimePeriod) {
+        Date firstStartDate = largestTimePeriod.getStartDate();
+        Date firstEndDate = largestTimePeriod.getEndDate();
+
+        Date secondStartDate = smallestSprintTimePeriod.getStartDate();
+        Date secondEndDate = smallestSprintTimePeriod.getEndDate();
+
+        return (firstStartDate.equals(secondStartDate) && firstEndDate.after(secondEndDate)) ||
+                (firstStartDate.before(secondStartDate) && (firstEndDate.equals(secondEndDate) || firstEndDate.after(secondEndDate)));
+    }
+
 }
