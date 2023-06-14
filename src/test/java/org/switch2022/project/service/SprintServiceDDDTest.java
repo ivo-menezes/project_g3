@@ -15,12 +15,10 @@ import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -283,4 +281,117 @@ public class SprintServiceDDDTest {
         //Assert
         assertEquals(expectedMessage,result);
     }
+
+    @Test
+    @DisplayName("Ensure sprint is not created due to time period overlap with previous sprint")
+    void ensureSprintOverlappingPreviousSprintThrowsException() {
+        //Arrange
+        NewSprintDTO sprintDTO = mock(NewSprintDTO.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        SprintDDD newSprint = mock(SprintDDD.class);
+        TimePeriod newTimePeriod = mock(TimePeriod.class);
+
+        SprintDDD lastSprint = mock(SprintDDD.class);
+        TimePeriod lastTimePeriod = mock(TimePeriod.class);
+
+        //setting up dates for mock TimePeriods
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2023, Calendar.APRIL, 1);
+        Date firstStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 10);
+        Date firstEndDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 5);
+        Date secondStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 15);
+        Date secondEndDate = calendar.getTime();
+
+        sprintDTO.projectCode = projectCode;
+        sprintDTO.timePeriod = newTimePeriod;
+
+        //conferring behavior to the dependencies
+        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
+        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+
+        //conferring behavior to startDate, endDate and timePeriod
+        when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
+        when(lastTimePeriod.getEndDate()).thenReturn(firstEndDate);
+        when(lastSprint.getTimePeriod()).thenReturn(lastTimePeriod);
+
+        when(newTimePeriod.getStartDate()).thenReturn(secondStartDate);
+        when(newTimePeriod.getEndDate()).thenReturn(secondEndDate);
+        when(newSprint.getTimePeriod()).thenReturn(newTimePeriod);
+
+        String expectedMessage = "The time period of the new sprint overlaps with the last sprint";
+
+        //Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                sprintService.createSprint(sprintDTO));
+        String resultMessage = result.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure no overlapping sprint is successfully created")
+    void ensureNonOverlappingSprintIsSuccessfullyCreated() {
+        //Arrange
+        NewSprintDTO sprintDTO = mock(NewSprintDTO.class);
+        NewSprintDTO sprintDTO2 = mock(NewSprintDTO.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+
+        SprintDDD newSprint = mock(SprintDDD.class);
+        TimePeriod newTimePeriod = mock(TimePeriod.class);
+
+        SprintDDD lastSprint = mock(SprintDDD.class);
+        TimePeriod lastTimePeriod = mock(TimePeriod.class);
+
+        //setting up dates for mock TimePeriods
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2023, Calendar.APRIL, 1);
+        Date firstStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 10);
+        Date firstEndDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 12);
+        Date secondStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 30);
+        Date secondEndDate = calendar.getTime();
+
+        sprintDTO.projectCode = projectCode;
+        sprintDTO.timePeriod = newTimePeriod;
+
+        //conferring behavior to the dependencies
+        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
+        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+
+        //conferring behavior to startDate, endDate and timePeriod
+        when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
+        when(lastTimePeriod.getEndDate()).thenReturn(firstEndDate);
+        when(lastSprint.getTimePeriod()).thenReturn(lastTimePeriod);
+
+        when(newTimePeriod.getStartDate()).thenReturn(secondStartDate);
+        when(newTimePeriod.getEndDate()).thenReturn(secondEndDate);
+        when(newSprint.getTimePeriod()).thenReturn(newTimePeriod);
+
+        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+
+        when(sprintRepository.save(newSprint)).thenReturn(newSprint);
+
+        when(toControllerMapper.convertToDTO(newSprint)).thenReturn(sprintDTO2);
+
+        //act
+        NewSprintDTO result = sprintService.createSprint(sprintDTO);
+
+        //assert
+        assertEquals(sprintDTO2, result);
+    }
+
+
 }

@@ -7,8 +7,10 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.TimePeriod;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
+import org.switch2022.project.utils.TimePeriodUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +65,13 @@ public class SprintServiceDDD {
     }
 
     /**
-     * Creates a sprint and adds it to the sprintRepository.
+     * Creates a sprint and adds it to the sprintRepository, unless there is an overlap with the previous sprint
      * @param sprintDTO a DTO with info to create the sprint with VOs, received from
      * the controller;
      * This method contemplates using a DTO carrying a status, meaning it can be
      * used for the DataLoader and other.
-     * @return a savedSprint object, unless there is an error with the projectCode
+     * @return a savedSprint object, unless there is an error with the projectCode,
+     * or an overlap with the previous sprint
      */
     public NewSprintDTO createSprint(NewSprintDTO sprintDTO) {
         SprintDDD sprint;
@@ -83,6 +86,12 @@ public class SprintServiceDDD {
                     sprintDTO.timePeriod,
                     sprintDTO.status);
         }
+
+        //checking if there is a time period overlap between the project's last saved sprint, and the one being created
+        if (hasTimePeriodOverlap(sprintDTO.projectCode, sprintDTO.timePeriod)) {
+            throw new IllegalArgumentException("The time period of the new sprint overlaps with the last sprint");
+        }
+
          SprintDDD savedSprint = this.iSprintRepository.save(sprint);
         return newSprintDTOMapper.convertToDTO(savedSprint);
     }
@@ -109,4 +118,24 @@ public class SprintServiceDDD {
 
         return updateSprintDomainDTO;
     }
+
+    /**
+     * Checks if a new sprint's time period overlaps with the time period of the last sprint in a project.
+     * @param projectCode the project code to check for the last sprint
+     * @param newSprintTimePeriod the time period of the new sprint to be checked for overlap
+     * @return true if there is an overlap between the time periods, false otherwise
+     */
+
+    private boolean hasTimePeriodOverlap(ProjectCode projectCode, TimePeriod newSprintTimePeriod) {
+        Optional<SprintDDD> lastSprintOptional = iSprintRepository.findLastSprintByProjectCode(projectCode);
+        if (lastSprintOptional.isPresent()) {
+            SprintDDD lastSprint = lastSprintOptional.get();
+            TimePeriod lastSprintTimePeriod = lastSprint.getTimePeriod();
+
+            return TimePeriodUtils.timePeriodsOverlap(lastSprintTimePeriod, newSprintTimePeriod);
+        }
+
+        return false;
+    }
+
 }
