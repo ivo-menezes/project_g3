@@ -81,4 +81,38 @@ class TimePeriodUtilsTest {
         assertFalse(result);
 
     }
+
+    @Test
+    @DisplayName("Ensure false is returned when there is not a period overlap firstStartDate after secondEndDate")
+    void ensureTimePeriodsDoNotOverlapFirstStartDateAfterSecondEndDate() {
+        // Arrange
+        TimePeriod firstTimePeriod = mock(TimePeriod.class);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2023, Calendar.JANUARY, 10);
+        Date firstStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.JANUARY, 15);
+        Date firstEndDate = calendar.getTime();
+
+        when(firstTimePeriod.getStartDate()).thenReturn(firstStartDate);
+        when(firstTimePeriod.getEndDate()).thenReturn(firstEndDate);
+
+        TimePeriod secondTimePeriod = mock(TimePeriod.class);
+        calendar.set(2023, Calendar.JANUARY, 5);
+        Date secondStartDate = calendar.getTime();
+
+
+        calendar.set(2023, Calendar.JANUARY, 9);
+        Date secondEndDate = calendar.getTime();
+
+        when(secondTimePeriod.getStartDate()).thenReturn(secondStartDate);
+        when(secondTimePeriod.getEndDate()).thenReturn(secondEndDate);
+
+        // Act
+        boolean result = timePeriodsOverlap(firstTimePeriod, secondTimePeriod);
+
+        // Assert
+        assertFalse(result);
+
+    }
 }
