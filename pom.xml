@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.switch2022</groupId>
@@ -146,12 +146,21 @@
                     <targetClasses>
                         <param>org.switch2022.project.model.*</param>
                         <param>org.switch2022.project.utils.*</param>
-                        <param>org.switch2022.project.controller.*</param>
+                        <param>org.switch2022.project.datamodelJpa.*</param>
+                        <param>org.switch2022.project.ddd.*</param>
+                        <param>org.switch2022.project.mapper.*</param>
+                        <param>org.switch2022.project.repository.*</param>
+                        <param>org.switch2022.project.service.*</param>
+
                     </targetClasses>
                     <targetTests>
                         <param>org.switch2022.project.model.*</param>
                         <param>org.switch2022.project.utils.*</param>
-                        <param>org.switch2022.project.controller.*</param>
+                        <param>org.switch2022.project.datamodelJpa.*</param>
+                        <param>org.switch2022.project.ddd.*</param>
+                        <param>org.switch2022.project.mapper.*</param>
+                        <param>org.switch2022.project.repository.*</param>
+                        <param>org.switch2022.project.service.*</param>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
