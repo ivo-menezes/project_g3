@@ -5,7 +5,7 @@ autonumber
 skinparam sequence {
 LifeLineBackgroundColor #FFBBBB
 }
-title "US015
+title "US015 - As Manager, I want to get a list of all projects."
 
 participant Client
 participant Springboot
@@ -16,7 +16,7 @@ participant "projectRestDtoList:\n : List<ProjectRestDto>" as projectRestDtoList
 participant ": ProjectService" as Service
 participant ": IProjectRepository" as ProjRepository
 participant ": ProjectDomainDataAssembler" as Assembler
-participant "IProjectJpaRepository" as ProjectJpaRepository
+participant ": IProjectJpaRepository" as ProjectJpaRepository
 participant "projectJpaList:\n : List<ProjectJpa>" as projectJpaList
 participant "projectList:\n : List<Project>" as projectList
 participant ": NewProjectDtoMapper" as NewMapper
@@ -45,11 +45,15 @@ ProjectJpaRepository -> projectJpaList ** : create
 ProjectJpaRepository --> ProjRepository : projectsJpaList
 deactivate ProjectJpaRepository
 
-ProjRepository -> Assembler : toDomain(projectsJpaList)
+ProjRepository -> projectList ** : create
+loop for each projectJpa in projectJpaList
+ProjRepository -> Assembler : toDomain(projectsJpa)
 activate Assembler
+Assembler --> ProjRepository: project
+deactivate Assembler
+ProjRepository -> projectList: add(project)
+end
 
-Assembler -> projectList ** : create
-Assembler --> ProjRepository: projectList
 deactivate Assembler
 
 deactivate Assembler
@@ -57,12 +61,17 @@ deactivate Assembler
 ProjRepository --> Service: projectList
 deactivate ProjRepository
 
-Service -> NewMapper: toDto(projectList)
-activate NewMapper
-NewMapper -> projectDtoList ** : create
+Service -> projectDtoList ** : create
 
-NewMapper --> Service: projectDtoList
+loop for each project in projectList
+Service -> NewMapper: toDto(project)
+activate NewMapper
+
+NewMapper --> Service: projectDto
 deactivate NewMapper
+Service -> projectDtoList: add(projectDto)
+
+end loop
 
 Service --> Controller : projectDtoList
 deactivate Service

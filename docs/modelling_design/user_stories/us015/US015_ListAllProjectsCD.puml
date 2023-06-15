@@ -1,0 +1,98 @@
+@startuml
+top to bottom direction
+skinparam linetype ortho
+'Interfaces
+interface AggregateRoot
+
+interface DomainEntity {
+identity(): ID
+}
+interface DomainId
+
+interface ValueObject
+
+interface IProjectRepository  {
+getAllProjects()
+}
+
+interface ProjectJpaRepository
+
+'Classes
+class NewProjectDTO
+
+class NewProjectDTOMapper {
+toDto(Project)
+}
+class ProjectController {
+getAllProjects()
+}
+class Project {
+   projectCode: ProjectCode
+   projectName: ProjectName
+   description: Description
+   timePeriod: TimePeriod
+   projectSprintDuration: ProjectSprintDuration
+   projectNumberOfPlannedSprints: ProjectNumberOfPlannedSprints
+   projectStatus: ProjectStatus
+   customerID: CustomerID
+   businessSectorID: BusinessSectorID
+   typologyID: TypologyID
+   projectBudget: ProjectBudget
+   productBacklog: List<UserStoryID>
+}
+class ProjectDomainDataAssembler {
+toData(Project)
+toDomain(ProjectJpa)
+}
+class ProjectJpa {
+   projectCode: String
+   projectName: String
+   description: String
+   startDate: Date
+   endDate: Date
+   sprintDuration: int
+   projectNumberOfPlannedSprints: int
+   projectStatus: String
+   customerID: long
+   businessSectorID: long
+   typologyID: long
+   projectBudget: float
+   productBacklog: List<String>
+}
+
+
+class ProjectRepository {
+getAllProjects()
+
+}
+class ProjectRestDto
+
+class ProjectRestDtoMapper {
+toDomainDto(ProjectRestDto)
+toRestDto(NewProjectDTO)
+}
+
+class ProjectService {
+getAllProjects()
+}
+
+'Relations
+
+AggregateRoot                --^  DomainEntity
+AggregateRoot                ..>  DomainId
+DomainEntity                 ..>  DomainId
+DomainId                     --^  ValueObject
+NewProjectDTOMapper          ..>  NewProjectDTO
+ProjectController           o-->  ProjectRestDtoMapper
+ProjectController           o-->  ProjectService
+Project                      ..^  AggregateRoot
+ProjectDomainDataAssembler   ..>  Project
+ProjectDomainDataAssembler   ..>  ProjectJpa
+ProjectRepository            ..^  IProjectRepository
+ProjectRepository           o--> ProjectDomainDataAssembler
+ProjectRepository           o--> ProjectJpaRepository
+ProjectRestDtoMapper         ..>  NewProjectDTO
+ProjectRestDtoMapper         ..>  ProjectRestDto
+ProjectService              o--> IProjectRepository
+ProjectService              o--> NewProjectDTOMapper
+@enduml
