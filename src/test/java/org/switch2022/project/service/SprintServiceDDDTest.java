@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
+import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.*;
@@ -95,53 +96,7 @@ public class SprintServiceDDDTest {
         assertEquals(message, result);
     }
 
-    @Test
-    public void ensureServiceCreatesSprintSuccessfully() {
-        //arrange
-        //Create sprintDTO:
-        NewSprintDTO sprintDTO = new NewSprintDTO();
-        NewSprintDTO toControllerDTO = new NewSprintDTO();
 
-        //Create VO from sprintDTO and toControllerDTO:
-
-        ProjectCode projectCode = new ProjectCode("AAA");
-        SprintNumber sprintNumber = new SprintNumber(1);
-        SprintID sprintID = new SprintID(projectCode, sprintNumber);
-        SprintStatus status = SprintStatus.Planned;
-        TimePeriod timePeriod = new TimePeriod(new Date(10 / 3 / 2023),
-                new Date(25 / 3 / 2023));
-
-        toControllerDTO.sprintID = new SprintID(projectCode, sprintNumber);
-        toControllerDTO.timePeriod = timePeriod;
-        toControllerDTO.status = status;
-
-        sprintDTO.projectCode = projectCode;
-        sprintDTO.timePeriod = timePeriod;
-        sprintDTO.sprintNumber = sprintNumber;
-        sprintDTO.sprintID = sprintID;
-
-        //Create a mock sprint:
-        SprintDDD sprint = mock(SprintDDD.class);
-        when(sprint.identity()).thenReturn(sprintID);
-        when(sprint.getTimePeriod()).thenReturn(timePeriod);
-        when(sprint.getSprintStatus()).thenReturn(status);
-
-        //Mock and train a sprint factory:
-        when(sprintFactory.newSprintID(sprintDTO.projectCode, sprintDTO.sprintNumber)).thenReturn(sprintID);
-        when(sprintFactory.createSprint(sprintDTO)).thenReturn(sprint);
-
-        //Mock and train repository of sprints:
-        when(sprintRepository.save(sprint)).thenReturn(sprint);
-
-        //Mock and train mapper:
-        when(toControllerMapper.convertToDTO(sprint)).thenReturn(toControllerDTO);
-
-        //act
-        NewSprintDTO result = sprintService.createSprint(sprintDTO);
-
-        //assert
-        assertEquals(toControllerDTO, result);
-    }
     @Test
     public void ensureServiceCreatesList(){
         // arrange
@@ -337,12 +292,15 @@ public class SprintServiceDDDTest {
     }
 
     @Test
-    @DisplayName("Ensure no overlapping sprint is successfully created")
+    @DisplayName("Ensure sprint is successfully created")
     void ensureNonOverlappingSprintIsSuccessfullyCreated() {
         //Arrange
         NewSprintDTO sprintDTO = mock(NewSprintDTO.class);
         NewSprintDTO sprintDTO2 = mock(NewSprintDTO.class);
         ProjectCode projectCode = mock(ProjectCode.class);
+
+        ProjectDDD project = mock(ProjectDDD.class);
+        TimePeriod projectTimePeriod = mock(TimePeriod.class);
 
         SprintDDD newSprint = mock(SprintDDD.class);
         TimePeriod newTimePeriod = mock(TimePeriod.class);
@@ -364,12 +322,14 @@ public class SprintServiceDDDTest {
         calendar.set(2023, Calendar.APRIL, 30);
         Date secondEndDate = calendar.getTime();
 
+        calendar.set(2023, Calendar.APRIL, 1);
+        Date projectStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 30);
+        Date projectEndDate = calendar.getTime();
+
         sprintDTO.projectCode = projectCode;
         sprintDTO.timePeriod = newTimePeriod;
-
-        //conferring behavior to the dependencies
-        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
 
         //conferring behavior to startDate, endDate and timePeriod
         when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
@@ -380,18 +340,91 @@ public class SprintServiceDDDTest {
         when(newTimePeriod.getEndDate()).thenReturn(secondEndDate);
         when(newSprint.getTimePeriod()).thenReturn(newTimePeriod);
 
+        when(projectTimePeriod.getStartDate()).thenReturn(projectStartDate);
+        when(projectTimePeriod.getEndDate()).thenReturn(projectEndDate);
+        when(project.getTimePeriod()).thenReturn(projectTimePeriod);
+
+        //conferring behavior to the dependencies
+        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
+
         when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
 
         when(sprintRepository.save(newSprint)).thenReturn(newSprint);
-
         when(toControllerMapper.convertToDTO(newSprint)).thenReturn(sprintDTO2);
 
-        //act
+        //Act
         NewSprintDTO result = sprintService.createSprint(sprintDTO);
 
-        //assert
+        //Assert
         assertEquals(sprintDTO2, result);
     }
 
+    @Test
+    @DisplayName("Ensure sprint fails to be created because its time period is not contained within the project's")
+    void ensureSprintIsNotCreatedBecauseItsTimePeriodIsNotContainedWithinProjects() {
+        //Arrange
+        NewSprintDTO sprintDTO = mock(NewSprintDTO.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
 
+        ProjectDDD project = mock(ProjectDDD.class);
+        TimePeriod projectTimePeriod = mock(TimePeriod.class);
+
+        SprintDDD newSprint = mock(SprintDDD.class);
+        TimePeriod newTimePeriod = mock(TimePeriod.class);
+
+        SprintDDD lastSprint = mock(SprintDDD.class);
+        TimePeriod lastTimePeriod = mock(TimePeriod.class);
+
+        //setting up dates for mock TimePeriods
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2023, Calendar.APRIL, 1);
+        Date firstStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 10);
+        Date firstEndDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 12);
+        Date secondStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 30);
+        Date secondEndDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 1);
+        Date projectStartDate = calendar.getTime();
+
+        calendar.set(2023, Calendar.APRIL, 25);
+        Date projectEndDate = calendar.getTime();
+
+        sprintDTO.projectCode = projectCode;
+        sprintDTO.timePeriod = newTimePeriod;
+
+        //conferring behavior to startDate, endDate and timePeriod
+        when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
+        when(lastTimePeriod.getEndDate()).thenReturn(firstEndDate);
+        when(lastSprint.getTimePeriod()).thenReturn(lastTimePeriod);
+
+        when(newTimePeriod.getStartDate()).thenReturn(secondStartDate);
+        when(newTimePeriod.getEndDate()).thenReturn(secondEndDate);
+        when(newSprint.getTimePeriod()).thenReturn(newTimePeriod);
+
+        when(projectTimePeriod.getStartDate()).thenReturn(projectStartDate);
+        when(projectTimePeriod.getEndDate()).thenReturn(projectEndDate);
+        when(project.getTimePeriod()).thenReturn(projectTimePeriod);
+
+        //conferring behavior to the dependencies
+        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
+        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
+
+        String expectedMessage = "The time period of the new sprint is not contained within the project's time period";
+
+        //Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                sprintService.createSprint(sprintDTO));
+        String resultMessage = result.getMessage();
+
+        //Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
 }

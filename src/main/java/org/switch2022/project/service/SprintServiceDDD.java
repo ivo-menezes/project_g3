@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
+import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.valueobject.ProjectCode;
@@ -12,6 +13,7 @@ import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.utils.TimePeriodUtils;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +75,7 @@ public class SprintServiceDDD {
      * @return a savedSprint object, unless there is an error with the projectCode,
      * or an overlap with the previous sprint
      */
+    @Transactional
     public NewSprintDTO createSprint(NewSprintDTO sprintDTO) {
         SprintDDD sprint;
         sprintDTO.sprintID = sprintFactory.newSprintID(
@@ -91,6 +94,12 @@ public class SprintServiceDDD {
         if (hasTimePeriodOverlap(sprintDTO.projectCode, sprintDTO.timePeriod)) {
             throw new IllegalArgumentException("The time period of the new sprint overlaps with the last sprint");
         }
+        //checking if the time period of the sprint being created is contained in respective project's time period
+        if (!sprintIsContainedInProjectTimePeriod(sprintDTO.projectCode, sprintDTO.timePeriod)) {
+            throw new IllegalArgumentException("The time period of the new sprint is not contained" +
+                    " within the project's time period");
+        }
+
 
          SprintDDD savedSprint = this.iSprintRepository.save(sprint);
         return newSprintDTOMapper.convertToDTO(savedSprint);
@@ -133,6 +142,24 @@ public class SprintServiceDDD {
             TimePeriod lastSprintTimePeriod = lastSprint.getTimePeriod();
 
             return TimePeriodUtils.timePeriodsOverlap(lastSprintTimePeriod, newSprintTimePeriod);
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the specified sprint time period is contained within the project's time period.
+     * @param projectCode the code of the project
+     * @param newSprintTimePeriod the time period of the new sprint
+     * @return true if the sprint time period is contained within the project's time period, false otherwise
+     */
+    private boolean sprintIsContainedInProjectTimePeriod(ProjectCode projectCode, TimePeriod newSprintTimePeriod) {
+        Optional<ProjectDDD> projectOptional = projectRepository.getByID(projectCode);
+        if (projectOptional.isPresent()) {
+            ProjectDDD project = projectOptional.get();
+            TimePeriod projectTimePeriod = project.getTimePeriod();
+
+            return TimePeriodUtils.timePeriodContainsTimePeriod(projectTimePeriod, newSprintTimePeriod);
         }
 
         return false;
