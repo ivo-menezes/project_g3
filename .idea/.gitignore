@@ -6,3 +6,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+$PROJECT_FILE$
+checkstyle-idea.xml
+codeStyles/Project.xml
+codeStyles/codeStyleConfig.xml
+encodings.xml
+inspectionProfiles/Project_Default.xml
+jpa-buddy.xml
+misc.xml
+qaplug_profiles.xml
