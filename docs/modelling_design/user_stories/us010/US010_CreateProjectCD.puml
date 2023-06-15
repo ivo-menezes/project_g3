@@ -1,0 +1,128 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface AggregateRoot
+
+interface DomainEntity  {
+identity(): ID
+}
+
+interface DomainId
+
+interface ValueObject
+
+interface IProjectFactory {
+createProject(newProjectDTO)
+}
+
+interface IProjectRepository  {
+save(project)
+}
+
+interface ProjectJpaRepository
+
+interface ICustomerRepository {
+containsID(customerID)
+}
+
+interface IBusinessSectorRepository {
+containsID(businessSectorID)
+}
+
+interface ITypologyRepository {
+containsID(typologyID)
+}
+
+class NewProjectDTO
+
+class NewProjectDTOMapper {
+toDto(project)
+}
+
+class ProjectController {
+createProject(projectRestDto)
+}
+
+class ProjectRestDtoMapper {
+toDomainDto(projectRestDto)
+toRestDto(newProjectDTO)
+}
+
+class ProjectService {
+createProject(newProjectDTO)
+}
+
+class ProjectFactoryImpl {
+createProject(newProjectDTO)
+}
+
+class ProjectRepository {
+existsByProjectCode(projectCode)
+save(project)
+}
+
+class Project {
+   projectCode: ProjectCode
+   projectName: ProjectName
+   description: Description
+   timePeriod: TimePeriod
+   projectSprintDuration: ProjectSprintDuration
+   projectNumberOfPlannedSprints: ProjectNumberOfPlannedSprints
+   projectStatus: ProjectStatus
+   customerID: CustomerID
+   businessSectorID: BusinessSectorID
+   typologyID: TypologyID
+   projectBudget: ProjectBudget
+   productBacklog: List<UserStoryID>
+}
+
+
+class ProjectDomainDataAssembler {
+toData(project)
+toDomain(projectJpa)
+}
+
+
+class ProjectJpa {
+   projectCode: String
+   projectName: String
+   description: String
+   startDate: Date
+   endDate: Date
+   sprintDuration: int
+   projectNumberOfPlannedSprints: int
+   projectStatus: String
+   customerID: long
+   businessSectorID: long
+   typologyID: long
+   projectBudget: float
+   productBacklog: List<String>
+}
+
+AggregateRoot                   --^  DomainEntity
+AggregateRoot                   ..>  DomainId
+DomainEntity                    ..>  DomainId
+DomainId                        --^  ValueObject
+NewProjectDTOMapper             ..>  NewProjectDTO
+ProjectController               o--  ProjectRestDtoMapper
+ProjectController               o--  ProjectService
+Project                         ..^  AggregateRoot
+Project                         *--> ProductBacklog
+ProjectDomainDataAssembler      ..>  Project
+ProjectDomainDataAssembler      ..>  ProjectJpa
+ProjectFactoryImpl              ..^  IProjectFactory
+ProjectFactoryImpl              ..>  Project
+ProjectRepository               ..^  IProjectRepository
+ProjectRepository               o--> ProjectDomainDataAssembler
+ProjectRepository               o--> ProjectJpaRepository
+ProjectRestDtoMapper            ..>  NewProjectDTO
+ProjectService                  o--> IProjectFactory
+ProjectService                  o--> IProjectRepository
+ProjectService                  o--> NewProjectDTOMapper
+ProjectService                  o--> ICustomerRepository
+ProjectService                  o--> IBusinessSectorRepository
+ProjectService                  o--> ITypologyRepository
+
+@enduml
