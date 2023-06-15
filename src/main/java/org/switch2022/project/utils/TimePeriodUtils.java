@@ -6,6 +6,9 @@ import java.util.Date;
 
 public class TimePeriodUtils {
 
+    public TimePeriodUtils() {
+    }
+
     /**
      * Checks if two time periods overlap
      * @param firstTimePeriod the first time period
@@ -25,19 +28,18 @@ public class TimePeriodUtils {
     /**
      * Checks if a given time period is contained within another time period.
      * @param largestTimePeriod the largest time period
-     * @param smallestSprintTimePeriod the smallest time period
+     * @param smallestTimePeriod the smallest time period
      * @return true if the smaller time period is fully contained within the larger time period, false otherwise.
      */
 
-    public static boolean timePeriodContainsTimePeriod(TimePeriod largestTimePeriod, TimePeriod smallestSprintTimePeriod) {
+    public static boolean timePeriodContainsTimePeriod(TimePeriod largestTimePeriod, TimePeriod smallestTimePeriod) {
         Date firstStartDate = largestTimePeriod.getStartDate();
         Date firstEndDate = largestTimePeriod.getEndDate();
 
-        Date secondStartDate = smallestSprintTimePeriod.getStartDate();
-        Date secondEndDate = smallestSprintTimePeriod.getEndDate();
+        Date secondStartDate = smallestTimePeriod.getStartDate();
+        Date secondEndDate = smallestTimePeriod.getEndDate();
 
-        return (firstStartDate.equals(secondStartDate) && firstEndDate.after(secondEndDate)) ||
-                (firstStartDate.before(secondStartDate) && (firstEndDate.equals(secondEndDate) || firstEndDate.after(secondEndDate)));
+        return (!firstStartDate.after(secondStartDate) && !firstEndDate.before(secondEndDate));
     }
 
 }
