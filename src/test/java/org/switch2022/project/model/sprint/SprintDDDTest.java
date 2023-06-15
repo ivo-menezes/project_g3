@@ -93,56 +93,6 @@ class SprintDDDTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-/*    @Test
-    @DisplayName("ensure user story successfully added to sprint Backlog")
-    void addUserStoryInSprintToSprintBacklogTrue() {
-        //Arrange
-        UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
-        SprintID sprintID = mock(SprintID.class);
-        TimePeriod timePeriod = mock(TimePeriod.class);
-
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
-        //Act
-        boolean result = sprint.addUserStoryToSprintBacklog(userStoryInSprint);
-        //assert
-        assertTrue(result);
-    }
-
-    @Test
-    @DisplayName("ensure the same user story cannot been added twice to sprint Backlog")
-    void addUserStoryInSprintToSprintBacklogFalse() {
-        //Arrange
-        UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
-        SprintID sprintID = mock(SprintID.class);
-        TimePeriod timePeriod = mock(TimePeriod.class);
-
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
-        //Act
-        sprint.addUserStoryToSprintBacklog(userStoryInSprint);
-        boolean result = sprint.addUserStoryToSprintBacklog(userStoryInSprint);
-        //assert
-        assertFalse(result);
-    }
-
-    @Test
-    @DisplayName("ensure that when a user story equals null it is not added to the Sprint Backlog")
-    void addUserStoryInSprintToSprintBacklogNull() {
-        //Arrange
-        SprintID sprintID = mock(SprintID.class);
-        TimePeriod timePeriod = mock(TimePeriod.class);
-
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
-        String expectedMessage = "UserStoryInSprint must not be null";
-
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            sprint.addUserStoryToSprintBacklog(null);
-        });
-        //Act
-        String resultMessage = exception.getMessage();
-        //Assert
-        assertEquals(expectedMessage, resultMessage);
-    }*/
-
     @Test
     @DisplayName("ensure sprint ID is returned")
     void ensureSprintIDIsReturned() {
@@ -264,4 +214,21 @@ class SprintDDDTest {
         //assert
         assertEquals(SprintStatus.Closed, result);
     }
+
+    @Test
+    @DisplayName("Ensure that the sprintBacklog is successfully retrieved")
+    void ensureSprintBacklogIsRetrieved(){
+        //Arrange
+        SprintID sprintID = mock(SprintID.class);
+        TimePeriod timePeriod = mock(TimePeriod.class);
+
+        SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
+
+        //Act
+        SprintBacklog result = sprint.getSprintBacklog();
+        //Assert
+        assertInstanceOf(SprintBacklog.class, result);
+
+    }
+
 }

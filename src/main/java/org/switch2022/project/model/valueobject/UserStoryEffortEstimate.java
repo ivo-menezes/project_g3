@@ -17,6 +17,10 @@ public class UserStoryEffortEstimate implements ValueObject {
         this.userStoryEffortEstimate = userStoryEffortEstimate;
     }
 
+    public Double getUserStoryEffortEstimate() {
+        return userStoryEffortEstimate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -33,5 +37,6 @@ public class UserStoryEffortEstimate implements ValueObject {
     public int hashCode() {
         return Objects.hash(userStoryEffortEstimate);
     }
+
 
 }

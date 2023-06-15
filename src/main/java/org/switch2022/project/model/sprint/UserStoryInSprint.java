@@ -21,6 +21,8 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
 
     private final UserStoryStatus userStoryInSprintStatus;
 
+
+
     /**
      * Protected constructor to instantiate a UserStoryInSprint.
      * @param userStoryInSprintID encapsulates a UserStoryID and a SprintID;
@@ -58,7 +60,7 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
      * Retrieves the effort associated to the UserStoryInSprint.
      * @return userStoryEffortEstimate.
      */
-    protected UserStoryEffortEstimate getUserStoryEffortEstimate() {
+    public UserStoryEffortEstimate getUserStoryEffortEstimate() {
         return userStoryEffortEstimate;
     }
 
@@ -66,7 +68,7 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
      * Retrieves the status associated to the UserStoryInSprint.
      * @return userStoryInSprintStatus.
      */
-    protected UserStoryStatus getUserStoryInSprintStatus() {
+    public UserStoryStatus getUserStoryInSprintStatus() {
         return userStoryInSprintStatus;
     }
 

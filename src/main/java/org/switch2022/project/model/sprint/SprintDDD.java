@@ -15,8 +15,7 @@ public class SprintDDD implements AggregateRoot<SprintID> {
 
     private SprintStatus status;
 
-
-    //private final List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
+    private final SprintBacklog sprintBacklog;
 
     /**
      * Public constructor to instantiate a sprint.
@@ -35,6 +34,7 @@ public class SprintDDD implements AggregateRoot<SprintID> {
         this.sprintID = sprintID;
         this.timePeriod = timePeriod;
         this.status = status;
+        this.sprintBacklog = new SprintBacklog();
     }
 
     public SprintID identity() {
@@ -50,6 +50,10 @@ public class SprintDDD implements AggregateRoot<SprintID> {
 
     public void setStatus(SprintStatus status) {
         this.status = status;
+    }
+
+    public SprintBacklog getSprintBacklog() {
+        return sprintBacklog;
     }
 
     @Override
@@ -70,38 +74,5 @@ public class SprintDDD implements AggregateRoot<SprintID> {
         return Objects.hash(sprintID);
     }
 
-    /**
-     * Add a user story to the sprint backlog.
-     *
-     * @param userStoryInSprint relates a specific US to a specific sprint.
-     * @return true if the userStoryInSprint was added to the Sprint Backlog, or false otherwise.
-     */
-/*    public boolean addUserStoryToSprintBacklog(UserStoryInSprint userStoryInSprint) {
-        boolean added = false;
-
-        if (!this.existsUserStory(userStoryInSprint)) {
-            this.sprintBacklog.add(userStoryInSprint);
-            added = true;
-        }
-        return added;
-    }
-
-    /**
-     * Checks if it contains the user story in the sprint backlog.
-     *
-     * @param userStoryInSprint relates a specific US to a specific sprint.
-     * @return returns false if the user story does not exist, or true otherwise.
-     */
-   /* private boolean existsUserStory(UserStoryInSprint userStoryInSprint) {
-        boolean exists = false;
-
-        if (userStoryInSprint == null) {
-            throw new IllegalArgumentException("UserStoryInSprint must not be null");
-        }
-        if (sprintBacklog.contains(userStoryInSprint)) {
-            exists = true;
-        }
-        return exists;
-    }*/
 
 }

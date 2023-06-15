@@ -2,6 +2,7 @@ package org.switch2022.project.datamodel.JPA;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,14 +22,23 @@ public class SprintJPA {
 
     private String sprintStatus;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumns({
+            @JoinColumn(name = "projectCode", referencedColumnName = "projectCode"),
+            @JoinColumn(name = "sprintNumber", referencedColumnName = "sprintNumber")
+    })
+    private List<UserStoryInSprintJPA> sprintBacklogJPA;
+
     protected SprintJPA() {
     }
 
-    public SprintJPA(SprintJpaID sprintID, Date startDate, Date endDate, String sprintStatus) {
+    public SprintJPA(SprintJpaID sprintID, Date startDate, Date endDate, String sprintStatus,
+                     List<UserStoryInSprintJPA> sprintBacklogJPA) {
         this.sprintID = sprintID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.sprintStatus = sprintStatus;
+        this.sprintBacklogJPA = sprintBacklogJPA;
     }
 
     public SprintJpaID getSprintID() {
@@ -43,7 +53,13 @@ public class SprintJPA {
         return endDate;
     }
 
-    public String getSprintStatus(){ return sprintStatus; }
+    public String getSprintStatus() {
+        return sprintStatus;
+    }
+
+    public List<UserStoryInSprintJPA> getSprintBacklogJPA() {
+        return sprintBacklogJPA;
+    }
 
     @Override
     public boolean equals(Object o) {

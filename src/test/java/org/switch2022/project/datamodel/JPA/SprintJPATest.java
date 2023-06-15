@@ -2,8 +2,13 @@
 package org.switch2022.project.datamodel.JPA;
 
 import org.junit.jupiter.api.Test;
-import java.sql.Date;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SprintJPATest {
 
@@ -14,8 +19,11 @@ public class SprintJPATest {
         Date startDate = new Date(2023,2,2);
         Date endDate = new Date(2023,4,4);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus);
-        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
+        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertEquals(sprint1.hashCode(), sprint2.hashCode());
     }
 
@@ -26,26 +34,35 @@ public class SprintJPATest {
         Date startDate = new Date(2022,4,4);
         Date endDate = new Date(2022,6,6);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus);
-        SprintJPA sprint3 = new SprintJPA(sprintID3, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
+        SprintJPA sprint3 = new SprintJPA(sprintID3, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertNotEquals(sprint1.hashCode(), sprint3.hashCode());
     }
+
     @Test
     public void testEquals_SameInstance() {
         SprintJpaID sprintID = new SprintJpaID("ABC", 1);
         Date startDate = new Date(2023,6,23);
         Date endDate = new Date(2023,6,23);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertEquals(sprint1, sprint1);
     }
+
     @Test
     public void testEquals_Null() {
         SprintJpaID sprintID = new SprintJpaID("ABC", 1);
         Date startDate = new Date(2022,2,23);
         Date endDate = new Date(2022,2,24);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertNotEquals(null, sprint1);
     }
 
@@ -55,7 +72,9 @@ public class SprintJPATest {
         Date startDate = new Date(2020,3,3);
         Date endDate = new Date(2020,5,5);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertNotEquals("ABC", sprint1);
     }
 
@@ -66,8 +85,11 @@ public class SprintJPATest {
         Date startDate = new Date(2023,10,20);
         Date endDate = new Date(2023,10,20);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus);
-        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
+        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertEquals(sprint1, sprint2);
     }
 
@@ -78,8 +100,11 @@ public class SprintJPATest {
         Date startDate = new Date(2020,12,12);
         Date endDate = new Date(2020,12,31);
         String sprintStatus = "Planned";
-        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus);
-        SprintJPA sprint3 = new SprintJPA(sprintID3, startDate, endDate, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
+        SprintJPA sprint3 = new SprintJPA(sprintID3, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
         assertNotEquals(sprint1, sprint3);
     }
     @Test
@@ -91,10 +116,13 @@ public class SprintJPATest {
         Date endDate = new Date(2020,12,12);
         String sprintStatus = "Planned";
         String sprintStatusTwo = "Open";
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
 
         //act
-        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus);
-        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatusTwo);
+        SprintJPA sprint1 = new SprintJPA(sprintID1, startDate, endDate, sprintStatus,
+                sprintBacklogJPA);
+        SprintJPA sprint2 = new SprintJPA(sprintID2, startDate, endDate, sprintStatusTwo,
+                sprintBacklogJPA);
 
         //assert
         assertNotEquals(sprint1, sprint2);

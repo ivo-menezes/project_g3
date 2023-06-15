@@ -22,6 +22,15 @@ public class UserStoryInSprintID implements DomainId {
         this.userStoryID = userStoryID;
     }
 
+    public SprintID getSprintID() {
+        return sprintID;
+    }
+
+    public UserStoryID getUserStoryID() {
+        return userStoryID;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
