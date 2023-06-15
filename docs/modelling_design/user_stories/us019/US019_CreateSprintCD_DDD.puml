@@ -1,0 +1,148 @@
+@startuml
+skinparam linetype ortho
+
+interface CrudRepository
+
+interface DomainID
+
+interface Repository
+
+interface AggregateRoot
+
+interface DomainEntity
+
+interface ValueObject
+
+interface ISprintFactory {
+  + createSprint(NewSprintDTO): SprintDDD
+  + createSprint(SprintID, TimePeriod, SprintStatus): SprintDDD
+  + newSprintID(ProjectCode, SprintNumber): SprintID
+}
+interface ISprintRepository {
+  + replace(SprintDDD): SprintDDD
+  + findByProjectCode(ProjectCode): List<SprintDDD>
+  + findLastSprintByProjectCode(ProjectCode): Optional<SprintDDD>
+}
+class NewSprintDTO
+class NewSprintDTOMapper {
+  + convertToDTO(SprintDDD): NewSprintDTO
+}
+
+interface IProjectRepository {
+  + save(ProjectDDD): ProjectDDD
+}
+interface ProjectJpaRepository
+
+class ProjectRepositoryForJpa {
+  + existsByProjectCode(String): boolean
+}
+class SprintAssemblerData {
+  + toData(SprintDDD): SprintJPA
+  + toDomain(SprintJPA): SprintDDD
+  + convertToSprintJpaID(SprintID): SprintJpaID
+}
+class SprintController {
+  + createSprint(SprintRestDTO): ResponseEntity<SprintRestDTO>
+}
+class SprintDDD {
+  + equals(Object): boolean
+  + hashCode(): int
+  + identity(): SprintID
+   status: SprintStatus
+   timePeriod: TimePeriod
+   sprintStatus: SprintStatus
+}
+class SprintFactoryImpl {
+  + newSprintID(ProjectCode, SprintNumber): SprintID
+  + createSprint(SprintID, TimePeriod, SprintStatus): SprintDDD
+  + createSprint(NewSprintDTO): SprintDDD
+}
+class SprintJPA {
+  + hashCode(): int
+  + equals(Object): boolean
+   endDate: Date
+   startDate: Date
+   sprintID: SprintJpaID
+   sprintStatus: String
+}
+interface SprintJPARepository {
+  + findAllByProjectCode(String): List<SprintJPA>
+  + findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc(String): Optional<SprintJPA>
+}
+class SprintRepository {
+  + save(SprintDDD): SprintDDD
+  + getByID(SprintID): Optional<SprintDDD>
+  + containsID(SprintID): boolean
+  + findLastSprintByProjectCode(ProjectCode): Optional<SprintDDD>
+  + findByProjectCode(ProjectCode): List<SprintDDD>
+}
+class SprintRestDTO
+
+class SprintRestDTOMapper {
+  + createProjectCode(SprintRestDTO): NewSprintDTO
+  + toDomainDTO(SprintRestDTO): NewSprintDTO
+  + toRestDTO(NewSprintDTO): SprintRestDTO
+}
+class SprintServiceDDD {
+  + getNewSprintNumber(ProjectCode): int
+  + createSprint(NewSprintDTO): NewSprintDTO
+  + sprintList(ProjectCode): List<NewSprintDTO>
+  - hasTimePeriodOverlap(ProjectCode, TimePeriod): boolean
+  - sprintIsContainedInProjectTimePeriod(ProjectCode, TimePeriod): boolean
+}
+
+ISprintFactory       ..>  NewSprintDTO
+
+ISprintRepository    ..>  SprintDDD
+
+NewSprintDTOMapper   ..>  NewSprintDTO
+NewSprintDTOMapper   ..>  SprintDDD
+
+SprintController     ..>  NewSprintDTO
+SprintController     ..>  SprintRestDTO
+SprintController    o-->  SprintRestDTOMapper
+SprintController    o-->  SprintServiceDDD
+
+SprintFactoryImpl    -up-^  ISprintFactory
+SprintFactoryImpl    ..>  NewSprintDTO
+SprintFactoryImpl    ..>  SprintDDD
+
+SprintRepository     --^  ISprintRepository
+SprintRepository     ..>  SprintDDD
+SprintRepository    o-->  SprintJPARepository
+
+SprintAssemblerData  ..>  SprintJPA
+SprintJPARepository  ..>  SprintJPA
+SprintRepository     o--> SprintAssemblerData
+SprintRepository     ..>  SprintJPA
+SprintAssemblerData  ..>  SprintDDD
+
+SprintRestDTOMapper  ..>  NewSprintDTO
+SprintRestDTOMapper  ..>  SprintRestDTO
+
+SprintServiceDDD    o-->  ISprintFactory
+SprintServiceDDD    o-->  IProjectRepository
+SprintServiceDDD    o-->  ISprintRepository
+SprintServiceDDD     ..>  NewSprintDTO
+SprintServiceDDD    o-->  NewSprintDTOMapper
+SprintServiceDDD    ..>  SprintDDD
+
+ProjectRepositoryForJpa  o-up->  ProjectJpaRepository
+ProjectRepositoryForJpa  .up.|>  IProjectRepository
+
+CrudRepository <|-down- SprintJPARepository
+CrudRepository <|-down- ProjectJpaRepository
+
+ProjectRepositoryForJpa -..|> Repository
+SprintJPARepository -..|> Repository
+
+SprintDDD -..|> AggregateRoot
+
+AggregateRoot --|> DomainID
+AggregateRoot --|> DomainEntity
+Repository --|> DomainID
+Repository --|> AggregateRoot
+DomainID --|> ValueObject
+DomainEntity --|> DomainID
+
+@enduml
