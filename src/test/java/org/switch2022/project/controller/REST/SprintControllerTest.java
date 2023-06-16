@@ -129,7 +129,7 @@ class SprintControllerTest {
         ResponseEntity<SprintRestDTO> result = sprintController.createSprint(sprintDTOFromUI);
 
         // Assert
-        assertEquals(500, result.getStatusCodeValue());
+        assertEquals(400, result.getStatusCodeValue());
 
     }
     @Test
@@ -146,7 +146,7 @@ class SprintControllerTest {
         ResponseEntity<SprintRestDTO> result = sprintController.createSprint(mockDTOUI);
 
         //assert
-        assertEquals(400, result.getStatusCodeValue());
+        assertEquals(500, result.getStatusCodeValue());
     }
     @Test
     public void createSprintWithExceptionReturnsInternalServerError() {
@@ -158,7 +158,7 @@ class SprintControllerTest {
         ResponseEntity<SprintRestDTO> result = sprintController.createSprint(sprintDTO);
 
         //assert
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
     }
     @Test
     public void ensureControllerCreatesSprintLIst(){

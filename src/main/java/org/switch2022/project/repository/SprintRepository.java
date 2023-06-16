@@ -117,7 +117,7 @@ public class SprintRepository implements ISprintRepository {
 
         List<SprintDDD> allSprints = new ArrayList<>();
         for(SprintJPA sprintJPA : listJPA){
-                allSprints.add(sprintAssemblerData.toDomain(sprintJPA));
+            allSprints.add(sprintAssemblerData.toDomain(sprintJPA));
         }
         return allSprints;
     }

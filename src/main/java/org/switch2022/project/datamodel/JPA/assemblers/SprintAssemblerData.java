@@ -30,7 +30,8 @@ import java.util.List;
         SprintID sprintID = sprintDDD.identity();
         String projectCode = sprintID.getProjectCode().toString();
         String sprintStatus = sprintDDD.getSprintStatus().toString();
-        int sprintNumber = sprintID.getSprintNumber().getSprintNumber(); // Get the underlying int value
+        // Get the underlying int value
+        int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
         SprintJpaID sprintJpaID = new SprintJpaID(projectCode, sprintNumber);
 
         TimePeriod timePeriod = sprintDDD.getTimePeriod();
@@ -69,13 +70,18 @@ import java.util.List;
 
         TimePeriod timePeriod = new TimePeriod(sprintJPA.getStartDate(), sprintJPA.getEndDate());
 
-        SprintDDD sprint = new SprintDDD(sprintID, timePeriod, sprintStatus);
-
-        return sprint;
+        return new SprintDDD(sprintID, timePeriod, sprintStatus);
         }
+
+    /***
+     * Converts the SprintID into the SprintJPAID, which is the equivalent,
+     * but with primitive values.
+     * @param sprintID the domain entity of our business
+     * @return SprintJPAID with primitive data
+     */
     public SprintJpaID convertToSprintJpaID(SprintID sprintID) {
         ProjectCode projectCode = sprintID.getProjectCode();
-        String projectCodeString = projectCode != null ? projectCode.toString() : null;
+        String projectCodeString = projectCode.toString();
         int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
         return new SprintJpaID(projectCodeString, sprintNumber);
     }

@@ -47,17 +47,19 @@ public class SprintController {
             NewSprintDTO newToControllerDTO = service.createSprint(controllerDTO);
             SprintRestDTO sprintRestDTO = mapper.toRestDTO(newToControllerDTO);
 
-            ResponseEntity<SprintRestDTO> response = new ResponseEntity<>(sprintRestDTO, HttpStatus.CREATED);
-            return response;
+            return new ResponseEntity<>(sprintRestDTO, HttpStatus.CREATED);
         }catch (IllegalArgumentException e){
-            ResponseEntity<SprintRestDTO> response = new ResponseEntity<>(sprintDTOFromUI, HttpStatus.INTERNAL_SERVER_ERROR);
-            return response;
+            return new ResponseEntity<>(sprintDTOFromUI, HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            ResponseEntity<SprintRestDTO> response = new ResponseEntity<>(sprintDTOFromUI, HttpStatus.BAD_REQUEST);
-            return response;
+            return new ResponseEntity<>(sprintDTOFromUI, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    /***
+     * GET Request for a list of the sprints available for a specified project
+     * @param projectCode of the project
+     * @return list of sprints of the requested project
+     */
     @GetMapping("")
     public ResponseEntity<List<SprintRestDTO>> retrieveSprintList(@PathVariable("projectCode") String projectCode){
         try{
@@ -66,8 +68,7 @@ public class SprintController {
             NewSprintDTO newControllerDTO = mapper.createProjectCode(newDTOUI);
             List<NewSprintDTO> allSprintsFromProject = service.sprintList(newControllerDTO.projectCode);
             List<SprintRestDTO> allSprints = mapper.getSprintList(allSprintsFromProject);
-            ResponseEntity<List<SprintRestDTO>> response = new ResponseEntity<>(allSprints, HttpStatus.OK);
-            return response;
+            return new ResponseEntity<>(allSprints, HttpStatus.OK);
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

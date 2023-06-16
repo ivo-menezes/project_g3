@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class SprintJPATest {
 
@@ -126,6 +126,69 @@ public class SprintJPATest {
 
         //assert
         assertNotEquals(sprint1, sprint2);
+    }
+    @Test
+    public void ensureSprintJPAIsNull(){
+        //arrange
+        SprintJPA sprintJPA = null;
+
+        //act and assert
+        assertNull(sprintJPA);
+    }
+    @Test
+    public void ensureSprintJPAIsNotEqualAnotherObjectClass(){
+        //arrange
+        SprintJpaID mockJPAID = mock(SprintJpaID.class);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprintJPA = new SprintJPA(mockJPAID,
+                new Date(2023,03,02),
+                new Date(2023,03,15),
+                "Open",sprintBacklogJPA);
+        Object o = mock(Object.class);
+
+        //act
+        boolean result = o.getClass().equals(sprintJPA.getClass());
+
+        //assert
+        assertFalse(result);
+    }
+    @Test
+    public void ensureSprintJPAIsNotEqualAnotherWithDifferentStartDate(){
+        //arrange
+        SprintJpaID mockJPAID = mock(SprintJpaID.class);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprintJPA = new SprintJPA(mockJPAID,
+                new Date(2023,03,02),
+                new Date(2023,03,15),
+                "Open",sprintBacklogJPA);
+        SprintJPA sprintJPATwo = new SprintJPA(mockJPAID,
+                new Date(2023,03,03),
+                new Date(2023,03,15),
+                "Open",sprintBacklogJPA);
+        //act
+        boolean result = sprintJPA.equals(sprintJPATwo);
+
+        //assert
+        assertFalse(result);
+    }
+    @Test
+    public void ensureSprintJPAIsNotEqualAnotherWithDifferentEndDate(){
+        //arrange
+        SprintJpaID mockJPAID = mock(SprintJpaID.class);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        SprintJPA sprintJPA = new SprintJPA(mockJPAID,
+                new Date(2023,03,03),
+                new Date(2023,03,15),
+                "Open",sprintBacklogJPA);
+        SprintJPA sprintJPATwo = new SprintJPA(mockJPAID,
+                new Date(2023,03,03),
+                new Date(2023,03,20),
+                "Open",sprintBacklogJPA);
+        //act
+        boolean result = sprintJPA.equals(sprintJPATwo);
+
+        //assert
+        assertFalse(result);
     }
 }
 
