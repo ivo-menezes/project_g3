@@ -11,9 +11,10 @@ participant Client
 participant SpringBoot
 participant ": SprintController" as Controller
 participant "response:\n : ResponseEntity\n<SprintBacklogDTO>" as response
-participant ": SprintRestDtoMapper" as Mapper
+participant "sprintID : SprintID" as sprintID
 participant ": SprintService" as Service
-participant ": Sprint" as Sprint
+participant ": ISprintRepository" as Repository
+participant "sprint : Sprint" as Sprint
 participant "sprintBacklog: SprintBacklog" as backlog
 participant "userStoriesInSprint : \n List<userStoriesInSprint>" as usinsprintlist
 participant "userStoryInSprintIDList :\n List<UserStoryInSprintID>" as List
@@ -37,20 +38,22 @@ SpringBoot -> Controller: getSpringBacklog(projectCode,sprintNumber)
 
 activate Controller
 
-Controller -> Mapper: toDomainDTO (projectCode,sprintNumber)
-activate Mapper
-Mapper -> Controller: sprintIdDTO
-deactivate Mapper
-Controller -> Service: getSprintBacklog(sprintIdDTO)
+Controller --> sprintID ** : create(projectCode, sprintNumber)
+
+Controller -> Service: getSprintBacklog(sprintID)
 activate Service
 
 
-Service -> Sprint: getSprintBacklog(sprintIdDTO)
+Service -> Repository: getSprint(sprintID)
+activate Repository
+Repository --> Service: sprint
+deactivate Repository
+Service -> Sprint: getUserStoryInSprintList(sprint)
 activate Sprint
-Sprint -> backlog : getSprintBacklog(sprintIdDTO)
+Sprint -> backlog : getSprintBacklog()
 activate backlog
 
-backlog -> usinsprintlist : getSprintBacklog(sprintIdDTO)
+backlog -> usinsprintlist : getSprintBacklog()
 activate usinsprintlist
 
 usinsprintlist --> backlog : userStoryInSprintList
