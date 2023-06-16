@@ -1,0 +1,6 @@
+@startuml
+
+"Project Manager" -> System: Select sprint and update status\n(projectCode, sprintNumber, sprintStatus)
+"Project Manager" <-- System: updated status sprint
+
+@enduml
