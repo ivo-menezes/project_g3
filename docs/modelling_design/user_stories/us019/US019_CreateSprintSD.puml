@@ -13,6 +13,7 @@ participant "sprintRestDto : SprintRestDto" as restDto
 participant ": SprintController" as Controller
 participant ": SprintRestDtoMapper" as RestMapper
 participant ": SprintService" as Service
+participant ": IProjectRepository" as ProjectRepository
 participant ": IFactorySprint" as Factory
 participant "sprintID : SprintID" as SprintID
 participant "sprint : Sprint" as Sprint
@@ -20,9 +21,10 @@ participant ": ISprintRepository" as Repository
 participant ": SprintAssemblerData" as Assembler
 participant ": ISprintRepositoryJPA" as RepositoryJPA
 participant ": NewSprintDtoMapper" as NewMapper
+participant "allSprints : List<Sprint>" as allSprints
 participant "sprintJpa : SprintJpa" as SprintJpa
 participant "savedSprint : Sprint" as savedSprint
-participant "sprintRestDtoOut : SprintRestDto" as sprintRestDtoOut
+participant "sprintRestDto : SprintRestDto" as sprintRestDto
 participant "response : ResponseEntity<sprintRestDto>" as response
 
 activate Client
@@ -34,59 +36,89 @@ Springboot -> Controller: createSprint(sprintRestDto)
 deactivate Springboot
 activate Controller
 
-Controller -> RestMapper : toDomainDto(sprintRestDto)
+Controller -> RestMapper : createProjectCode(sprintRestDTO)
 activate RestMapper
-RestMapper --> Controller : sprintDto
-deactivate RestMapper
-Controller -> Service : createSprint(sprintDto)
-activate Service
+RestMapper --> Controller : newSprintDto
 
-Service -> Repository : getNewSprintNumber(projectCode)
+deactivate RestMapper
+
+Controller -> Service : getNewSprintNumber(projectCode)
+activate Service
+Service -> ProjectRepository : existsByProjectCode(projectCode)
+activate ProjectRepository
+ProjectRepository --> Service : true
+deactivate ProjectRepository
+Service -> Repository: findByProjectCode(projectCode)
 activate Repository
 
-Repository -> RepositoryJPA : findProjectCode(projectCode)
+Repository -> RepositoryJPA : findAllByProjectCode(projectCode)
 activate RepositoryJPA
-RepositoryJPA --> Repository: sprints
-Repository -> RepositoryJPA : count()
-RepositoryJPA --> Repository: numberOfSprints
+RepositoryJPA --> Repository: listJPA
 deactivate RepositoryJPA
+Repository -> allSprints ** : create
+loop for each sprintJPA in listJPA
+Repository -> Assembler : toDomain(sprintJPA)
+activate Assembler
+Assembler --> Repository : sprint
+deactivate Assembler
+Repository -> allSprints : add(sprint)
+activate allSprints
+deactivate allSprints
+end
 
-Repository --> Service : newSprintNumber
+Repository --> Service : allSprints
 deactivate Repository
 
-Service -> Factory: createSprint(sprintDto)
+Service -> Service : allSprints.size()+1
+activate Service #Darksalmon
+deactivate Service
+Service --> Controller : newSprintNumber
+deactivate Service
+
+Controller -> RestMapper : toDomainDto(sprintRestDTO)
+activate RestMapper
+RestMapper --> Controller : sprintDto
+
+deactivate RestMapper
+
+Controller -> Service : createSprint(sprintDto)
+deactivate Repository
+activate Service
+Service -> Factory : newSprintID(projectCode, newSprintNumber)
 activate Factory
+Factory --> SprintID ** : create
+Factory --> Service : sprintID
+Service -> Factory: createSprint(sprintDto)
 
-Factory --> SprintID ** : create(projectCode, newSprintNumber)
 
-Factory --> Sprint ** : create (sprintID, timePeriod)
+Factory --> Sprint ** : create
 Factory --> Service : sprint
 deactivate
+
+
+Service -> Service : !hasTimePeriodOverlap\n(projectCode, timePeriod)
+activate Service #Darksalmon
+Service -> Service : sprintIsContainedInProjectTimePeriod\n(projectCode, timePeriod)
+deactivate Service
 
 Service -> Repository :save(sprint)
 activate Repository
 
-Repository -> Repository : !hasDateOverlap(projectCode,\n newStartDate)
-activate Repository #Darksalmon
-Repository -> RepositoryJPA : findLastSprintByProjectCode(projectCode)
-activate RepositoryJPA
-RepositoryJPA --> Repository : lastSprint
-deactivate Repository
-deactivate RepositoryJPA
+
 
 Repository -> Assembler : toData(sprint)
 activate Assembler
-Assembler --> SprintJpa ** :Create(sprint)
+Assembler --> SprintJpa ** :create(sprint)
 Assembler --> Repository: sprintJpa
 deactivate Assembler
 
 Repository -> RepositoryJPA : save(sprintJpa)
-activate RepositoryJPA #FFBBBB
+activate RepositoryJPA
 RepositoryJPA --> Repository : savedSprintJpa
 deactivate RepositoryJPA
 Repository -> Assembler : toDomain(savedSprintJpa)
-activate Assembler #FFBBBB
-Assembler --> savedSprint ** :Create(savedSprintJpa)
+activate Assembler
+Assembler --> savedSprint ** :create(savedSprintJpa)
 Assembler --> Repository : savedSprint
 deactivate Assembler
 
@@ -95,16 +127,16 @@ deactivate Repository
 Service -> NewMapper : convertToDto(savedSprint)
 activate NewMapper
 NewMapper --> Service : savedSprintDto
-deactivate
+deactivate NewMapper
 
 Service --> Controller: savedSprintDto
-deactivate
+deactivate Service
 Controller -> RestMapper :toRestDto(savedSprintDto)
 activate RestMapper
-RestMapper --> sprintRestDtoOut ** :Create(savedSprintDto)
-RestMapper --> Controller :sprintRestDtoOut
+RestMapper --> sprintRestDto ** :Create(savedSprintDto)
+RestMapper --> Controller :sprintRestDto
 deactivate RestMapper
-Controller --> response ** : create(sprintRestDtoOut, HttpStatus.CREATED)
+Controller --> response ** : create(sprintRestDto, HttpStatus.CREATED)
 Controller --> Client: Confirms created Sprint
 deactivate Controller
 deactivate Client
