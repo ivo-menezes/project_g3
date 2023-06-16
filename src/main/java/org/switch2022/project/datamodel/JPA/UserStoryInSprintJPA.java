@@ -37,7 +37,7 @@ public class UserStoryInSprintJPA {
     public UserStoryInSprintJPA(UserStoryInSprint userStoryInSprint) {
     }
 
-    protected UserStoryInSprintIDJpa getID() {
+    public UserStoryInSprintIDJpa getID() {
         return idJpa;
     }
 

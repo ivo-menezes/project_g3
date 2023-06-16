@@ -40,6 +40,19 @@ class UserStoryInSprintIDJpa implements Serializable {
     }
 
 
+    public String getProjectCode() {
+        return projectCode;
+    }
+
+    public int getSprintNumber() {
+        return sprintNumber;
+    }
+
+    public String getUserStoryNumber() {
+        return userStoryNumber;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

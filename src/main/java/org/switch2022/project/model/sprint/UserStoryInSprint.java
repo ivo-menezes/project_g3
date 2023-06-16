@@ -30,9 +30,9 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
      *                                UserStoryInSprint;
      * @param userStoryInSprintStatus encapsulates the status for UserStoryInSprint.
      */
-    protected UserStoryInSprint(UserStoryInSprintID userStoryInSprintID,
-                                UserStoryEffortEstimate userStoryEffortEstimate,
-                                UserStoryStatus userStoryInSprintStatus) {
+    public UserStoryInSprint(UserStoryInSprintID userStoryInSprintID,
+                             UserStoryEffortEstimate userStoryEffortEstimate,
+                             UserStoryStatus userStoryInSprintStatus) {
         if (userStoryInSprintID == null) {
             throw new IllegalArgumentException("ID for User Story in Sprint cannot be null");
         }
