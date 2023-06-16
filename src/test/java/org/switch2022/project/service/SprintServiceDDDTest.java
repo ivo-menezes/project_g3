@@ -12,6 +12,7 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
@@ -427,4 +428,30 @@ public class SprintServiceDDDTest {
         //Assert
         assertEquals(expectedMessage, resultMessage);
     }
+    @Test
+    @DisplayName("Ensure userStoryInSprintList is successfully retrieved")
+    void ensureUserStoryInSprintListIsRetrieved() {
+        //Arrange
+        ProjectCode projectCode = mock(ProjectCode.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        SprintID sprintID = new SprintID(projectCode, sprintNumber);
+        SprintDDD sprint = mock(SprintDDD.class);
+        //SprintBacklog sprintBacklog = mock(SprintBacklog.class);
+        UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
+        List<UserStoryInSprint> list = new ArrayList<>();
+        list.add(userStoryInSprint);
+
+            //Train objects
+
+        when(sprintRepository.findSprintBySprintID(sprintID)).thenReturn(Optional.of(sprint));
+        when(sprint.getUserStoriesInSprintList()).thenReturn(list);
+
+        //Act
+        List<UserStoryInSprint> result = sprintService.getUserStoryInSprintList(sprintID);
+
+        //Assert
+        assertEquals(list, result);
+
+    }
+
 }

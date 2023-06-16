@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.SprintJpaID;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
-import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
@@ -38,18 +37,15 @@ import java.util.List;
         Date startDate = timePeriod.getStartDate();
         Date endDate = timePeriod.getEndDate();
 
-        SprintBacklog sprintBacklog = sprintDDD.getSprintBacklog();
+        List<UserStoryInSprint> sprintBacklog = sprintDDD.getUserStoriesInSprintList();
         List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
 
 
          //create a List<UserStoryInSprintJPA> sprintBacklogJPA from the sprintBacklog
          //of a sprint:
 
-
-        if (sprintBacklog.getUserStoriesInSprintList().size() > 0) {
-            for (int i = 0; i < sprintBacklog.getUserStoriesInSprintList().size(); i++) {
-
-                UserStoryInSprint userStoryInSprint = sprintBacklog.getUserStoriesInSprintList().get(i);
+        if (sprintBacklog.size() > 0) {
+            for (UserStoryInSprint userStoryInSprint : sprintBacklog) {
 
                 UserStoryInSprintJPA userStoryInSprintJPA = userStoryInSprintDataAssembler.toData(userStoryInSprint);
                 sprintBacklogJPA.add(userStoryInSprintJPA);

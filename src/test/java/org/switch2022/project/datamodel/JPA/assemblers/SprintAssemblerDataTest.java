@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.SprintJpaID;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
-import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 
 import java.text.ParseException;
@@ -32,7 +32,8 @@ public class SprintAssemblerDataTest {
         SprintNumber sprintNumberDouble = mock(SprintNumber.class);
         TimePeriod timePeriodDouble = mock(TimePeriod.class);
         SprintStatus sprintStatus = mock(SprintStatus.class);
-        SprintBacklog sprintBacklog = mock(SprintBacklog.class);
+        //SprintBacklog sprintBacklog = mock(SprintBacklog.class);
+        List<UserStoryInSprint> list = new ArrayList<>();
         List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
         UserStoryInSprintDataAssembler userStoryInSprintDataAssembler = mock(
                 UserStoryInSprintDataAssembler.class);
@@ -47,8 +48,7 @@ public class SprintAssemblerDataTest {
         when(timePeriodDouble.getEndDate()).thenReturn(formatter.parse("31/01/2023"));
         when(sprintDouble.getSprintStatus()).thenReturn(sprintStatus);
         when(sprintStatus.toString()).thenReturn("Planned");
-        when(sprintDouble.getSprintBacklog()).thenReturn(sprintBacklog);
-        when(sprintBacklog.getUserStoriesInSprintList()).thenReturn(new ArrayList<>());
+        when(sprintDouble.getUserStoriesInSprintList()).thenReturn(list);
 
         SprintJpaID expectedSprintJpaId = new SprintJpaID("PJ1", 1);
         SprintJPA expectedSprintJpa = new SprintJPA(expectedSprintJpaId,

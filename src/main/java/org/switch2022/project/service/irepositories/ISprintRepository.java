@@ -15,4 +15,6 @@ public interface ISprintRepository extends RepositoryNew<SprintID, SprintDDD> {
     SprintDDD replace(SprintDDD sprint);
 
     Optional<SprintDDD> findLastSprintByProjectCode(ProjectCode projectCode);
+
+    Optional<SprintDDD> findSprintBySprintID(SprintID sprintID);
 }

@@ -6,6 +6,9 @@ import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.TimePeriod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -101,11 +104,11 @@ class SprintDDDTest {
         TimePeriod timePeriod = mock(TimePeriod.class);
 
         SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
-        SprintID expected = sprintID;
+
         //Act
         SprintID result = sprint.identity();
         //Assert
-        assertEquals(expected, result);
+        assertEquals(sprintID, result);
     }
 
     @Test
@@ -116,11 +119,10 @@ class SprintDDDTest {
         TimePeriod timePeriod = mock(TimePeriod.class);
 
         SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
-        TimePeriod expected = timePeriod;
         //Act
         TimePeriod result = sprint.getTimePeriod();
         //Assert
-        assertEquals(expected, result);
+        assertEquals(timePeriod, result);
     }
 
     @Test
@@ -131,9 +133,8 @@ class SprintDDDTest {
         TimePeriod timePeriod = mock(TimePeriod.class);
 
         SprintDDD sprint_1 = new SprintDDD(sprintID, timePeriod);
-        SprintDDD sprint_2 = sprint_1;
         //Act
-        boolean result = sprint_1.equals(sprint_2);
+        boolean result = sprint_1.equals(sprint_1);
         //Assert
         assertTrue(result);
     }
@@ -216,18 +217,19 @@ class SprintDDDTest {
     }
 
     @Test
-    @DisplayName("Ensure that the sprintBacklog is successfully retrieved")
+    @DisplayName("Ensure that a list of UserStoryInSprint is successfully retrieved")
     void ensureSprintBacklogIsRetrieved(){
         //Arrange
         SprintID sprintID = mock(SprintID.class);
         TimePeriod timePeriod = mock(TimePeriod.class);
 
         SprintDDD sprint = new SprintDDD(sprintID, timePeriod);
+        List<UserStoryInSprint> expected = new ArrayList<>();
 
         //Act
-        SprintBacklog result = sprint.getSprintBacklog();
+        List<UserStoryInSprint> result = sprint.getUserStoriesInSprintList();
         //Assert
-        assertInstanceOf(SprintBacklog.class, result);
+        assertEquals(expected, result);
 
     }
 

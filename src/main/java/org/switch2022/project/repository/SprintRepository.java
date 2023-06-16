@@ -156,4 +156,20 @@ public class SprintRepository implements ISprintRepository {
         }
     }
 
+    public Optional<SprintDDD> findSprintBySprintID(SprintID sprintID) {
+        //String projectCode = sprintID.getProjectCode().toString();
+        //int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
+        SprintJpaID sprintJpaID = sprintAssemblerData.convertToSprintJpaID(sprintID);
+
+        Optional<SprintJPA> sprintJPAOptional =
+                sprintJpaRepository.findById(sprintJpaID);
+        if (sprintJPAOptional.isPresent()) {
+            SprintJPA sprintJPA = sprintJPAOptional.get();
+            SprintDDD sprint = sprintAssemblerData.toDomain(sprintJPA);
+            return Optional.of(sprint);
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

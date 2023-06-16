@@ -7,7 +7,9 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
@@ -163,6 +165,25 @@ public class SprintServiceDDD {
         }
 
         return false;
+    }
+
+    /**
+     * Returns a list of UserStoryInSprint of a given sprint in a given project.
+     * @param sprintID contains projectCode and SprintNumber to retrieve the list
+     * @return the list userStoryInSprintList.
+     */
+    public List<UserStoryInSprint> getUserStoryInSprintList(SprintID sprintID){
+        Optional<SprintDDD> sprintOptional = iSprintRepository.findSprintBySprintID(sprintID);
+
+        if (sprintOptional.isEmpty()) {
+            throw new RuntimeException("Sprint with given number and projectCode does not exist.");
+        }
+
+        SprintDDD sprint = sprintOptional.get();
+
+        List<UserStoryInSprint> userStoryInSprintList = sprint.getUserStoriesInSprintList();
+
+        return userStoryInSprintList;
     }
 
 }
