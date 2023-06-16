@@ -1,30 +1,101 @@
 @startuml
-'https://plantuml.com/component-diagram
+!theme plain
 
-"<<System>>\nproject-g3" as system
-() "UI" as ui
-() "REST API" as api
+top to bottom direction
 
-component system {
+title "Architectural Design Model - Logical View Level 3"
 
-    [Client] as client
+"<<component>>\n<<C4 Context>>\nBackend" as be
 
-    component [Server] as server {
+() "REST API" as rest
+() "SQL API" as db
 
-        [Application] as app
-        [DB] as db
+component be {
 
-        () " " as dbapi
-        db -l- dbapi
-        app -r-( dbapi
+    portout " " as api_port
+    portout " " as db_port
 
-        app -- api
+    folder " " as framework_layer {
+
+        component "<<component>>\n<<Component C4>>\nRouters" as routers {
+            port " " as routerport
+        }
+
+        component "<<component>>\n<<Component C4>>\nSQL DB Client" as persistence {
+            port " " as to_db_port
+        }
 
     }
 
-    client -- ui
-    client --( api
+    () "controllers API" as controllerApi
+    routers -down-( controllerApi
+
+    component "<<component>>\nData Model" as datamodel
+
+    () "Data Model API" as dmApi
+    () "Persistence API" as pApi
+
+    persistence -- pApi
+
+    datamodel -right- dmApi
+
+    folder " " as interface_layer {
+
+        component "<<component>>\n<<Component C4>>\nControllers" as controllers {
+                }
+
+        component "<<component>>\n<<Component C4>>\nRepositories" as repositories {
+                }
+    }
+
+    controllers -up- controllerApi
+
+    repositories -up-( dmApi
+    persistence --( dmApi
+    persistence ..|> repositories
+    repositories -up-( pApi
+
+    component "<<component>>\nDTO" as dto
+
+    () "Service API" as serviceApi
+    () "DTO API" as dtoApi
+
+    dto -right- dtoApi
+    controllers --( dtoApi
+
+    controllers --( serviceApi
+
+    folder " " as app_business_layer {
+
+        component "<<component>>\n<<Component C4>>\nServices" as services {
+                    }
+
+    }
+
+    services -up- serviceApi
+    services -up-( dtoApi
+
+    repositories ..|> services
+
+    folder " " as enterprise_business_layer {
+
+        component "<<component>>\n<<Component C4>>\nModel" as model {
+                        }
+
+    }
+
+    () "Model API" as modelApi
+
+    model -up- modelApi
+    services --( modelApi
+    repositories --( modelApi
 
 }
+
+    api_port -- rest
+    db_port --( db
+
+    routerport -- api_port
+    to_db_port -- db_port
 
 @enduml

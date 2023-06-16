@@ -1,0 +1,66 @@
+@startuml
+
+!theme plain
+hide footbox
+autonumber
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+
+title "US010 - As Manager, I want to register/create a new project."
+
+participant ":Bootstrap" as bootstrap
+
+participant "<<Component C4>>\n: IProjectRepository" as ProjRepository
+participant "<<Component C4>>\n: ProjectDomainDataAssembler" as project_assembler
+participant "<<Component C4>>\n: IProjectJpaRepository" as ProjectJpaRepository
+
+participant "<<Component C4>>\n: ICustomerRepository" as CustomerRepository
+participant "<<Component C4>>\n: CustomerDomainDataAssembler" as customer_assembler
+participant "<<Component C4>>\n: CustomerRepositoryJPA" as CustomerJpaRepository
+
+participant "<<Component C4>>\n: IBusinessSectorRepository" as BusinessSectorRepository
+participant "<<Component C4>>\n: BusinessSectorDomainDataAssembler" as bs_assembler
+participant "<<Component C4>>\n: BusinessSectorRepositoryJPA" as BusinessSectorJpaRepository
+
+participant "<<Component C4>>\n: ITypologyRepository" as TypologyRepository
+participant "<<Component C4>>\n: TypologyDomainDataAssembler" as typology_assembler
+participant "<<Component C4>>\n: TypologyJpaRepository" as TypologyJpaRepository
+
+participant "<<Component C4>>\n: ProjectController" as Controller
+participant "<<Component C4>>\n: ProjectRestDtoMapper" as Mapper
+participant "<<Component C4>>\n: ProjectService" as Service
+
+participant "<<Component C4>>\n: IProjectFactory" as Factory
+
+participant "<<Component C4>>\n: NewProjectDtoMapper" as NewMapper
+
+activate bootstrap
+bootstrap --> ProjectJpaRepository : create(config)
+bootstrap --> project_assembler : create(config)
+bootstrap --> ProjRepository : create(ProjectJpaRepository, ProjectDomainDataAssembler)
+
+bootstrap --> CustomerJpaRepository : create(config)
+bootstrap --> customer_assembler : create(config)
+bootstrap --> CustomerRepository : create(CustomerRepositoryJPA, CustomerDomainDataAssembler)
+
+bootstrap --> BusinessSectorJpaRepository : create(config)
+bootstrap --> bs_assembler : create(config)
+bootstrap --> BusinessSectorRepository : create(BusinessSectorRepositoryJPA, BusinessSectorDomainDataAssembler)
+
+bootstrap --> TypologyJpaRepository : create(config)
+bootstrap --> typology_assembler : create(config)
+bootstrap --> TypologyRepository : create(TypologyJpaRepository, TypologyDomainDataAssembler)
+
+bootstrap --> Factory : create(config)
+bootstrap --> NewMapper : create(config)
+bootstrap --> Service: create(ICustomerRepository, IBusinessSectorRepository, ITypologyRepository, IProjectFactory, IProjectRepository, NewProjectDTOMapper)
+
+bootstrap --> Mapper : create(config)
+bootstrap --> Controller : create(ProjectService, ProjectRestDtoMapper)
+
+deactivate bootstrap
+
+ref over bootstrap: see US010_CreateProjectSD
+
+@enduml

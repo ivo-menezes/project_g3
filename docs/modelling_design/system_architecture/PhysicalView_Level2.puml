@@ -1,25 +1,34 @@
 @startuml
-'https://plantuml.com/deployment-diagram
 
-node "localhost : -" as pc
-node " : " as server
+title Architectural Design Model - Physical View Level 2
 
-node pc {
+folder "Project-g3" {
 
-    component browser {
+    node "localhost :" as localhost {
 
-        [Client]
+        component "<<component>>\nBrowser" {
+
+            ["<<component>>\n<<Container C4>>\nFrontend"]
+
+        }
 
     }
 
+    node " : " as server {
+
+        ["<<component>>\n<<Container C4>>\nBackend"]
+
+    }
+
+    localhost <--> server : HTTP/S
+
+    node " : " as dbserver {
+
+        ["<<component>>\n<<Container C4>>\nDatabase"]
+    }
+
+    server <--> dbserver : TCP/IP
+
 }
-
-node server {
-
-    [Server]
-
-}
-
-pc <--> server : http(s)
 
 @enduml

@@ -1,0 +1,25 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+
+skinparam sequence{
+LifeLineBackgroundColor #FFBBBB
+}
+
+title "Architectural Design Model - Process View Level 1\nUS023 - As Manager, I want to create a new project in the web UI."
+
+actor Manager
+participant "<<C4 Context>>\nproject-g3 : Project-g3" as system
+
+activate Manager
+Manager -> system : I want to register/create a new project
+activate system
+system --> Manager : UI
+deactivate system
+
+Manager -> system: code, name, description, start date, end date, customer ID, typology ID, business sector ID
+activate system
+Manager <-- system: Confirms project creation.
+deactivate system
+@enduml

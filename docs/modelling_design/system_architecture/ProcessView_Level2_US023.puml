@@ -1,28 +1,37 @@
 @startuml
 !theme plain
-skinparam sequence {
+hide footbox
+autonumber
+
+skinparam sequence{
 LifeLineBackgroundColor #FFBBBB
 }
-title "US023 - As a Manager, I want to create a Project in the web UI."
 
-participant Manager
-participant Client
-participant Server
-participant Database
+title "Architectural Design Model - Process View Level 2\nUS023 - As a Manager, I want to create a Project in the web UI."
 
-Manager -> Client: I want to create a project
-activate Client
-Client -> Client: Show UI
-Client --> Manager: Ask for data
-Manager -> Client: Create project (code, name, description, \n start date, end date, budget, sprint duration,\n number of planned sprints)
-Client -> Server: Post{project body}
-activate Server
-Server -> Database: save project
-activate Database
-Database --> Server: confirm saved project
-deactivate Database
-Server --> Client: 201
-deactivate Server
-Client -> Client: Generate UI
-Manager <-- Client: Confirms project creation.
+participant "<<Container C4>>\n: Frontend" as fe
+participant "<<Container C4>>\n: Backend" as be
+participant "<<Container C4>>\n: Database" as db
+
+[o-> fe: I want to create a project
+activate fe
+[o<-- fe : Show UI
+deactivate fe
+
+[o-> fe : code, name, description, start date, end date,\n customer ID, typology ID, business sector ID
+activate fe
+
+fe -> be: POST /projects {"projectCode":"projectCode",\n                     "projectName":"projectName",\n                     "description":"description",\n                     "customerID":"customerID",\n                     "businessSectorID":"businessSectorID",\n                     "typologyID":"typologyID"}
+activate be
+
+be -> db : INSERT
+activate db
+db --> be : saved project
+deactivate db
+
+be --> fe: 201 / 40x
+deactivate be
+
+[o<-- fe : OK / ~OK
+
 @enduml

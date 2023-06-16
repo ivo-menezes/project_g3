@@ -1,19 +1,47 @@
 @startuml
-'https://plantuml.com/component-diagram
+!theme plain
 
-"<<System>>\nproject-g3" as system
+
+title "Architectural Design Model - Logical View Level 2"
+
+"<<component>>\n<<C4 Context>>\nproject-g3" as system
 () "UI" as ui
 () "REST API" as api
 
 component system {
 
-    [Client] as client
-    [Server] as server
+    component "<<component>>\n<<C4 Container>>\nFrontend" {
+        portout " " as p1
+        port " " as p2
+    }
 
-    server #-- api
+    component "<<component>>\n<<C4 Container>>\nBackend" {
+        port " " as p3
+        portout " " as dbport
+    }
 
-    client #-- ui
-    client #--( api
+    ' client uses server API
+    p1 -- p3
+
+    portout " " as p4
+    portout " " as p5
+
+    ' client presents UI
+    p2 -- p4
+    p4 -- ui
+
+    ' server presents API
+    p3 -- p5
+    p5 -- api
+
+    component "<<component>>\n<<C4 Container>>\nDatabase" {
+        port " " as p6
+    }
+
+    () "SQL API" as dbAPI
+
+    dbAPI -- p6
+    dbport --( dbAPI
 
 }
 

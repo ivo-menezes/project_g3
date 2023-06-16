@@ -1,7 +1,9 @@
 @startuml
-'https://plantuml.com/component-diagram
+!theme plain
 
-[<<System>>\nproject-g3] as system
+title "Architectural Design Model - Logical View Level 1"
+
+[<<component>>\n<<C4 Context>>\nProject-g3] as system
 () "REST API" as api
 () "UI" as ui
 
