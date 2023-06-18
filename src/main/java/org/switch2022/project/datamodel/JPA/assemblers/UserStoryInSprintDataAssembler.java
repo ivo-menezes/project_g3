@@ -3,6 +3,7 @@ package org.switch2022.project.datamodel.JPA.assemblers;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintIDJpa;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
+import org.switch2022.project.datamodel.JPA.UserStoryJpaId;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 
@@ -60,4 +61,11 @@ public class UserStoryInSprintDataAssembler {
                 userStoryInSprintStatus);
     }
 
+    public UserStoryInSprintIDJpa convertToJpaId(UserStoryInSprintID domainId) {
+        String projectCode = domainId.getUserStoryID().getProjectCode().toString();
+        int sprintNumber = domainId.getSprintID().getSprintNumber().getSprintNumber();
+        String userStoryNumber = domainId.getUserStoryID().getUserStoryNumber().toString();
+
+        return new UserStoryInSprintIDJpa(projectCode, sprintNumber, userStoryNumber);
+    }
 }

@@ -2,6 +2,7 @@ package org.switch2022.project.service;
 
 import org.springframework.stereotype.Service;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
+import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
@@ -13,6 +14,7 @@ import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.model.valueobject.UserStoryInSprintID;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
@@ -224,4 +226,39 @@ public class SprintServiceDDD {
 
         return userStoryInSprintList;
     }
+
+    /**
+     * Retrieves the details of an activity classified as backlog
+     * using project code, sprint number and user story number as key
+     *
+     * @param userStoryInSprintID the object containing project code, sprint number and user story number of the project
+     *                            to retrieve the details
+     * @return a List of UserStoryInSprint
+     */
+    public UserStoryInSprint getUserStoryInSprintDetails(UserStoryInSprintID userStoryInSprintID) {
+
+        Optional<UserStoryInSprint> userStoryInSprintOptional = this.iSprintRepository.getUserStoriesFromSprint(userStoryInSprintID);
+
+        if (userStoryInSprintOptional.isEmpty()) {
+            throw new RuntimeException("project with given projectCode does not exist");
+        }
+        UserStoryInSprint userStoryInSprint  =  userStoryInSprintOptional.get();
+
+        return userStoryInSprint;
+
+    }
+
+    public UpdateUsInSprintDomainDTO updateUsInSprintStatus(UpdateUsInSprintDomainDTO updateUsInSprintDomainDTO) {
+        Optional<UserStoryInSprint> userStoryInSprintOptional = iSprintRepository.getUserStoriesFromSprint(updateUsInSprintDomainDTO.userStoryInSprintID);
+        if (userStoryInSprintOptional.isEmpty()){
+            throw new IllegalArgumentException("UserStoryInSprint id does not exist");
+        }
+
+        UserStoryInSprint userStoryInSprint = userStoryInSprintOptional.get();
+        userStoryInSprint.setStatus(updateUsInSprintDomainDTO.userStoryInSprintStatus);
+        iSprintRepository.replaceUsInSprint(userStoryInSprint);
+
+        return updateUsInSprintDomainDTO;
+    }
+
 }

@@ -1,6 +1,7 @@
 package org.switch2022.project.model.sprint;
 
 import org.switch2022.project.ddd.DomainEntity;
+import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.UserStoryEffortEstimate;
 import org.switch2022.project.model.valueobject.UserStoryInSprintID;
 import org.switch2022.project.model.valueobject.UserStoryStatus;
@@ -19,7 +20,7 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
     private final UserStoryInSprintID userStoryInSprintID;
     private final UserStoryEffortEstimate userStoryEffortEstimate;
 
-    private final UserStoryStatus userStoryInSprintStatus;
+    private UserStoryStatus userStoryInSprintStatus;
 
 
 
@@ -48,6 +49,9 @@ public class UserStoryInSprint implements DomainEntity<UserStoryInSprintID> {
         this.userStoryInSprintStatus = userStoryInSprintStatus;
     }
 
+    public void setStatus(UserStoryStatus status) {
+        this.userStoryInSprintStatus = status;
+    }
     /**
      * Retrieves the ID for UserStoryInSprint.
      * @return userStoryInSprintID

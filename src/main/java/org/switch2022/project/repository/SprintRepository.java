@@ -2,11 +2,18 @@ package org.switch2022.project.repository;
 
 import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.SprintJpaID;
+import org.switch2022.project.datamodel.JPA.UserStoryInSprintIDJpa;
+import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
+import org.switch2022.project.datamodel.JPA.assemblers.UserStoryInSprintDataAssembler;
+import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.UserStoryInSprintID;
 import org.switch2022.project.repository.JPA.SprintJPARepository;
+import org.switch2022.project.repository.JPA.UserStoryInSprintJpaRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 
 import java.util.ArrayList;
@@ -28,10 +35,18 @@ public class SprintRepository implements ISprintRepository {
     private final SprintAssemblerData sprintAssemblerData;
 
     public SprintRepository(SprintJPARepository sprintJpaRepository,
-                            SprintAssemblerData sprintAssemblerData){
+                            SprintAssemblerData sprintAssemblerData,
+                            UserStoryInSprintDataAssembler userStoryInSprintDataAssembler,
+                            UserStoryInSprintJpaRepository userStoryInSprintJpaRepository
+    ){
         this.sprintJpaRepository = sprintJpaRepository;
         this.sprintAssemblerData = sprintAssemblerData;
+        this.userStoryInSprintDataAssembler = userStoryInSprintDataAssembler;
+        this.userStoryInSprintJpaRepository = userStoryInSprintJpaRepository;
     }
+
+    private final UserStoryInSprintDataAssembler userStoryInSprintDataAssembler;
+    private final UserStoryInSprintJpaRepository userStoryInSprintJpaRepository;
 
     /***
      * This will check whether the Repository already has a sprint with the id we pass
@@ -172,4 +187,27 @@ public class SprintRepository implements ISprintRepository {
         }
     }
 
+    public Optional<UserStoryInSprint> getUserStoriesFromSprint(UserStoryInSprintID id) {
+        UserStoryInSprintIDJpa jpaId = userStoryInSprintDataAssembler.convertToJpaId(id);
+        Optional<UserStoryInSprintJPA> userStoryInSprintOptional =  userStoryInSprintJpaRepository.findById(jpaId);
+
+        if (userStoryInSprintOptional.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(userStoryInSprintDataAssembler.toDomain(userStoryInSprintOptional.get()));
+        }
+    }
+    /**
+     * Method responsible for replacing a UserStoryInSprint with new changes in the repository.
+     * @param usInSprint
+     * @return UserStoryInSprint object
+     */
+    @Override
+    public UserStoryInSprint replaceUsInSprint(UserStoryInSprint usInSprint) {
+        UserStoryInSprintJPA userStoryInSprintJPA = userStoryInSprintDataAssembler.toData(usInSprint);
+        UserStoryInSprintJPA savedUsInSprintJpa = userStoryInSprintJpaRepository.save(userStoryInSprintJPA);
+        UserStoryInSprint savedUsInSprint = userStoryInSprintDataAssembler.toDomain(savedUsInSprintJpa);
+
+        return savedUsInSprint;
+    }
 }

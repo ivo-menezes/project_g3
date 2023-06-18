@@ -3,6 +3,7 @@ package org.switch2022.project.mapper.REST;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
+import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 
@@ -106,4 +107,39 @@ public class SprintRestDTOMapper {
 
         return updateSprintOutputDTO;
     }
+
+    /**
+     * Method responsible for converting a primitive data DTO to a domain DTO
+     * @param inputUsSprintInputDTO
+     * @return updateUsInSprintDomainDTO
+     */
+    public UpdateUsInSprintDomainDTO uSInSprintToDomainDTO(InputUsInSprintStatusDTO inputUsSprintInputDTO) {
+        ProjectCode projectCode = new ProjectCode(inputUsSprintInputDTO.projectCode);
+        UserStoryNumber userStoryNumber =  new UserStoryNumber(inputUsSprintInputDTO.userStoryNumber);
+        SprintNumber sprintNumber =  new SprintNumber(inputUsSprintInputDTO.sprintNumber);
+
+        SprintID sprintID = new SprintID(projectCode, sprintNumber);
+        UserStoryID userStoryID = new UserStoryID(userStoryNumber, projectCode);
+        UserStoryInSprintID userStoryInSprintID = new UserStoryInSprintID(sprintID, userStoryID);
+
+        UserStoryStatus userStoryStatus = UserStoryStatus.valueOf(inputUsSprintInputDTO.userStoryStatus);
+
+        UpdateUsInSprintDomainDTO updateUsInSprintDomainDTO = new UpdateUsInSprintDomainDTO();
+        updateUsInSprintDomainDTO.userStoryInSprintID = userStoryInSprintID;
+        updateUsInSprintDomainDTO.sprintNumber = sprintNumber;
+        updateUsInSprintDomainDTO.userStoryInSprintStatus = userStoryStatus;
+
+        return updateUsInSprintDomainDTO;
+    }
+
+    public InputUsInSprintStatusDTO uSInSprintToDataDTO(UpdateUsInSprintDomainDTO updateUsInSprintDomainDTO){
+        InputUsInSprintStatusDTO inputUsInSprintStatusDTO = new InputUsInSprintStatusDTO();
+        inputUsInSprintStatusDTO.sprintNumber = updateUsInSprintDomainDTO.userStoryInSprintID.getSprintID().getSprintNumber().getSprintNumber();
+        inputUsInSprintStatusDTO.projectCode = updateUsInSprintDomainDTO.userStoryInSprintID.getSprintID().getProjectCode().toString();
+        inputUsInSprintStatusDTO.userStoryNumber = updateUsInSprintDomainDTO.userStoryInSprintID.getUserStoryID().getUserStoryNumber().toString();
+        inputUsInSprintStatusDTO.userStoryStatus = updateUsInSprintDomainDTO.userStoryInSprintStatus.toString();
+
+        return inputUsInSprintStatusDTO;
+    }
+
 }
