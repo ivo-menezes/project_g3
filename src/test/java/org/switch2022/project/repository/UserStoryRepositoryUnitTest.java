@@ -195,4 +195,24 @@ class UserStoryRepositoryUnitTest {
         // Assert
         assertEquals(Optional.empty(), resultOptional);
     }
+
+    @DisplayName("ensure replace a UserStory returns the saved object when JPA returns the saved object")
+    @Test
+    void shouldReplaceAnUserStory() {
+        // Arrange
+        UserStoryDDD userStoryDouble = mock(UserStoryDDD.class);
+        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryJpa savedUserStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryDDD savedUserStoryDouble = mock(UserStoryDDD.class);
+
+        when(userStoryDomainDataAssemblerDouble.toData(userStoryDouble)).thenReturn(userStoryJpaDouble);
+        when(userStoryJpaRepositoryDouble.save(userStoryJpaDouble)).thenReturn(savedUserStoryJpaDouble);
+        when(userStoryDomainDataAssemblerDouble.toDomain(savedUserStoryJpaDouble)).thenReturn(savedUserStoryDouble);
+
+        // Act
+        UserStoryDDD result = userStoryRepository.replace(userStoryDouble);
+
+        // Assert
+        assertEquals(savedUserStoryDouble, result);
+    }
 }

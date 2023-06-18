@@ -58,6 +58,12 @@ public class UserStoryRepository implements IUserStoryRepository {
         return userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
     }
 
+    public UserStoryDDD replace(UserStoryDDD userStory) {
+        UserStoryJpa userStoryJpa = userStoryDomainDataAssembler.toData(userStory);
+        UserStoryJpa savedUserStoryJpa = userStoryJpaRepository.save(userStoryJpa);
+        return userStoryDomainDataAssembler.toDomain(savedUserStoryJpa);
+    }
+
     /**
      * Creates an iterable with all user stories contained in the repository.
      *

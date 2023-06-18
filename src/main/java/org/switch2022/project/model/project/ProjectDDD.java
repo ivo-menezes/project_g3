@@ -173,4 +173,8 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
     public int hashCode() {
         return Objects.hash(projectCode);
     }
+
+    public void removeUserStoryIDs(List<UserStoryID> listOfUserStoryID) {
+        productBacklog.removeUserStoryIDs(listOfUserStoryID);
+    }
 }

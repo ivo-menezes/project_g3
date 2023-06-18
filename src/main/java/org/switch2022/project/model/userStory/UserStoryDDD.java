@@ -85,6 +85,10 @@ public class UserStoryDDD implements AggregateRoot<UserStoryID> {
         return userStoryStatus;
     }
 
+    public void setUserStoryStatus(UserStoryStatus userStoryStatus) {
+        this.userStoryStatus = userStoryStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

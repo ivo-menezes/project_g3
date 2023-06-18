@@ -150,4 +150,36 @@ class ProductBacklogDDDTest {
         // Assert
         assertEquals(expectedSize, resultSize);
     }
+
+    @DisplayName("check if returns correct product backlog")
+    @Test
+    void ensureReturnsCorrectProductBacklog() {
+        //Arrange
+        UserStoryID userStoryID1 = mock(UserStoryID.class);
+        UserStoryID userStoryID2 = mock(UserStoryID.class);
+        UserStoryID userStoryID3 = mock(UserStoryID.class);
+        UserStoryID userStoryID4 = mock(UserStoryID.class);
+
+        List<UserStoryID> listOfUserStoryID = new ArrayList<>();
+        listOfUserStoryID.add(userStoryID1);
+        listOfUserStoryID.add(userStoryID2);
+
+        List<UserStoryID> openUserStories = new ArrayList<>();
+        openUserStories.add(userStoryID1);
+        openUserStories.add(userStoryID2);
+        openUserStories.add(userStoryID3);
+        openUserStories.add(userStoryID4);
+
+        ProductBacklogDDD productBacklog = new ProductBacklogDDD(openUserStories);
+        productBacklog.removeUserStoryIDs(listOfUserStoryID);
+
+        ProjectDDD project = mock(ProjectDDD.class);
+        when(project.getProductBacklog()).thenReturn(productBacklog.getOpenUserStories());
+
+        //Act
+        List<UserStoryID> result = project.getProductBacklog();
+
+        //Assert
+        assertEquals(productBacklog.getOpenUserStories(),result);
+    }
 }

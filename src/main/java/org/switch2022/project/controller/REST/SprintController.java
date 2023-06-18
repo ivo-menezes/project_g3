@@ -9,6 +9,7 @@ import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
+import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.service.SprintServiceDDD;
 
 import java.util.List;
@@ -76,11 +77,12 @@ public class SprintController {
 
     @PatchMapping("")
     public ResponseEntity<UpdateSprintDTO> updateStatusSprint(@RequestBody UpdateSprintDTO updateSprintInputDTO) {
-
         try {
             UpdateSprintDomainDTO updateSprintDomainDTO = mapper.toDomainDTO(updateSprintInputDTO);
             UpdateSprintDomainDTO changedDomainDTO = service.updateStatusSprint(updateSprintDomainDTO);
             UpdateSprintDTO outputDTO = mapper.toDataDTO(changedDomainDTO);
+            SprintID sprintID = updateSprintDomainDTO.sprintID;
+            service.updateProductBacklogAndUserStoryStatus(sprintID);
 
             return new ResponseEntity<>(outputDTO, HttpStatus.OK);
 

@@ -12,18 +12,18 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
+import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -37,12 +37,14 @@ public class SprintServiceDDDTest {
     NewSprintDTOMapper toControllerMapper;
     @MockBean
     IProjectRepository projectRepository;
+    @MockBean
+    IUserStoryRepository userStoryRepository;
     @Autowired
     SprintServiceDDD sprintService;
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository);
+        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository);
     }
     @Test
     public void ensureServiceThrowsExceptionForFactory(){
@@ -51,7 +53,8 @@ public class SprintServiceDDDTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository);
+            new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository,
+                    userStoryRepository);
         });
         String result = exception.getMessage();
         // assert
@@ -64,7 +67,8 @@ public class SprintServiceDDDTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository);
+            new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository,
+                    userStoryRepository);
         });
         String result = exception.getMessage();
         // assert
@@ -77,7 +81,8 @@ public class SprintServiceDDDTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository);
+            new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository,
+                    userStoryRepository);
         });
         String result = exception.getMessage();
         // assert
@@ -90,13 +95,28 @@ public class SprintServiceDDDTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null);
+            new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null,
+                    userStoryRepository);
         });
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
     }
 
+    @Test
+    public void ensureServiceThrowsExceptionForUserStoryRepository(){
+        //arrange
+        String message = "UserStoryRepository cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+            new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
+                    null);
+        });
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
 
     @Test
     public void ensureServiceCreatesList(){
@@ -427,6 +447,131 @@ public class SprintServiceDDDTest {
 
         //Assert
         assertEquals(expectedMessage, resultMessage);
+    }
+
+    @Test
+    @DisplayName("Ensure closing a sprint updates product backlog correctly")
+    void ensureUpdateProductBacklogCorrectly() {
+        // Arrange
+        SprintID sprintID = mock(SprintID.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+
+        Optional<ProjectDDD> projectOptional = Optional.of(mock(ProjectDDD.class));
+        Optional<SprintDDD> sprintOptional = Optional.of(mock(SprintDDD.class));
+        when(projectRepository.getByID(projectCode)).thenReturn(projectOptional);
+        when(sprintRepository.getByID(sprintID)).thenReturn(sprintOptional);
+        ProjectDDD project = projectOptional.get();
+        SprintDDD sprint = sprintOptional.get();
+
+        List<UserStoryID> list = new ArrayList<>();
+        when(sprint.listOfUserStoriesInSprintWithStatusDone()).thenReturn(list);
+        UserStoryID userStoryID1 = mock(UserStoryID.class);
+        UserStoryID userStoryID2 = mock(UserStoryID.class);
+        list.add(userStoryID1);
+        list.add(userStoryID2);
+
+        Optional<UserStoryDDD> userStoryOptional1 = Optional.of(mock(UserStoryDDD.class));
+        Optional<UserStoryDDD> userStoryOptional2 = Optional.of(mock(UserStoryDDD.class));
+        when(userStoryRepository.getByID(userStoryID1)).thenReturn(userStoryOptional1);
+        when(userStoryRepository.getByID(userStoryID2)).thenReturn(userStoryOptional2);
+        UserStoryDDD userStory1 = userStoryOptional1.get();
+        UserStoryDDD userStory2 = userStoryOptional2.get();
+
+        userStory1.setUserStoryStatus(UserStoryStatus.DONE);
+        userStory2.setUserStoryStatus(UserStoryStatus.DONE);
+        when(userStoryRepository.replace(userStory1)).thenReturn(userStory1);
+        when(userStoryRepository.replace(userStory2)).thenReturn(userStory2);
+
+        List<UserStoryID> productBacklog = new ArrayList<>();
+        productBacklog.add(userStoryID1);
+        productBacklog.add(userStoryID2);
+        project.removeUserStoryIDs(list);
+
+        when(projectRepository.replace(project)).thenReturn(project);
+
+        // Act
+        boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure closing a sprint updates product backlog correctly")
+    void ensureUpdateProductBacklogCorrectlyVerify() {
+        // Arrange
+        SprintID sprintID = mock(SprintID.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+
+        Optional<ProjectDDD> projectOptional = Optional.of(mock(ProjectDDD.class));
+        Optional<SprintDDD> sprintOptional = Optional.of(mock(SprintDDD.class));
+        when(projectRepository.getByID(projectCode)).thenReturn(projectOptional);
+        when(sprintRepository.getByID(sprintID)).thenReturn(sprintOptional);
+        ProjectDDD project = projectOptional.get();
+        SprintDDD sprint = sprintOptional.get();
+
+        List<UserStoryID> list = new ArrayList<>();
+        when(sprint.listOfUserStoriesInSprintWithStatusDone()).thenReturn(list);
+        UserStoryID userStoryID1 = mock(UserStoryID.class);
+        UserStoryID userStoryID2 = mock(UserStoryID.class);
+        UserStoryID userStoryID3 = mock(UserStoryID.class);
+        list.add(userStoryID1);
+        list.add(userStoryID2);
+        list.add(userStoryID3);
+
+        Optional<UserStoryDDD> userStoryOptional1 = Optional.of(mock(UserStoryDDD.class));
+        Optional<UserStoryDDD> userStoryOptional2 = Optional.of(mock(UserStoryDDD.class));
+        Optional<UserStoryDDD> userStoryOptional3 = Optional.of(mock(UserStoryDDD.class));
+        when(userStoryRepository.getByID(userStoryID1)).thenReturn(userStoryOptional1);
+        when(userStoryRepository.getByID(userStoryID2)).thenReturn(userStoryOptional2);
+        when(userStoryRepository.getByID(userStoryID3)).thenReturn(userStoryOptional3);
+        UserStoryDDD userStory1 = userStoryOptional1.get();
+        UserStoryDDD userStory2 = userStoryOptional2.get();
+        UserStoryDDD userStory3 = userStoryOptional3.get();
+
+        userStory1.setUserStoryStatus(UserStoryStatus.DONE);
+        userStory2.setUserStoryStatus(UserStoryStatus.DONE);
+        userStory3.setUserStoryStatus(UserStoryStatus.DONE);
+        when(userStoryRepository.replace(userStory1)).thenReturn(userStory1);
+        when(userStoryRepository.replace(userStory2)).thenReturn(userStory2);
+        when(userStoryRepository.replace(userStory3)).thenReturn(userStory3);
+
+        List<UserStoryID> productBacklog = new ArrayList<>();
+        productBacklog.add(userStoryID1);
+        productBacklog.add(userStoryID2);
+        productBacklog.add(userStoryID3);
+        project.removeUserStoryIDs(list);
+
+        when(projectRepository.replace(project)).thenReturn(project);
+
+        // Act
+        boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
+
+        // Assert
+        verify(userStory1, times(2)).setUserStoryStatus(UserStoryStatus.DONE);
+        verify(project, times(2)).removeUserStoryIDs(list);
+    }
+
+    @Test
+    @DisplayName("Ensure closing a sprint throws exception with optional project and sprint empty")
+    void ensureUpdateProductBacklogThrowsException() {
+        // Arrange
+        SprintID sprintID = mock(SprintID.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+
+        Optional<ProjectDDD> projectOptional = Optional.empty();
+        Optional<SprintDDD> sprintOptional = Optional.empty();
+        when(projectRepository.getByID(projectCode)).thenReturn(projectOptional);
+        when(sprintRepository.getByID(sprintID)).thenReturn(sprintOptional);
+
+        //Act
+        boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
+
+        //Assert
+        assertFalse(result);
     }
     @Test
     @DisplayName("Ensure userStoryInSprintList is successfully retrieved")

@@ -18,6 +18,8 @@ public interface RepositoryNew<ID extends DomainId, T extends AggregateRoot<ID>>
      */
     T save(T entity);
 
+    T replace(T entity);
+
     /**
      * Returns all saved entities.
      *

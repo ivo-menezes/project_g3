@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.AggregateRoot;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.model.valueobject.UserStoryID;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,5 +76,7 @@ public class SprintDDD implements AggregateRoot<SprintID> {
         return Objects.hash(sprintID);
     }
 
-
+    public List<UserStoryID> listOfUserStoriesInSprintWithStatusDone() {
+        return sprintBacklog.listOfUserStoriesInSprintWithStatusDone();
+    }
 }

@@ -1,5 +1,8 @@
 package org.switch2022.project.model.sprint;
 
+import org.switch2022.project.model.valueobject.UserStoryID;
+import org.switch2022.project.model.valueobject.UserStoryStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,19 @@ public class SprintBacklog {
      */
     public List<UserStoryInSprint> getUserStoriesInSprintList() {
         return List.copyOf(this.userStoriesInSprintList);
+    }
+
+    protected List<UserStoryID> listOfUserStoriesInSprintWithStatusDone() {
+        List<UserStoryID> listUserStoryIDs = new ArrayList<>();
+        List<UserStoryInSprint> finalSprintBacklog = getUserStoriesInSprintList();
+
+        for (UserStoryInSprint userStoryInSprint: finalSprintBacklog) {
+            if (userStoryInSprint.getUserStoryInSprintStatus().equals(UserStoryStatus.DONE)) {
+                UserStoryID userStoryID = userStoryInSprint.identity().getUserStoryID();
+                listUserStoryIDs.add(userStoryID);
+            }
+        }
+        return listUserStoryIDs;
     }
 }
 

@@ -7,12 +7,15 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.userStory.UserStoryDDD;
+import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
+import org.switch2022.project.service.irepositories.IUserStoryRepository;
 import org.switch2022.project.utils.TimePeriodUtils;
 
 import javax.transaction.Transactional;
@@ -28,16 +31,19 @@ public class SprintServiceDDD {
     private final ISprintRepository iSprintRepository;
     private final NewSprintDTOMapper newSprintDTOMapper;
     private final IProjectRepository projectRepository;
+    private final IUserStoryRepository userStoryRepository;
 
     /**
      * Public constructor for SprintService.
-     * @param sprintFactory a factory that implements ISprintFactory;
+     *
+     * @param sprintFactory    a factory that implements ISprintFactory;
      * @param sprintRepository a repository that implements RepositoryJPA;
      */
     public SprintServiceDDD(ISprintFactory sprintFactory,
                             ISprintRepository sprintRepository,
                             NewSprintDTOMapper newSprintDTOMapper,
-                            IProjectRepository projectRepository){
+                            IProjectRepository projectRepository,
+                            IUserStoryRepository userStoryRepository) {
         if (sprintFactory == null) {
             throw new IllegalArgumentException("SprintFactory cannot be null.");
         }
@@ -50,15 +56,19 @@ public class SprintServiceDDD {
         if (projectRepository == null) {
             throw new IllegalArgumentException("ProjectRepository cannot be null.");
         }
+        if (userStoryRepository == null) {
+            throw new IllegalArgumentException("UserStoryRepository cannot be null.");
+        }
         this.sprintFactory = sprintFactory;
         this.iSprintRepository = sprintRepository;
         this.newSprintDTOMapper = newSprintDTOMapper;
         this.projectRepository = projectRepository;
+        this.userStoryRepository = userStoryRepository;
     }
 
     public int getNewSprintNumber(ProjectCode projectCode) {
 
-        if(!projectRepository.existsByProjectCode(projectCode.toString())){
+        if (!projectRepository.existsByProjectCode(projectCode.toString())) {
             throw new RuntimeException("There is no project with this code.");
         }
         List<SprintDDD> allSprintsInProject = iSprintRepository.findByProjectCode(projectCode);
@@ -70,10 +80,11 @@ public class SprintServiceDDD {
 
     /**
      * Creates a sprint and adds it to the sprintRepository, unless there is an overlap with the previous sprint
+     *
      * @param sprintDTO a DTO with info to create the sprint with VOs, received from
-     * the controller;
-     * This method contemplates using a DTO carrying a status, meaning it can be
-     * used for the DataLoader and other.
+     *                  the controller;
+     *                  This method contemplates using a DTO carrying a status, meaning it can be
+     *                  used for the DataLoader and other.
      * @return a savedSprint object, unless there is an error with the projectCode,
      * or an overlap with the previous sprint
      */
@@ -83,9 +94,9 @@ public class SprintServiceDDD {
         sprintDTO.sprintID = sprintFactory.newSprintID(
                 sprintDTO.projectCode, sprintDTO.sprintNumber);
 
-        if(sprintDTO.status == null) {
+        if (sprintDTO.status == null) {
             sprint = sprintFactory.createSprint(sprintDTO);
-        }else {
+        } else {
             sprint = sprintFactory.createSprint(
                     sprintDTO.sprintID,
                     sprintDTO.timePeriod,
@@ -103,15 +114,15 @@ public class SprintServiceDDD {
         }
 
 
-         SprintDDD savedSprint = this.iSprintRepository.save(sprint);
+        SprintDDD savedSprint = this.iSprintRepository.save(sprint);
         return newSprintDTOMapper.convertToDTO(savedSprint);
     }
 
-    public List<NewSprintDTO> sprintList (ProjectCode projectCode){
+    public List<NewSprintDTO> sprintList(ProjectCode projectCode) {
         List<NewSprintDTO> newDTOList = new ArrayList<>();
-         List<SprintDDD> allSprints = iSprintRepository.findByProjectCode(projectCode);
+        List<SprintDDD> allSprints = iSprintRepository.findByProjectCode(projectCode);
 
-        for(SprintDDD sprintDDD : allSprints){
+        for (SprintDDD sprintDDD : allSprints) {
             newDTOList.add(newSprintDTOMapper.convertToDTO(sprintDDD));
         }
         return newDTOList;
@@ -119,7 +130,7 @@ public class SprintServiceDDD {
 
     public UpdateSprintDomainDTO updateStatusSprint(UpdateSprintDomainDTO updateSprintDomainDTO) {
         Optional<SprintDDD> sprintOptional = iSprintRepository.getByID(updateSprintDomainDTO.sprintID);
-        if (sprintOptional.isEmpty()){
+        if (sprintOptional.isEmpty()) {
             throw new IllegalArgumentException("Sprint id does not exist");
         }
 
@@ -132,7 +143,8 @@ public class SprintServiceDDD {
 
     /**
      * Checks if a new sprint's time period overlaps with the time period of the last sprint in a project.
-     * @param projectCode the project code to check for the last sprint
+     *
+     * @param projectCode         the project code to check for the last sprint
      * @param newSprintTimePeriod the time period of the new sprint to be checked for overlap
      * @return true if there is an overlap between the time periods, false otherwise
      */
@@ -151,7 +163,8 @@ public class SprintServiceDDD {
 
     /**
      * Checks if the specified sprint time period is contained within the project's time period.
-     * @param projectCode the code of the project
+     *
+     * @param projectCode         the code of the project
      * @param newSprintTimePeriod the time period of the new sprint
      * @return true if the sprint time period is contained within the project's time period, false otherwise
      */
@@ -165,6 +178,32 @@ public class SprintServiceDDD {
         }
 
         return false;
+    }
+
+    public boolean updateProductBacklogAndUserStoryStatus(SprintID sprintID) {
+        ProjectCode projectCode = sprintID.getProjectCode();
+        Optional<ProjectDDD> projectOptional = projectRepository.getByID(projectCode);
+        Optional<SprintDDD> sprintOptional = iSprintRepository.getByID(sprintID);
+
+        if (projectOptional.isPresent() && sprintOptional.isPresent()) {
+            ProjectDDD project = projectOptional.get();
+            SprintDDD sprint = sprintOptional.get();
+            List<UserStoryID> listOfUserStoryWithStatusDone = sprint.listOfUserStoriesInSprintWithStatusDone();
+
+            for (UserStoryID userStoryID : listOfUserStoryWithStatusDone) {
+                Optional<UserStoryDDD> userStoryOptional = userStoryRepository.getByID(userStoryID);
+                if (userStoryOptional.isPresent()) {
+                    UserStoryDDD userStory = userStoryOptional.get();
+                    userStory.setUserStoryStatus(UserStoryStatus.DONE);
+                    userStoryRepository.replace(userStory);
+                }
+            }
+            project.removeUserStoryIDs(listOfUserStoryWithStatusDone);
+            projectRepository.replace(project);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -185,5 +224,4 @@ public class SprintServiceDDD {
 
         return userStoryInSprintList;
     }
-
 }

@@ -64,4 +64,10 @@ class ProductBacklogDDD {
     protected List<UserStoryID> getOpenUserStories() {
         return List.copyOf(this.openUserStories);
     }
+
+    protected void removeUserStoryIDs(List<UserStoryID> listOfUserStoryID) {
+        for (UserStoryID userStoryID : listOfUserStoryID) {
+            openUserStories.remove(userStoryID);
+        }
+    }
 }

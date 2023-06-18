@@ -20,6 +20,7 @@ import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.ProjectCode;
+import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.service.SprintServiceDDD;
 
 import java.util.ArrayList;
@@ -219,6 +220,8 @@ class SprintControllerTest {
         when(sprintMapper.toDomainDTO(updateSprintDTO)).thenReturn(domainDTO);
         when(serviceDDD.updateStatusSprint(domainDTO)).thenReturn(domainDTO);
         when(sprintMapper.toDataDTO(domainDTO)).thenReturn(updateSprintDTO);
+        SprintID sprintID = domainDTO.sprintID;
+        serviceDDD.updateProductBacklogAndUserStoryStatus(sprintID);
 
         //Act
         ResponseEntity<UpdateSprintDTO> responseEntity = sprintController.updateStatusSprint(updateSprintDTO);

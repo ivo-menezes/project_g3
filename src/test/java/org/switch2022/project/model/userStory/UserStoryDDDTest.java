@@ -353,4 +353,26 @@ class UserStoryDDDTest {
         // Assert
         assertEquals(userStoryStatus, result);
     }
+
+    @Test
+    @DisplayName("ensure user story status is returned")
+    void setStatus() {
+        //Arrange
+        UserStoryID id = mock(UserStoryID.class);
+        UserStoryActor actor = mock(UserStoryActor.class);
+        Description description = mock(Description.class);
+        UserStoryAcceptanceCriteria acceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
+
+        UserStoryDDD userStory = new UserStoryDDD(id, actor, description, acceptanceCriteria,
+                UserStoryStatus.TO_DO);
+
+        UserStoryStatus userStoryStatus = UserStoryStatus.DONE;
+        userStory.setUserStoryStatus(userStoryStatus);
+
+        //Act
+        UserStoryStatus result = userStory.getStatus();
+
+        //Assert
+        assertEquals(UserStoryStatus.DONE, result);
+    }
 }
