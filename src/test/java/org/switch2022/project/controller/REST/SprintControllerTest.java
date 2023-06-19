@@ -14,10 +14,12 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.switch2022.project.mapper.REST.InputUsInSprintStatusDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
+import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
@@ -245,6 +247,47 @@ class SprintControllerTest {
 
         //Act
         ResponseEntity<UpdateSprintDTO> responseEntity = sprintController.updateStatusSprint(updateSprintDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(),400);
+    }
+
+    @DisplayName("Ensure that the US in sprint status update was successful.")
+    @Test
+    public void updateUsStatusSprintSuccess(){
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        InputUsInSprintStatusDTO inputUsInSprintStatusDTO = mock(InputUsInSprintStatusDTO.class);
+        UpdateUsInSprintDomainDTO domainDTO = mock(UpdateUsInSprintDomainDTO.class);
+
+        when(sprintMapper.uSInSprintToDomainDTO(inputUsInSprintStatusDTO)).thenReturn(domainDTO);
+        when(serviceDDD.updateUsInSprintStatus(domainDTO)).thenReturn(domainDTO);
+        when(sprintMapper.uSInSprintToDataDTO(domainDTO)).thenReturn(inputUsInSprintStatusDTO);
+
+        //Act
+        ResponseEntity<InputUsInSprintStatusDTO> responseEntity = sprintController.updateUsInSprintStatus(inputUsInSprintStatusDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(),200);
+    }
+
+    @DisplayName("Ensure that the US in sprint status update fails.")
+    @Test
+    public void updateUsStatusSprintFails(){
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        InputUsInSprintStatusDTO inputUsInSprintStatusDTO = mock(InputUsInSprintStatusDTO.class);
+        UpdateUsInSprintDomainDTO domainDTO = mock(UpdateUsInSprintDomainDTO.class);
+
+        when(sprintMapper.uSInSprintToDomainDTO(inputUsInSprintStatusDTO)).thenReturn(domainDTO);
+        when(serviceDDD.updateUsInSprintStatus(domainDTO)).thenThrow(new IllegalArgumentException(""));
+
+        //Act
+        ResponseEntity<InputUsInSprintStatusDTO> responseEntity = sprintController.updateUsInSprintStatus(inputUsInSprintStatusDTO);
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(),400);

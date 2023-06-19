@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
+import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 class SprintRestDTOMapperTest {
 
     SprintRestDTOMapper mapper = new SprintRestDTOMapper();
+
     @Test
     public void ensureMapperCreatesDTOToServicesCorrectly() throws ParseException {
         //arrange
@@ -41,8 +43,9 @@ class SprintRestDTOMapperTest {
         //assert
         assertInstanceOf(NewSprintDTO.class, result);
     }
+
     @Test
-    public void ensureMapperCreatesProjectCode(){
+    public void ensureMapperCreatesProjectCode() {
         //arrange
         SprintRestDTO mockDTO = mock(SprintRestDTO.class);
         ProjectCode mockCode = mock(ProjectCode.class);
@@ -59,6 +62,7 @@ class SprintRestDTOMapperTest {
         //assert
         assertEquals(mockController.projectCode.toString(), result.projectCode.toString());
     }
+
     @Test
     public void ensureMapperConvertsToRestDTO() throws ParseException {
         //arrange
@@ -172,8 +176,8 @@ class SprintRestDTOMapperTest {
         //Arrange
         UpdateSprintDTO updateSprintDTO = mock(UpdateSprintDTO.class);
         updateSprintDTO.projectCode = "A1";
-        updateSprintDTO.sprintNumber= 1;
-        updateSprintDTO.sprintStatus= "Open";
+        updateSprintDTO.sprintNumber = 1;
+        updateSprintDTO.sprintStatus = "Open";
 
         SprintRestDTOMapper mapperDouble = new SprintRestDTOMapper();
 
@@ -212,5 +216,73 @@ class SprintRestDTOMapperTest {
 
         //Assert
         assertInstanceOf(UpdateSprintDTO.class, result);
+    }
+
+    @Test
+    @DisplayName("Ensure InputUsInSprintStatusDTO is converted to UpdateUsInSprintDomainDTO correctly.")
+    void uSInSprintToDomainDTOSuccess() {
+        // Arrange
+        InputUsInSprintStatusDTO inputDto = new InputUsInSprintStatusDTO();
+        inputDto.projectCode = "A1";
+        inputDto.userStoryNumber = "US2";
+        inputDto.sprintNumber = 1;
+        inputDto.userStoryStatus = "TO_DO";
+
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(projectCode.toString()).thenReturn(inputDto.projectCode);
+
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        when(userStoryNumber.toString()).thenReturn(inputDto.userStoryNumber);
+
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        when(sprintNumber.getSprintNumber()).thenReturn(inputDto.sprintNumber);
+
+        UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
+        when(userStoryStatus.toString()).thenReturn(inputDto.userStoryStatus);
+
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        when(userStoryID.getUserStoryNumber()).thenReturn(userStoryNumber);
+        when(userStoryID.getProjectCode()).thenReturn(projectCode);
+
+        SprintID sprintID = mock(SprintID.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+        when(sprintID.getSprintNumber()).thenReturn(sprintNumber);
+
+        UserStoryInSprintID userStoryInSprintID = mock(UserStoryInSprintID.class);
+        when(userStoryInSprintID.getSprintID()).thenReturn(sprintID);
+        when(userStoryInSprintID.getUserStoryID()).thenReturn(userStoryID);
+
+        UpdateUsInSprintDomainDTO expectedDto = new UpdateUsInSprintDomainDTO();
+        expectedDto.userStoryInSprintID = userStoryInSprintID;
+        expectedDto.sprintNumber = sprintNumber;
+        expectedDto.userStoryInSprintStatus = userStoryStatus;
+
+        // Create the object under test
+        SprintRestDTOMapper sprintRestDTOMapper = new SprintRestDTOMapper();
+
+        // Act
+        UpdateUsInSprintDomainDTO result = sprintRestDTOMapper.uSInSprintToDomainDTO(inputDto);
+
+        // Assert
+        assertInstanceOf(UpdateUsInSprintDomainDTO.class, result);
+    }
+
+    @Test
+    @DisplayName("Ensure UpdateSprintDomainDTO is converted to UpdateSprintDTO correctly.")
+    void toDataDTOSuccess() {
+        // Arrange
+        InputUsInSprintStatusDTO updateDto = mock(InputUsInSprintStatusDTO.class);
+        updateDto.projectCode = "A1";
+        updateDto.userStoryNumber = "US1";
+        updateDto.sprintNumber = 1;
+        updateDto.userStoryStatus = "TO_DO";
+
+        SprintRestDTOMapper mapperDouble = new SprintRestDTOMapper();
+
+        //Act
+        UpdateUsInSprintDomainDTO result = mapperDouble.uSInSprintToDomainDTO(updateDto);
+
+        //Assert
+        assertInstanceOf(UpdateUsInSprintDomainDTO.class, result);
     }
 }
