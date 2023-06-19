@@ -1,132 +1,148 @@
 @startuml
-
 skinparam linetype ortho
 
-class CreateSprintController {
-createSprint(sprintDTO)
-}
+interface CrudRepository
 
-class SprintService {
-createSprint(sprintDTO)
-}
+interface DomainID
 
-class ProjectRepository {
-containsID(projectCode)
-}
+interface Repository
 
-class SprintRepository {
-save(sprint)
-containsID(sprintID)
-}
+interface AggregateRoot
 
+interface DomainEntity
 
-class ProjectCode {
-projectCode:String
-}
-
-class SprintFactoryImpl {
-createSprint(sprintID,timePeriod)
-}
-
-class TimePeriod {
-startDate: Date
-endDate: Date
-}
-
-class Sprint{
-}
-
-class SprintNumber{
-sprintNumber:int
-}
-
-class SprintID{
-projectCode
-sprintNumber
-}
-
-
-class sprintDTO {
-sprintNumber: int
-startDate: Date
-endDate: Date
-projectCode : String
-}
-
-
+interface ValueObject
 
 interface ISprintFactory {
-createSprint(printID,timePeriod)
+  + createSprint(NewSprintDTO): SprintDDD
+  + createSprint(SprintID, TimePeriod, SprintStatus): SprintDDD
+  + newSprintID(ProjectCode, SprintNumber): SprintID
+}
+interface ISprintRepository {
+  + replace(SprintDDD): SprintDDD
+  + findByProjectCode(ProjectCode): List<SprintDDD>
+  + findLastSprintByProjectCode(ProjectCode): Optional<SprintDDD>
+}
+class NewSprintDTO
+class NewSprintDTOMapper {
+  + convertToDTO(SprintDDD): NewSprintDTO
 }
 
-interface ValueObject {
+interface IProjectRepository {
+  + save(ProjectDDD): ProjectDDD
+}
+interface ProjectJpaRepository
+
+class ProjectRepositoryForJpa {
+  + existsByProjectCode(String): boolean
+}
+class SprintAssemblerData {
+  + toData(SprintDDD): SprintJPA
+  + toDomain(SprintJPA): SprintDDD
+  + convertToSprintJpaID(SprintID): SprintJpaID
+}
+class SprintController {
+  + createSprint(SprintRestDTO): ResponseEntity<SprintRestDTO>
+}
+class SprintDDD {
+  + equals(Object): boolean
+  + hashCode(): int
+  + identity(): SprintID
+   status: SprintStatus
+   timePeriod: TimePeriod
+   sprintStatus: SprintStatus
+}
+class SprintFactoryImpl {
+  + newSprintID(ProjectCode, SprintNumber): SprintID
+  + createSprint(SprintID, TimePeriod, SprintStatus): SprintDDD
+  + createSprint(NewSprintDTO): SprintDDD
+}
+class SprintJPA {
+  + hashCode(): int
+  + equals(Object): boolean
+   endDate: Date
+   startDate: Date
+   sprintID: SprintJpaID
+   sprintStatus: String
+}
+interface SprintJPARepository {
+  + findAllByProjectCode(String): List<SprintJPA>
+  + findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc(String): Optional<SprintJPA>
+}
+class SprintRepository {
+  + save(SprintDDD): SprintDDD
+  + getByID(SprintID): Optional<SprintDDD>
+  + containsID(SprintID): boolean
+  + findLastSprintByProjectCode(ProjectCode): Optional<SprintDDD>
+  + findByProjectCode(ProjectCode): List<SprintDDD>
+}
+class SprintRestDTO
+
+class SprintRestDTOMapper {
+  + createProjectCode(SprintRestDTO): NewSprintDTO
+  + toDomainDTO(SprintRestDTO): NewSprintDTO
+  + toRestDTO(NewSprintDTO): SprintRestDTO
+}
+class SprintServiceDDD {
+  + getNewSprintNumber(ProjectCode): int
+  + createSprint(NewSprintDTO): NewSprintDTO
+  + sprintList(ProjectCode): List<NewSprintDTO>
+  - hasTimePeriodOverlap(ProjectCode, TimePeriod): boolean
+  - sprintIsContainedInProjectTimePeriod(ProjectCode, TimePeriod): boolean
 }
 
-interface DomainID {
-}
+ISprintFactory       ..>  NewSprintDTO
 
-interface Repository {
-}
+ISprintRepository    ..>  SprintDDD
 
-interface AggregateRoot {
-}
+NewSprintDTOMapper   ..>  NewSprintDTO
+NewSprintDTOMapper   ..>  SprintDDD
 
-interface DomainEntity {
-}
+SprintController     ..>  NewSprintDTO
+SprintController     ..>  SprintRestDTO
+SprintController    *--  SprintRestDTOMapper
+SprintController    *--  SprintServiceDDD
 
+SprintFactoryImpl    -up-^  ISprintFactory
+SprintFactoryImpl    ..>  NewSprintDTO
+SprintFactoryImpl    ..>  SprintDDD
 
+SprintRepository     --^  ISprintRepository
+SprintRepository     ..>  SprintDDD
+SprintRepository    o-->  SprintJPARepository
 
-CreateSprintController "1" o-- "1" SprintService
-CreateSprintController ..> sprintDTO
+SprintAssemblerData  ..>  SprintJPA
+SprintJPARepository  ..>  SprintJPA
+SprintRepository     *-- SprintAssemblerData
+SprintRepository     ..>  SprintJPA
+SprintAssemblerData  ..>  SprintDDD
 
+SprintRestDTOMapper  ..>  NewSprintDTO
+SprintRestDTOMapper  ..>  SprintRestDTO
 
-SprintService "1" o-- "1" ProjectCode
-SprintService "1" o-- "1" SprintNumber
-SprintService "1" o-- "1" TimePeriod
-SprintService "1" o-- "1" SprintRepository
-SprintService ..>  ProjectRepository
-SprintService ..> ISprintFactory
+SprintServiceDDD    o--  ISprintFactory
+SprintServiceDDD    o--  IProjectRepository
+SprintServiceDDD    o--  ISprintRepository
+SprintServiceDDD    ..>  NewSprintDTO
+SprintServiceDDD    *--  NewSprintDTOMapper
+SprintServiceDDD    ..>  SprintDDD
 
-SprintRepository "1" *-- "*" Sprint
+ProjectRepositoryForJpa  o-up-  ProjectJpaRepository
+ProjectRepositoryForJpa  .up.|>  IProjectRepository
 
-SprintFactoryImpl ..|> ISprintFactory
+CrudRepository <|-down- SprintJPARepository
+CrudRepository <|-down- ProjectJpaRepository
 
-Sprint -..> SprintFactoryImpl
+ProjectRepositoryForJpa --|> Repository
+SprintJPARepository --|> Repository
 
-TimePeriod -..> SprintFactoryImpl
+SprintDDD --|> AggregateRoot
 
-SprintID  -..> SprintFactoryImpl
-
-SprintNumber -..> SprintID
-
-ProjectCode -..> SprintID
-
-
-
-
-ProjectRepository -..|> Repository
-SprintRepository -..|> Repository
-
-
-Repository --|> DomainID
 AggregateRoot --|> DomainID
-SprintID -..|> DomainID
-
-Repository --|> AggregateRoot
-
 AggregateRoot --|> DomainEntity
-
-
+Repository --|> DomainID
+Repository --|> AggregateRoot
 DomainID --|> ValueObject
-TimePeriod -..|> ValueObject
-SprintNumber -..|> ValueObject
-SprintID -..|> ValueObject
-ProjectCode -..|> ValueObject
-
-
-
-
-
-
+DomainEntity --|> DomainID
 
 @enduml

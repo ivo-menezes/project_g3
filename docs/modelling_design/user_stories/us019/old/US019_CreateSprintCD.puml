@@ -1,0 +1,132 @@
+@startuml
+
+skinparam linetype ortho
+
+class CreateSprintController {
+createSprint(sprintDTO)
+}
+
+class SprintService {
+createSprint(sprintDTO)
+}
+
+class ProjectRepository {
+containsID(projectCode)
+}
+
+class SprintRepository {
+save(sprint)
+containsID(sprintID)
+}
+
+
+class ProjectCode {
+projectCode:String
+}
+
+class SprintFactoryImpl {
+createSprint(sprintID,timePeriod)
+}
+
+class TimePeriod {
+startDate: Date
+endDate: Date
+}
+
+class Sprint{
+}
+
+class SprintNumber{
+sprintNumber:int
+}
+
+class SprintID{
+projectCode
+sprintNumber
+}
+
+
+class sprintDTO {
+sprintNumber: int
+startDate: Date
+endDate: Date
+projectCode : String
+}
+
+
+
+interface ISprintFactory {
+createSprint(printID,timePeriod)
+}
+
+interface ValueObject {
+}
+
+interface DomainID {
+}
+
+interface Repository {
+}
+
+interface AggregateRoot {
+}
+
+interface DomainEntity {
+}
+
+
+
+CreateSprintController "1" o-- "1" SprintService
+CreateSprintController ..> sprintDTO
+
+
+SprintService "1" o-- "1" ProjectCode
+SprintService "1" o-- "1" SprintNumber
+SprintService "1" o-- "1" TimePeriod
+SprintService "1" o-- "1" SprintRepository
+SprintService ..>  ProjectRepository
+SprintService ..> ISprintFactory
+
+SprintRepository "1" *-- "*" Sprint
+
+SprintFactoryImpl ..|> ISprintFactory
+
+Sprint -..> SprintFactoryImpl
+
+TimePeriod -..> SprintFactoryImpl
+
+SprintID  -..> SprintFactoryImpl
+
+SprintNumber -..> SprintID
+
+ProjectCode -..> SprintID
+
+
+
+
+ProjectRepository -..|> Repository
+SprintRepository -..|> Repository
+
+
+Repository --|> DomainID
+AggregateRoot --|> DomainID
+SprintID -..|> DomainID
+
+Repository --|> AggregateRoot
+
+AggregateRoot --|> DomainEntity
+
+
+DomainID --|> ValueObject
+TimePeriod -..|> ValueObject
+SprintNumber -..|> ValueObject
+SprintID -..|> ValueObject
+ProjectCode -..|> ValueObject
+
+
+
+
+
+
+
+@enduml
