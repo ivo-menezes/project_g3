@@ -4,16 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.REST.InputUsInSprintStatusDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
-import org.switch2022.project.mapper.REST.UserStoryRestDto;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
-import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.SprintServiceDDD;
 

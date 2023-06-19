@@ -14,7 +14,6 @@ import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
-import org.switch2022.project.model.valueobject.UserStoryInSprintID;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;

@@ -3,7 +3,6 @@ package org.switch2022.project.datamodel.JPA.assemblers;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintIDJpa;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
-import org.switch2022.project.datamodel.JPA.UserStoryJpaId;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 

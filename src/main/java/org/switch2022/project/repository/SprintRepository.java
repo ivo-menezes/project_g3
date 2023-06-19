@@ -6,7 +6,6 @@ import org.switch2022.project.datamodel.JPA.UserStoryInSprintIDJpa;
 import org.switch2022.project.datamodel.JPA.UserStoryInSprintJPA;
 import org.switch2022.project.datamodel.JPA.assemblers.SprintAssemblerData;
 import org.switch2022.project.datamodel.JPA.assemblers.UserStoryInSprintDataAssembler;
-import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
