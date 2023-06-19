@@ -227,27 +227,6 @@ public class SprintServiceDDD {
         return userStoryInSprintList;
     }
 
-    /**
-     * Retrieves the details of an activity classified as backlog
-     * using project code, sprint number and user story number as key
-     *
-     * @param userStoryInSprintID the object containing project code, sprint number and user story number of the project
-     *                            to retrieve the details
-     * @return a List of UserStoryInSprint
-     */
-    public UserStoryInSprint getUserStoryInSprintDetails(UserStoryInSprintID userStoryInSprintID) {
-
-        Optional<UserStoryInSprint> userStoryInSprintOptional = this.iSprintRepository.getUserStoriesFromSprint(userStoryInSprintID);
-
-        if (userStoryInSprintOptional.isEmpty()) {
-            throw new RuntimeException("project with given projectCode does not exist");
-        }
-        UserStoryInSprint userStoryInSprint  =  userStoryInSprintOptional.get();
-
-        return userStoryInSprint;
-
-    }
-
     public UpdateUsInSprintDomainDTO updateUsInSprintStatus(UpdateUsInSprintDomainDTO updateUsInSprintDomainDTO) {
         Optional<UserStoryInSprint> userStoryInSprintOptional = iSprintRepository.getUserStoriesFromSprint(updateUsInSprintDomainDTO.userStoryInSprintID);
         if (userStoryInSprintOptional.isEmpty()){
