@@ -42,7 +42,7 @@ public class SprintAssemblerDataTest {
         when(sprintIdDouble.getProjectCode()).thenReturn(projectCodeDouble);
         when(projectCodeDouble.toString()).thenReturn("PJ1");
         when(sprintIdDouble.getSprintNumber()).thenReturn(sprintNumberDouble);
-        when(sprintNumberDouble.getSprintNumber()).thenReturn(1);
+        when(sprintNumberDouble.getValue()).thenReturn(1);
         when(sprintDouble.getTimePeriod()).thenReturn(timePeriodDouble);
         when(timePeriodDouble.getStartDate()).thenReturn(formatter.parse("01/01/2023"));
         when(timePeriodDouble.getEndDate()).thenReturn(formatter.parse("31/01/2023"));

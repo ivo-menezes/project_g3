@@ -30,7 +30,7 @@ import java.util.List;
         String projectCode = sprintID.getProjectCode().toString();
         String sprintStatus = sprintDDD.getSprintStatus().toString();
         // Get the underlying int value
-        int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
+        int sprintNumber = sprintID.getSprintNumber().getValue();
         SprintJpaID sprintJpaID = new SprintJpaID(projectCode, sprintNumber);
 
         TimePeriod timePeriod = sprintDDD.getTimePeriod();
@@ -78,7 +78,7 @@ import java.util.List;
     public SprintJpaID convertToSprintJpaID(SprintID sprintID) {
         ProjectCode projectCode = sprintID.getProjectCode();
         String projectCodeString = projectCode.toString();
-        int sprintNumber = sprintID.getSprintNumber().getSprintNumber();
+        int sprintNumber = sprintID.getSprintNumber().getValue();
         return new SprintJpaID(projectCodeString, sprintNumber);
     }
 }

@@ -51,7 +51,7 @@ public class SprintRestDTOMapper {
         SprintRestDTO sprintRestDTO = new SprintRestDTO();
 
         sprintRestDTO.projectCode = toControllerDTO.sprintID.getProjectCode().toString();
-        sprintRestDTO.sprintNumber = toControllerDTO.sprintID.getSprintNumber().getSprintNumber();
+        sprintRestDTO.sprintNumber = toControllerDTO.sprintID.getSprintNumber().getValue();
         sprintRestDTO.startDate = toControllerDTO.timePeriod.getStartDate();
         sprintRestDTO.endDate = toControllerDTO.timePeriod.getEndDate();
         sprintRestDTO.status = toControllerDTO.status.toString();
@@ -101,7 +101,7 @@ public class SprintRestDTOMapper {
      */
     public UpdateSprintDTO toDataDTO(UpdateSprintDomainDTO updateSprintDomainDTO){
         UpdateSprintDTO updateSprintOutputDTO = new UpdateSprintDTO();
-        updateSprintOutputDTO.sprintNumber = updateSprintDomainDTO.sprintID.getSprintNumber().getSprintNumber();
+        updateSprintOutputDTO.sprintNumber = updateSprintDomainDTO.sprintID.getSprintNumber().getValue();
         updateSprintOutputDTO.projectCode = updateSprintDomainDTO.sprintID.getProjectCode().toString();
         updateSprintOutputDTO.sprintStatus = updateSprintDomainDTO.sprintStatus.toString();
 
@@ -134,7 +134,7 @@ public class SprintRestDTOMapper {
 
     public InputUsInSprintStatusDTO uSInSprintToDataDTO(UpdateUsInSprintDomainDTO updateUsInSprintDomainDTO){
         InputUsInSprintStatusDTO inputUsInSprintStatusDTO = new InputUsInSprintStatusDTO();
-        inputUsInSprintStatusDTO.sprintNumber = updateUsInSprintDomainDTO.userStoryInSprintID.getSprintID().getSprintNumber().getSprintNumber();
+        inputUsInSprintStatusDTO.sprintNumber = updateUsInSprintDomainDTO.userStoryInSprintID.getSprintID().getSprintNumber().getValue();
         inputUsInSprintStatusDTO.projectCode = updateUsInSprintDomainDTO.userStoryInSprintID.getSprintID().getProjectCode().toString();
         inputUsInSprintStatusDTO.userStoryNumber = updateUsInSprintDomainDTO.userStoryInSprintID.getUserStoryID().getUserStoryNumber().toString();
         inputUsInSprintStatusDTO.userStoryStatus = updateUsInSprintDomainDTO.userStoryInSprintStatus.toString();

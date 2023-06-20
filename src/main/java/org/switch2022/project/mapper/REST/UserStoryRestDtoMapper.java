@@ -1,6 +1,7 @@
 package org.switch2022.project.mapper.REST;
 
 import org.springframework.stereotype.Component;
+import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.model.valueobject.*;
 
@@ -45,5 +46,27 @@ public class UserStoryRestDtoMapper {
         }
 
         return restDtoList;
+    }
+
+    public NewAddUsToSprintBacklogDTO toSprintBacklogDomainDTO(AddUsToSprintBacklogDTO addUsToSprintBacklogDTO) {
+
+        NewAddUsToSprintBacklogDTO sprintBacklogDomainDto = new NewAddUsToSprintBacklogDTO();
+        sprintBacklogDomainDto.projectCode = new ProjectCode(addUsToSprintBacklogDTO.projectCode);
+        sprintBacklogDomainDto.sprintNumber = new SprintNumber(addUsToSprintBacklogDTO.sprintNumber);
+        sprintBacklogDomainDto.userStoryNumber = new UserStoryNumber(addUsToSprintBacklogDTO.userStoryNumber);
+        sprintBacklogDomainDto.userStoryEffortEstimate = new UserStoryEffortEstimate(addUsToSprintBacklogDTO.userStoryEffortEstimate);
+
+        return sprintBacklogDomainDto;
+    }
+
+    public AddUsToSprintBacklogDTO toSprintBacklogRestDTO(NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO) {
+
+        AddUsToSprintBacklogDTO sprintBacklogRestDto = new AddUsToSprintBacklogDTO();
+        sprintBacklogRestDto.projectCode = newAddUsToSprintBacklogDTO.projectCode.toString();
+        sprintBacklogRestDto.sprintNumber = newAddUsToSprintBacklogDTO.sprintNumber.getValue();
+        sprintBacklogRestDto.userStoryNumber = newAddUsToSprintBacklogDTO.userStoryNumber.toString();
+        sprintBacklogRestDto.userStoryEffortEstimate = newAddUsToSprintBacklogDTO.userStoryEffortEstimate.getValue();
+
+        return sprintBacklogRestDto;
     }
 }

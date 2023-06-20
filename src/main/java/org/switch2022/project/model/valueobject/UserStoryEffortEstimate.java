@@ -39,4 +39,7 @@ public class UserStoryEffortEstimate implements ValueObject {
     }
 
 
+    public Double getValue() {
+        return this.userStoryEffortEstimate;
+    }
 }

@@ -6,20 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
+import org.switch2022.project.mapper.UserStoryInSprintDTO;
+import org.switch2022.project.mapper.UserStoryInSprintDTOMapper;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
+import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
+import org.switch2022.project.repository.SprintRepository;
+import org.switch2022.project.repository.UserStoryRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,12 +46,14 @@ public class SprintServiceDDDTest {
     IProjectRepository projectRepository;
     @MockBean
     IUserStoryRepository userStoryRepository;
+    @MockBean
+    UserStoryInSprintDTOMapper userStoryInSprintDTOMapper;
     @Autowired
     SprintServiceDDD sprintService;
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository);
+        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository,userStoryInSprintDTOMapper);
     }
     @Test
     public void ensureServiceThrowsExceptionForFactory(){
@@ -54,7 +63,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
             new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository,
-                    userStoryRepository);
+                    userStoryRepository, userStoryInSprintDTOMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -68,7 +77,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
             new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository,
-                    userStoryRepository);
+                    userStoryRepository, userStoryInSprintDTOMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -82,7 +91,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
             new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository,
-                    userStoryRepository);
+                    userStoryRepository, userStoryInSprintDTOMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -96,7 +105,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null,
-                    userStoryRepository);
+                    userStoryRepository, userStoryInSprintDTOMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -111,7 +120,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
-                    null);
+                    null, userStoryInSprintDTOMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -597,6 +606,52 @@ public class SprintServiceDDDTest {
         //Assert
         assertEquals(list, result);
 
+    }
+    @Test
+    @DisplayName("Ensure that a user story is moved from product backlog to the sprint backlog and then converted into a DTO")
+    void addUsToSprintBacklogFromProductBacklogAndConvertToDTO() {
+
+        //Arrange
+        NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO = new NewAddUsToSprintBacklogDTO();
+        newAddUsToSprintBacklogDTO.projectCode = new ProjectCode("PJ26");
+        newAddUsToSprintBacklogDTO.sprintNumber = new SprintNumber(26);
+        newAddUsToSprintBacklogDTO.userStoryNumber = new UserStoryNumber("US26");
+        newAddUsToSprintBacklogDTO.userStoryEffortEstimate = new UserStoryEffortEstimate(2.0);
+
+        Optional<ProjectDDD> projectDDD = mock(Optional.class);
+        ProjectDDD projectDDDMock = mock(ProjectDDD.class);
+        when(projectRepository.getByID(newAddUsToSprintBacklogDTO.projectCode)).thenReturn(Optional.ofNullable(projectDDDMock));
+        when(projectDDD.get()).thenReturn(projectDDDMock);
+
+        List<UserStoryID> productBacklog = new ArrayList<>();
+        UserStoryID userStoryID = new UserStoryID(newAddUsToSprintBacklogDTO.userStoryNumber, newAddUsToSprintBacklogDTO.projectCode);
+        productBacklog.add(userStoryID);
+        when(projectDDDMock.getProductBacklog()).thenReturn(productBacklog);
+        Optional<UserStoryDDD> userStoryDDD = mock(Optional.class);
+        UserStoryDDD userStoryDDDMock = mock(UserStoryDDD.class);
+        when(userStoryRepository.getByID(userStoryID)).thenReturn(userStoryDDD);
+        when(userStoryDDD.get()).thenReturn(userStoryDDDMock);
+        UserStoryStatus userStoryStatus = UserStoryStatus.TO_DO;
+        when(userStoryDDDMock.getStatus()).thenReturn(userStoryStatus);
+        Optional<SprintDDD> sprintDDD = mock(Optional.class);
+        SprintDDD sprintDDDMock = mock(SprintDDD.class);
+        when(sprintRepository.getByID(any())).thenReturn(sprintDDD);
+        when(sprintDDD.get()).thenReturn(sprintDDDMock);
+        List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
+        SprintBacklog sprintBacklog1 = mock(SprintBacklog.class);
+        when(sprintDDDMock.getUserStoriesInSprintList()).thenReturn(sprintBacklog);
+        SprintID sprintID = new SprintID(newAddUsToSprintBacklogDTO.projectCode, newAddUsToSprintBacklogDTO.sprintNumber);
+        UserStoryInSprintID userStoryInSprintID = new UserStoryInSprintID(sprintID, userStoryID);
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(userStoryInSprintID, newAddUsToSprintBacklogDTO.userStoryEffortEstimate, userStoryStatus);
+        when(sprintBacklog1.save(userStoryInSprint)).thenReturn(userStoryInSprint);
+        UserStoryInSprintDTO userStoryInSprintDTO = new UserStoryInSprintDTO();
+        when(userStoryInSprintDTOMapper.toDto(userStoryInSprint)).thenReturn(userStoryInSprintDTO);
+
+        //Act
+        UserStoryInSprintDTO result = sprintService.addUsToSprintBacklog(newAddUsToSprintBacklogDTO);
+
+        //Assert
+        assertEquals(userStoryInSprintDTO, result);
     }
 
 }

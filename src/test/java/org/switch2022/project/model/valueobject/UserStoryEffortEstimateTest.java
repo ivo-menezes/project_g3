@@ -130,4 +130,17 @@ class UserStoryEffortEstimateTest {
         // Assert
         assertNotEquals(true, isNotEqual);
     }
+
+    @Test
+    @DisplayName("Test to ensure if we get the correct value of effortEstimate")
+    public void testGetValue() {
+        // Arrange
+        UserStoryEffortEstimate effortEstimate = new UserStoryEffortEstimate(5.0);
+
+        // Act
+        Double value = effortEstimate.getValue();
+
+        // Assert
+        assertEquals(5.0, value);
+    }
 }

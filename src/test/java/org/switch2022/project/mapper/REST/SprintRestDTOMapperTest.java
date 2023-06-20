@@ -77,7 +77,7 @@ class SprintRestDTOMapperTest {
         when(mockPeriod.getStartDate()).thenReturn(dateFormat.parse("2023-03-21"));
         when(mockPeriod.getEndDate()).thenReturn(dateFormat.parse("2023-03-31"));
 
-        when(mockNumber.getSprintNumber()).thenReturn(1);
+        when(mockNumber.getValue()).thenReturn(1);
         when(mockCode.toString()).thenReturn("P1");
         when(mockID.getProjectCode()).thenReturn(mockCode);
         when(mockStatus.toString()).thenReturn("Planned");
@@ -152,12 +152,12 @@ class SprintRestDTOMapperTest {
         SprintRestDTO sprintDTOUI2 = mock(SprintRestDTO.class);
 
         sprintDTOUI1.projectCode = sprintDTOToController1.sprintID.getProjectCode().toString();
-        sprintDTOUI1.sprintNumber = sprintDTOToController1.sprintID.getSprintNumber().getSprintNumber();
+        sprintDTOUI1.sprintNumber = sprintDTOToController1.sprintID.getSprintNumber().getValue();
         sprintDTOUI1.startDate = sprintDTOToController1.timePeriod.getStartDate();
         sprintDTOUI1.endDate = sprintDTOToController1.timePeriod.getEndDate();
 
         sprintDTOUI2.projectCode = sprintDTOToController2.sprintID.getProjectCode().toString();
-        sprintDTOUI2.sprintNumber = sprintDTOToController2.sprintID.getSprintNumber().getSprintNumber();
+        sprintDTOUI2.sprintNumber = sprintDTOToController2.sprintID.getSprintNumber().getValue();
         sprintDTOUI2.startDate = sprintDTOToController2.timePeriod.getStartDate();
         sprintDTOUI2.endDate = sprintDTOToController2.timePeriod.getEndDate();
 
@@ -193,7 +193,7 @@ class SprintRestDTOMapperTest {
     void updateSprintToDataDTOSuccess() {
         //Arrange
         SprintNumber sprintNumber = mock(SprintNumber.class);
-        when(sprintNumber.getSprintNumber()).thenReturn(1);
+        when(sprintNumber.getValue()).thenReturn(1);
 
         ProjectCode projectCode = mock(ProjectCode.class);
         when(projectCode.toString()).thenReturn("A1");
@@ -235,7 +235,7 @@ class SprintRestDTOMapperTest {
         when(userStoryNumber.toString()).thenReturn(inputDto.userStoryNumber);
 
         SprintNumber sprintNumber = mock(SprintNumber.class);
-        when(sprintNumber.getSprintNumber()).thenReturn(inputDto.sprintNumber);
+        when(sprintNumber.getValue()).thenReturn(inputDto.sprintNumber);
 
         UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
         when(userStoryStatus.toString()).thenReturn(inputDto.userStoryStatus);

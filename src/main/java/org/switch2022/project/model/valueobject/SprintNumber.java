@@ -26,7 +26,9 @@ public class SprintNumber implements ValueObject, Serializable {
         return sprintNumber == that.sprintNumber;
     }
 
-    public int getSprintNumber() {
-        return sprintNumber;
+    public int getValue() {
+        return this.sprintNumber;
     }
+
+
 }

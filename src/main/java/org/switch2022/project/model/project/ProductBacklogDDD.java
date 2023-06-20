@@ -5,6 +5,7 @@ import org.switch2022.project.model.valueobject.UserStoryPriority;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class ProductBacklog stores a list of UserStoryID
@@ -71,3 +72,5 @@ class ProductBacklogDDD {
         }
     }
 }
+
+

@@ -1,0 +1,99 @@
+@startuml
+!theme plain
+hide footbox
+autonumber
+title "US032 - As Project Manager, I want to add a user story to the open/current sprint backlog"
+
+participant Client
+participant Springboot
+participant "addUSToSprintBacklogDTO:addUSToSprintBacklogDTO" as dto
+participant ": SprintController" as Controller
+participant ": UserStoryRestDtoMapper" as UserStoryRestDtoMapper
+participant ": SprintService" as Services
+participant "response : ResponseEntity<resDto>" as response
+participant ": IProjectRepository" as IProjectRepository
+participant ": Project" as Project
+participant ": ProductBacklog" as ProductBacklog
+participant ": UserStoryRepository" as UserStoryRepository
+participant ": UserStory" as UserStory
+'participant ": UserStoryJpaRepository" as UserStoryJpaRepository
+participant ": SprintRepository" as SprintRepository
+participant ": Sprint" as Sprint
+participant ": SprintBacklog" as SprintBacklog
+participant ": UserStoryMapper" as UserStoryMapper
+
+activate Client #FFBBBB
+Client -> Springboot : POST /projects/${projectCode}/sprint/sprintBacklog {"projectCode":"projectCode"},\n (projectCode, sprintNumber, userStoryNumber, userStoryEffortEstimate)
+
+activate Springboot #FFBBBB
+Springboot --> dto ** : create(projectCode, sprintNumber, userStoryNumber, userStoryEffortEstimate)
+Springboot -> Controller : addUStoSprintBacklog(addUSToSprintBacklogDTO)
+activate Controller #FFBBBB
+Controller -> UserStoryRestDtoMapper : toDomainDto(addUStoSprintBacklogDTO)
+activate UserStoryRestDtoMapper #FFBBBB
+UserStoryRestDtoMapper --> Controller : domainDTO
+deactivate UserStoryRestDtoMapper
+Controller -> Services : addUStoSprintBacklog(domainDTO)
+activate Services #FFBBBB
+
+Services -> IProjectRepository : getProjectByID(projectCode)
+activate IProjectRepository #FFBBBB
+IProjectRepository --> Services : project
+deactivate IProjectRepository
+
+Services -> Project : getProductBacklog()
+activate Project #FFBBBB
+Project --> Services : productBacklog
+deactivate Project
+
+Services -> ProductBacklog : findUserStory(userStoryID)
+activate ProductBacklog #FFBBBB
+ProductBacklog --> Services : userStoryID
+deactivate ProductBacklog
+
+Services -> UserStoryRepository : getByID(userStoryID)
+activate UserStoryRepository #FFBBBB
+UserStoryRepository --> Services : userStory
+deactivate UserStoryRepository
+
+Services -> UserStory : getStatus()
+activate UserStory #FFBBBB
+UserStory --> Services : userStoryStatus
+deactivate UserStory
+
+Services -> SprintRepository : getByID(SprintID)
+activate SprintRepository #FFBBBB
+SprintRepository --> Services : sprint
+deactivate SprintRepository
+
+Services -> Sprint : getSprintBacklog()
+activate Sprint #FFBBBB
+Sprint --> Services : sprintBacklog
+deactivate Sprint
+
+Services -> SprintBacklog : save(userStoryId, userStoryEffortEstimate, userStoryStatus)
+activate SprintBacklog #FFBBBB
+SprintBacklog --> Services : savedUserStory
+deactivate SprintBacklog
+
+Services -> UserStoryMapper : toDTO(savedUserStory)
+activate UserStoryMapper #FFBBBB
+UserStoryMapper --> Services : NewUserStoryInfoDTO
+deactivate UserStoryMapper
+
+Services --> Controller : NewUserStoryInfoDTO
+deactivate Services
+
+Controller -> UserStoryRestDtoMapper : toRestDto(NewUserStoryInfoDTO)
+activate UserStoryRestDtoMapper #FFBBBB
+UserStoryRestDtoMapper --> Controller : restDto
+deactivate UserStoryRestDtoMapper
+Controller --> response ** : addToSprintBacklog(restDto, HttpStatus.CREATED)
+
+Controller --> Client: confirm
+deactivate Controller
+deactivate Springboot
+
+deactivate Client
+
+@enduml

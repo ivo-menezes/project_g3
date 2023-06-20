@@ -58,6 +58,20 @@ public class SprintBacklog {
         }
         return listUserStoryIDs;
     }
+
+    public UserStoryInSprint save(UserStoryInSprint userStoryInSprint) {
+
+        if (userStoryInSprint == null) {
+            throw new IllegalArgumentException("User Story in Sprint cannot be null");
+        }
+
+        if (userStoriesInSprintList.contains(userStoryInSprint)) {
+            throw new IllegalArgumentException("UserStoryInSprint already in backlog");
+        }
+        userStoriesInSprintList.add(userStoryInSprint);
+
+        return userStoryInSprint;
+    }
 }
 
 

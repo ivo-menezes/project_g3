@@ -1,6 +1,7 @@
 package org.switch2022.project.mapper.REST;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.model.valueobject.*;
 
@@ -87,5 +88,42 @@ class UserStoryRestDtoMapperTest {
 
         // Assert
         assertInstanceOf(UserStoryRestDto.class, resultList.get(0));
+    }
+
+    @Test
+    void toSprintBacklogDomainDTO() {
+        // Arrange
+        AddUsToSprintBacklogDTO addUsToSprintBacklogDTO = mock(AddUsToSprintBacklogDTO.class);
+        addUsToSprintBacklogDTO.userStoryNumber = "US003";
+        addUsToSprintBacklogDTO.projectCode = "Test";
+        addUsToSprintBacklogDTO.sprintNumber = 2;
+        addUsToSprintBacklogDTO.userStoryEffortEstimate = 3;
+
+        // Act
+        NewAddUsToSprintBacklogDTO result = mapper.toSprintBacklogDomainDTO(addUsToSprintBacklogDTO);
+
+        // Assert
+        assertInstanceOf(NewAddUsToSprintBacklogDTO.class, result);
+    }
+
+    @Test
+    void toSprintBacklogRestDto() {
+        // Arrange
+        NewAddUsToSprintBacklogDTO dtoDouble = mock(NewAddUsToSprintBacklogDTO.class);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
+        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        UserStoryEffortEstimate userStoryEffortEstimateDouble = mock(UserStoryEffortEstimate.class);
+
+        dtoDouble.projectCode = projectCodeDouble;
+        dtoDouble.sprintNumber = sprintNumberDouble;
+        dtoDouble.userStoryNumber = userStoryNumberDouble;
+        dtoDouble.userStoryEffortEstimate = userStoryEffortEstimateDouble;
+
+        // Act
+        AddUsToSprintBacklogDTO result = mapper.toSprintBacklogRestDTO(dtoDouble);
+
+        // Assert
+        assertInstanceOf(AddUsToSprintBacklogDTO.class, result);
     }
 }

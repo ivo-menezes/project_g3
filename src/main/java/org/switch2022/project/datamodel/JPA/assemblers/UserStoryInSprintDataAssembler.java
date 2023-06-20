@@ -22,7 +22,7 @@ public class UserStoryInSprintDataAssembler {
                 getProjectCode().toString();
 
         int sprintNumber = userStoryInSprintID.getSprintID().
-                getSprintNumber().getSprintNumber();
+                getSprintNumber().getValue();
 
         String userStoryNumber = userStoryInSprintID.getUserStoryID().
                 getUserStoryNumber().toString();
@@ -62,7 +62,7 @@ public class UserStoryInSprintDataAssembler {
 
     public UserStoryInSprintIDJpa convertToJpaId(UserStoryInSprintID domainId) {
         String projectCode = domainId.getUserStoryID().getProjectCode().toString();
-        int sprintNumber = domainId.getSprintID().getSprintNumber().getSprintNumber();
+        int sprintNumber = domainId.getSprintID().getSprintNumber().getValue();
         String userStoryNumber = domainId.getUserStoryID().getUserStoryNumber().toString();
 
         return new UserStoryInSprintIDJpa(projectCode, sprintNumber, userStoryNumber);

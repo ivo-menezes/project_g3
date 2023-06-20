@@ -1,12 +1,12 @@
 package org.switch2022.project.service;
 
 import org.springframework.stereotype.Service;
-import org.switch2022.project.mapper.UpdateSprintDomainDTO;
-import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
+import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
@@ -14,6 +14,9 @@ import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
+import org.switch2022.project.model.valueobject.UserStoryInSprintID;
+import org.switch2022.project.repository.SprintRepository;
+import org.switch2022.project.repository.UserStoryRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
@@ -33,6 +36,7 @@ public class SprintServiceDDD {
     private final NewSprintDTOMapper newSprintDTOMapper;
     private final IProjectRepository projectRepository;
     private final IUserStoryRepository userStoryRepository;
+    private final UserStoryInSprintDTOMapper userStoryInSprintDTOMapper;
 
     /**
      * Public constructor for SprintService.
@@ -44,7 +48,8 @@ public class SprintServiceDDD {
                             ISprintRepository sprintRepository,
                             NewSprintDTOMapper newSprintDTOMapper,
                             IProjectRepository projectRepository,
-                            IUserStoryRepository userStoryRepository) {
+                            IUserStoryRepository userStoryRepository,
+                            UserStoryInSprintDTOMapper userStoryInSprintDTOMapper) {
         if (sprintFactory == null) {
             throw new IllegalArgumentException("SprintFactory cannot be null.");
         }
@@ -60,12 +65,15 @@ public class SprintServiceDDD {
         if (userStoryRepository == null) {
             throw new IllegalArgumentException("UserStoryRepository cannot be null.");
         }
+        if (userStoryInSprintDTOMapper == null) {
+            throw new IllegalArgumentException("UserStoryInSprintDTOMapper cannot be null.");
+        }
         this.sprintFactory = sprintFactory;
         this.iSprintRepository = sprintRepository;
         this.newSprintDTOMapper = newSprintDTOMapper;
         this.projectRepository = projectRepository;
         this.userStoryRepository = userStoryRepository;
-    }
+        this.userStoryInSprintDTOMapper = userStoryInSprintDTOMapper;    }
 
     public int getNewSprintNumber(ProjectCode projectCode) {
 
@@ -238,5 +246,48 @@ public class SprintServiceDDD {
 
         return updateUsInSprintDomainDTO;
     }
+
+
+    public UserStoryInSprintDTO addUsToSprintBacklog(NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO) {
+        UserStoryInSprintDTO userStoryInSprintDTO;
+        Optional<ProjectDDD> projectDDD = projectRepository.getByID(newAddUsToSprintBacklogDTO.projectCode);
+        if (projectDDD.isPresent()) {
+            List<UserStoryID> productBacklog = projectDDD.get().getProductBacklog();
+            UserStoryID userStoryIdFromDTO = new UserStoryID(newAddUsToSprintBacklogDTO.userStoryNumber, newAddUsToSprintBacklogDTO.projectCode);
+            findUsIdInProductBacklog(productBacklog, userStoryIdFromDTO);
+            Optional<UserStoryDDD> userStory = userStoryRepository.getByID(userStoryIdFromDTO);
+            if (userStory.isEmpty()) {
+                throw new IllegalArgumentException("User Story is empty.");
+            }
+            UserStoryStatus userStoryStatus = userStory.get().getStatus();
+            SprintID sprintIDFromDTO = new SprintID(newAddUsToSprintBacklogDTO.projectCode, newAddUsToSprintBacklogDTO.sprintNumber);
+            Optional<SprintDDD> sprintDDD = iSprintRepository.getByID(sprintIDFromDTO);
+            if (sprintDDD.isEmpty()) {
+                throw new IllegalArgumentException("Sprint is empty.");
+            }
+            List<UserStoryInSprint> userStoriesInSprint = sprintDDD.get().getUserStoriesInSprintList();
+            UserStoryInSprintID userStoryInSprintID = new UserStoryInSprintID(sprintIDFromDTO, userStoryIdFromDTO);
+            UserStoryInSprint userStoryInSprint = new UserStoryInSprint(userStoryInSprintID, newAddUsToSprintBacklogDTO.userStoryEffortEstimate, userStoryStatus);
+            userStoriesInSprint.add(userStoryInSprint);
+            userStoryInSprintDTO = userStoryInSprintDTOMapper.toDto(userStoryInSprint);
+        } else {
+            throw new IllegalArgumentException("Project is empty.");
+        }
+        return userStoryInSprintDTO;
+    }
+
+    private static void findUsIdInProductBacklog(List<UserStoryID> productBacklog, UserStoryID userStoryIdFromDTO) {
+        Optional<UserStoryID> optionalUserStoryID = Optional.empty();
+        for (UserStoryID userStoryID : productBacklog) {
+            if (userStoryID.equals(userStoryIdFromDTO)) {
+                optionalUserStoryID = Optional.of(userStoryID);
+                break;
+            }
+        }
+        if (optionalUserStoryID.isEmpty()) {
+            throw new IllegalArgumentException("User Story ID not found in the product backlog.");
+        }
+    }
+
 
 }

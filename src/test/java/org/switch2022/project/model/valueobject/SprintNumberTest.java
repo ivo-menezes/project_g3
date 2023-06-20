@@ -103,7 +103,7 @@ class SprintNumberTest {
         SprintNumber sprintNumber = new SprintNumber(expected);
 
         //Act
-        long result = sprintNumber.getSprintNumber();
+        long result = sprintNumber.getValue();
 
         //Assert
         assertEquals(expected, result);
