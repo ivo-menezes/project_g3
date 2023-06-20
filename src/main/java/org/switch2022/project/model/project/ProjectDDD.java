@@ -36,7 +36,7 @@ public class ProjectDDD implements AggregateRoot<ProjectCode> {
     ) {
 
         this(projectCode, projectName, description,
-                ProjectStatus.Planned, timePeriod,
+                ProjectStatus.PLANNED, timePeriod,
                 projectSprintDuration, projectNumberOfPlannedSprints,
                 customerID, businessSectorID, typologyID,
                 projectBudget, new ArrayList<>());

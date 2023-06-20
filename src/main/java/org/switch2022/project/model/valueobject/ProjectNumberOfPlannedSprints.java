@@ -21,8 +21,12 @@ public class ProjectNumberOfPlannedSprints implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProjectNumberOfPlannedSprints)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectNumberOfPlannedSprints)) {
+            return false;
+        }
         ProjectNumberOfPlannedSprints that = (ProjectNumberOfPlannedSprints) o;
         return projectNumberOfPlannedSprints == that.projectNumberOfPlannedSprints;
     }

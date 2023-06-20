@@ -16,7 +16,9 @@ public class CustomerFactoryImpl implements ICustomerFactory {
      * @return a customer object
      */
     @Override
-    public CustomerDDD createCustomer(CustomerID customerID,CustomerNIF customerNIF, CustomerDesignation customerDesignation) {
+    public CustomerDDD createCustomer(CustomerID customerID,
+                                      CustomerNIF customerNIF,
+                                      CustomerDesignation customerDesignation) {
 
         if (customerNIF == null) {
             throw new IllegalArgumentException("customerNIF, cannot be null");

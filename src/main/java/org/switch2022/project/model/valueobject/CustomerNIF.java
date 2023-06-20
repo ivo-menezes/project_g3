@@ -25,8 +25,6 @@ public class CustomerNIF implements ValueObject {
         this.customerNIF = customerNIF;
     }
 
-    protected CustomerNIF() {}
-
     /**
      * Method to check if the NIF is valid in Portugal.
      * @param nif
@@ -37,8 +35,9 @@ public class CustomerNIF implements ValueObject {
         final int max = 9;
 
         //check if is numeric and has 9 numbers
-        if (!nif.matches("[0-9]+") || nif.length() != max)
+        if (!nif.matches("[0-9]+") || nif.length() != max) {
             return false;
+        }
 
         int checkSum = 0;
         //calculate checkSum
@@ -48,10 +47,11 @@ public class CustomerNIF implements ValueObject {
         int checkDigit = 11 - (checkSum % 11);
 
         //if checkDigit is higher than 9 set it to zero
-        if (checkDigit > 9) checkDigit = 0;
+        if (checkDigit > 9) checkDigit = 0; {
 
-        //compare checkDigit with the last number of NIF
-        return checkDigit == nif.charAt(max - 1) - '0';
+            //compare checkDigit with the last number of NIF
+            return checkDigit == nif.charAt(max - 1) - '0';
+        }
     }
 
     /**
@@ -96,8 +96,12 @@ public class CustomerNIF implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CustomerNIF)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CustomerNIF)) {
+            return false;
+        }
         CustomerNIF that = (CustomerNIF) o;
         return customerNIF.equals(that.customerNIF);
     }

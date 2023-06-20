@@ -21,8 +21,12 @@ public class ProjectBudget implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProjectBudget)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectBudget)) {
+            return false;
+        }
         ProjectBudget that = (ProjectBudget) o;
         return projectBudget == that.projectBudget;
     }

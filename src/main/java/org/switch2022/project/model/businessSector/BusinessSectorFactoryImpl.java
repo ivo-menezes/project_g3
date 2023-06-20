@@ -13,7 +13,8 @@ public class BusinessSectorFactoryImpl implements IBusinessSectorFactory{
      * @return a businessSector object
      */
     @Override
-    public BusinessSectorDDD createBusinessSector(BusinessSectorID businessSectorID, BusinessSectorDesignation businessSectorDesignation) {
+    public BusinessSectorDDD createBusinessSector(BusinessSectorID businessSectorID,
+                                                  BusinessSectorDesignation businessSectorDesignation) {
 
         if (businessSectorDesignation == null) {
             throw new IllegalArgumentException("businessSectorDesignation cannot be null");

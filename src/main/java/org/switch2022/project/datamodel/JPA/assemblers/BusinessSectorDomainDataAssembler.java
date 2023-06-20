@@ -26,7 +26,8 @@ public class BusinessSectorDomainDataAssembler {
 
     public BusinessSectorDDD toDomain(BusinessSectorJPA businessSectorJPA) {
         BusinessSectorID businessSectorID = new BusinessSectorID(businessSectorJPA.getId());
-        BusinessSectorDesignation businessSectorDesignation = new BusinessSectorDesignation(businessSectorJPA.getBusinessSectorDesignation());
+        BusinessSectorDesignation businessSectorDesignation =
+                new BusinessSectorDesignation(businessSectorJPA.getBusinessSectorDesignation());
         return new BusinessSectorDDD(businessSectorID,businessSectorDesignation);
     }
 }

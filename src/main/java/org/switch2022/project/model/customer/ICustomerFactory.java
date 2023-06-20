@@ -6,5 +6,7 @@ import org.switch2022.project.model.valueobject.CustomerNIF;
 
 public interface ICustomerFactory {
 
-    CustomerDDD createCustomer (CustomerID customerID, CustomerNIF customerNIF, CustomerDesignation customerDesignation);
+    CustomerDDD createCustomer (CustomerID customerID,
+                                CustomerNIF customerNIF,
+                                CustomerDesignation customerDesignation);
 }

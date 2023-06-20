@@ -22,8 +22,12 @@ public class ProjectSprintDuration implements ValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProjectSprintDuration)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectSprintDuration)) {
+            return false;
+        }
         ProjectSprintDuration that = (ProjectSprintDuration) o;
         return sprintDuration == that.sprintDuration;
     }

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class BusinessSectorDesignation implements ValueObject {
 
-    private String businessSectorDesignation;
+    private final String businessSectorDesignation;
 
     public BusinessSectorDesignation (String businessSectorDesignation) {
         if (businessSectorDesignation == null || businessSectorDesignation.isEmpty() || businessSectorDesignation.isBlank()) {

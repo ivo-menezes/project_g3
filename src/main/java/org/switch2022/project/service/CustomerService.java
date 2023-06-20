@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class CustomerService {
 
     @Autowired
-    private ICustomerFactory customerFactory;
+    private final ICustomerFactory customerFactory;
 
     @Autowired
-    private ICustomerRepository customerRepository;
+    private final ICustomerRepository customerRepository;
 
     /**
      * Default constructor that receives the factory and repository as dependency injection.
@@ -43,7 +43,9 @@ public class CustomerService {
      */
     public CustomerDTO createCustomer (CustomerDTO customerDTO) {
 
-        CustomerDDD customer= customerFactory.createCustomer(customerDTO.customerID,customerDTO.customerNIF,customerDTO.customerDesignation);
+        CustomerDDD customer= customerFactory.createCustomer(customerDTO.customerID,
+                customerDTO.customerNIF,
+                customerDTO.customerDesignation);
         CustomerDDD customerDDDSaved = customerRepository.save(customer);
         customerDTO.customerID=customerDDDSaved.identity();
 

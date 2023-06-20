@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class BusinessSectorService {
 
     @Autowired
-    private IBusinessSectorFactory businessSectorFactory;
+    private final IBusinessSectorFactory businessSectorFactory;
 
     @Autowired
-    private IBusinessSectorRepository businessSectorRepository;
+    private final IBusinessSectorRepository businessSectorRepository;
 
 
     /**
@@ -24,7 +24,8 @@ public class BusinessSectorService {
      * @param businessSectorFactory
      * @param businessSectorRepository
      */
-    public BusinessSectorService(IBusinessSectorFactory businessSectorFactory, IBusinessSectorRepository businessSectorRepository) {
+    public BusinessSectorService(IBusinessSectorFactory businessSectorFactory,
+                                 IBusinessSectorRepository businessSectorRepository) {
         if (businessSectorFactory == null) {
             throw new IllegalArgumentException("businessSectorFactory must not be null.");
         }

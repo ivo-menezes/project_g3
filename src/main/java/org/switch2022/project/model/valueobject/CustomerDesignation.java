@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class CustomerDesignation implements ValueObject {
 
-    private String customerDesignation;
+    private final String customerDesignation;
 
     /**
      * Constructor for CustomerDesignation.

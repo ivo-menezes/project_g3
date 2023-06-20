@@ -5,5 +5,6 @@ import org.switch2022.project.model.valueobject.BusinessSectorID;
 
 public interface IBusinessSectorFactory {
 
-    BusinessSectorDDD createBusinessSector (BusinessSectorID businessSectorID, BusinessSectorDesignation businessSectorDesignation);
+    BusinessSectorDDD createBusinessSector (BusinessSectorID businessSectorID,
+                                            BusinessSectorDesignation businessSectorDesignation);
 }

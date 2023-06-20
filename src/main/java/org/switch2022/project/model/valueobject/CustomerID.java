@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class CustomerID implements DomainId, Serializable {
 
-    private long id;
+    private final long id;
     public CustomerID(Long id) {
         this.id = id;
     }

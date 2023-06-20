@@ -128,7 +128,7 @@ class ProjectDomainDataAssemblerTest {
         when(projectJpa.getProjectCode()).thenReturn("P001");
         when(projectJpa.getProjectName()).thenReturn("Awesome Project");
         when(projectJpa.getDescription()).thenReturn("This is a description");
-        when(projectJpa.getProjectStatus()).thenReturn("Planned");
+        when(projectJpa.getProjectStatus()).thenReturn("PLANNED");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2023, Calendar.JANUARY, 1);
@@ -168,7 +168,7 @@ class ProjectDomainDataAssemblerTest {
                 new ProjectCode("P001"),
                 new ProjectName("Awesome Project"),
                 new Description("This is a description"),
-                ProjectStatus.Planned,
+                ProjectStatus.PLANNED,
                 new TimePeriod(startDate, endDate),
                 new ProjectSprintDuration(3),
                 new ProjectNumberOfPlannedSprints(5),

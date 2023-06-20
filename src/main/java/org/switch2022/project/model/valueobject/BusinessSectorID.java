@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.DomainId;
 import java.io.Serializable;
 
 public class BusinessSectorID implements DomainId, Serializable {
-    private long id;
+    private final long id;
     public BusinessSectorID(long id) {
         this.id = id;
     }

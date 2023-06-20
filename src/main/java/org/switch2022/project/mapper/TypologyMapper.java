@@ -12,10 +12,11 @@ public class TypologyMapper {
      * @return TypologyOutputDTO object.
      */
     public TypologyOutputDTO toOutputDTO(TypologyDTO typology) {
-        if (typology.typologyID != null)
+        if (typology.typologyID != null) {
             return new TypologyOutputDTO(typology.typologyID.getId(), typology.typologyDesignation.toString());
-        else
+        } else {
             return new TypologyOutputDTO(null, typology.typologyDesignation.toString());
+        }
     }
 
     /**
@@ -27,7 +28,8 @@ public class TypologyMapper {
 
         for (TypologyDTO typologyDTO : Typologies) {
 
-            TypologyOutputDTO typologyOutputDTO = new TypologyOutputDTO(typologyDTO.typologyID.getId(), typologyDTO.typologyDesignation.toString());
+            TypologyOutputDTO typologyOutputDTO =
+                    new TypologyOutputDTO(typologyDTO.typologyID.getId(), typologyDTO.typologyDesignation.toString());
 
             TypologiesOutput.add(typologyOutputDTO);
         }

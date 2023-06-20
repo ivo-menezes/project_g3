@@ -33,14 +33,12 @@ public class BusinessSectorController {
     @PostMapping("")
     public ResponseEntity<BusinessSectorOutputDTO> createBusinessSector(@RequestBody BusinessSectorDTO businessSector) {
 
-        try
-        {
+        try {
             BusinessSectorDTO savedBusinessSector = businessSectorService.createBusinessSector(businessSector);
             BusinessSectorOutputDTO businessSectorOutputDTO = businessSectorMapper.toOutputDTO(savedBusinessSector);
             return new ResponseEntity<>(businessSectorOutputDTO, HttpStatus.CREATED);
         }
-        catch (InvalidDataAccessApiUsageException exception)
-        {
+        catch (InvalidDataAccessApiUsageException exception) {
             BusinessSectorOutputDTO businessSectorOutputDTO = businessSectorMapper.toOutputDTO(businessSector);
             return new ResponseEntity<>(businessSectorOutputDTO, HttpStatus.BAD_REQUEST);
         }
