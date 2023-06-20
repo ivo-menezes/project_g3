@@ -26,20 +26,6 @@ class UserStoryInSprintIDJpa implements Serializable {
         this.userStoryNumber = userStoryNumber;
     }
 
-
-    public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
-    }
-
-    public void setSprintNumber(int sprintNumber) {
-        this.sprintNumber = sprintNumber;
-    }
-
-    public void setUserStoryNumber(String userStoryNumber) {
-        this.userStoryNumber = userStoryNumber;
-    }
-
-
     public String getProjectCode() {
         return projectCode;
     }

@@ -1,7 +1,6 @@
 package org.switch2022.project.datamodel.JPA;
 
 import org.springframework.lang.NonNull;
-import org.switch2022.project.model.sprint.UserStoryInSprint;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -32,9 +31,6 @@ public class UserStoryInSprintJPA {
         this.idJpa = idJpa;
         this.userStoryEffortEstimate = userStoryEffortEstimate;
         this.userStoryInSprintStatus = userStoryInSprintStatus;
-    }
-
-    public UserStoryInSprintJPA(UserStoryInSprint userStoryInSprint) {
     }
 
     public UserStoryInSprintIDJpa getID() {
