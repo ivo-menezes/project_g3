@@ -1,0 +1,149 @@
+@startuml
+skinparam linetype ortho
+title "US033 - As Project Member, I want to update the status (i.e.: the Scrum Board category) of a user story in the scope of the current/active sprint backlog in the web UI."
+
+class SprintController {
+SprintServiceDDD :service
+SprintRestDTOMapper :mapper
+updateUsInSprintStatus(inputInSprintStatusDTO)
+}
+
+class SprintService {
+ISprintRepository :iSprintRepository
+updateUsInSprintStatus(updateUsInSprintDomainDTO)
+}
+
+class SprintRepository {
+UsInSprintJPARepository :userStoryInSprintJPA
+UsInSprintDataAssembler :usInSprint
+getUserStoriesFromSprint(id)
+replaceUSInSprint(usInsprint)
+}
+
+class UserStorySprintDataAssembler {
+convertToJpaID(domainID)
+}
+
+Interface UserStoryInSprintJPARepository {
+findById(sprintJpaID)
+save(sprintJPA)
+}
+
+class UserStoryInSprint {
+setStatus(userStoryStatus)
+}
+
+class UserStoryInSprintJPA {
+SprintID :sprintID
+UserStoryStatus :status
+}
+
+class SprintRestDTOMapper {
+toDomainDTO(updateSprintInputDTO)
+toDataDTO(updateUsInSprintDomainDTO)
+}
+
+class InputUsInSprintStatusDTO  {
+String :projectCode
+int :sprintNumber
+String :userStoryNumber
+String :userStoryStatus
+}
+
+class UpdateUsInSprintDomainDTO  {
+UserStoryInSprintID :userStoryInSprintID
+SprintNumber :sprintNumber
+UserStoryInSprintStatus :userStoryInSprintStatus
+}
+
+enum UserStoryStatus{
+TO_DO
+IN_PROGRESS
+TESTING
+DONE
+CANCELLED
+}
+
+class SprintID{
+ProjectCode :projectCode
+SprintNumber :SprintNumber
+}
+
+class UserStoryID {
+ProjectCode : projectCode
+UserStoryNumber : userStoryNumber
+}
+
+class ProjectCode{
+String :projectCode
+}
+
+class SprintNumber{
+int sprintNumber
+}
+
+interface ISprintRepository
+interface Repository
+interface CrudRepository
+interface DomainId
+interface AggregateRoot
+interface DomainEntity
+interface ValueObject
+
+UserStorySprintDataAssembler ..> SprintID
+UserStorySprintDataAssembler ..> UserStoryID
+UserStorySprintDataAssembler ..> UserStoryInSprintJPA
+UserStorySprintDataAssembler ..> SprintDDD
+
+SprintRestDTOMapper ..> UpdateUsInSprintDomainDTO
+SprintRestDTOMapper ..> InputUsInSprintStatusDTO
+
+SprintController o--  SprintService
+SprintController o-- SprintRestDTOMapper
+SprintController ..> InputUsInSprintStatusDTO
+
+SprintService ..> UpdateUsInSprintDomainDTO
+SprintService o-- ISprintRepository
+SprintService ..> UserStoryInSprint
+
+SprintRepository ..|> ISprintRepository
+SprintRepository o-- UserStorySprintDataAssembler
+SprintRepository o-- UserStoryInSprintJPARepository
+SprintRepository ..> UserStoryInSprint
+SprintRepository ..> UserStoryInSprintJPA
+SprintRepository ..> SprintID
+SprintRepository ..> UserStoryID
+
+
+ISprintRepository --|> Repository
+
+UserStoryInSprintJPARepository --|> CrudRepository
+
+SprintDDD *-- UserStoryStatus
+SprintDDD *-- SprintID
+SprintDDD -..|> AggregateRoot
+
+UserStoryStatus -..|> ValueObject
+UserStoryNumber -..|> ValueObject
+SprintNumber -..|> ValueObject
+
+
+SprintID ..|> DomainId
+SprintID *-- ProjectCode
+SprintID *-- SprintNumber
+
+UserStoryID ..|> DomainId
+UserStoryID *-- ProjectCode
+UserStoryID *-- UserStoryNumber
+
+
+ProjectCode ..|> DomainId
+
+DomainId ..|> ValueObject
+
+AggregateRoot --|> DomainId
+AggregateRoot --|> DomainEntity
+
+Repository --|> DomainId
+Repository --|> AggregateRoot
+@enduml

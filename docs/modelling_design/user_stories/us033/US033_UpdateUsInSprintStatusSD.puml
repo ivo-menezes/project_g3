@@ -1,0 +1,92 @@
+@startuml
+!theme plain
+title US033 - As Project Member, I want to update the status (i.e.: the Scrum Board category) of a user story in the scope of the current/active sprint backlog in the web UI.
+autonumber
+hide footbox
+
+participant Client
+participant "Springboot"
+participant "updateUsSprintInputDto : UpdateUsSprintDTO" as restDto
+participant ": SprintController" as Controller
+participant ": SprintRestDTOMapper" as RestMapper
+participant "updateUsSprintDomainDTO : UpdateUsSprintDomainDTO" as DTO
+participant ": SprintService" as Service
+participant ": ISprintRepository" as Repository
+participant ": UserStoryInSprintDataAssembler" as Assembler
+participant ": userStoryInSprintJpaRepository" as RepositoryJPA
+participant "userStoryInSprint:UserStoryInSprint" as Sprint
+participant "response : ResponseEntity<updateUsSprintOutputDTO>" as response
+
+activate Client #FFBBBB
+Client ->  Springboot: PATCH /sprints/{projectCode}/sprintNumber \n{"projectCode":"code", "sprintNumber": "sprintNumber" \n "userStoryNumber": "userStoryNumber", \n "userStoryStatus": "userStoryStatus"}
+activate Springboot #FFBBBB
+Springboot --> restDto **: create(projectCode, userStoryNumber, \n sprintNumber,userStoryStatus)
+Springboot -> Controller: updateUsStatus(UpdateUsSprintDTO)
+deactivate Springboot
+
+activate Controller #FFBBBB
+Controller -> RestMapper : toDomainDto(UpdateUsSprintDTO)
+activate RestMapper #FFBBBB
+RestMapper --> DTO **:create(updateUsSprintInputDto)
+RestMapper --> Controller : updateStatusDomainDto
+deactivate RestMapper
+Controller -> Service: updateStatus(updateUsSprintDomainDto)
+deactivate Controller
+activate Service #FFBBBB
+Service -> Repository : getByID(userStoryInSprintID)
+activate Repository #FFBBBB
+Repository -> Assembler : convertIDJpa(userStoryInSprintID)
+activate Assembler #FFBBBB
+Assembler --> Repository : userStoryInSprintJPA
+deactivate Assembler
+Repository -> RepositoryJPA : getbyID(userStoryInSprintID)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository : userStoryInSprintJPA
+deactivate RepositoryJPA
+Repository -> Assembler : toDomain(userStoryInSprintJPA)
+activate Assembler #FFBBBB
+Assembler --> Repository : userStoryInSprint
+deactivate Assembler
+Repository --> Service : userStory
+deactivate Repository
+Service -> Sprint : setStatus(userStoryInSprintStatus)
+activate Sprint #FFBBBB
+deactivate Sprint
+Service -> Repository : replace(userStoryInSprint)
+
+activate Repository #FFBBBB
+Repository -> Assembler : toData(userStoryInSprint)
+activate Assembler #FFBBBB
+Assembler --> UserStoryInSprintJPA ** :Create(userStoryInSprint)
+Assembler --> Repository: userStoryInSprintJPA
+deactivate Assembler
+
+Repository -> RepositoryJPA : save(userStoryInSprintJPA)
+activate RepositoryJPA #FFBBBB
+RepositoryJPA --> Repository : savedUserStoryInSprintJPA
+deactivate RepositoryJPA
+Repository -> Assembler : toDomain(userStoryInSprintJPA)
+activate Assembler #FFBBBB
+Assembler --> savedUserStoryInSprint ** :create(userStoryInSprintJPA)
+Assembler --> Repository : savedUserStoryInSprint
+deactivate Assembler
+
+Repository --> Service: savedUserStoryInSprint
+deactivate Repository
+activate Controller #FFBBBB
+Service --> Controller: savedUserStoryInSprint
+deactivate
+Controller -> RestMapper :toRestDto(savedUsStatusDto)
+
+activate RestMapper #FFBBBB
+RestMapper --> updateUsSprintOutputDTO ** :Create(savedUsStatusDto)
+RestMapper --> Controller :updateUsSprintOutputDTO
+deactivate RestMapper
+Controller --> response ** : create(updateUsSprintOutputDTO, HttpStatus.OK)
+Controller --> Client: Confirms updated UserStory Status
+deactivate Controller
+deactivate Client
+
+
+
+@enduml

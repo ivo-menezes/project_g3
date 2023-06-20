@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+skinparam sequence {
+LifeLineBackgroundColor #FFBBBB
+}
+title US033 - As Project Member, I want to update the status (i.e.: the Scrum Board category) \n of a user story in the scope of the current/active sprint backlog in the web UI.
+
+participant Manager
+participant Client
+participant Server
+participant Database
+
+Manager -> Client: I want to update a User Story Status in Sprint Backlog
+activate Client
+Client -> Client: Show UI
+Client --> Manager: Ask for data
+Manager -> Client: Update sprint (user story status)
+Client -> Server: Patch{sprint body}
+activate Server
+Server -> Database: save sprint
+activate Database
+Database --> Server: confirm saved sprint
+deactivate Database
+Server --> Client: 201
+deactivate Server
+Client -> Client: Generate UI
+Manager <-- Client: Confirms sprint updated.
+@enduml
