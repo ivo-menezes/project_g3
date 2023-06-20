@@ -27,7 +27,12 @@ public class ProjectService {
     private final NewProjectDTOMapper newProjectDTOMapper;
 
 
-    public ProjectService(ICustomerRepository customerRepository, IBusinessSectorRepository businessSectorRepository, ITypologyRepository typologyRepository, IProjectFactory projectFactory, IProjectRepository projectRepository, NewProjectDTOMapper newProjectDTOMapper) {
+    public ProjectService(ICustomerRepository customerRepository,
+                          IBusinessSectorRepository businessSectorRepository,
+                          ITypologyRepository typologyRepository,
+                          IProjectFactory projectFactory,
+                          IProjectRepository projectRepository,
+                          NewProjectDTOMapper newProjectDTOMapper) {
         if (customerRepository == null) {
             throw new IllegalArgumentException("Customer Repository must not be null.");
         }

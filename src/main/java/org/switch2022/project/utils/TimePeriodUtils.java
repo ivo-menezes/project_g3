@@ -6,7 +6,8 @@ import java.util.Date;
 
 public class TimePeriodUtils {
 
-    public TimePeriodUtils() {
+    private TimePeriodUtils() {
+        throw new UnsupportedOperationException("Utility class");
     }
 
     /**
