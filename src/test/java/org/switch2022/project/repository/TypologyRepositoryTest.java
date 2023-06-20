@@ -176,5 +176,38 @@ class TypologyRepositoryTest {
         //Assert
         assertFalse(result);
     }
+
+    @Test
+    @DisplayName("Ensure containsID returns true when id exists")
+    void ensureContainsIdIsTrueWhenIdExists(){
+        //Arrange
+        TypologyID typologyIdDouble = mock(TypologyID.class);
+
+        when(typologyIdDouble.getId()).thenReturn(10L);
+        when(typologyJpaRepository.existsById(typologyIdDouble.getId())).thenReturn(true);
+
+        //Act
+        boolean result = typologyRepository.containsID(typologyIdDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure containsID returns false when id does not exist")
+    void ensureContainsIdIsFalseWhenIdDoesNotExist(){
+        //Arrange
+        TypologyID typologyIdDouble = mock(TypologyID.class);
+
+        when(typologyIdDouble.getId()).thenReturn(10L);
+        when(typologyJpaRepository.existsById(typologyIdDouble.getId())).thenReturn(false);
+
+        //Act
+        boolean result = typologyRepository.containsID(typologyIdDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }
 

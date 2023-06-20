@@ -151,4 +151,37 @@ class BusinessSectorRepositoryTest {
         //Assert
         assertFalse(result);
     }
+
+    @Test
+    @DisplayName("Ensure containsID returns true when id exists")
+    void ensureContainsIdIsTrueWhenIdExists(){
+        //Arrange
+        BusinessSectorID businessDouble = mock(BusinessSectorID.class);
+
+        when(businessDouble.getId()).thenReturn(10L);
+        when(businessSectorRepositoryJPA.existsById(businessDouble.getId())).thenReturn(true);
+
+        //Act
+        boolean result = businessSectorRepository.containsID(businessDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure containsID returns false when id does not exist")
+    void ensureContainsIdIsFalseWhenIdDoesNotExist(){
+        //Arrange
+        BusinessSectorID businessDouble = mock(BusinessSectorID.class);
+
+        when(businessDouble.getId()).thenReturn(10L);
+        when(businessSectorRepositoryJPA.existsById(businessDouble.getId())).thenReturn(false);
+
+        //Act
+        boolean result = businessSectorRepository.containsID(businessDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }

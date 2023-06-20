@@ -4,7 +4,7 @@ import org.switch2022.project.model.valueobject.TimePeriod;
 
 import java.util.Date;
 
-public class TimePeriodUtils {
+public final class TimePeriodUtils {
 
     private TimePeriodUtils() {
         throw new UnsupportedOperationException("Utility class");

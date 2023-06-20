@@ -153,4 +153,36 @@ class CustomerRepositoryTest {
         assertFalse(result);
     }
 
+    @Test
+    @DisplayName("Ensure containsID returns true when id exists")
+    void ensureContainsIdIsTrueWhenIdExists() {
+        //Arrange
+        CustomerID customerIdDouble = mock(CustomerID.class);
+
+        when(customerIdDouble.getId()).thenReturn(10L);
+        when(customerRepositoryJPA.existsById(customerIdDouble.getId())).thenReturn(true);
+
+        //Act
+        boolean result = customerRepository.containsID(customerIdDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Ensure containsID returns true when id exists")
+    void ensureContainsIdIsFalseWhenIdDoesNotExist() {
+        //Arrange
+        CustomerID customerIdDouble = mock(CustomerID.class);
+
+        when(customerIdDouble.getId()).thenReturn(10L);
+        when(customerRepositoryJPA.existsById(customerIdDouble.getId())).thenReturn(false);
+
+        //Act
+        boolean result = customerRepository.containsID(customerIdDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }
