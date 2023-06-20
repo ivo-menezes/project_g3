@@ -76,10 +76,8 @@ const CreateSprint = () => {
         // Allows to view in the console the newly created sprint
         console.log(newSprint)
 
-        postSprint(dispatch, projectCode, newSprint)
-        await sleep(500)
-        //Navigates to the sprint list for the current project
-        navigate(`/listSprints/${projectCode}`)
+        postSprint(dispatch, projectCode, newSprint, navigate)
+
     };
 
     // Renders the form for creating a new sprint

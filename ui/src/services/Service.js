@@ -49,23 +49,23 @@ export const postUserStoryToBackend = (success, failure, projectCode, userStory)
         .catch(error => failure(error))
 }
 
-export const postProjectToBackend = (project) => {
+export const postProjectToBackend = (success, failure, project) => {
     const ENDPOINT = "projects";
     axios.post(API_URL + ENDPOINT, project)
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
+        .then(response => success(response))
+        .catch(error => failure(error))
 }
 
-export const postSprintToBackend = (projectCode, sprint) => {
+export const postSprintToBackend = (success, failure, projectCode, sprint) => {
     const ENDPOINT = `projects/${projectCode}/sprints`
     axios.post(API_URL + ENDPOINT, sprint)
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
+        .then(response => success(response))
+        .catch(error => failure(error))
 }
 
-export const postResourceToBackend = (projectCode, resource) => {
+export const postResourceToBackend = (success, failure, projectCode, resource) => {
     const ENDPOINT = `projects/${projectCode}/resources`
     axios.post(API_URL + ENDPOINT, resource)
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
+        .then(response => success(response))
+        .catch(error => failure(error))
 }

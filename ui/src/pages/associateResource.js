@@ -52,21 +52,22 @@ const AssociateResource = () => {
         handleChange(event)
     }
 
-    const handleSubmission = () => {
+    const handleSubmission = (event) => {
+        event.preventDefault();
+
         for (const key in newResource) {
             if (typeof newResource[key] === 'object' && newResource[key] instanceof Date) {
                 newResource[key] = newResource[key].toISOString().split('T')[0];
             }
         }
         console.log(newResource)
-        postResource(dispatch, projectCode, newResource)
+        postResource(dispatch, projectCode, newResource, navigate)
         //creates an array of strings representing each key-value pair in the newResource object, values are stringified
         //individually and joined with the '\n' character.
         const formattedResource = Object.entries(newResource).map(([key, value]) => {
             return `${key}: ${JSON.stringify(value)}`;
         });
         /*alert(formattedResource.join("\n"));*/
-        navigate(`/listResources/${projectCode}`);
     }
     const role = [
         'Team Member',

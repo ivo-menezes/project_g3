@@ -7,6 +7,7 @@ import TextField from '../components/textField';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import TextArea from "../components/textArea";
 import {postUserStoryToBackend} from "../services/Service";
+import axios from "axios";
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CreateUserStory = () => {
@@ -39,12 +40,12 @@ const CreateUserStory = () => {
     const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const handleSubmission = async () => {
-        //addUserStory(dispatch, newUserStory);
-        console.log(newUserStory)
-        postUserStory(dispatch, projectCode, newUserStory)
-        sleep(500)
-        navigate(`/backlog/${projectCode}`);
+    // handles the form submission (POSTing the created user story to backend)
+    const handleSubmission = (event) => {
+        event.preventDefault();  // necessary so automatic refresh doesn't interrupt request
+
+        // calling postUserStory action
+        postUserStory(dispatch, projectCode, newUserStory, navigate)
     };
 
     return (

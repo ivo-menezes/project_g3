@@ -57,7 +57,9 @@ const CreateProject = () => {
     // submits the newProject to the global context via the addProject action
     const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
-    const handleSubmission = async () => {
+    const handleSubmission = (event) => {
+        event.preventDefault();
+
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newProject) {
             if (typeof newProject[key] === 'object' && newProject[key] instanceof Date) {
@@ -66,10 +68,8 @@ const CreateProject = () => {
                 newProject[key] = newProject[key].toISOString().split('T')[0];
             }
         }
-        console.log(newProject)
-        postProject(dispatch, newProject)
-        sleep(500)
-        navigate('/listProjects')
+
+        postProject(dispatch, newProject, navigate)
     }
 
     const status = [

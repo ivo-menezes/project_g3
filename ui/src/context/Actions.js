@@ -187,29 +187,35 @@ export const fetchResources = (dispatch, projectCode) => {
     )
 }
 
-export const postUserStory = (dispatch, projectCode, userStory) => {
+export const postUserStory = (dispatch, projectCode, userStory, navigate) => {
     postUserStoryToBackend(
-        (response) => console.log("user story successfully posted"),
-        (error) => console.log("user story failed to be posted"),
+        (response) => navigate(`/backlog/${projectCode}`),
+        (error) => console.log(error),
         projectCode, userStory
     )
 }
 
-export const postProject = (dispatch, project) => {
+export const postProject = (dispatch, project, navigate) => {
     postProjectToBackend(
+        (response) => navigate('/listProjects'),
+        (error) => console.log(error),
         project
     )
 }
 
-export const postSprint = (dispatch, projectCode, sprint) => {
+export const postSprint = (dispatch, projectCode, sprint, navigate) => {
     postSprintToBackend(
+        (response) => navigate(`/listSprints/${projectCode}`),
+        (error) => console.log(error),
         projectCode,
         sprint
     )
 }
 
-export const postResource = (dispatch, projectCode, resource) => {
+export const postResource = (dispatch, projectCode, resource, navigate) => {
     postResourceToBackend(
+        (response) => navigate(`/listResources/${projectCode}`),
+        (error) => console.log(error),
         projectCode,
         resource
     )
