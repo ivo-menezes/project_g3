@@ -28,7 +28,7 @@ Client -> Controller
 activate Controller
 ref over Client: US034_CloseCurrentSprint\n(close the current/active sprint\n of a project)
 
-Controller -> Service: checkUserStoriesWithStatusDone (sprintID)
+Controller -> Service: updateProductBacklogAndUserStoryStatus(sprintID)
 activate Service
 
 Service -> PR: getByID(projectCode)
@@ -58,7 +58,7 @@ activate USRepo
 USRepo --> Service: userStory
 Service -> US: setUserStoryStatus(UserStoryStatus.DONE)
 activate US
-US --> Service: userStoryStatusUpdated
+US --> Service: userStoryStatusChanged
 deactivate US
 Service -> USRepo: replace(userStory)
 USRepo -> UserStoryAssembler: toData(userStory)
@@ -76,21 +76,21 @@ UserStoryAssembler --> USRepo: savedUserStory
 deactivate UserStoryAssembler
 USRepo --> Service: savedUserStory
 deactivate USRepo
-end
 
-Service -> Project: removeUserStoryIDs \n(List<UserStoryID>)
+Service -> Project: removeUserStoryID(UserStoryID)
 activate Project
 
-Project -> PB: removeUserStoryIDs \n(List<UserStoryID>)
+Project -> PB: removeUserStoryID(UserStoryID)
 activate PB
 
-loop for each userStoryID in List<UserStoryID>
-PB -> PB: remove(userStoryID)
-end
-PB --> Project: true
+
+PB --> Project: userStoryIDRemoved
 deactivate PB
-Project --> Service: true
+Project --> Service: userStoryIDRemoved
 deactivate Project
+
+end
+
 
 Service -> PR: replace(project)
 activate PR
@@ -109,7 +109,7 @@ deactivate ProjectAssembler
 PR --> Service: savedProject
 deactivate PR
 
-Service --> Controller: OK
+Service --> Controller: true
 
 ref over Client: US034_CloseCurrentSprint\n(close the current/active sprint\n of a project)
 Controller --> Client
