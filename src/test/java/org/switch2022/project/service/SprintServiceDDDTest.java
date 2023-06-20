@@ -58,10 +58,9 @@ public class SprintServiceDDDTest {
         String message = "SprintFactory cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper);
-        });
+                    userStoryRepository, userStoryInSprintDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -72,10 +71,9 @@ public class SprintServiceDDDTest {
         String message = "SprintRepository cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper);
-        });
+                    userStoryRepository, userStoryInSprintDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -86,10 +84,9 @@ public class SprintServiceDDDTest {
         String message = "NewSprintDTOMapper cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper);
-        });
+                    userStoryRepository, userStoryInSprintDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -100,10 +97,9 @@ public class SprintServiceDDDTest {
         String message = "ProjectRepository cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null,
-                    userStoryRepository, userStoryInSprintDTOMapper);
-        });
+                    userStoryRepository, userStoryInSprintDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -115,10 +111,9 @@ public class SprintServiceDDDTest {
         String message = "UserStoryRepository cannot be null.";
 
         // act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
-                    null, userStoryInSprintDTOMapper);
-        });
+                    null, userStoryInSprintDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -206,9 +201,8 @@ public class SprintServiceDDDTest {
         String expectedMessage = "There is no project with this code.";
 
         //act
-        RuntimeException exception = assertThrows(RuntimeException.class, ()-> {
-            sprintService.getNewSprintNumber(mockCode);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, ()->
+            sprintService.getNewSprintNumber(mockCode));
         String result = exception.getMessage();
 
         //assert
@@ -255,9 +249,8 @@ public class SprintServiceDDDTest {
         String expectedMessage = "Sprint id does not exist";
 
         //Act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->{
-            sprintService.updateStatusSprint(sprintDomainDTO);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+            sprintService.updateStatusSprint(sprintDomainDTO));
         String result = exception.getMessage();
 
         //Assert
@@ -621,80 +614,26 @@ public class SprintServiceDDDTest {
         UserStoryDDD userStory1 = userStoryOptional1.get();
         UserStoryDDD userStory2 = userStoryOptional2.get();
 
-        userStory1.setUserStoryStatus(UserStoryStatus.DONE);
-        userStory2.setUserStoryStatus(UserStoryStatus.DONE);
-        when(userStoryRepository.replace(userStory1)).thenReturn(userStory1);
-        when(userStoryRepository.replace(userStory2)).thenReturn(userStory2);
+        doNothing().when(userStory1).setUserStoryStatus(UserStoryStatus.DONE);
+        doNothing().when(project).removeUserStoryID(userStoryID1);
+        UserStoryDDD savedUserStory1 = mock(UserStoryDDD.class);
+        when(userStoryRepository.replace(userStory1)).thenReturn(savedUserStory1);
 
-        List<UserStoryID> productBacklog = new ArrayList<>();
-        productBacklog.add(userStoryID1);
-        productBacklog.add(userStoryID2);
-        project.removeUserStoryIDs(list);
+        doNothing().when(userStory2).setUserStoryStatus(UserStoryStatus.DONE);
+        doNothing().when(project).removeUserStoryID(userStoryID2);
+        UserStoryDDD savedUserStory2 = mock(UserStoryDDD.class);
+        when(userStoryRepository.replace(userStory1)).thenReturn(savedUserStory2);
 
-        when(projectRepository.replace(project)).thenReturn(project);
+        ProjectDDD savedProject = mock(ProjectDDD.class);
+        when(projectRepository.replace(project)).thenReturn(savedProject);
 
         // Act
         boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
 
         // Assert
         assertTrue(result);
-    }
-
-    @Test
-    @DisplayName("Ensure closing a sprint updates product backlog correctly")
-    void ensureUpdateProductBacklogCorrectlyVerify() {
-        // Arrange
-        SprintID sprintID = mock(SprintID.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-        when(sprintID.getProjectCode()).thenReturn(projectCode);
-
-        Optional<ProjectDDD> projectOptional = Optional.of(mock(ProjectDDD.class));
-        Optional<SprintDDD> sprintOptional = Optional.of(mock(SprintDDD.class));
-        when(projectRepository.getByID(projectCode)).thenReturn(projectOptional);
-        when(sprintRepository.getByID(sprintID)).thenReturn(sprintOptional);
-        ProjectDDD project = projectOptional.get();
-        SprintDDD sprint = sprintOptional.get();
-
-        List<UserStoryID> list = new ArrayList<>();
-        when(sprint.listOfUserStoriesInSprintWithStatusDone()).thenReturn(list);
-        UserStoryID userStoryID1 = mock(UserStoryID.class);
-        UserStoryID userStoryID2 = mock(UserStoryID.class);
-        UserStoryID userStoryID3 = mock(UserStoryID.class);
-        list.add(userStoryID1);
-        list.add(userStoryID2);
-        list.add(userStoryID3);
-
-        Optional<UserStoryDDD> userStoryOptional1 = Optional.of(mock(UserStoryDDD.class));
-        Optional<UserStoryDDD> userStoryOptional2 = Optional.of(mock(UserStoryDDD.class));
-        Optional<UserStoryDDD> userStoryOptional3 = Optional.of(mock(UserStoryDDD.class));
-        when(userStoryRepository.getByID(userStoryID1)).thenReturn(userStoryOptional1);
-        when(userStoryRepository.getByID(userStoryID2)).thenReturn(userStoryOptional2);
-        when(userStoryRepository.getByID(userStoryID3)).thenReturn(userStoryOptional3);
-        UserStoryDDD userStory1 = userStoryOptional1.get();
-        UserStoryDDD userStory2 = userStoryOptional2.get();
-        UserStoryDDD userStory3 = userStoryOptional3.get();
-
-        userStory1.setUserStoryStatus(UserStoryStatus.DONE);
-        userStory2.setUserStoryStatus(UserStoryStatus.DONE);
-        userStory3.setUserStoryStatus(UserStoryStatus.DONE);
-        when(userStoryRepository.replace(userStory1)).thenReturn(userStory1);
-        when(userStoryRepository.replace(userStory2)).thenReturn(userStory2);
-        when(userStoryRepository.replace(userStory3)).thenReturn(userStory3);
-
-        List<UserStoryID> productBacklog = new ArrayList<>();
-        productBacklog.add(userStoryID1);
-        productBacklog.add(userStoryID2);
-        productBacklog.add(userStoryID3);
-        project.removeUserStoryIDs(list);
-
-        when(projectRepository.replace(project)).thenReturn(project);
-
-        // Act
-        boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
-
-        // Assert
-        verify(userStory1, times(2)).setUserStoryStatus(UserStoryStatus.DONE);
-        verify(project, times(2)).removeUserStoryIDs(list);
+        verify(userStory1, times(1)).setUserStoryStatus(UserStoryStatus.DONE);
+        verify(project, times(1)).removeUserStoryID(userStoryID1);
     }
 
     @Test
@@ -715,6 +654,39 @@ public class SprintServiceDDDTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Ensure closing a sprint with optional user story empty")
+    void ensureUpdateProductBacklogWithOptionalUserStoryEmpty() {
+        // Arrange
+        SprintID sprintID = mock(SprintID.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCode);
+
+        Optional<ProjectDDD> projectOptional = Optional.of(mock(ProjectDDD.class));
+        Optional<SprintDDD> sprintOptional = Optional.of(mock(SprintDDD.class));
+        when(projectRepository.getByID(projectCode)).thenReturn(projectOptional);
+        when(sprintRepository.getByID(sprintID)).thenReturn(sprintOptional);
+        ProjectDDD project = projectOptional.get();
+        SprintDDD sprint = sprintOptional.get();
+
+        List<UserStoryID> list = new ArrayList<>();
+        when(sprint.listOfUserStoriesInSprintWithStatusDone()).thenReturn(list);
+        UserStoryID userStoryID1 = mock(UserStoryID.class);
+        list.add(userStoryID1);
+
+        Optional<UserStoryDDD> userStoryOptional = Optional.empty();
+        when(userStoryRepository.getByID(userStoryID1)).thenReturn(userStoryOptional);
+
+        ProjectDDD savedProject = mock(ProjectDDD.class);
+        when(projectRepository.replace(project)).thenReturn(savedProject);
+
+        // Act
+        boolean result = sprintService.updateProductBacklogAndUserStoryStatus(sprintID);
+
+        // Assert
+        assertTrue(result);
     }
     @Test
     @DisplayName("Ensure userStoryInSprintList is successfully retrieved")
@@ -760,7 +732,7 @@ public class SprintServiceDDDTest {
         List<UserStoryID> productBacklog = new ArrayList<>();
         UserStoryID userStoryID = new UserStoryID(newAddUsToSprintBacklogDTO.userStoryNumber, newAddUsToSprintBacklogDTO.projectCode);
         productBacklog.add(userStoryID);
-        when(projectDDDMock.getProductBacklog()).thenReturn(productBacklog);
+        when(projectDDDMock. getProductBacklog()).thenReturn(productBacklog);
         Optional<UserStoryDDD> userStoryDDD = mock(Optional.class);
         UserStoryDDD userStoryDDDMock = mock(UserStoryDDD.class);
         when(userStoryRepository.getByID(userStoryID)).thenReturn(userStoryDDD);

@@ -5,7 +5,6 @@ import org.switch2022.project.model.valueobject.UserStoryPriority;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The class ProductBacklog stores a list of UserStoryID
@@ -66,10 +65,12 @@ class ProductBacklogDDD {
         return List.copyOf(this.openUserStories);
     }
 
-    protected void removeUserStoryIDs(List<UserStoryID> listOfUserStoryID) {
-        for (UserStoryID userStoryID : listOfUserStoryID) {
+    /**
+     * Removes the userStoryID from the productBacklog
+     *
+     */
+    protected void removeUserStoryID(UserStoryID userStoryID) {
             openUserStories.remove(userStoryID);
-        }
     }
 }
 

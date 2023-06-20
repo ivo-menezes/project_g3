@@ -6,7 +6,6 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
-import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
@@ -15,8 +14,6 @@ import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
 import org.switch2022.project.model.valueobject.UserStoryInSprintID;
-import org.switch2022.project.repository.SprintRepository;
-import org.switch2022.project.repository.UserStoryRepository;
 import org.switch2022.project.service.irepositories.IProjectRepository;
 import org.switch2022.project.service.irepositories.ISprintRepository;
 import org.switch2022.project.service.irepositories.IUserStoryRepository;
@@ -189,6 +186,13 @@ public class SprintServiceDDD {
         return false;
     }
 
+    /**
+     * updates the product backlog when a sprint is closed, removing the IDs of the closed sprint with status done
+     * updates the status of a user story, changing to Done
+     *
+     * @param sprintID the id of the sprint
+     * @return true projectOptional and sprintOptional are not empty, false otherwise
+     */
     public boolean updateProductBacklogAndUserStoryStatus(SprintID sprintID) {
         ProjectCode projectCode = sprintID.getProjectCode();
         Optional<ProjectDDD> projectOptional = projectRepository.getByID(projectCode);
@@ -205,9 +209,9 @@ public class SprintServiceDDD {
                     UserStoryDDD userStory = userStoryOptional.get();
                     userStory.setUserStoryStatus(UserStoryStatus.DONE);
                     userStoryRepository.replace(userStory);
+                    project.removeUserStoryID(userStoryID);
                 }
             }
-            project.removeUserStoryIDs(listOfUserStoryWithStatusDone);
             projectRepository.replace(project);
             return true;
         } else {
