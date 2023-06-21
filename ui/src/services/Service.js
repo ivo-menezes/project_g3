@@ -69,3 +69,11 @@ export const postResourceToBackend = (success, failure, projectCode, resource) =
         .then(response => success(response))
         .catch(error => failure(error))
 }
+
+//Calls the updateUsInSprintStatus method in the sprintController.
+export const patchStatusSprintToBackend = (success, failure, updatedSprint) => {
+    const ENDPOINT = `projects/${updatedSprint.projectCode}/sprints`
+    axios.patch(API_URL + ENDPOINT, updatedSprint)
+        .then(response => success(response))
+        .catch(error => failure(error))
+}

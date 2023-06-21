@@ -1,7 +1,12 @@
 import {
     fetchBacklogFromBackend,
-    fetchProjectsFromBackend, fetchResourcesFromBackend,
-    fetchSprintsFromBackend, postProjectToBackend, postResourceToBackend, postSprintToBackend,
+    fetchProjectsFromBackend,
+    fetchResourcesFromBackend,
+    fetchSprintsFromBackend,
+    patchStatusSprintToBackend,
+    postProjectToBackend,
+    postResourceToBackend,
+    postSprintToBackend,
     postUserStoryToBackend
 } from "../services/Service";
 
@@ -219,4 +224,13 @@ export const postResource = (dispatch, projectCode, resource, navigate) => {
         projectCode,
         resource
     )
+}
+
+export const setSprintStatus = (dispatch, updatedSprint) => {
+    //fetchSprints function to fetch the sprints and update the state using dispatch.
+    patchStatusSprintToBackend(() => fetchSprints(dispatch,updatedSprint.projectCode),
+                        //Function to handle errors and print to console
+                        (error) => console.log(error),
+                               //Is the status object that contains information about the status of the sprint
+                                updatedSprint)
 }

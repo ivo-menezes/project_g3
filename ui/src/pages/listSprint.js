@@ -1,10 +1,11 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import Table from "../components/table";
 import {useParams, useNavigate, useLocation} from "react-router-dom";
 import AppContext from "../context/AppContext";
-import {fetchSprints} from "../context/Actions";
+import {fetchSprints, setSprintStatus} from "../context/Actions";
+import DropDownList from "../components/dropDownList";
 
 // Array defining the headers for the table
 const headers = [
@@ -38,12 +39,38 @@ const ListSprints = () => {
     const handleViewSprintBacklog = (sprintNumber) => {
         navigate(`/sprintBacklog/${projectCode}/${sprintNumber}`);
     };
+
+    const statusValue = [
+        "Open",
+        "Closed"
+    ]
+
+    //Function to handle status change in sprint in DropDownList component
+    const handleChangeStatus = (event) => {
+        const sprintNumber = event.target.name;
+        const sprintStatus = event.target.value;
+        //Object expected by the backend
+        const updatedSprint = {projectCode, sprintNumber, sprintStatus}
+
+        //Call to the "setSprintStatus" function that is implemented in "Context-Action".
+        setSprintStatus(dispatch, updatedSprint);
+    }
+
     // Mapping sprints to a formatted array
     const sprints = sprintInProject.map((sprint) => ({
         sprintNumber: sprint.sprintNumber,
         startDate: sprint.startDate,
         endDate: sprint.endDate,
-        status: "status",
+        status: (<div className="dropDownList">
+            <DropDownList
+                mandatory={true}
+                label=''
+                name={sprint.sprintNumber}
+                items={statusValue}
+                value={sprint.status}
+                onChange={handleChangeStatus}
+            />
+        </div>),
         view: ( <>
                 <img
                     className="button-view"
@@ -65,7 +92,6 @@ const ListSprints = () => {
     const handleRowClick = (id) => {
         navigate(`/viewProject/${id}`);
     };
-
 
     return (
         <div>
