@@ -112,7 +112,7 @@ public class SprintController {
         }
     }
 
-    @PatchMapping("/addUserStoryToSprintBacklog")
+    @PatchMapping("{sprintNumber}/addUserStoryToSprintBacklog")
     public ResponseEntity<AddUsInSprintToBacklogDTO> addUSToOpenSprintBacklog(@RequestBody AddUsToSprintBacklogDTO restDto) {
         try {
             NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO = userStoryRestDtoMapper.toSprintBacklogDomainDTO(restDto);
