@@ -5,12 +5,9 @@ import org.switch2022.project.mapper.*;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
-import org.switch2022.project.model.sprint.ISprintFactory;
-import org.switch2022.project.model.sprint.SprintDDD;
-import org.switch2022.project.model.sprint.AssembledUS;
+import org.switch2022.project.model.sprint.*;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
-import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
 import org.switch2022.project.model.valueobject.TimePeriod;
@@ -293,9 +290,10 @@ public class SprintServiceDDD {
             if (sprintDDD.isEmpty()) {
                 throw new IllegalArgumentException("Sprint is empty.");
             }
-            List<UserStoryInSprint> userStoriesInSprint = sprintDDD.get().getUserStoriesInSprintList();
+            List<UserStoryInSprint> userStoriesInSprint = new ArrayList<>(sprintDDD.get().getUserStoriesInSprintList());
             UserStoryInSprintID userStoryInSprintID = new UserStoryInSprintID(sprintIDFromDTO, userStoryIdFromDTO);
             UserStoryInSprint userStoryInSprint = new UserStoryInSprint(userStoryInSprintID, newAddUsToSprintBacklogDTO.userStoryEffortEstimate, userStoryStatus);
+
             userStoriesInSprint.add(userStoryInSprint);
             userStoryInSprintDTO = userStoryInSprintDTOMapper.toDto(userStoryInSprint);
         } else {
