@@ -43,8 +43,4 @@ public interface RepositoryNew<ID extends DomainId, T extends AggregateRoot<ID>>
      */
     boolean containsID(ID id);
 
-    /**
-     * Deletes all entities in the repository.
-     */
-    void clearRepository();
 }

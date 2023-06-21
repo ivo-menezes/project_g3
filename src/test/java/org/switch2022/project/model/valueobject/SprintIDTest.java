@@ -17,7 +17,7 @@ class SprintIDTest {
     @Test
     @DisplayName("Check if sprint ID is created")
     public void checkIfSprintIdIsCreated() {
-        new SprintID(projectCode, sprintNumber);
+        assertInstanceOf(SprintID.class, new SprintID(projectCode, sprintNumber));
     }
 
     @Test

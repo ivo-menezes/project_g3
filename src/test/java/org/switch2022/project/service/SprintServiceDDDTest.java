@@ -52,7 +52,7 @@ public class SprintServiceDDDTest {
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository,userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper);
+        assertInstanceOf(SprintServiceDDD.class,new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository,userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
     }
     @Test
     public void ensureServiceThrowsExceptionForFactory(){

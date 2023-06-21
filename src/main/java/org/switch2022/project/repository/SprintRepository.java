@@ -105,18 +105,11 @@ public class SprintRepository implements ISprintRepository {
         SprintJpaID jpaID = sprintAssemblerData.convertToSprintJpaID(id);
         Optional<SprintJPA> sprintJPAOptional = sprintJpaRepository.findById(jpaID);
 
-        if(sprintJPAOptional.isEmpty()) {
-            return Optional.empty();
-        }else {
+        if(sprintJPAOptional.isPresent()) {
             return Optional.of(sprintAssemblerData.toDomain(sprintJPAOptional.get()));
+        }else {
+            return Optional.empty();
         }
-    }
-    /**
-     * Used to clear the repository
-     */
-    @Override
-    public void clearRepository() {
-        sprintJpaRepository.deleteAll();
     }
 
     /** This method should return a sprint list with the project Code provided.

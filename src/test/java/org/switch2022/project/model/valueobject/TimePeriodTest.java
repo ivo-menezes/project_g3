@@ -42,7 +42,7 @@ class TimePeriodTest {
     public void checkIfClassCreatesValidTimePeriod() {
 
          //act
-        new TimePeriod(startDate, endDate);
+        assertInstanceOf(TimePeriod.class, new TimePeriod(startDate, endDate));
 
     }
 
