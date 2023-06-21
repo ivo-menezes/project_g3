@@ -1,8 +1,10 @@
 package org.switch2022.project.mapper.REST;
 
+
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.mapper.UserStoryInSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class UserStoryRestDtoMapperTest {
 
@@ -109,21 +112,29 @@ class UserStoryRestDtoMapperTest {
     @Test
     void toSprintBacklogRestDto() {
         // Arrange
-        NewAddUsToSprintBacklogDTO dtoDouble = mock(NewAddUsToSprintBacklogDTO.class);
-        ProjectCode projectCodeDouble = mock(ProjectCode.class);
-        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
-        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
-        UserStoryEffortEstimate userStoryEffortEstimateDouble = mock(UserStoryEffortEstimate.class);
+        UserStoryInSprintDTO userStoryInSprintDTO = new UserStoryInSprintDTO();
+        UserStoryInSprintID userStoryInSprintID = mock(UserStoryInSprintID.class);
+        UserStoryEffortEstimate userStoryEffortEstimate = mock(UserStoryEffortEstimate.class);
+        UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
+        userStoryInSprintDTO.userStoryInSprintID = userStoryInSprintID;
+        userStoryInSprintDTO.userStoryEffortEstimate = userStoryEffortEstimate;
+        userStoryInSprintDTO.userStoryStatus = userStoryStatus;
 
-        dtoDouble.projectCode = projectCodeDouble;
-        dtoDouble.sprintNumber = sprintNumberDouble;
-        dtoDouble.userStoryNumber = userStoryNumberDouble;
-        dtoDouble.userStoryEffortEstimate = userStoryEffortEstimateDouble;
+        SprintID sprintID = mock(SprintID.class);
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        when(userStoryInSprintDTO.userStoryInSprintID.getSprintID()).thenReturn(sprintID);
+        when(userStoryInSprintDTO.userStoryInSprintID.getUserStoryID()).thenReturn(userStoryID);
+        ProjectCode projectCodeDouble = mock(ProjectCode.class);
+        when(sprintID.getProjectCode()).thenReturn(projectCodeDouble);
+        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
+        when(sprintID.getSprintNumber()).thenReturn(sprintNumberDouble);
+        UserStoryNumber userStoryNumberDouble = mock(UserStoryNumber.class);
+        when(userStoryID.getUserStoryNumber()).thenReturn(userStoryNumberDouble);
 
         // Act
-        AddUsToSprintBacklogDTO result = mapper.toSprintBacklogRestDTO(dtoDouble);
+        AddUsInSprintToBacklogDTO result = mapper.toSprintBacklogRestDTO(userStoryInSprintDTO);
 
         // Assert
-        assertInstanceOf(AddUsToSprintBacklogDTO.class, result);
+        assertInstanceOf(AddUsInSprintToBacklogDTO.class, result);
     }
 }

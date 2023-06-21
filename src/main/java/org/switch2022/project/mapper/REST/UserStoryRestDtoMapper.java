@@ -3,6 +3,7 @@ package org.switch2022.project.mapper.REST;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
 import org.switch2022.project.mapper.NewUserStoryInfoDTO;
+import org.switch2022.project.mapper.UserStoryInSprintDTO;
 import org.switch2022.project.model.valueobject.*;
 
 import java.util.ArrayList;
@@ -59,14 +60,17 @@ public class UserStoryRestDtoMapper {
         return sprintBacklogDomainDto;
     }
 
-    public AddUsToSprintBacklogDTO toSprintBacklogRestDTO(NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO) {
+    public AddUsInSprintToBacklogDTO toSprintBacklogRestDTO(UserStoryInSprintDTO userStoryInSprintDTO) {
 
-        AddUsToSprintBacklogDTO sprintBacklogRestDto = new AddUsToSprintBacklogDTO();
-        sprintBacklogRestDto.projectCode = newAddUsToSprintBacklogDTO.projectCode.toString();
-        sprintBacklogRestDto.sprintNumber = newAddUsToSprintBacklogDTO.sprintNumber.getValue();
-        sprintBacklogRestDto.userStoryNumber = newAddUsToSprintBacklogDTO.userStoryNumber.toString();
-        sprintBacklogRestDto.userStoryEffortEstimate = newAddUsToSprintBacklogDTO.userStoryEffortEstimate.getValue();
+        AddUsInSprintToBacklogDTO addUsInSprintToBacklogDTO = new AddUsInSprintToBacklogDTO();
+        SprintID sprintID = userStoryInSprintDTO.userStoryInSprintID.getSprintID();
+        UserStoryID userStoryID = userStoryInSprintDTO.userStoryInSprintID.getUserStoryID();
+        addUsInSprintToBacklogDTO.projectCode = sprintID.getProjectCode().toString();
+        addUsInSprintToBacklogDTO.sprintNumber = sprintID.getSprintNumber().getValue();
+        addUsInSprintToBacklogDTO.userStoryNumber = userStoryID.getUserStoryNumber().toString();
+        addUsInSprintToBacklogDTO.userStoryEffortEstimate = userStoryInSprintDTO.userStoryEffortEstimate.getValue();
+        addUsInSprintToBacklogDTO.userStoryStatus = userStoryInSprintDTO.userStoryStatus.toString();
 
-        return sprintBacklogRestDto;
+        return addUsInSprintToBacklogDTO;
     }
 }

@@ -31,9 +31,9 @@ Springboot -> Controller : addUStoSprintBacklog(addUSToSprintBacklogDTO)
 activate Controller #FFBBBB
 Controller -> UserStoryRestDtoMapper : toDomainDto(addUStoSprintBacklogDTO)
 activate UserStoryRestDtoMapper #FFBBBB
-UserStoryRestDtoMapper --> Controller : domainDTO
+UserStoryRestDtoMapper --> Controller : NewAddUsToSprintBackLogDTO
 deactivate UserStoryRestDtoMapper
-Controller -> Services : addUStoSprintBacklog(domainDTO)
+Controller -> Services : addUStoSprintBacklog(newAddUsToSprintBackLogDTO)
 activate Services #FFBBBB
 
 Services -> IProjectRepository : getProjectByID(projectCode)
@@ -78,15 +78,15 @@ deactivate SprintBacklog
 
 Services -> UserStoryMapper : toDTO(savedUserStory)
 activate UserStoryMapper #FFBBBB
-UserStoryMapper --> Services : NewUserStoryInfoDTO
+UserStoryMapper --> Services : UserStoryInSprintDTO
 deactivate UserStoryMapper
 
-Services --> Controller : NewUserStoryInfoDTO
+Services --> Controller : UserStoryInSprintDTO
 deactivate Services
 
-Controller -> UserStoryRestDtoMapper : toRestDto(NewUserStoryInfoDTO)
+Controller -> UserStoryRestDtoMapper : toSprintBacklogRestDto(UserStoryInSprintDTO)
 activate UserStoryRestDtoMapper #FFBBBB
-UserStoryRestDtoMapper --> Controller : restDto
+UserStoryRestDtoMapper --> Controller : addUsInSprintBacklogDTO
 deactivate UserStoryRestDtoMapper
 Controller --> response ** : addToSprintBacklog(restDto, HttpStatus.CREATED)
 
