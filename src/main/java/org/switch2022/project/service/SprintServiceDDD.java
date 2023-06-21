@@ -106,7 +106,8 @@ public class SprintServiceDDD {
     }
 
     /**
-     * Creates a sprint and adds it to the sprintRepository, unless there is an overlap with the previous sprint
+     * Creates a sprint and adds it to the sprintRepository, unless there is an overlap with the previous sprints or
+     * the sprint time period is not contained within the project's.
      *
      * @param sprintDTO a DTO with info to create the sprint with VOs, received from
      *                  the controller;
@@ -169,23 +170,25 @@ public class SprintServiceDDD {
     }
 
     /**
-     * Checks if a new sprint's time period overlaps with the time period of the last sprint in a project.
+     * Checks if a new sprint's time period overlaps with the time period of the previous sprints in a project.
      *
-     * @param projectCode         the project code to check for the last sprint
+     * @param projectCode         the project code to check for the previous sprints
      * @param newSprintTimePeriod the time period of the new sprint to be checked for overlap
      * @return true if there is an overlap between the time periods, false otherwise
      */
 
     private boolean hasTimePeriodOverlap(ProjectCode projectCode, TimePeriod newSprintTimePeriod) {
-        Optional<SprintDDD> lastSprintOptional = iSprintRepository.findLastSprintByProjectCode(projectCode);
-        if (lastSprintOptional.isPresent()) {
-            SprintDDD lastSprint = lastSprintOptional.get();
-            TimePeriod lastSprintTimePeriod = lastSprint.getTimePeriod();
+        List<SprintDDD> sprintList = iSprintRepository.findByProjectCode(projectCode);
+        boolean hasOverlap = false;
 
-            return TimePeriodUtils.timePeriodsOverlap(lastSprintTimePeriod, newSprintTimePeriod);
+        for (SprintDDD sprint : sprintList) {
+            TimePeriod previousSprintTimePeriod = sprint.getTimePeriod();
+            if(TimePeriodUtils.timePeriodsOverlap(previousSprintTimePeriod, newSprintTimePeriod)){
+                hasOverlap = true;
+                break;
+            }
         }
-
-        return false;
+        return hasOverlap;
     }
 
     /**
