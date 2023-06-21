@@ -41,6 +41,7 @@ const ListSprints = () => {
     };
 
     const statusValue = [
+        "Planned",
         "Open",
         "Closed"
     ]
@@ -61,7 +62,7 @@ const ListSprints = () => {
         sprintNumber: sprint.sprintNumber,
         startDate: sprint.startDate,
         endDate: sprint.endDate,
-        status: (<div className="dropDownList">
+        status: (<div className="dropDownStatus">
             <DropDownList
                 mandatory={true}
                 label=''
