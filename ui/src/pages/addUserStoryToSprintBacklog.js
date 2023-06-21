@@ -5,6 +5,7 @@ import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
 import {fetchBacklog} from "../context/Actions";
+import DropDownList from "../components/dropDownList";
 
 const headers = [
     {label: "Number", key: "number"},
@@ -33,43 +34,27 @@ const AddUserStory = () => {
     }, []);
 
     const backlogForProject = state.backlogs.data;
-    // table component renders columns in the same order as the object properties...
-    // to match the headers, need to sort the object properties
-    const sortedBacklog = JSON.parse(
-        JSON.stringify(backlogForProject, [
-            "projectCode",
-            "userStoryNumber",
-            "actor",
-            "description",
-            "status",
-            "priority",
-            "acceptanceCriteria",
-        ])
-    );
 
     // Define a state variable to store the selected user stories
     const [selectedUserStories, setSelectedUserStories] = useState([]);
+    const [effort, setEffort] = useState();
 
     // Function to add or remove the selected User Stories from the selectedUserStories state based on the checkbox status
     const handleSelectUS = (userStoryNumber) => {
-        setSelectedUserStories((prevSelectedUserStories) => {
-            if (prevSelectedUserStories.includes(userStoryNumber)) {
-                // User Story already selected, remove it
-                return prevSelectedUserStories.filter(
-                    (story) => story !== userStoryNumber
-                );
-            } else {
-                // User Story not selected, add it
-                return [...prevSelectedUserStories, userStoryNumber];
-            }
-        });
+        setSelectedUserStories(userStoryNumber);
+    };
+
+    const effortValues = [0.5, 1, 2, 3, 5, 8, 13, 20, 40]
+
+    const handleSelectEffort = (event) => {
+        const effortValue = event.target.value;
+        setEffort(effortValue)
     };
 
     // Update the finalBacklog array based on selectedUserStories
-    const updatedFinalBacklog = sortedBacklog.map((backlogForProject) => {
-        const isSelected = selectedUserStories.includes(
-            backlogForProject.userStoryNumber
-        );
+    const updatedFinalBacklog = backlogForProject.map((backlogForProject) => {
+
+        const isSelected = selectedUserStories.includes(backlogForProject.userStoryNumber);
 
         return {
             number: backlogForProject.userStoryNumber,
@@ -79,40 +64,34 @@ const AddUserStory = () => {
             priority: backlogForProject.priority,
             ac: backlogForProject.acceptanceCriteria,
             select: (
-                <input
-                    type="checkbox"
-                    onChange={() => handleSelectUS(backlogForProject.userStoryNumber)}
-                    checked={isSelected}
-                />
+                <div>
+                    <input
+                        type="radio"
+                        name="US"
+                        onChange={() => handleSelectUS(backlogForProject.userStoryNumber)}
+                    />
+
+                    {isSelected ?  (
+                        <div>
+                            <DropDownList
+                                mandatory={true}
+                                label=''
+                                name={"effort"}
+                                items={effortValues}
+                                onChange={handleSelectEffort}
+                            />
+                        </div>
+                    ) : (<div></div>)
+                    }
+
+                </div>
             ),
         };
     });
 
-/*      const finalBacklog = sortedBacklog.map((backlogForProject) => ({
-        number: backlogForProject.userStoryNumber,
-        actor: backlogForProject.actor,
-        description: backlogForProject.description,
-        status: backlogForProject.status,
-        priority: backlogForProject.priority,
-        ac: backlogForProject.acceptanceCriteria,
-        select: (
-            <input
-                type="checkbox"
-                onChange={() => handleSelectUS(backlogForProject.userStoryNumber)}
-            />
-        ),
-
-    }));*/
-
     const handleAddUserStory = () => {
-        // Filter the backlogForProject to get the selected User Story objects
-        const selectedStories = backlogForProject.filter(
-            (story) => selectedUserStories.includes(story.userStoryNumber)
-        );
-
-        // Dispatch an action to add the selected User Stories to the sprint backlog
-        // You need to define the action and handle it in your context reducer
-        dispatch({ type: "ADD_USER_STORIES_TO_SPRINT", stories: selectedStories });
+        console.log(`adding user story ${selectedUserStories} with effort ${effort} to project ${projectCode}`)
+        // addUserStoryToSprintBacklog(...)
 
         // Navigate back to the sprint backlog page
         handleBackToSprintBacklog();
@@ -141,7 +120,6 @@ const AddUserStory = () => {
                         className="table-b"
                         data={updatedFinalBacklog}
                         headers={headers}
-                        selectedUserStories={selectedUserStories} // Pass selectedUserStories as a prop
                         onSelectUS={handleSelectUS} // Pass handleSelectUS as a prop
                     />
                 ) : (
