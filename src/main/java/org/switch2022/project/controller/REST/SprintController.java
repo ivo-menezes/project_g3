@@ -4,17 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.mapper.REST.*;
-import org.switch2022.project.mapper.NewUserStoryInfoDTO;
 import org.switch2022.project.mapper.REST.InputUsInSprintStatusDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
-import org.switch2022.project.mapper.UpdateSprintDTO;
-import org.switch2022.project.mapper.UpdateSprintDomainDTO;
-import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
-import org.switch2022.project.model.userStory.UserStoryDDD;
-import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.SprintServiceDDD;
 
@@ -28,16 +23,22 @@ public class SprintController {
     private final SprintServiceDDD service;
 
     private final SprintRestDTOMapper mapper;
+    private final UserStoryRestDtoMapper userStoryRestDtoMapper;
 
-    public SprintController(SprintServiceDDD service, SprintRestDTOMapper mapper) {
+
+    public SprintController(SprintServiceDDD service, SprintRestDTOMapper mapper, UserStoryRestDtoMapper userStoryRestDtoMapper) {
         if(service == null){
             throw new IllegalArgumentException("Sprint Service cannot be null/nonexistent");
         }
         if(mapper == null){
             throw new IllegalArgumentException("Sprint Mapper cannot be null/nonexistent");
         }
+        if(userStoryRestDtoMapper == null){
+            throw new IllegalArgumentException("User Story Mapper cannot be null/nonexistent");
+        }
         this.service = service;
         this.mapper = mapper;
+        this.userStoryRestDtoMapper = userStoryRestDtoMapper;
     }
 
     /***
@@ -111,10 +112,16 @@ public class SprintController {
         }
     }
 
-    /*public ResponseEntity<restDto> addUSToOpenSprintBacklog(@RequestBody AddUsToSprintBacklogDTO restDto) {
+    @PatchMapping("/addUserStoryToSprintBacklog")
+    public ResponseEntity<AddUsInSprintToBacklogDTO> addUSToOpenSprintBacklog(@RequestBody AddUsToSprintBacklogDTO restDto) {
         try {
-            UserStoryRestDtoMapper domainDTO = mapper.
-        }
+            NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO = userStoryRestDtoMapper.toSprintBacklogDomainDTO(restDto);
+            UserStoryInSprintDTO userStoryInSprintDTO = service.addUsToSprintBacklog(newAddUsToSprintBacklogDTO);
+            AddUsInSprintToBacklogDTO addUsInSprintToBacklogDTO = userStoryRestDtoMapper.toSprintBacklogRestDTO(userStoryInSprintDTO);
+            return new ResponseEntity<>(addUsInSprintToBacklogDTO, HttpStatus.ACCEPTED);
 
-    }*/
+        } catch (IllegalArgumentException exception) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

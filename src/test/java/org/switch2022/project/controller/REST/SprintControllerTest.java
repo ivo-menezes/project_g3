@@ -14,12 +14,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.switch2022.project.mapper.REST.InputUsInSprintStatusDTO;
-import org.switch2022.project.mapper.REST.SprintRestDTO;
-import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
-import org.switch2022.project.mapper.UpdateSprintDTO;
-import org.switch2022.project.mapper.UpdateSprintDomainDTO;
-import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
+import org.switch2022.project.mapper.*;
+import org.switch2022.project.mapper.REST.*;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
@@ -42,8 +38,11 @@ class SprintControllerTest {
     SprintServiceDDD serviceDDD;
     @MockBean
     SprintRestDTOMapper sprintMapper;
+    @MockBean
+    UserStoryRestDtoMapper userStoryRestDtoMapper;
     @Autowired
     SprintController sprintController;
+
 
     @BeforeEach
     public void setUp() {
@@ -58,7 +57,7 @@ class SprintControllerTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintController(null, sprintMapper);
+            new SprintController(null, sprintMapper, userStoryRestDtoMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -71,7 +70,7 @@ class SprintControllerTest {
 
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()-> {
-            new SprintController(serviceDDD, null);
+            new SprintController(serviceDDD, null, userStoryRestDtoMapper);
         });
         String result = exception.getMessage();
         // assert
@@ -291,5 +290,28 @@ class SprintControllerTest {
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(),400);
+    }
+
+    @DisplayName("Ensure that UserStoryInSprint was added to sprint backlog")
+    @Test
+    public void addUsToSprintBacklogSuccessfully(){
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO = mock(NewAddUsToSprintBacklogDTO.class);
+        UserStoryInSprintDTO userStoryInSprintDTO = mock(UserStoryInSprintDTO.class);
+        AddUsToSprintBacklogDTO addUsToSprintBacklogDTO = mock(AddUsToSprintBacklogDTO.class);
+        AddUsInSprintToBacklogDTO addUsInSprintToBacklogDTO = mock(AddUsInSprintToBacklogDTO.class);
+
+        when(userStoryRestDtoMapper.toSprintBacklogDomainDTO(addUsToSprintBacklogDTO)).thenReturn(newAddUsToSprintBacklogDTO);
+        when(serviceDDD.addUsToSprintBacklog(newAddUsToSprintBacklogDTO)).thenReturn(userStoryInSprintDTO);
+        when(userStoryRestDtoMapper.toSprintBacklogRestDTO(userStoryInSprintDTO)).thenReturn(addUsInSprintToBacklogDTO);
+
+        //Act
+        ResponseEntity<AddUsInSprintToBacklogDTO> responseEntity = sprintController.addUSToOpenSprintBacklog(addUsToSprintBacklogDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(),202);
     }
 }

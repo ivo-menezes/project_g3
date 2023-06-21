@@ -10,7 +10,7 @@ participant "addUSToSprintBacklogDTO:addUSToSprintBacklogDTO" as dto
 participant ": SprintController" as Controller
 participant ": UserStoryRestDtoMapper" as UserStoryRestDtoMapper
 participant ": SprintService" as Services
-participant "response : ResponseEntity<resDto>" as response
+participant "response : ResponseEntity<addUsInSprintBacklogDTO>" as response
 participant ": IProjectRepository" as IProjectRepository
 participant ": Project" as Project
 participant ": ProductBacklog" as ProductBacklog
@@ -88,7 +88,7 @@ Controller -> UserStoryRestDtoMapper : toSprintBacklogRestDto(UserStoryInSprintD
 activate UserStoryRestDtoMapper #FFBBBB
 UserStoryRestDtoMapper --> Controller : addUsInSprintBacklogDTO
 deactivate UserStoryRestDtoMapper
-Controller --> response ** : addToSprintBacklog(restDto, HttpStatus.CREATED)
+Controller --> response ** : addToSprintBacklog(addUsInSprintBacklogDTO, HttpStatus.CREATED)
 
 Controller --> Client: confirm
 deactivate Controller
