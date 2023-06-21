@@ -10,9 +10,11 @@ import org.switch2022.project.mapper.REST.InputUsInSprintStatusDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTO;
 import org.switch2022.project.mapper.REST.SprintRestDTOMapper;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.SprintServiceDDD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -123,5 +125,25 @@ public class SprintController {
         } catch (IllegalArgumentException exception) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping( "{sprintNumber}/getSprintBacklog")
+    public ResponseEntity<List<AssembledUSRestDto>> getSprintBacklog (@PathVariable ProjectCode projectCode,
+                                                                      @PathVariable SprintNumber sprintNumber ) {
+        try{
+            SprintID sprintID = new SprintID(projectCode,sprintNumber);
+
+            List<UserStoryInSprint> userStoryInSprintList = service.getUserStoryInSprintList(sprintID);
+            List<NewAssembledUSDTO> assembledUSDTOList = service.createListOfAssembledUS(userStoryInSprintList);
+
+            List<AssembledUSRestDto> restDtoList = new ArrayList<>();
+            for (NewAssembledUSDTO newAssembledUSDTO : assembledUSDTOList) {
+                restDtoList.add(mapper.assembledUSToRestDto(newAssembledUSDTO));
+            }
+            return new ResponseEntity<>(restDtoList,HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }

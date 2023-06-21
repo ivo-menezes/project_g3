@@ -17,8 +17,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.switch2022.project.mapper.*;
 import org.switch2022.project.mapper.REST.*;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
+import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.service.SprintServiceDDD;
 
 import java.util.ArrayList;
@@ -313,5 +315,74 @@ class SprintControllerTest {
 
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(),202);
+    }
+
+
+    @DisplayName("Ensure that the Sprint Backlog List is returned with httpStatus 200.")
+    @Test
+    public void ensureSprintBacklogListIsReturnedWithOK(){
+        //Arrange
+
+        ProjectCode projectCode = new ProjectCode("P1");
+        SprintNumber sprintNumber = new SprintNumber(1);
+        SprintID sprintID = new SprintID(projectCode,sprintNumber);
+
+
+        UserStoryInSprint userStoryInSprintDoubleOne = mock(UserStoryInSprint.class);
+        UserStoryInSprint userStoryInSprintDoubleTwo = mock(UserStoryInSprint.class);
+
+        NewAssembledUSDTO newAssembledUSDTODoubleOne = mock(NewAssembledUSDTO.class);
+        NewAssembledUSDTO newAssembledUSDTODoubleTwo = mock(NewAssembledUSDTO.class);
+
+        AssembledUSRestDto assembledUSRestDtoDoubleOne = mock(AssembledUSRestDto.class);
+        AssembledUSRestDto assembledUSRestDtoDoubleTwo = mock(AssembledUSRestDto.class);
+
+
+        List<UserStoryInSprint> userStoryInSprintList = new ArrayList<>();
+        userStoryInSprintList.add(userStoryInSprintDoubleOne);
+        userStoryInSprintList.add(userStoryInSprintDoubleTwo);
+
+
+        List<NewAssembledUSDTO> newAssembledUSDTOList = new ArrayList<>();
+        newAssembledUSDTOList.add(newAssembledUSDTODoubleOne);
+        newAssembledUSDTOList.add(newAssembledUSDTODoubleTwo);
+
+        List<AssembledUSRestDto> restDtoList = new ArrayList<>();
+        restDtoList.add(assembledUSRestDtoDoubleOne);
+        restDtoList.add(assembledUSRestDtoDoubleTwo);
+
+        when(serviceDDD.getUserStoryInSprintList(sprintID)).thenReturn(userStoryInSprintList);
+        when(serviceDDD.createListOfAssembledUS(userStoryInSprintList)).thenReturn(newAssembledUSDTOList);
+
+        when(sprintMapper.assembledUSToRestDto(newAssembledUSDTODoubleOne)).thenReturn(assembledUSRestDtoDoubleOne);
+        when(sprintMapper.assembledUSToRestDto(newAssembledUSDTODoubleTwo)).thenReturn(assembledUSRestDtoDoubleTwo);
+
+        //Act
+        ResponseEntity<List<AssembledUSRestDto>> response = sprintController.getSprintBacklog(projectCode,sprintNumber);
+
+        //Assert
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(restDtoList, response.getBody());
+
+    }
+
+    @DisplayName("ensure consulting sprint Backlog returns HTTP status 404 - Not Found when service throws exception")
+    @Test
+    void shouldReturnStatusNotFound() {
+
+        // Arrange
+
+        ProjectCode projectCode = new ProjectCode("P1");
+        SprintNumber sprintNumber = new SprintNumber(1);
+        SprintID sprintID = new SprintID(projectCode,sprintNumber);
+
+        when(serviceDDD.getUserStoryInSprintList(sprintID)).thenThrow(RuntimeException.class);
+
+        //Act
+        ResponseEntity<?> response = sprintController.getSprintBacklog(projectCode,sprintNumber);
+
+        // Assert
+        assertEquals(404, response.getStatusCodeValue());
+
     }
 }
