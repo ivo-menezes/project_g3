@@ -4,6 +4,7 @@ This css is organized by section, each of these addressing the following aspects
 - Header and Menu icons;
 - Table formatting for all pages;
 - Forms;
+- Dropdowns inserted in table columns;
 - Buttons;
 - Other style rules for specific pages.
 
@@ -389,12 +390,40 @@ header .logo
     font-weight: bold;
 }
 
-.dropDownStatus{
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* --- DROPDOWN TO INSERT IN TABLE COLUMNS (NOT FORMS! FOR THIS, SEE THE SECTION ABOVE - FORMS) ----------------- */
 
+    /* Styling the container div */
+.dropDownStatus {
+    display: inline-block; /* Display the container as an inline element in tables */
+    position: relative; /* Creates a local coordinate system for its positioned children: child elements with absolute position
+                            (the arrow elemente) will be positioned relative to this parent element */
 }
 
-    /* --- BUTTONS ------------------------------------------------------------------------------------------------------ */
+.dropDownStatus select {
+    width: 10vw; /* Adjusts the width */
+    font-size: 1.20rem; /* Adjust the font size */
+    font-family: Arial, sans-serif; /* Adjust the font family for the selected element*/
+    padding: 8px; /* Between the text and the border of the box */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none; /* Remove the default arrow */
+}
+
+    /* Styling the arrow icon */
+.dropDownStatus::after { /* Targets the arrow icon on the right side of the dropdown box */
+    content: "\25BE"; /* pseudo-element to the Unicode character for a downward-pointing triangle */
+    position: absolute;
+    top: 25%;
+    right: 8px;
+}
+
+    /* Styling the options */
+.dropDownStatus select option {
+    font-size: 1.2rem; /* Adjust the font size */
+    font-family: Arial, sans-serif; /* Adjust the font family */
+}
+
+/* --- BUTTONS ------------------------------------------------------------------------------------------------------ */
 
 /* button in Welcome page */
 .button-welcome {
