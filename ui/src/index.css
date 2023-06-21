@@ -789,6 +789,60 @@ a:link {
     top: 40vh;
 }
 
+/* AddUserStoryToSprintBacklog page style */
+
+    /* Styling the container div */
+.radioButton {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.table-b td.radioButton {
+    text-align: center;
+}
+
+.radioButton input[type="radio"] {
+    margin-right: 5px;
+}
+
+    /* Styling the dropdown elements */
+
+.dropDownEffort label {
+    font-size: 1.2rem; /* Adjust the font size of the dropdown list label */
+}
+
+.dropDownEffort select {
+    width: 5vw; /* Adjusts the width */
+    font-size: 1rem; /* Adjust the font size */
+    font-family: Arial, sans-serif; /* Adjust the font family for the selected element*/
+    padding-top: 8px; /* Between the text and the border of the box */
+    padding-bottom: 8px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+}
+
+/* Styling the arrow icon */
+.dropDownEffort::after { /* Targets the arrow icon on the right side of the dropdown box */
+    content: "\25BE"; /* pseudo-element to the Unicode character for a downward-pointing triangle */
+    position: absolute;
+    top: 25%;
+    right: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
