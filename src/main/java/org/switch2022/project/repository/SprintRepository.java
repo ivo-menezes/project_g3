@@ -150,26 +150,6 @@ public class SprintRepository implements ISprintRepository {
         return savedSprint;
     }
 
-    /**
-     * Finds the last sprint associated with a project based on its code
-     * @param projectCode the project code
-     * @return an Optional containing the last sprint, if found, or an empty optional, otherwise
-     */
-
-    public Optional<SprintDDD> findLastSprintByProjectCode(ProjectCode projectCode) {
-
-        Optional<SprintJPA> sprintJpaOptional =
-                sprintJpaRepository.
-                        findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc(projectCode.toString());
-        if (sprintJpaOptional.isPresent()) {
-            SprintJPA sprintJPA = sprintJpaOptional.get();
-            SprintDDD lastSprint = sprintAssemblerData.toDomain(sprintJPA);
-            return Optional.of(lastSprint);
-        } else {
-            return Optional.empty();
-        }
-    }
-
     public Optional<SprintDDD> findSprintBySprintID(SprintID sprintID) {
         //String projectCode = sprintID.getProjectCode().toString();
         //int sprintNumber = sprintID.getSprintNumber().getSprintNumber();

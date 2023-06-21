@@ -6,11 +6,9 @@ import org.switch2022.project.datamodel.JPA.SprintJPA;
 import org.switch2022.project.datamodel.JPA.SprintJpaID;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SprintJPARepository extends CrudRepository<SprintJPA, SprintJpaID> {
     @Query("SELECT s FROM SprintJPA s WHERE s.sprintID.projectCode = :projectCode")
     List<SprintJPA> findAllByProjectCode(String projectCode);
 
-    Optional<SprintJPA> findTopBySprintID_ProjectCodeOrderBySprintID_SprintNumberDesc(String projectCode);
 }

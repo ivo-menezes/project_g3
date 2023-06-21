@@ -329,9 +329,12 @@ public class SprintServiceDDDTest {
         sprintDTO.projectCode = projectCode;
         sprintDTO.timePeriod = newTimePeriod;
 
+        List<SprintDDD> sprintList = new ArrayList<>();
+        sprintList.add(lastSprint);
+
         //conferring behavior to the dependencies
         when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(sprintRepository.findByProjectCode(projectCode)).thenReturn(sprintList);
 
         //conferring behavior to startDate, endDate and timePeriod
         when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
@@ -370,6 +373,9 @@ public class SprintServiceDDDTest {
         SprintDDD lastSprint = mock(SprintDDD.class);
         TimePeriod lastTimePeriod = mock(TimePeriod.class);
 
+        List<SprintDDD> sprintList = new ArrayList<>();
+        sprintList.add(lastSprint);
+
         //setting up dates for mock TimePeriods
         Calendar calendar = Calendar.getInstance();
         calendar.set(2023, Calendar.APRIL, 1);
@@ -409,7 +415,7 @@ public class SprintServiceDDDTest {
         //conferring behavior to the dependencies
         when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
 
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(sprintRepository.findByProjectCode(projectCode)).thenReturn(sprintList);
         when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
 
         when(sprintRepository.save(newSprint)).thenReturn(newSprint);
@@ -438,6 +444,9 @@ public class SprintServiceDDDTest {
         SprintDDD lastSprint = mock(SprintDDD.class);
         TimePeriod lastTimePeriod = mock(TimePeriod.class);
 
+        List<SprintDDD> sprintList = new ArrayList<>();
+        sprintList.add(lastSprint);
+
         //setting up dates for mock TimePeriods
         Calendar calendar = Calendar.getInstance();
         calendar.set(2023, Calendar.APRIL, 1);
@@ -476,7 +485,7 @@ public class SprintServiceDDDTest {
 
         //conferring behavior to the dependencies
         when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(sprintRepository.findByProjectCode(projectCode)).thenReturn(sprintList);
         when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
 
         String expectedMessage = "The time period of the new sprint is not contained within the project's time period";
@@ -490,74 +499,6 @@ public class SprintServiceDDDTest {
         assertEquals(expectedMessage, resultMessage);
     }
 
-    @Test
-    @DisplayName("Ensure sprint is successfully created when lastSprint Optional is in fact empty")
-    void ensureNonOverlappingSprintIsSuccessfullyCreatedWithNoPreviousSprint() {
-        //Arrange
-        NewSprintDTO sprintDTO = mock(NewSprintDTO.class);
-        NewSprintDTO sprintDTO2 = mock(NewSprintDTO.class);
-        ProjectCode projectCode = mock(ProjectCode.class);
-
-        ProjectDDD project = mock(ProjectDDD.class);
-        TimePeriod projectTimePeriod = mock(TimePeriod.class);
-
-        SprintDDD newSprint = mock(SprintDDD.class);
-        TimePeriod newTimePeriod = mock(TimePeriod.class);
-
-        SprintDDD lastSprint = mock(SprintDDD.class);
-        TimePeriod lastTimePeriod = mock(TimePeriod.class);
-
-        //setting up dates for mock TimePeriods
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2023, Calendar.APRIL, 1);
-        Date firstStartDate = calendar.getTime();
-
-        calendar.set(2023, Calendar.APRIL, 10);
-        Date firstEndDate = calendar.getTime();
-
-        calendar.set(2023, Calendar.APRIL, 12);
-        Date secondStartDate = calendar.getTime();
-
-        calendar.set(2023, Calendar.APRIL, 30);
-        Date secondEndDate = calendar.getTime();
-
-        calendar.set(2023, Calendar.APRIL, 1);
-        Date projectStartDate = calendar.getTime();
-
-        calendar.set(2023, Calendar.APRIL, 30);
-        Date projectEndDate = calendar.getTime();
-
-        sprintDTO.projectCode = projectCode;
-        sprintDTO.timePeriod = newTimePeriod;
-
-        //conferring behavior to startDate, endDate and timePeriod
-        when(lastTimePeriod.getStartDate()).thenReturn(firstStartDate);
-        when(lastTimePeriod.getEndDate()).thenReturn(firstEndDate);
-        when(lastSprint.getTimePeriod()).thenReturn(lastTimePeriod);
-
-        when(newTimePeriod.getStartDate()).thenReturn(secondStartDate);
-        when(newTimePeriod.getEndDate()).thenReturn(secondEndDate);
-        when(newSprint.getTimePeriod()).thenReturn(newTimePeriod);
-
-        when(projectTimePeriod.getStartDate()).thenReturn(projectStartDate);
-        when(projectTimePeriod.getEndDate()).thenReturn(projectEndDate);
-        when(project.getTimePeriod()).thenReturn(projectTimePeriod);
-
-        //conferring behavior to the dependencies
-        when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
-
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.empty());
-        when(projectRepository.getByID(projectCode)).thenReturn(Optional.of(project));
-
-        when(sprintRepository.save(newSprint)).thenReturn(newSprint);
-        when(toControllerMapper.convertToDTO(newSprint)).thenReturn(sprintDTO2);
-
-        //Act
-        NewSprintDTO result = sprintService.createSprint(sprintDTO);
-
-        //Assert
-        assertEquals(sprintDTO2, result);
-    }
 
     @Test
     @DisplayName("Ensure sprint fails to be created because project optional is in fact empty")
@@ -575,6 +516,9 @@ public class SprintServiceDDDTest {
         SprintDDD lastSprint = mock(SprintDDD.class);
         TimePeriod lastTimePeriod = mock(TimePeriod.class);
 
+        List<SprintDDD> sprintList = new ArrayList<>();
+        sprintList.add(lastSprint);
+
         //setting up dates for mock TimePeriods
         Calendar calendar = Calendar.getInstance();
         calendar.set(2023, Calendar.APRIL, 1);
@@ -613,7 +557,7 @@ public class SprintServiceDDDTest {
 
         //conferring behavior to the dependencies
         when(sprintFactory.createSprint(sprintDTO)).thenReturn(newSprint);
-        when(sprintRepository.findLastSprintByProjectCode(projectCode)).thenReturn(Optional.of(lastSprint));
+        when(sprintRepository.findByProjectCode(projectCode)).thenReturn(sprintList);
         when(projectRepository.getByID(projectCode)).thenReturn(Optional.empty());
 
         String expectedMessage = "The time period of the new sprint is not contained within the project's time period";
