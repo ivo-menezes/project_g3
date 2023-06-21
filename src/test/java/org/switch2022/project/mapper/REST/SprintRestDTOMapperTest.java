@@ -2,6 +2,7 @@ package org.switch2022.project.mapper.REST;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.mapper.NewAssembledUSDTO;
 import org.switch2022.project.mapper.UpdateSprintDTO;
 import org.switch2022.project.mapper.UpdateSprintDomainDTO;
 import org.switch2022.project.mapper.UpdateUsInSprintDomainDTO;
@@ -284,5 +285,40 @@ class SprintRestDTOMapperTest {
 
         //Assert
         assertInstanceOf(UpdateUsInSprintDomainDTO.class, result);
+    }
+
+    @Test
+    @DisplayName("Ensure AssembledUS toRestDto returns the expected object type")
+    void ensureAssembledUSToRestDtoReturnsTheExpectedObjectType() {
+
+        //Arrange
+
+        NewAssembledUSDTO newAssembledUSDTO = mock(NewAssembledUSDTO.class);
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        UserStoryActor userStoryActor = mock(UserStoryActor.class);
+        Description userStoryDescription = mock(Description.class);
+        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
+        UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
+        UserStoryEffortEstimate userStoryEffortEstimate = mock(UserStoryEffortEstimate.class);
+
+
+        newAssembledUSDTO.userStoryNumber = userStoryNumber;
+        newAssembledUSDTO.projectCode = projectCode;
+        newAssembledUSDTO.sprintNumber = sprintNumber;
+        newAssembledUSDTO.userStoryActor = userStoryActor;
+        newAssembledUSDTO.userStoryDescription = userStoryDescription;
+        newAssembledUSDTO.userStoryAcceptanceCriteria = userStoryAcceptanceCriteria;
+        newAssembledUSDTO.userStoryStatus = userStoryStatus;
+        newAssembledUSDTO.userStoryEffortEstimate = userStoryEffortEstimate;
+
+        SprintRestDTOMapper mapper = new SprintRestDTOMapper();
+
+        //Act
+        AssembledUSRestDto resultDto = mapper.assembledUSToRestDto(newAssembledUSDTO);
+
+        //Assert
+        assertInstanceOf(AssembledUSRestDto.class,resultDto);
     }
 }

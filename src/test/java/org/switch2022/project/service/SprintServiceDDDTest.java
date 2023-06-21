@@ -6,16 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.switch2022.project.mapper.NewAddUsToSprintBacklogDTO;
-import org.switch2022.project.mapper.UpdateSprintDomainDTO;
-import org.switch2022.project.mapper.UserStoryInSprintDTO;
-import org.switch2022.project.mapper.UserStoryInSprintDTOMapper;
+import org.switch2022.project.mapper.*;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintBacklog;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.AssembledUS;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.*;
@@ -45,12 +43,16 @@ public class SprintServiceDDDTest {
     IUserStoryRepository userStoryRepository;
     @MockBean
     UserStoryInSprintDTOMapper userStoryInSprintDTOMapper;
+    @MockBean
+    AssembledUsAssembler assembledUsAssembler;
+    @MockBean
+    NewAssembledUSDTOMapper newAssembledUSDTOMapper;
     @Autowired
     SprintServiceDDD sprintService;
 
     @Test
     public void ensureServiceIsInstantiated(){
-        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository,userStoryInSprintDTOMapper);
+        new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository, userStoryRepository,userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper);
     }
     @Test
     public void ensureServiceThrowsExceptionForFactory(){
@@ -60,7 +62,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(null, sprintRepository, toControllerMapper, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper));
+                    userStoryRepository, userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -73,7 +75,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, null, toControllerMapper, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper));
+                    userStoryRepository, userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -86,7 +88,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, null, projectRepository,
-                    userStoryRepository, userStoryInSprintDTOMapper));
+                    userStoryRepository, userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -99,7 +101,7 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, null,
-                    userStoryRepository, userStoryInSprintDTOMapper));
+                    userStoryRepository, userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -113,7 +115,47 @@ public class SprintServiceDDDTest {
         // act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
             new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
-                    null, userStoryInSprintDTOMapper));
+                    null, userStoryInSprintDTOMapper, assembledUsAssembler, newAssembledUSDTOMapper));
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureServiceThrowsExceptionForUserStoryInSprintDTOMapperRepository(){
+        //arrange
+        String message = "UserStoryInSprintDTOMapper cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+                new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
+                        userStoryRepository, null, assembledUsAssembler, newAssembledUSDTOMapper));
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+    @Test
+    public void ensureServiceThrowsExceptionForAssembledUsAssemblerRepository(){
+        //arrange
+        String message = "AssembledUsAssembler cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+                new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
+                        userStoryRepository, userStoryInSprintDTOMapper, null, newAssembledUSDTOMapper));
+        String result = exception.getMessage();
+        // assert
+        assertEquals(message, result);
+    }
+
+    @Test
+    public void ensureServiceThrowsExceptionForNewAssembledUSDTOMapperRepository(){
+        //arrange
+        String message = "NewAssembledUSDTOMapper cannot be null.";
+
+        // act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->
+                new SprintServiceDDD(sprintFactory, sprintRepository, toControllerMapper, projectRepository,
+                        userStoryRepository, userStoryInSprintDTOMapper, assembledUsAssembler, null));
         String result = exception.getMessage();
         // assert
         assertEquals(message, result);
@@ -758,6 +800,83 @@ public class SprintServiceDDDTest {
 
         //Assert
         assertEquals(userStoryInSprintDTO, result);
+    }
+
+    @Test
+    @DisplayName("Ensure userStoryAssembledList is successfully retrieved")
+    void ensureUserStoryAssembledListListIsRetrievedTwo() {
+
+        // Arrange
+
+        UserStoryNumber userStoryNumber = mock(UserStoryNumber.class);
+        ProjectCode projectCode = mock(ProjectCode.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        UserStoryActor userStoryActor = mock(UserStoryActor.class);
+        Description userStoryDescription = mock(Description.class);
+        UserStoryAcceptanceCriteria userStoryAcceptanceCriteria = mock(UserStoryAcceptanceCriteria.class);
+        UserStoryStatus userStoryStatus = mock(UserStoryStatus.class);
+        UserStoryEffortEstimate userStoryEffortEstimate = mock(UserStoryEffortEstimate.class);
+
+
+        UserStoryID userStoryID = mock(UserStoryID.class);
+        UserStoryDDD userStory = mock(UserStoryDDD.class);
+        UserStoryInSprintID userStoryInSprintID = mock(UserStoryInSprintID.class);
+        SprintID sprintID = mock(SprintID.class);
+        SprintDDD sprint = mock(SprintDDD.class);
+
+        UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
+        List<UserStoryInSprint> userStoryInSprintList = new ArrayList<>();
+        userStoryInSprintList.add(userStoryInSprint);
+
+        AssembledUS assembledUS = mock(AssembledUS.class);
+        List<AssembledUS> assembledUSList = new ArrayList<>();
+        assembledUSList.add(assembledUS);
+
+        NewAssembledUSDTO newAssembledUSDTO = mock(NewAssembledUSDTO.class);
+        List <NewAssembledUSDTO> assembledUSDtoList = new ArrayList<>();
+        assembledUSDtoList.add(newAssembledUSDTO);
+
+
+        // Train objects
+
+        when(userStory.identity()).thenReturn(userStoryID);
+        when(userStoryID.getUserStoryNumber()).thenReturn(userStoryNumber);
+
+        when(userStoryID.getProjectCode()).thenReturn(projectCode);
+
+        when(userStoryInSprint.identity()).thenReturn(userStoryInSprintID);
+        when(userStoryInSprintID.getSprintID()).thenReturn(sprintID);
+        when(sprintID.getSprintNumber()).thenReturn(sprintNumber);
+
+
+        //Método assembleUserStory
+
+        when(userStory.getActor()).thenReturn(userStoryActor);
+
+        when(userStory.getDescription()).thenReturn(userStoryDescription);
+
+        when(userStory.getAcceptanceCriteria()).thenReturn(userStoryAcceptanceCriteria);
+
+        when(userStoryInSprint.getUserStoryInSprintStatus()).thenReturn(userStoryStatus);
+
+        when(userStoryInSprint.getUserStoryEffortEstimate()).thenReturn(userStoryEffortEstimate);
+
+        when(sprintRepository.findSprintBySprintID(sprintID)).thenReturn(Optional.of(sprint));
+        when(sprint.getUserStoriesInSprintList()).thenReturn(userStoryInSprintList);
+
+        when(userStoryInSprintID.getUserStoryID()).thenReturn(userStoryID);
+        when(userStoryRepository.getByID(userStoryID)).thenReturn(Optional.of(userStory));
+        when(assembledUsAssembler.assembledUserStory(userStoryInSprint, userStory)).thenReturn(assembledUS);
+
+
+        when(newAssembledUSDTOMapper.toDto(assembledUS)).thenReturn(newAssembledUSDTO);
+
+        // Act
+
+        List<NewAssembledUSDTO> result = sprintService.createListOfAssembledUS(userStoryInSprintList);
+
+        // Assert
+        assertEquals(assembledUSDtoList, result);
     }
 
 }

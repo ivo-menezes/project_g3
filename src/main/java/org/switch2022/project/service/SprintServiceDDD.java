@@ -7,6 +7,7 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTOMapper;
 import org.switch2022.project.model.project.ProjectDDD;
 import org.switch2022.project.model.sprint.ISprintFactory;
 import org.switch2022.project.model.sprint.SprintDDD;
+import org.switch2022.project.model.sprint.AssembledUS;
 import org.switch2022.project.model.userStory.UserStoryDDD;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
@@ -34,19 +35,28 @@ public class SprintServiceDDD {
     private final IProjectRepository projectRepository;
     private final IUserStoryRepository userStoryRepository;
     private final UserStoryInSprintDTOMapper userStoryInSprintDTOMapper;
+    private final AssembledUsAssembler assembledUsAssembler;
+
+    private final NewAssembledUSDTOMapper newAssembledUSDTOMapper;
 
     /**
      * Public constructor for SprintService.
      *
-     * @param sprintFactory    a factory that implements ISprintFactory;
-     * @param sprintRepository a repository that implements RepositoryJPA;
+     * @param sprintFactory           a factory that implements ISprintFactory;
+     * @param sprintRepository        a repository that implements RepositoryJPA;
+     * @param assembledUsAssembler
+     * @param newAssembledUSDTOMapper
      */
     public SprintServiceDDD(ISprintFactory sprintFactory,
                             ISprintRepository sprintRepository,
                             NewSprintDTOMapper newSprintDTOMapper,
                             IProjectRepository projectRepository,
                             IUserStoryRepository userStoryRepository,
-                            UserStoryInSprintDTOMapper userStoryInSprintDTOMapper) {
+                            UserStoryInSprintDTOMapper userStoryInSprintDTOMapper,
+                            AssembledUsAssembler assembledUsAssembler,
+                            NewAssembledUSDTOMapper newAssembledUSDTOMapper) {
+
+
         if (sprintFactory == null) {
             throw new IllegalArgumentException("SprintFactory cannot be null.");
         }
@@ -65,12 +75,23 @@ public class SprintServiceDDD {
         if (userStoryInSprintDTOMapper == null) {
             throw new IllegalArgumentException("UserStoryInSprintDTOMapper cannot be null.");
         }
+        if (assembledUsAssembler == null) {
+            throw new IllegalArgumentException("AssembledUsAssembler cannot be null.");
+        }
+        if (newAssembledUSDTOMapper == null) {
+            throw new IllegalArgumentException("NewAssembledUSDTOMapper cannot be null.");
+        }
+
+
         this.sprintFactory = sprintFactory;
         this.iSprintRepository = sprintRepository;
         this.newSprintDTOMapper = newSprintDTOMapper;
         this.projectRepository = projectRepository;
         this.userStoryRepository = userStoryRepository;
-        this.userStoryInSprintDTOMapper = userStoryInSprintDTOMapper;    }
+        this.userStoryInSprintDTOMapper = userStoryInSprintDTOMapper;
+        this.assembledUsAssembler = assembledUsAssembler;
+        this.newAssembledUSDTOMapper = newAssembledUSDTOMapper;
+    }
 
     public int getNewSprintNumber(ProjectCode projectCode) {
 
@@ -291,6 +312,41 @@ public class SprintServiceDDD {
         if (optionalUserStoryID.isEmpty()) {
             throw new IllegalArgumentException("User Story ID not found in the product backlog.");
         }
+    }
+
+    public List <NewAssembledUSDTO> createListOfAssembledUS (List<UserStoryInSprint> userStoryInSprintList) {
+
+        List<AssembledUS> assembledUSList = createAssembledUS(userStoryInSprintList);
+
+        List <NewAssembledUSDTO> assembledUSDtoList= new ArrayList<>();
+
+        for (AssembledUS assembledUS : assembledUSList) {
+
+            assembledUSDtoList.add(newAssembledUSDTOMapper.toDto(assembledUS));
+
+        }
+
+        return assembledUSDtoList;
+    }
+
+
+    public List<AssembledUS> createAssembledUS (List<UserStoryInSprint> userStoryInSprintList) {
+
+        List<AssembledUS> assembledUSList = new ArrayList<>();
+
+
+        for (UserStoryInSprint userStoryInSprint : userStoryInSprintList) {
+
+            UserStoryID userStoryID = userStoryInSprint.identity().getUserStoryID();
+            Optional<UserStoryDDD> userStoryOptional = this.userStoryRepository.getByID(userStoryID);
+
+            if (userStoryOptional.isPresent()) {
+                UserStoryDDD userStory = userStoryOptional.get();
+                AssembledUS assembledUS = assembledUsAssembler.assembledUserStory(userStoryInSprint, userStory);
+                assembledUSList.add(assembledUS);
+            }
+        }
+        return assembledUSList;
     }
 
 
