@@ -101,7 +101,7 @@ public class SprintController {
         }
     }
 
-    @PatchMapping("/updateUsInSprint")
+    @PatchMapping("{sprintNumber}/updateUsInSprint")
     public ResponseEntity<InputUsInSprintStatusDTO> updateUsInSprintStatus(@RequestBody InputUsInSprintStatusDTO inputUsInSprintStatusDTO) {
 
         try {

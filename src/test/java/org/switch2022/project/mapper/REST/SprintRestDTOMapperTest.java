@@ -269,7 +269,7 @@ class SprintRestDTOMapperTest {
     }
 
     @Test
-    @DisplayName("Ensure UpdateSprintDomainDTO is converted to UpdateSprintDTO correctly.")
+    @DisplayName("Ensure UpdateUsInSprintDomainDTO is converted to InputUsInSprintStatusDTO correctly.")
     void toDataDTOSuccess() {
         // Arrange
         InputUsInSprintStatusDTO updateDto = mock(InputUsInSprintStatusDTO.class);
