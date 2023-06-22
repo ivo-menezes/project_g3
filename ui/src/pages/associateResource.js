@@ -57,7 +57,11 @@ const AssociateResource = () => {
 
         for (const key in newResource) {
             if (typeof newResource[key] === 'object' && newResource[key] instanceof Date) {
-                newResource[key] = newResource[key].toISOString().split('T')[0];
+
+                const timezoneOffset = newResource[key].getTimezoneOffset();
+                const adjustedDate = new Date(newResource[key].getTime() - timezoneOffset * 60000);
+
+                newResource[key] = adjustedDate.toISOString().split('T')[0];
             }
         }
         console.log(newResource)

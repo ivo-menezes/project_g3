@@ -63,9 +63,14 @@ const CreateProject = () => {
         // Date objects need to be converted to strings because the table component can't handle displaying objects
         for (const key in newProject) {
             if (typeof newProject[key] === 'object' && newProject[key] instanceof Date) {
+                // The "Z", which defines dates as UTC time will be dropped. Dates will be set as local.
+                // Adjust the date to the correct time zone by subtracting the timezone offset
+                const timezoneOffset = newProject[key].getTimezoneOffset();
+                const adjustedDate = new Date(newProject[key].getTime() - timezoneOffset * 60000);
+
                 // toISOString generates a string in the format '2022-11-14T00:55:31.820Z'
                 // we just want the date part: split at the 'T' and only use the first part
-                newProject[key] = newProject[key].toISOString().split('T')[0];
+                newProject[key] = adjustedDate.toISOString().split('T')[0];
             }
         }
 
