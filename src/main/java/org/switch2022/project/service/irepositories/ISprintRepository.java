@@ -20,5 +20,5 @@ public interface ISprintRepository extends RepositoryNew<SprintID, SprintDDD> {
 
     Optional<UserStoryInSprint> getUserStoriesFromSprint(UserStoryInSprintID id);
 
-    UserStoryInSprint replaceUsInSprint(UserStoryInSprint usInSprint);
+    UserStoryInSprint saveUsInSprint(UserStoryInSprint usInSprint);
 }

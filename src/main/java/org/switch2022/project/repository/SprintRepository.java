@@ -175,7 +175,7 @@ public class SprintRepository implements ISprintRepository {
      * @return UserStoryInSprint object
      */
     @Override
-    public UserStoryInSprint replaceUsInSprint(UserStoryInSprint usInSprint) {
+    public UserStoryInSprint saveUsInSprint(UserStoryInSprint usInSprint) {
         UserStoryInSprintJPA userStoryInSprintJPA = userStoryInSprintDataAssembler.toData(usInSprint);
         UserStoryInSprintJPA savedUsInSprintJpa = userStoryInSprintJpaRepository.save(userStoryInSprintJPA);
         UserStoryInSprint savedUsInSprint = userStoryInSprintDataAssembler.toDomain(savedUsInSprintJpa);
