@@ -1,10 +1,10 @@
 package org.switch2022.project.controller.MVC;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -41,27 +41,40 @@ class BusinessSectorControllerMVCTest {
     /**
      * The class BusinessSectorDesignation does not have a serializer
      * This serializer converts the BusinessSectorDesignation object into a string representation by using the toString()
+     * You can check <a href="https://www.baeldung.com/jackson-custom-serialization">...</a>
      */
-    public static class BusinessSectorDesignationSerializer extends JsonSerializer<BusinessSectorDesignation> {
+    public static class ItemSerializer extends StdSerializer<BusinessSectorDTO> {
+
+        public ItemSerializer() {
+            this(null);
+        }
+
+        public ItemSerializer(Class<BusinessSectorDTO> t) {
+            super(t);
+        }
 
         @Override
-        public void serialize(BusinessSectorDesignation businessSectorDesignation, JsonGenerator jsonGenerator,
-                              SerializerProvider serializer)
+        public void serialize(
+                BusinessSectorDTO businessSectorDTO, JsonGenerator jsonGenerator, SerializerProvider provider)
                 throws IOException {
-            jsonGenerator.writeString(businessSectorDesignation.toString());
+
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("businessSectorDesignation", businessSectorDTO.businessSectorDesignation.toString());
+            jsonGenerator.writeEndObject();
         }
     }
 
     @Test
-    void returnAccountAndCreated() throws Exception {
+    void returnBusinessSectorAndCreated() throws Exception {
         String businessSectorDesignation = "Information services";
         BusinessSectorDesignation businessSectorDesignationVO = new BusinessSectorDesignation(businessSectorDesignation);
         BusinessSectorDTO dto = new BusinessSectorDTO();
         dto.businessSectorDesignation = businessSectorDesignationVO;
 
         //register the serializer method with the ObjectMapper instance injected
-        objectMapper.registerModule(new SimpleModule().addSerializer(BusinessSectorDesignation.class,
-                new BusinessSectorDesignationSerializer()));
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(BusinessSectorDTO.class, new BusinessSectorControllerMVCTest.ItemSerializer());
+        objectMapper.registerModule(module);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/businessSectors")
                 .contentType(MediaType.APPLICATION_JSON)

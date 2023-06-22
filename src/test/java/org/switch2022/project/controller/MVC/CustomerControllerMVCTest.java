@@ -1,10 +1,10 @@
 package org.switch2022.project.controller.MVC;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -40,33 +40,34 @@ class CustomerControllerMVCTest {
    }
 
    /**
-    * The class CustomerNIF does not have a serializer
+    * The class CustomerNIF and CustomerDesignation do not have a serializer
     * This serializer converts the CustomerNIF object into a string representation by using the toString()
+    * You can check <a href="https://www.baeldung.com/jackson-custom-serialization">...</a>
     */
-   public static class CustomerNIFSerializer extends JsonSerializer<CustomerNIF> {
+   public static class ItemSerializer extends StdSerializer<CustomerDTO> {
+
+       public ItemSerializer() {
+           this(null);
+       }
+
+       public ItemSerializer(Class<CustomerDTO> t) {
+           super(t);
+       }
 
        @Override
-       public void serialize(CustomerNIF customerNIF, JsonGenerator jsonGenerator, SerializerProvider serializer)
+       public void serialize(
+               CustomerDTO customerDTO, JsonGenerator jsonGenerator, SerializerProvider provider)
                throws IOException {
-           jsonGenerator.writeString(customerNIF.toString());
+
+           jsonGenerator.writeStartObject();
+           jsonGenerator.writeStringField("customerNIF", customerDTO.customerNIF.toString());
+           jsonGenerator.writeStringField("customerDesignation", customerDTO.customerDesignation.toString());
+           jsonGenerator.writeEndObject();
        }
    }
 
-    /**
-     * The class CustomerNIF does not have a serializer
-     * This serializer converts the CustomerNIF object into a string representation by using the toString()
-     */
-    public static class CustomerDesignationSerializer extends JsonSerializer<CustomerDesignation> {
-
-        @Override
-        public void serialize(CustomerDesignation customerDesignation, JsonGenerator jsonGenerator, SerializerProvider serializer)
-                throws IOException {
-            jsonGenerator.writeString(customerDesignation.toString());
-        }
-    }
-
    @Test
-   void returnAccountAndCreated() throws Exception {
+   void returnCustomerAndCreated() throws Exception {
 
        String customerNIF = "225041898";
        CustomerNIF customerNIFVO = new CustomerNIF(customerNIF);
@@ -77,10 +78,9 @@ class CustomerControllerMVCTest {
        dto.customerDesignation = customerDesignationVO;
 
        //register the serializer method with the ObjectMapper instance injected
-       objectMapper.registerModule(new SimpleModule().addSerializer(CustomerNIF.class,
-           new CustomerControllerMVCTest.CustomerNIFSerializer()));
-       objectMapper.registerModule(new SimpleModule().addSerializer(CustomerDesignation.class,
-               new CustomerControllerMVCTest.CustomerDesignationSerializer()));
+       SimpleModule module = new SimpleModule();
+       module.addSerializer(CustomerDTO.class, new CustomerControllerMVCTest.ItemSerializer());
+       objectMapper.registerModule(module);
 
        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customers")
                .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ class CustomerControllerMVCTest {
    }
 
     @Test
-    void returnBusinessSectorsAndOK() throws Exception{
+    void returnCustomersAndOK() throws Exception{
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
