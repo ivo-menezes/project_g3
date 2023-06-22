@@ -4,7 +4,7 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
-import {fetchBacklog} from "../context/Actions";
+import {addUserStorySB, fetchBacklog} from "../context/Actions";
 import DropDownList from "../components/dropDownList";
 
 const headers = [
@@ -36,12 +36,12 @@ const AddUserStory = () => {
     const backlogForProject = state.backlogs.data;
 
     // Define a state variable to store the selected user stories
-    const [selectedUserStories, setSelectedUserStories] = useState([]);
+    const [selectedUserStory, setSelectedUserStory] = useState([]);
     const [effort, setEffort] = useState();
 
-    // Function to add or remove the selected User Stories from the selectedUserStories state based on the checkbox status
+    // Function to add or remove the selected User Stories from the selectedUserStory state based on the checkbox status
     const handleSelectUS = (userStoryNumber) => {
-        setSelectedUserStories(userStoryNumber);
+        setSelectedUserStory(userStoryNumber);
     };
 
     const effortValues = [0.5, 1, 2, 3, 5, 8, 13, 20, 40]
@@ -51,10 +51,10 @@ const AddUserStory = () => {
         setEffort(effortValue)
     };
 
-    // Update the finalBacklog array based on selectedUserStories
+    // Update the finalBacklog array based on selectedUserStory
     const updatedFinalBacklog = backlogForProject.map((backlogForProject) => {
 
-        const isSelected = selectedUserStories.includes(backlogForProject.userStoryNumber);
+        const isSelected = selectedUserStory.includes(backlogForProject.userStoryNumber);
 
         return {
             number: backlogForProject.userStoryNumber,
@@ -89,15 +89,22 @@ const AddUserStory = () => {
         };
     });
 
+    const navigate = useNavigate();
+
     const handleAddUserStory = () => {
-        console.log(`adding user story ${selectedUserStories} with effort ${effort} to project ${projectCode}`)
-        // addUserStoryToSprintBacklog(...)
+        console.log(`adding user story ${selectedUserStory} with effort ${effort} to project ${projectCode}`)
+
+        const payload = {
+            "projectCode" : projectCode,
+            "sprintNumber" : sprintNumber,
+            "userStoryNumber" : selectedUserStory,
+            "userStoryEffortEstimate": effort
+        }
 
         // Navigate back to the sprint backlog page
-        handleBackToSprintBacklog();
+        addUserStorySB(dispatch, projectCode, sprintNumber, payload, navigate);
     };
 
-    const navigate = useNavigate();
     const location = useLocation();
 
     const handleBackToSprintBacklog = () => {

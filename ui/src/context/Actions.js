@@ -2,7 +2,7 @@ import {
     fetchBacklogFromBackend,
     fetchProjectsFromBackend,
     fetchResourcesFromBackend,
-    fetchSprintsFromBackend,
+    fetchSprintsFromBackend, patchAddUserStoryToSprintBacklog,
     patchStatusSprintToBackend,
     postProjectToBackend,
     postResourceToBackend,
@@ -233,4 +233,12 @@ export const setSprintStatus = (dispatch, updatedSprint) => {
                         (error) => console.log(error),
                                //Is the status object that contains information about the status of the sprint
                                 updatedSprint)
+}
+
+export const addUserStorySB = (dispatch, projectCode, sprintNumber, payload, navigate) => {
+    patchAddUserStoryToSprintBacklog(
+        (response) => navigate(`/sprintBacklog/${projectCode}/${sprintNumber}`),
+        (error) => console.log(error),
+        payload
+    )
 }

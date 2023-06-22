@@ -77,3 +77,10 @@ export const patchStatusSprintToBackend = (success, failure, updatedSprint) => {
         .then(response => success(response))
         .catch(error => failure(error))
 }
+
+export const patchAddUserStoryToSprintBacklog = (success, failure, payload) => {
+    const ENDPOINT = `projects/${payload.projectCode}/sprints/${payload.sprintNumber}/addUserStoryToSprintBacklog`
+    axios.patch(API_URL + ENDPOINT, payload)
+        .then(response => success(response))
+        .catch(error => failure(error))
+}
