@@ -4,6 +4,7 @@ import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.valueobject.AccountID;
 import org.switch2022.project.model.valueobject.Email;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IAccountRepository {
@@ -19,5 +20,7 @@ public interface IAccountRepository {
     AccountID getAccountIDWhenInputEmailEqualsAccountEmail (String email);
 
     Email getEmailWhenOutputAccountIDEqualsAccountAccountID (AccountID accountID);
+
+    List<AccountDDD> getAll();
 }
 

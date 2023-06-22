@@ -8,6 +8,9 @@ import org.switch2022.project.model.account.IAccountFactory;
 import org.switch2022.project.model.valueobject.*;
 import org.switch2022.project.service.irepositories.IAccountRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -72,5 +75,23 @@ public class AccountService {
         accountDTO.accountID = savedAccount.identity();
 
         return accountDTO;
+    }
+
+    public List<NewAccountDTO> getAllAccounts() {
+        List<NewAccountDTO> accounts = new ArrayList<>();
+        List<AccountDDD> accountList = accountRepository.getAll();
+
+        for(AccountDDD accountDDD : accountList) {
+            NewAccountDTO dto = new NewAccountDTO();
+
+            dto.accountID = accountDDD.identity();
+            dto.email = accountDDD.getEmail();
+            dto.name = accountDDD.getName();
+            dto.phoneNumber = accountDDD.getPhoneNumber();
+            dto.photo = accountDDD.getPhoto();
+            dto.profile = accountDDD.getProfile();
+
+            accounts.add(dto);
+        } return accounts;
     }
 }

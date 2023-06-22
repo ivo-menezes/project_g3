@@ -11,6 +11,10 @@ import org.switch2022.project.mapper.NewAccountDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTO;
 import org.switch2022.project.mapper.REST.AccountRestDTOMapper;
 import org.switch2022.project.service.AccountService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -101,5 +105,39 @@ class AccountControllerTest {
         //Assert
         assertEquals(400, response.getStatusCodeValue());
         assertEquals(restDTO, response.getBody());
+    }
+
+    @DisplayName("ensure that get all accounts correctly and HTTP status 200 - OK")
+    @Test
+    void shouldReturnAllAccountsAndStatusOK() {
+        //Arrange
+        List<NewAccountDTO> accountDTOList = new ArrayList<>();
+        List<AccountRestDTO> accountRestDTOList = new ArrayList<>();
+
+        when(accountService.getAllAccounts()).thenReturn(accountDTOList);
+        when(mapper.toRestList(accountDTOList)).thenReturn(accountRestDTOList);
+
+        //Act
+        ResponseEntity<?> response = controller.getAccounts();
+
+        //Assert
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(accountRestDTOList, response.getBody());
+    }
+
+    @DisplayName("ensure returns HTTP status 404 when service throws exception")
+    @Test
+    void shouldReturnStatusNotFound() {
+        //Arrange
+        List<NewAccountDTO> accountDTOList = new ArrayList<>();
+        List<AccountRestDTO> accountRestDTOList = new ArrayList<>();
+
+        when(accountService.getAllAccounts()).thenThrow(RuntimeException.class);
+
+        //Act
+        ResponseEntity<?> responseEntity = controller.getAccounts();
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 404);
     }
 }

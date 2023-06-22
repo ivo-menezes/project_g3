@@ -87,4 +87,15 @@ public class AccountRepository implements IAccountRepository {
             return null;
         }
     }
+
+    public List<AccountDDD> getAll() {
+        List<AccountDDD> listOfAccounts = new ArrayList<>();
+
+        Iterable<AccountJpa> accountJpaList = accountJpaRepository.findAll();
+
+        for(AccountJpa accountJPA : accountJpaList) {
+            listOfAccounts.add(accountDomainDataAssembler.toDomain(accountJPA));
+
+        } return listOfAccounts;
+    }
 }

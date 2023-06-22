@@ -295,4 +295,33 @@ class AccountRepositoryTest {
         //Assert
         assertTrue(result);
     }
+
+    @Test
+    @DisplayName("Check if get all works correctly")
+    void getAllSuccessfullyWorks(){
+        //Arrange
+        AccountJpaRepository repositoryJPA = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+
+        List<AccountJpa> jpaList = new ArrayList<>();
+        List<AccountDDD> accounts = new ArrayList<>();
+
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        jpaList.add(accountJpa);
+
+        AccountDDD account = mock(AccountDDD.class);
+
+        when(repositoryJPA.findAll()).thenReturn(jpaList);
+        when(assembler.toDomain(accountJpa)).thenReturn(account);
+
+        accounts.add(account);
+
+        AccountRepository repository = new AccountRepository(repositoryJPA, assembler);
+
+        //Act
+        List<AccountDDD> result = repository.getAll();
+
+        //Assert
+        assertEquals(accounts, result);
+    }
 }

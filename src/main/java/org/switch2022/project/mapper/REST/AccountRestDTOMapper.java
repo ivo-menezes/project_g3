@@ -2,11 +2,10 @@ package org.switch2022.project.mapper.REST;
 
 import org.springframework.stereotype.Component;
 import org.switch2022.project.mapper.NewAccountDTO;
-import org.switch2022.project.mapper.NewResourceDTO;
-import org.switch2022.project.model.profile.Profile;
 import org.switch2022.project.model.valueobject.*;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AccountRestDTOMapper {
@@ -36,5 +35,14 @@ public class AccountRestDTOMapper {
         accountRestDTO.profile = domainDto.profile.toString();
 
         return accountRestDTO;
+    }
+
+    public List<AccountRestDTO> toRestList(List<NewAccountDTO> domainDtoList) {
+        List<AccountRestDTO> list = new ArrayList<>();
+
+        for (NewAccountDTO accountDTO : domainDtoList) {
+            AccountRestDTO dto = toRestDto(accountDTO);
+            list.add(dto);
+        } return list;
     }
 }
