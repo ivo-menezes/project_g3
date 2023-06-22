@@ -38,6 +38,8 @@ const CreateSprint = () => {
         endDate: ''
     }
     const [newSprint, setNewSprint] = useState(emptySprint)
+    const lastSprint = projectSprints[projectSprints.length - 1];
+
 
     // Updates the newSprint state variable when a user types into an input field.
     const handleChange = (event) => {
@@ -96,9 +98,9 @@ const CreateSprint = () => {
                 <Header className='header-create' text="Create sprint"/>
 
                 <div className="project-details-container">
-                    <h2 className={"project-details-title"}>Project Details</h2>
+                    <h2 className={"project-details-title"}>Details</h2>
                     <div className="project-detail">
-                        <div className="project-detail-label">ID:</div>
+                        <div className="project-detail-label">Project code:</div>
                         <div className="project-detail-value">{project.projectCode}</div>
                     </div>
                     <div className="project-detail">
@@ -108,6 +110,10 @@ const CreateSprint = () => {
                     <div className="project-detail">
                         <div className="project-detail-label">End Date:</div>
                         <div className="project-detail-value">{project.endDate}</div>
+                    </div>
+                    <div className="project-detail">
+                        <div className="project-detail-label">Previous Sprint End Date:</div>
+                        <div className="project-detail-value">{lastSprint.endDate}</div>
                     </div>
                 </div>
 
