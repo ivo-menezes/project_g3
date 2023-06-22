@@ -3,12 +3,11 @@ import AppContext from "../context/AppContext";
 import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {addSprint, postSprint} from "../context/Actions";
 import PickDate from "../components/date";
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-
 
 const CreateSprint = () => {
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
@@ -80,6 +79,13 @@ const CreateSprint = () => {
 
     };
 
+    const handleRowClick = (id) => {
+        navigate(`/listSprints/${id}`);
+    };
+
+    const project = state.projects.data.find((project) => project.projectCode === projectCode);
+
+
     // Renders the form for creating a new sprint
     return (
         <div>
@@ -88,6 +94,23 @@ const CreateSprint = () => {
             <Header/>
             <section className='form-create'>
                 <Header className='header-create' text="Create sprint"/>
+
+                <div className="project-details-container">
+                    <h2 className={"project-details-title"}>Project Details</h2>
+                    <div className="project-detail">
+                        <div className="project-detail-label">ID:</div>
+                        <div className="project-detail-value">{project.projectCode}</div>
+                    </div>
+                    <div className="project-detail">
+                        <div className="project-detail-label">Start Date:</div>
+                        <div className="project-detail-value">{project.startDate}</div>
+                    </div>
+                    <div className="project-detail">
+                        <div className="project-detail-label">End Date:</div>
+                        <div className="project-detail-value">{project.endDate}</div>
+                    </div>
+                </div>
+
                 <form onSubmit={handleSubmission}>
 
                     <TextField className="textField"
@@ -103,7 +126,7 @@ const CreateSprint = () => {
                             onChange={handleStartDateChange}
                             selectedDate={newSprint.startDate}
                             dateFormat="dd/MM/yyyy"
-                            label='Start Date'
+                            label="Start Date"
                             name="startDate"
                         />
                     </div>
@@ -120,9 +143,10 @@ const CreateSprint = () => {
                     </div>
                     <div className="button-container">
                         <Button className='button-form-create-save' name="Save"/>
-                        <Link to="/listProjects">
-                            <Button className='button-form-cancel' name="Cancel"/>
-                        </Link>
+                        <Button className='button-form-cancel'
+                                name="Cancel"
+                                onClick={() => handleRowClick(projectCode)}
+                            />
                     </div>
                 </form>
             </section>
