@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ResourceRestDTO {
     public long resourceID;
-    public long accountID;
+    public String email;
     public double costPerHour;
     public String role;
     public double percentageOfAllocation;

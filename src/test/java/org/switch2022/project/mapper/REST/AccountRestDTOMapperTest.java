@@ -11,7 +11,7 @@ class AccountRestDTOMapperTest {
     @Test
     void toDomainDto() {
         AccountRestDTO restDTO = new AccountRestDTO();
-        restDTO.accountID = 1L;
+        //restDTO.accountID = 1L;
         restDTO.email = "xpto@gmail.com";
         restDTO.name = "ricardo";
         restDTO.phoneNumber = "+351917830464";
@@ -19,7 +19,7 @@ class AccountRestDTOMapperTest {
         restDTO.profile = "User";
 
         NewAccountDTO domainDTO = new NewAccountDTO();
-        domainDTO.accountID = new AccountID(restDTO.accountID);
+        //domainDTO.accountID = new AccountID(restDTO.accountID);
         domainDTO.email = new Email(restDTO.email);
         domainDTO.name = new Name(restDTO.name);
         domainDTO.phoneNumber = new PhoneNumber(restDTO.phoneNumber);
@@ -44,7 +44,7 @@ class AccountRestDTOMapperTest {
         domainDTO.profile = new ProfileName("User");
 
         AccountRestDTO restDTO = new AccountRestDTO();
-        restDTO.accountID = domainDTO.accountID.getId();
+        //restDTO.accountID = domainDTO.accountID.getId();
         restDTO.email = domainDTO.email.toString();
         restDTO.name = domainDTO.name.toString();
         restDTO.phoneNumber = domainDTO.phoneNumber.toString();

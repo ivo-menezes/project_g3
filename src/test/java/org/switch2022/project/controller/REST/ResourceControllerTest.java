@@ -10,7 +10,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTOMapper;
+import org.switch2022.project.mapper.ResourceDTOOutput;
+import org.switch2022.project.model.valueobject.AccountID;
+import org.switch2022.project.model.valueobject.Email;
 import org.switch2022.project.service.ResourceService;
+import org.switch2022.project.service.irepositories.IAccountRepository;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -26,6 +31,9 @@ class ResourceControllerTest {
     @MockBean
     ResourceRestDTOMapper mapper;
 
+    @MockBean
+    IAccountRepository accountRepository;
+
     @Autowired
     ResourceController controller;
 
@@ -39,7 +47,7 @@ class ResourceControllerTest {
 
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
-            new ResourceController(resourceService, mapper));
+            new ResourceController(resourceService, mapper, accountRepository));
 
         String resultMessage = result.getMessage();
 
@@ -57,7 +65,25 @@ class ResourceControllerTest {
 
         // Act
         IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
-            new ResourceController(resourceService, mapper));
+            new ResourceController(resourceService, mapper, accountRepository));
+
+        String resultMessage = result.getMessage();
+
+        // Assert
+        assertEquals(expectedMessage, resultMessage);
+    }
+
+    @DisplayName("ensure that creating an account throws an exception when accountRepository is null")
+    @Test
+    void shouldReturnExceptionWhenAccountRepositoryIsNull() {
+        //Arrange
+        accountRepository = null;
+
+        String expectedMessage = "AccountRepository must not be null";
+
+        // Act
+        IllegalArgumentException result = assertThrows(IllegalArgumentException.class, () ->
+                new ResourceController(resourceService, mapper, accountRepository));
 
         String resultMessage = result.getMessage();
 
@@ -73,10 +99,14 @@ class ResourceControllerTest {
         NewResourceDTO domainDTO = mock(NewResourceDTO.class);
         NewResourceDTO savedDomainDTO = mock(NewResourceDTO.class);
         ResourceRestDTO savedRestDTO = mock(ResourceRestDTO.class);
+        AccountID accountID = mock(AccountID.class);
+        Email email = mock(Email.class);
 
-        when(mapper.toDomainDto(restDTO)).thenReturn(domainDTO);
+        when(accountRepository.getAccountIDWhenInputEmailEqualsAccountEmail(restDTO.email)).thenReturn(accountID);
+        when(mapper.toDomainDto(restDTO, accountID)).thenReturn(domainDTO);
         when(resourceService.createResource(domainDTO)).thenReturn(savedDomainDTO);
-        when(mapper.toRestDto(savedDomainDTO)).thenReturn(savedRestDTO);
+        when(accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(savedDomainDTO.accountID)).thenReturn(email);
+        when(mapper.toRestDto(savedDomainDTO, email)).thenReturn(savedRestDTO);
 
         //Act
         ResponseEntity<?> response = controller.createResource(restDTO);
@@ -92,8 +122,10 @@ class ResourceControllerTest {
         //Arrange
         ResourceRestDTO restDTO = mock(ResourceRestDTO.class);
         NewResourceDTO domainDTO = mock(NewResourceDTO.class);
+        AccountID accountID = mock(AccountID.class);
 
-        when(mapper.toDomainDto(restDTO)).thenReturn(domainDTO);
+        when(accountRepository.getAccountIDWhenInputEmailEqualsAccountEmail(restDTO.email)).thenReturn(accountID);
+        when(mapper.toDomainDto(restDTO, accountID)).thenReturn(domainDTO);
         when(resourceService.createResource(domainDTO)).thenThrow(RuntimeException.class);
 
         //Act
@@ -108,9 +140,9 @@ class ResourceControllerTest {
     @Test
     void shouldReturnListOfResourcesAndStatusOk() {
         //Arrange
-        NewResourceDTO resourceDTODomain1 = mock(NewResourceDTO.class);
-        NewResourceDTO resourceDTODomain2 = mock(NewResourceDTO.class);
-        List<NewResourceDTO> listDomain = mock(List.class);
+        ResourceDTOOutput resourceDTODomain1 = mock(ResourceDTOOutput.class);
+        ResourceDTOOutput resourceDTODomain2 = mock(ResourceDTOOutput.class);
+        List<ResourceDTOOutput> listDomain = mock(List.class);
 
         listDomain.add(resourceDTODomain1);
         listDomain.add(resourceDTODomain2);
@@ -136,9 +168,9 @@ class ResourceControllerTest {
     @Test
     void shouldReturnStatusNotFound() {
         //Arrange
-        NewResourceDTO resourceDTODomain1 = mock(NewResourceDTO.class);
-        NewResourceDTO resourceDTODomain2 = mock(NewResourceDTO.class);
-        List<NewResourceDTO> listDomain = mock(List.class);
+        ResourceDTOOutput resourceDTODomain1 = mock(ResourceDTOOutput.class);
+        ResourceDTOOutput resourceDTODomain2 = mock(ResourceDTOOutput.class);
+        List<ResourceDTOOutput> listDomain = mock(List.class);
 
         listDomain.add(resourceDTODomain1);
         listDomain.add(resourceDTODomain2);

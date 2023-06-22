@@ -3,6 +3,7 @@ package org.switch2022.project.service;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.NewResourceDTOMapper;
+import org.switch2022.project.mapper.ResourceDTOOutput;
 import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.resource.IResourceFactory;
 import org.switch2022.project.model.resource.ResourceDDD;
@@ -104,15 +105,16 @@ public class ResourceService {
         return resourceDTO;
     }
 
-    public List<NewResourceDTO> getAllResources() {
-        List<NewResourceDTO> resources = new ArrayList<>();
+    public List<ResourceDTOOutput> getAllResources() {
+        List<ResourceDTOOutput> resources = new ArrayList<>();
         List<ResourceDDD> resourceDDD = resourceRepository.getAll();
 
         for (ResourceDDD resource : resourceDDD) {
+            Email email = accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(resource.getAccountID());
 
-            NewResourceDTO resourceDTO = new NewResourceDTO();
+            ResourceDTOOutput resourceDTO = new ResourceDTOOutput();
             resourceDTO.resourceID = resource.identity();
-            resourceDTO.accountID = resource.getAccountID();
+            resourceDTO.email = email;
             resourceDTO.costPerHour = resource.getCostPerHour();
             resourceDTO.role = resource.getRole();
             resourceDTO.percentageOfAllocation = resource.getPercentageOfAllocation();

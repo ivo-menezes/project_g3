@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTO;
 import org.switch2022.project.mapper.REST.ResourceRestDTOMapper;
+import org.switch2022.project.mapper.ResourceDTOOutput;
+import org.switch2022.project.model.valueobject.AccountID;
+import org.switch2022.project.model.valueobject.Email;
 import org.switch2022.project.service.ResourceService;
+import org.switch2022.project.service.irepositories.IAccountRepository;
 
 import java.util.List;
 
@@ -17,8 +21,10 @@ public class ResourceController {
 
     private final ResourceService resourceService;
     private final ResourceRestDTOMapper mapper;
+    private final IAccountRepository accountRepository;
 
-    public ResourceController(ResourceService resourceService, ResourceRestDTOMapper mapper) {
+    public ResourceController(ResourceService resourceService, ResourceRestDTOMapper mapper, IAccountRepository
+                              accountRepository) {
         if (resourceService == null) {
             throw new IllegalArgumentException("ResourceService must not be null");
         }
@@ -26,17 +32,22 @@ public class ResourceController {
         if (mapper == null) {
             throw new IllegalArgumentException("ResourceDTOMapper must not be null");
         }
-
+        if (accountRepository == null) {
+            throw new IllegalArgumentException("AccountRepository must not be null");
+        }
         this.resourceService = resourceService;
         this.mapper = mapper;
+        this.accountRepository = accountRepository;
     }
 
     @PostMapping(path="/projects/{projectcode}/resources")
     public ResponseEntity<?> createResource(@RequestBody ResourceRestDTO restDTO) {
         try {
-            NewResourceDTO domainDTO = mapper.toDomainDto(restDTO);
+            AccountID accountID = accountRepository.getAccountIDWhenInputEmailEqualsAccountEmail(restDTO.email);
+            NewResourceDTO domainDTO = mapper.toDomainDto(restDTO, accountID);
             NewResourceDTO savedResourceDTO = resourceService.createResource(domainDTO);
-            ResourceRestDTO savedResourceRestDTO = mapper.toRestDto(savedResourceDTO);
+            Email email = accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(savedResourceDTO.accountID);
+            ResourceRestDTO savedResourceRestDTO = mapper.toRestDto(savedResourceDTO, email);
 
             return new ResponseEntity<>(savedResourceRestDTO, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -47,7 +58,7 @@ public class ResourceController {
     @GetMapping("/projects/{projectCode}/resources")
     public ResponseEntity<?> getResource() {
         try {
-            List<NewResourceDTO> domainDtoList = resourceService.getAllResources();
+            List<ResourceDTOOutput> domainDtoList = resourceService.getAllResources();
             List<ResourceRestDTO> restDtoList = mapper.toRestDTOList(domainDtoList);
             return new ResponseEntity<>(restDtoList, HttpStatus.OK);
 
