@@ -272,7 +272,7 @@ public class SprintServiceDDD {
         return updateUsInSprintDomainDTO;
     }
 
-
+    @Transactional
     public UserStoryInSprintDTO addUsToSprintBacklog(NewAddUsToSprintBacklogDTO newAddUsToSprintBacklogDTO) {
         UserStoryInSprintDTO userStoryInSprintDTO;
         Optional<ProjectDDD> projectDDD = projectRepository.getByID(newAddUsToSprintBacklogDTO.projectCode);
