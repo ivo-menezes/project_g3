@@ -57,6 +57,9 @@ public class SprintDDD implements AggregateRoot<SprintID> {
     public List<UserStoryInSprint> getUserStoriesInSprintList() {
         return sprintBacklog.getUserStoriesInSprintList();
     }
+    public UserStoryInSprint save(UserStoryInSprint userStoryInSprint) {
+        return sprintBacklog.save(userStoryInSprint);
+    }
 
     @Override
     public boolean equals(Object o) {

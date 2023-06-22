@@ -286,15 +286,9 @@ public class SprintServiceDDD {
             }
             UserStoryStatus userStoryStatus = userStory.get().getStatus();
             SprintID sprintIDFromDTO = new SprintID(newAddUsToSprintBacklogDTO.projectCode, newAddUsToSprintBacklogDTO.sprintNumber);
-            Optional<SprintDDD> sprintDDD = iSprintRepository.getByID(sprintIDFromDTO);
-            if (sprintDDD.isEmpty()) {
-                throw new IllegalArgumentException("Sprint is empty.");
-            }
-            List<UserStoryInSprint> userStoriesInSprint = new ArrayList<>(sprintDDD.get().getUserStoriesInSprintList());
             UserStoryInSprintID userStoryInSprintID = new UserStoryInSprintID(sprintIDFromDTO, userStoryIdFromDTO);
             UserStoryInSprint userStoryInSprint = new UserStoryInSprint(userStoryInSprintID, newAddUsToSprintBacklogDTO.userStoryEffortEstimate, userStoryStatus);
-
-            userStoriesInSprint.add(userStoryInSprint);
+            iSprintRepository.replaceUsInSprint(userStoryInSprint);
             userStoryInSprintDTO = userStoryInSprintDTOMapper.toDto(userStoryInSprint);
         } else {
             throw new IllegalArgumentException("Project is empty.");
