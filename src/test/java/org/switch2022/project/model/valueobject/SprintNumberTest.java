@@ -9,8 +9,8 @@ class SprintNumberTest {
 
     @Test
     @DisplayName(("Test for creation of SprintNumber"))
-    public void checkIfClassCreatesValidSprinNumber(){
-        new SprintNumber(1);
+    public void checkIfClassCreatesValidSprintNumber(){
+        assertInstanceOf(SprintNumber.class, new SprintNumber(1));
     }
 
     @Test

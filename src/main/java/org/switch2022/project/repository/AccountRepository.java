@@ -4,6 +4,7 @@ import org.switch2022.project.datamodel.JPA.AccountJpa;
 import org.switch2022.project.datamodel.JPA.assemblers.AccountDomainDataAssembler;
 import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.valueobject.AccountID;
+import org.switch2022.project.model.valueobject.Email;
 import org.switch2022.project.repository.JPA.AccountJpaRepository;
 import org.switch2022.project.service.irepositories.IAccountRepository;
 import java.util.ArrayList;
@@ -42,6 +43,15 @@ public class AccountRepository implements IAccountRepository {
         }
     }
 
+    public Optional<AccountDDD> getByEmail(String email) {
+        Optional<AccountJpa> accountJpaOptional = accountJpaRepository.findByEmail(email);
+        if (accountJpaOptional.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(accountDomainDataAssembler.toDomain(accountJpaOptional.get()));
+    }
+}
+
     public Iterable<AccountDDD> findAll() {
         List<AccountDDD> allAccounts = new ArrayList<>();
         Iterable<AccountJpa> allAccountsJpa = accountJpaRepository.findAll();
@@ -53,12 +63,28 @@ public class AccountRepository implements IAccountRepository {
         return allAccounts;
     }
 
-    public void clearRepository() {
-        accountJpaRepository.deleteAll();
-    }
-
     public boolean existsByEmail(String email) {
 
         return accountJpaRepository.existsByEmail(email);
+    }
+
+    public AccountID getAccountIDWhenInputEmailEqualsAccountEmail(String email) {
+        Optional<AccountDDD> optionalAccount = getByEmail(email);
+        if (optionalAccount.isPresent()) {
+            AccountDDD account = optionalAccount.get();
+            return account.identity();
+        } else {
+            return null;
+        }
+    }
+
+    public Email getEmailWhenOutputAccountIDEqualsAccountAccountID (AccountID accountID) {
+        Optional<AccountDDD> optionalAccount = getByID(accountID);
+        if (optionalAccount.isPresent()) {
+            AccountDDD account = optionalAccount.get();
+            return account.getEmail();
+        } else {
+            return null;
+        }
     }
 }

@@ -11,4 +11,6 @@ public interface AccountJpaRepository extends CrudRepository<AccountJpa, Long> {
 
         Optional<AccountJpa> findById (long accountID);
 
+        Optional<AccountJpa> findByEmail (String email);
+
 }

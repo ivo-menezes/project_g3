@@ -20,6 +20,7 @@ import org.switch2022.project.mapper.sprintDTOs.NewSprintDTO;
 import org.switch2022.project.model.sprint.UserStoryInSprint;
 import org.switch2022.project.model.valueobject.ProjectCode;
 import org.switch2022.project.model.valueobject.SprintID;
+import org.switch2022.project.model.valueobject.SprintStatus;
 import org.switch2022.project.model.valueobject.SprintNumber;
 import org.switch2022.project.service.SprintServiceDDD;
 
@@ -210,9 +211,9 @@ class SprintControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 
-    @DisplayName("Ensure that the sprint status update was successful.")
+    @DisplayName("Ensure that the sprint status update was successful with sprint status closed.")
     @Test
-    public void updateStatusSprintSuccess(){
+    public void updateStatusSprintSuccessStatusClosed(){
         //Arrange
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -224,7 +225,31 @@ class SprintControllerTest {
         when(serviceDDD.updateStatusSprint(domainDTO)).thenReturn(domainDTO);
         when(sprintMapper.toDataDTO(domainDTO)).thenReturn(updateSprintDTO);
         SprintID sprintID = domainDTO.sprintID;
+        domainDTO.sprintStatus = SprintStatus.Closed;
         serviceDDD.updateProductBacklogAndUserStoryStatus(sprintID);
+
+        //Act
+        ResponseEntity<UpdateSprintDTO> responseEntity = sprintController.updateStatusSprint(updateSprintDTO);
+
+        //Assert
+        assertEquals(responseEntity.getStatusCodeValue(),200);
+    }
+
+    @DisplayName("Ensure that the sprint status update was successful with sprint status not closed.")
+    @Test
+    public void updateStatusSprintSuccessStatusNotClosed(){
+        //Arrange
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        UpdateSprintDTO updateSprintDTO = mock(UpdateSprintDTO.class);
+        UpdateSprintDomainDTO domainDTO = mock(UpdateSprintDomainDTO.class);
+
+        when(sprintMapper.toDomainDTO(updateSprintDTO)).thenReturn(domainDTO);
+        when(serviceDDD.updateStatusSprint(domainDTO)).thenReturn(domainDTO);
+        when(sprintMapper.toDataDTO(domainDTO)).thenReturn(updateSprintDTO);
+        SprintID sprintID = domainDTO.sprintID;
+        domainDTO.sprintStatus = SprintStatus.Planned;
 
         //Act
         ResponseEntity<UpdateSprintDTO> responseEntity = sprintController.updateStatusSprint(updateSprintDTO);

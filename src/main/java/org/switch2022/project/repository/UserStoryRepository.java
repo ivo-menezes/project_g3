@@ -96,10 +96,4 @@ public class UserStoryRepository implements IUserStoryRepository {
             return Optional.of(userStoryDomainDataAssembler.toDomain(userStoryJpaOptional.get()));
         }
     }
-
-    @Override
-    public void clearRepository() {
-        userStoryJpaRepository.deleteAll();
-    }
-
 }

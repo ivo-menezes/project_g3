@@ -64,7 +64,7 @@ const AddUserStory = () => {
             priority: backlogForProject.priority,
             ac: backlogForProject.acceptanceCriteria,
             select: (
-                <div>
+                <div className = "radioButton">
                     <input
                         type="radio"
                         name="US"
@@ -72,10 +72,10 @@ const AddUserStory = () => {
                     />
 
                     {isSelected ?  (
-                        <div>
+                        <div className = "dropDownEffort">
                             <DropDownList
                                 mandatory={true}
-                                label=''
+                                label='Effort estimate '
                                 name={"effort"}
                                 items={effortValues}
                                 onChange={handleSelectEffort}

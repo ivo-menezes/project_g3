@@ -90,9 +90,10 @@ public class SprintController {
             UpdateSprintDomainDTO updateSprintDomainDTO = mapper.toDomainDTO(updateSprintInputDTO);
             UpdateSprintDomainDTO changedDomainDTO = service.updateStatusSprint(updateSprintDomainDTO);
             UpdateSprintDTO outputDTO = mapper.toDataDTO(changedDomainDTO);
-            SprintID sprintID = updateSprintDomainDTO.sprintID;
-            service.updateProductBacklogAndUserStoryStatus(sprintID);
-
+            SprintID sprintID = changedDomainDTO.sprintID;
+            if(changedDomainDTO.sprintStatus.equals(SprintStatus.Closed)) {
+                service.updateProductBacklogAndUserStoryStatus(sprintID);
+            }
             return new ResponseEntity<>(outputDTO, HttpStatus.OK);
 
         } catch (IllegalArgumentException exception) {
@@ -100,7 +101,7 @@ public class SprintController {
         }
     }
 
-    @PatchMapping("/updateUsInSprint")
+    @PatchMapping("{sprintNumber}/updateUsInSprint")
     public ResponseEntity<InputUsInSprintStatusDTO> updateUsInSprintStatus(@RequestBody InputUsInSprintStatusDTO inputUsInSprintStatusDTO) {
 
         try {

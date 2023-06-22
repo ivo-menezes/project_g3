@@ -126,6 +126,31 @@ class AccountRepositoryTest {
         assertEquals(accountOptional,result);
     }
 
+    @DisplayName("ensure getByEmail returns optional")
+    @Test
+    void shouldReturnAccountOptional() {
+        //Arrange
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository, assembler);
+
+        AccountDDD account = mock(AccountDDD.class);
+        String email = "xxx@gmail.com";
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        Optional<AccountJpa> accountJpaOptional = Optional.of(accountJpa);
+
+        when(accountJpaRepository.findByEmail(email)).thenReturn(accountJpaOptional);
+        when(assembler.toDomain(accountJpa)).thenReturn(account);
+
+        Optional<AccountDDD> accountOptional = Optional.of(account);
+
+        //Act
+        Optional<AccountDDD> result = accountRepository.getByEmail(email);
+
+        //Assert
+        assertEquals(accountOptional, result);
+    }
+
     @DisplayName("ensure getByEmail returns empty")
     @Test
     void shouldReturnEmptyOptional() {
@@ -145,5 +170,129 @@ class AccountRepositoryTest {
 
         //Assert
         assertEquals(Optional.empty(),result);
+    }
+
+    @DisplayName("getting an Email with an accountID")
+    @Test
+    void shouldReturnEmail() {
+        // Arrange
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository, assembler);
+
+        AccountDDD account = mock(AccountDDD.class);
+        AccountID accountID = mock(AccountID.class);
+        when(account.identity()).thenReturn(accountID);
+
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        Optional<AccountJpa> accountJpaOptional = Optional.of(accountJpa);
+
+        when(accountJpaRepository.findById(account.identity().getId())).thenReturn(accountJpaOptional);
+        when(assembler.toDomain(accountJpa)).thenReturn(account);
+
+        Optional<AccountDDD> accountOptional = Optional.of(account);
+
+        Email expectedEmail = mock(Email.class);
+        when(account.getEmail()).thenReturn(expectedEmail);
+
+        // Act
+        Email result = accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(accountID);
+
+        // Assert
+        assertEquals(expectedEmail, result);
+    }
+
+
+    @DisplayName("getting an email with an accountID returns null")
+    @Test
+    void shouldReturnNullEmail() {
+        //Arrange
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository,assembler);
+
+        AccountDDD account = mock(AccountDDD.class);
+        AccountID accountID = mock(AccountID.class);
+        when(account.identity()).thenReturn(accountID);
+
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        Optional<AccountJpa> accountJpaOptional = Optional.empty();
+
+        //Act
+        Email result = accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(accountID);
+
+        //Assert
+        assertNull(result);
+    }
+
+    @DisplayName("getting an AccountID with a matching email")
+    @Test
+    void shouldReturnAccountID() {
+        // Arrange
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository, assembler);
+
+        AccountDDD account = mock(AccountDDD.class);
+        Email email = mock(Email.class);
+        when(account.getEmail()).thenReturn(email);
+        when(email.toString()).thenReturn("xxx@gmail.com");
+
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        Optional<AccountJpa> accountJpaOptional = Optional.of(accountJpa);
+
+        when(accountJpaRepository.findByEmail(email.toString())).thenReturn(accountJpaOptional);
+        when(assembler.toDomain(accountJpa)).thenReturn(account);
+
+        Optional<AccountDDD> accountOptional = Optional.of(account);
+
+        AccountID expectedId = mock(AccountID.class);
+        when(account.identity()).thenReturn(expectedId);
+
+        // Act
+        AccountID result = accountRepository.getAccountIDWhenInputEmailEqualsAccountEmail(email.toString());
+
+        // Assert
+        assertEquals(expectedId, result);
+    }
+
+    @DisplayName("getting an email with an accountID returns null")
+    @Test
+    void shouldReturnNullAccountID() {
+        //Arrange
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository,assembler);
+
+        AccountDDD account = mock(AccountDDD.class);
+        Email email = mock(Email.class);
+        when(account.getEmail()).thenReturn(email);
+
+        AccountJpa accountJpa = mock(AccountJpa.class);
+        Optional<AccountJpa> accountJpaOptional = Optional.empty();
+
+        //Act
+        AccountID result = accountRepository.getAccountIDWhenInputEmailEqualsAccountEmail(email.toString());
+
+        //Assert
+        assertNull(result);
+    }
+
+    @DisplayName("verify is returns true")
+    @Test
+    void shouldReturnTrueWhenEmailExists() {
+        //Assert
+        AccountJpaRepository accountJpaRepository = mock(AccountJpaRepository.class);
+        AccountDomainDataAssembler assembler = mock(AccountDomainDataAssembler.class);
+        AccountRepository accountRepository = new AccountRepository(accountJpaRepository,assembler);
+        String email = "xxx@gmail.com";
+
+        when(accountRepository.existsByEmail(email)).thenReturn(true);
+
+        //Act
+        boolean result = accountRepository.existsByEmail(email);
+
+        //Assert
+        assertTrue(result);
     }
 }

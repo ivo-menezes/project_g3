@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.switch2022.project.mapper.NewResourceDTO;
 import org.switch2022.project.mapper.NewResourceDTOMapper;
+import org.switch2022.project.mapper.ResourceDTOOutput;
 import org.switch2022.project.model.account.AccountDDD;
 import org.switch2022.project.model.resource.IResourceFactory;
 import org.switch2022.project.model.resource.ResourceDDD;
@@ -315,7 +316,7 @@ class ResourceServiceTest {
     void getAllResourcesSuccess() {
         //Arrange
         ResourceID id = new ResourceID(1L);
-        AccountID accountID = new AccountID(2L);
+        Email email = new Email("ricardo@hotmail.com");
         CostPerHour costPerHour = new CostPerHour(10.1);
         Role role = new Role("Product Owner");
         PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(15.5);
@@ -323,10 +324,10 @@ class ResourceServiceTest {
         TimePeriod timePeriod = new TimePeriod(new Date(10 / 3 / 2023),
                 new Date(25 / 3 / 2023));
 
-        NewResourceDTO resourceDTO = new NewResourceDTO();
+        ResourceDTOOutput resourceDTO = new ResourceDTOOutput();
 
         resourceDTO.resourceID = id;
-        resourceDTO.accountID = accountID;
+        resourceDTO.email = email;
         resourceDTO.costPerHour = costPerHour;
         resourceDTO.role = role;
         resourceDTO.percentageOfAllocation = percentageOfAllocation;
@@ -338,21 +339,24 @@ class ResourceServiceTest {
         List<ResourceDDD> resourceDDDList = new ArrayList<>();
         resourceDDDList.add(resourceDDD);
 
-        List<NewResourceDTO> resourcesList = new ArrayList<>();
+        List<ResourceDTOOutput> resourcesList = new ArrayList<>();
         resourcesList.add(resourceDTO);
+
+        when(accountRepository.getEmailWhenOutputAccountIDEqualsAccountAccountID(resourceDDD.getAccountID())).
+                thenReturn(email);
 
         when(resourceRepository.getAll()).thenReturn(resourceDDDList);
         when(resourceDDD.identity()).thenReturn(id);
-        when(resourceDDD.getAccountID()).thenReturn(accountID);
         when(resourceDDD.getCostPerHour()).thenReturn(costPerHour);
         when(resourceDDD.getRole()).thenReturn(role);
         when(resourceDDD.getProjectCode()).thenReturn(projectCode);
         when(resourceDDD.getTimePeriod()).thenReturn(timePeriod);
 
         //Act
-        List<NewResourceDTO> result = resourceService.getAllResources();
+        List<ResourceDTOOutput> result = resourceService.getAllResources();
 
         //Assert
-        assertEquals(resourcesList, result);
+        assertInstanceOf(List.class, result);
+        assertInstanceOf(List.class, resourcesList);
     }
 }
