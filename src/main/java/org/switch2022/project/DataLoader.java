@@ -876,7 +876,22 @@ public class DataLoader implements CommandLineRunner {
 
         sprintService.createSprint(sprintDTOA2N3);
 
-        //LOAD ACCOUNTS
+        // LOAD USERSTORYINSPRINT
+
+        UserStoryEffortEstimate userStoryEffortEstimate = new UserStoryEffortEstimate(4.0);
+        NewAddUsToSprintBacklogDTO sprintBacklogDTOSB_A1_N3_N1 = createSprintBacklogDto(projectCode1,
+                sprintNumberA1N3,userStoryNumberA1N1,userStoryEffortEstimate);
+
+        sprintService.addUsToSprintBacklog(sprintBacklogDTOSB_A1_N3_N1);
+
+
+
+
+
+
+
+
+        // LOAD ACCOUNTS
 
         // Account 1
         Email emailAccount1 = new Email("js@mymail.com");
@@ -1241,6 +1256,22 @@ public class DataLoader implements CommandLineRunner {
 
 
     }
+
+    private static NewAddUsToSprintBacklogDTO createSprintBacklogDto(ProjectCode projectCode,
+                                                                     SprintNumber sprintNumber,
+                                                                     UserStoryNumber userStoryNumber,
+                                                                     UserStoryEffortEstimate userStoryEffortEstimate){
+        NewAddUsToSprintBacklogDTO sprintBacklogDTO = new NewAddUsToSprintBacklogDTO();
+
+        sprintBacklogDTO.projectCode = projectCode;
+        sprintBacklogDTO.sprintNumber=sprintNumber;
+        sprintBacklogDTO.userStoryNumber=userStoryNumber;
+        sprintBacklogDTO.userStoryEffortEstimate=userStoryEffortEstimate;
+
+        return sprintBacklogDTO;
+    }
+
+
 
     /**
      * Generates the sprint number for the sprint instance to be created,

@@ -12,6 +12,7 @@ import org.switch2022.project.model.valueobject.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +33,6 @@ public class SprintAssemblerDataTest {
         SprintNumber sprintNumberDouble = mock(SprintNumber.class);
         TimePeriod timePeriodDouble = mock(TimePeriod.class);
         SprintStatus sprintStatus = mock(SprintStatus.class);
-        //SprintBacklog sprintBacklog = mock(SprintBacklog.class);
         List<UserStoryInSprint> list = new ArrayList<>();
         List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
         UserStoryInSprintDataAssembler userStoryInSprintDataAssembler = mock(
@@ -63,7 +63,7 @@ public class SprintAssemblerDataTest {
         // Assert
         assertEquals(expectedSprintJpa, resultingSprintJpa);
          }
-/*
+
     @DisplayName("ensure toDomain method returns a correct SprintDDD")
     @Test
     void shouldReturnCorrectSprintDDD() {
@@ -72,6 +72,14 @@ public class SprintAssemblerDataTest {
         SprintJpaID sprintJpaIdDouble = mock(SprintJpaID.class);
         Date startDateDouble = mock(Date.class);
         Date endDateDouble = mock(Date.class);
+        UserStoryInSprintJPA userStoryInSprintJPA = mock(UserStoryInSprintJPA.class);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = new ArrayList<>();
+        sprintBacklogJPA.add(userStoryInSprintJPA);
+        List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
+        UserStoryInSprint userStoryInSprint = mock (UserStoryInSprint.class);
+        sprintBacklog.add(userStoryInSprint);
+        UserStoryInSprintDataAssembler userStoryInSprintDataAssembler = mock(
+                UserStoryInSprintDataAssembler.class);
 
         when(sprintJPADouble.getSprintID()).thenReturn(sprintJpaIdDouble);
         when(sprintJpaIdDouble.getSprintNumber()).thenReturn(1);
@@ -79,22 +87,25 @@ public class SprintAssemblerDataTest {
         when(sprintJPADouble.getStartDate()).thenReturn(startDateDouble);
         when(sprintJPADouble.getEndDate()).thenReturn(endDateDouble);
         when(sprintJPADouble.getSprintStatus()).thenReturn("Open");
+        when(sprintJPADouble.getSprintBacklogJPA()).thenReturn(sprintBacklogJPA);
 
         ProjectCode expectedProjectCode = new ProjectCode("XPTO");
         SprintNumber expectedSprintNumber = new SprintNumber(1);
         SprintID expectedSprintId = new SprintID(expectedProjectCode, expectedSprintNumber);
         TimePeriod expectedTimePeriod = new TimePeriod(startDateDouble, endDateDouble);
         SprintStatus expectedStatus = SprintStatus.Open;
-        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod, expectedStatus);
 
-        SprintAssemblerData assembler = new SprintAssemblerData();
+        SprintDDD expectedSprintDdd = new SprintDDD(expectedSprintId, expectedTimePeriod, expectedStatus,
+                sprintBacklog);
+
+        SprintAssemblerData assembler = new SprintAssemblerData(userStoryInSprintDataAssembler);
 
         // Act
         SprintDDD resultingSprintDdd = assembler.toDomain(sprintJPADouble);
 
         // Assert
         assertEquals(expectedSprintDdd, resultingSprintDdd);
-    }*/
+    }
 
 }
 

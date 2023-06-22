@@ -66,7 +66,18 @@ import java.util.List;
 
         TimePeriod timePeriod = new TimePeriod(sprintJPA.getStartDate(), sprintJPA.getEndDate());
 
-        return new SprintDDD(sprintID, timePeriod, sprintStatus);
+        List<UserStoryInSprintJPA> sprintBacklogJPA = sprintJPA.getSprintBacklogJPA();
+        List<UserStoryInSprint> sprintBacklog = new ArrayList<>();
+
+        if (sprintBacklogJPA.size() > 0) {
+            for (UserStoryInSprintJPA userStoryInSprintJPA : sprintBacklogJPA) {
+                UserStoryInSprint userStoryInSprint = userStoryInSprintDataAssembler.toDomain(
+                        userStoryInSprintJPA);
+                sprintBacklog.add(userStoryInSprint);
+            }
+        }
+
+        return new SprintDDD(sprintID, timePeriod, sprintStatus, sprintBacklog);
         }
 
     /***

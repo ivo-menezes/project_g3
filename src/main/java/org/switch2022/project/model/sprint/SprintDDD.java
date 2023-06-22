@@ -39,6 +39,19 @@ public class SprintDDD implements AggregateRoot<SprintID> {
         this.sprintBacklog = new SprintBacklog();
     }
 
+    public SprintDDD(SprintID sprintID,
+                     TimePeriod timePeriod,
+                     SprintStatus status,
+                     List<UserStoryInSprint> userStoryInSprintList) {
+        if(sprintID == null || timePeriod == null || status == null){
+            throw new IllegalArgumentException("Missing value, please try again.");
+        }
+        this.sprintID = sprintID;
+        this.timePeriod = timePeriod;
+        this.status = status;
+        this.sprintBacklog = new SprintBacklog(userStoryInSprintList);
+    }
+
     public SprintID identity() {
         return sprintID;
     }

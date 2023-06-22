@@ -18,6 +18,10 @@ public class SprintBacklog {
         this.userStoriesInSprintList = new ArrayList<>();
     }
 
+    protected SprintBacklog(List<UserStoryInSprint> userStoryInSprintList) {
+        this.userStoriesInSprintList = userStoryInSprintList;
+    }
+
     /**
      * Adds a UserStoryInSprint to the list of user stories in sprint.
      *
