@@ -350,6 +350,7 @@ class SprintControllerTest {
 
         ProjectCode projectCode = new ProjectCode("P1");
         SprintNumber sprintNumber = new SprintNumber(1);
+        int sprintNumberInt = 1;
         SprintID sprintID = new SprintID(projectCode,sprintNumber);
 
 
@@ -383,7 +384,7 @@ class SprintControllerTest {
         when(sprintMapper.assembledUSToRestDto(newAssembledUSDTODoubleTwo)).thenReturn(assembledUSRestDtoDoubleTwo);
 
         //Act
-        ResponseEntity<List<AssembledUSRestDto>> response = sprintController.getSprintBacklog(projectCode,sprintNumber);
+        ResponseEntity<List<AssembledUSRestDto>> response = sprintController.getSprintBacklog(projectCode,sprintNumberInt);
 
         //Assert
         assertEquals(200, response.getStatusCodeValue());
@@ -401,10 +402,12 @@ class SprintControllerTest {
         SprintNumber sprintNumber = new SprintNumber(1);
         SprintID sprintID = new SprintID(projectCode,sprintNumber);
 
+        int sprintNumberInt = 1;
+
         when(serviceDDD.getUserStoryInSprintList(sprintID)).thenThrow(RuntimeException.class);
 
         //Act
-        ResponseEntity<?> response = sprintController.getSprintBacklog(projectCode,sprintNumber);
+        ResponseEntity<?> response = sprintController.getSprintBacklog(projectCode,sprintNumberInt);
 
         // Assert
         assertEquals(404, response.getStatusCodeValue());

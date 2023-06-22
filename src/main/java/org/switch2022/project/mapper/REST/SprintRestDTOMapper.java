@@ -148,12 +148,12 @@ public class SprintRestDTOMapper {
         AssembledUSRestDto restDto = new AssembledUSRestDto();
         restDto.userStoryNumber = domainDto.userStoryNumber.toString();
         restDto.projectCode = domainDto.projectCode.toString();
-        restDto.sprintNumber = domainDto.sprintNumber.toString();
+        restDto.sprintNumber = domainDto.sprintNumber.getValue();
         restDto.userStoryActor = domainDto.userStoryActor.toString();
         restDto.userStoryDescription = domainDto.userStoryDescription.toString();
         restDto.userStoryAcceptanceCriteria = domainDto.userStoryAcceptanceCriteria.toString();
         restDto.userStoryStatus = domainDto.userStoryStatus.toString();
-        restDto.userStoryEffortEstimate = domainDto.userStoryEffortEstimate.toString();
+        restDto.userStoryEffortEstimate = domainDto.userStoryEffortEstimate.getUserStoryEffortEstimate();
 
         return restDto;
     }

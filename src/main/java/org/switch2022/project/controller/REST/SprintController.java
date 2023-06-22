@@ -128,11 +128,13 @@ public class SprintController {
         }
     }
 
-    @GetMapping( "{sprintNumber}/getSprintBacklog")
+    @GetMapping( "/{sprintNumber}/getSprintBacklog")
     public ResponseEntity<List<AssembledUSRestDto>> getSprintBacklog (@PathVariable ProjectCode projectCode,
-                                                                      @PathVariable SprintNumber sprintNumber ) {
+                                                                      @PathVariable int sprintNumber ) {
         try{
-            SprintID sprintID = new SprintID(projectCode,sprintNumber);
+            SprintNumber sprintNumber1 = new SprintNumber(sprintNumber);
+
+            SprintID sprintID = new SprintID(projectCode,sprintNumber1);
 
             List<UserStoryInSprint> userStoryInSprintList = service.getUserStoryInSprintList(sprintID);
             List<NewAssembledUSDTO> assembledUSDTOList = service.createListOfAssembledUS(userStoryInSprintList);
@@ -142,6 +144,7 @@ public class SprintController {
                 restDtoList.add(mapper.assembledUSToRestDto(newAssembledUSDTO));
             }
             return new ResponseEntity<>(restDtoList,HttpStatus.OK);
+
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

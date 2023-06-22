@@ -878,17 +878,28 @@ public class DataLoader implements CommandLineRunner {
 
         // LOAD USERSTORYINSPRINT
 
-        UserStoryEffortEstimate userStoryEffortEstimate = new UserStoryEffortEstimate(4.0);
-        NewAddUsToSprintBacklogDTO sprintBacklogDTOSB_A1_N3_N1 = createSprintBacklogDto(projectCode1,
-                sprintNumberA1N3,userStoryNumberA1N1,userStoryEffortEstimate);
+        UserStoryEffortEstimate userStoryEffortEstimate1 = new UserStoryEffortEstimate(1.0);
+        UserStoryEffortEstimate userStoryEffortEstimate2 = new UserStoryEffortEstimate(2.0);
+        UserStoryEffortEstimate userStoryEffortEstimate3 = new UserStoryEffortEstimate(3.0);
 
-        sprintService.addUsToSprintBacklog(sprintBacklogDTOSB_A1_N3_N1);
+        // UserStoryInSprint 1 - Project1 (A1) | Sprint 3 (N3) | US1 (N1) -> A1_N3_N1
 
+        NewAddUsToSprintBacklogDTO sprintBacklogDTO_A1_N3_N1 = createSprintBacklogDto(projectCode1,
+                sprintNumberA1N3,userStoryNumberA1N1,userStoryEffortEstimate1);
 
+        sprintService.addUsToSprintBacklog(sprintBacklogDTO_A1_N3_N1);
 
+        // UserStoryInSprint 2
+        NewAddUsToSprintBacklogDTO sprintBacklogDTOSB_A1_N3_N2 = createSprintBacklogDto(projectCode1,
+                sprintNumberA1N3,userStoryNumberA1N2,userStoryEffortEstimate2);
 
+        sprintService.addUsToSprintBacklog(sprintBacklogDTOSB_A1_N3_N2);
 
+        // UserStoryInSprint 3
+        NewAddUsToSprintBacklogDTO sprintBacklogDTOSB_A2_N3_N1 = createSprintBacklogDto(projectCode2,
+                sprintNumberA2N3,userStoryNumber1P2,userStoryEffortEstimate3);
 
+        sprintService.addUsToSprintBacklog(sprintBacklogDTOSB_A2_N3_N1);
 
 
         // LOAD ACCOUNTS
