@@ -14,15 +14,15 @@ Manager -> Client: I want to update a User Story Status in Sprint Backlog
 activate Client
 Client -> Client: Show UI
 Client --> Manager: Ask for data
-Manager -> Client: Update sprint (user story status)
-Client -> Server: Patch{sprint body}
+Manager -> Client: Update userStoryInSprint (user story status)
+Client -> Server: Patch{body}
 activate Server
-Server -> Database: save sprint
+Server -> Database: save userStoryInSprint
 activate Database
-Database --> Server: confirm saved sprint
+Database --> Server: confirm saved userStoryInSprint
 deactivate Database
 Server --> Client: 201
 deactivate Server
 Client -> Client: Generate UI
-Manager <-- Client: Confirms sprint updated.
+Manager <-- Client: Confirms userStoryInSprint updated.
 @enduml

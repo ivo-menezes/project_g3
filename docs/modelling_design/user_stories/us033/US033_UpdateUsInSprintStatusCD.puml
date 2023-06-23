@@ -25,8 +25,6 @@ convertToJpaID(domainID)
 }
 
 Interface UserStoryInSprintJPARepository {
-findById(sprintJpaID)
-save(sprintJPA)
 }
 
 class UserStoryInSprint {
@@ -82,7 +80,10 @@ class SprintNumber{
 int sprintNumber
 }
 
-interface ISprintRepository
+interface ISprintRepository{
+findById(userStoryInSprintIDJpa)
+save(UserStoryInSprintJPA)
+}
 interface Repository
 interface CrudRepository
 interface DomainId
@@ -116,6 +117,7 @@ SprintRepository ..> UserStoryID
 
 
 ISprintRepository --|> Repository
+UserStoryInSprintJPARepository --|> Repository
 
 UserStoryInSprintJPARepository --|> CrudRepository
 
