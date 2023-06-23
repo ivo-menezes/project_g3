@@ -118,7 +118,7 @@ const CreateSprint = () => {
                     </div>
                     <div className="project-detail">
                         <div className="project-detail-label">Previous Sprint End Date:</div>
-                        <div className="project-detail-value">{lastSprint.endDate}</div>
+                        <div className="project-detail-value">{lastSprint ? lastSprint.endDate : "none"}</div>
                     </div>
                 </div>
 
@@ -139,6 +139,8 @@ const CreateSprint = () => {
                             dateFormat="dd/MM/yyyy"
                             label="Start Date"
                             name="startDate"
+                            minDate={lastSprint ? new Date(lastSprint.endDate) : new Date(project.startDate)}
+                            maxDate ={new Date(project.endDate)}
                         />
                     </div>
 
@@ -150,6 +152,8 @@ const CreateSprint = () => {
                             dateFormat="dd/MM/yyyy"
                             label='End Date'
                             name="endDate"
+                            minDate = {newSprint.startDate}
+                            maxDate ={new Date(project.endDate)}
                         />
                     </div>
                     <div className="button-container">

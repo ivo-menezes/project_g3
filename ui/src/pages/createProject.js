@@ -165,6 +165,7 @@ const CreateProject = () => {
                             name={'endDate'}
                             selectedDate={newProject.endDate}
                             onChange={handleEndDateChange}
+                            minDate={newProject.startDate}
                         />
                     </div>
 

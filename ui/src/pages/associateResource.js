@@ -18,7 +18,8 @@ const AssociateResource = () => {
     //gets the project code from the URL parameter using the useParams hook.
     const {projectCode} = useParams();
     //gets the dispatch function and state from the AppContext using the useContext hook.
-    const {dispatch} = useContext(AppContext);
+    const {state, dispatch} = useContext(AppContext);
+    const project = state.projects.data.find((project) => project.projectCode === projectCode);
 
     const navigate = useNavigate();
 
@@ -112,6 +113,8 @@ const AssociateResource = () => {
                             name={'startDate'}
                             selectedDate={newResource.startDate}
                             onChange={handleStartDateChoice}
+                            minDate={new Date(project.startDate)}
+                            maxDate={new Date(project.endDate)}
                         />
                     </div>
                     <div className="date">
@@ -122,6 +125,8 @@ const AssociateResource = () => {
                             name={'endDate'}
                             selectedDate={newResource.endDate}
                             onChange={handleEndDateChoice}
+                            minDate={newResource.startDate}
+                            maxDate={new Date(project.endDate)}
                         />
                     </div>
                     <TextField className="textField"

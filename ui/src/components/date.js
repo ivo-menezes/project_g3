@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const Date = ({label, mandatory, selectedDate, dateFormat, onChange}) => {
+const Date = ({label, mandatory, selectedDate, dateFormat, onChange, minDate, maxDate}) => {
 
     return (
         <div>
@@ -12,6 +12,8 @@ const Date = ({label, mandatory, selectedDate, dateFormat, onChange}) => {
                 selected={selectedDate}
                 onChange={onChange}
                 dateFormat={dateFormat}
+                minDate={minDate}
+                maxDate={maxDate}
             />
         </div>
 
