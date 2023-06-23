@@ -108,6 +108,14 @@ export const patchStatusSprintToBackend = (success, failure, updatedSprint) => {
         .catch(error => failure(error))
 }
 
+//Calls the updateUsInSprintStatus method in the sprintController.
+export const patchStatusUserStoryToBackend = (success, failure, updatedUserStory) => {
+    const ENDPOINT = `projects/${updatedUserStory.projectCode}/sprints/${updatedUserStory.sprintNumber}/updateUsInSprint`;
+    axios.patch(API_URL + ENDPOINT, updatedUserStory)
+        .then(response => success(response))
+        .catch(error => failure(error))
+}
+
 export const patchAddUserStoryToSprintBacklog = (success, failure, payload) => {
     const ENDPOINT = `projects/${payload.projectCode}/sprints/${payload.sprintNumber}/addUserStoryToSprintBacklog`
     axios.patch(API_URL + ENDPOINT, payload)

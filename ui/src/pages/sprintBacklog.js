@@ -4,7 +4,8 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
-import {fetchBacklog, fetchSprintBacklog} from "../context/Actions";
+import {fetchSprintBacklog, setUserStoryStatus} from "../context/Actions";
+import DropDownList from "../components/dropDownList";
 
 const headers = [
     {label: "Number", key: "number"},
@@ -31,6 +32,26 @@ const SprintBacklog = () => {
         fetchSprintBacklog(dispatch, projectCode,sprintNumber);
     }, []);
 
+    const statusValue = [
+        "TO_DO",
+        "IN_PROGRESS",
+        "TESTING",
+        "DONE",
+        "CANCELLED"
+    ]
+
+    //Function to handle status change in userStory in DropDownList component
+    const handleChangeStatus = (event) => {
+        const userStoryNumber = event.target.name;
+        const userStoryStatus = event.target.value;
+        //Object expected by the backend
+        const updatedUserStory = {projectCode, userStoryNumber, sprintNumber, userStoryStatus}
+
+        //Call to the "setUserStoryStatus" function that is implemented in "Context-Action".
+        setUserStoryStatus(dispatch, updatedUserStory);
+    }
+
+
     const backlogForSprint = state.backlogs.data;
     // table component renders columns in the same order as the object properties...
     // to match the headers, need to sort the object properties
@@ -41,9 +62,18 @@ const SprintBacklog = () => {
         userStoryNumber: backlogForSprint.userStoryNumber,
         userStoryActor: backlogForSprint.userStoryActor,
         userStoryDescription: backlogForSprint.userStoryDescription,
-        userStoryStatus: backlogForSprint.userStoryStatus,
+        userStoryStatus: (<div className="dropDownStatus">
+            <DropDownList
+                mandatory={true}
+                label=''
+                name={backlogForSprint.userStoryNumber}
+                items={statusValue}
+                value={backlogForSprint.userStoryStatus}
+                onChange={handleChangeStatus}
+            />
+        </div>),
         userStoryAcceptanceCriteria: backlogForSprint.userStoryAcceptanceCriteria,
-        ef: backlogForSprint.userStoryEffortEstimate,
+        userStoryEffortEstimate: backlogForSprint.userStoryEffortEstimate,
 
 
     }));

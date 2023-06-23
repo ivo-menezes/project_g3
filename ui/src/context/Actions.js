@@ -3,7 +3,7 @@ import {
     fetchProjectsFromBackend,
     fetchResourcesFromBackend, fetchSprintBacklogFromBackend,
     fetchSprintsFromBackend, fetchTypologiesFromBackend, patchAddUserStoryToSprintBacklog,
-    patchStatusSprintToBackend,
+    patchStatusSprintToBackend, patchStatusUserStoryToBackend,
     postProjectToBackend,
     postResourceToBackend,
     postSprintToBackend,
@@ -258,6 +258,15 @@ export const setSprintStatus = (dispatch, updatedSprint) => {
                         (error) => console.log(error),
                                //Is the status object that contains information about the status of the sprint
                                 updatedSprint)
+}
+
+export const setUserStoryStatus = (dispatch, updatedUserStory) => {
+    //fetchUserStories function to fetch the userStory and update the state using dispatch.
+    patchStatusUserStoryToBackend(() => fetchSprintBacklog(dispatch,updatedUserStory.projectCode,updatedUserStory.sprintNumber),
+        //Function to handle errors and print to console
+        (error) => console.log(error),
+        //Is the status object that contains information about the status of the user story in sprint
+        updatedUserStory)
 }
 
 export const addUserStorySB = (dispatch, projectCode, sprintNumber, payload, navigate) => {
