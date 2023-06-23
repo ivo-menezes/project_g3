@@ -84,3 +84,12 @@ export const patchAddUserStoryToSprintBacklog = (success, failure, payload) => {
         .then(response => success(response))
         .catch(error => failure(error))
 }
+export const fetchSprintBacklogFromBackend = (success, failure, projectCode, sprintNumber) => {
+    const ENDPOINT = `projects/${projectCode}/sprints/${sprintNumber}/getSprintBacklog`
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData)
+        })
+        .catch(error => failure(error.message))
+}

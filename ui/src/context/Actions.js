@@ -1,7 +1,7 @@
 import {
     fetchBacklogFromBackend,
     fetchProjectsFromBackend,
-    fetchResourcesFromBackend,
+    fetchResourcesFromBackend, fetchSprintBacklogFromBackend,
     fetchSprintsFromBackend, patchAddUserStoryToSprintBacklog,
     patchStatusSprintToBackend,
     postProjectToBackend,
@@ -241,4 +241,14 @@ export const addUserStorySB = (dispatch, projectCode, sprintNumber, payload, nav
         (error) => console.log(error),
         payload
     )
+}
+
+export const fetchSprintBacklog = (dispatch, projectCode, sprintNumber) => {
+    dispatch({
+        type: FETCH_BACKLOG_STARTED
+    })
+    fetchSprintBacklogFromBackend(
+        (response) => dispatch(fetchBacklogSuccess(response)),
+        (errorMessage) => dispatch(fetchBacklogFailure(errorMessage)),
+        projectCode,sprintNumber)
 }
