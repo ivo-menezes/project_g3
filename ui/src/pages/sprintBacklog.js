@@ -4,15 +4,15 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Header from "../components/header";
 import Table from "../components/table";
 import Button from "../components/button";
-import {fetchBacklog} from "../context/Actions";
+import {fetchBacklog, fetchSprintBacklog} from "../context/Actions";
 
 const headers = [
     {label: "Number", key: "number"},
     {label: "Actor", key: "actor"},
     {label: "Description", key: "description"},
     {label: "Status", key: "status"},
-    {label: "Priority", key: "priority"},
     {label: "Acceptance Criteria", key: "ac"},
+    {label: "Effort Estimate", key: "ef"},
 ]
 
 const SprintBacklog = () => {
@@ -28,21 +28,23 @@ const SprintBacklog = () => {
         window.scrollTo(0, 0);
 
         // calling the fetchBacklog action that fetches the backlog for the given sprint from backend
-        fetchBacklog(dispatch, sprintNumber);
+        fetchSprintBacklog(dispatch, projectCode,sprintNumber);
     }, []);
 
     const backlogForSprint = state.backlogs.data;
     // table component renders columns in the same order as the object properties...
     // to match the headers, need to sort the object properties
-    const sortedBacklog = JSON.parse(JSON.stringify(backlogForSprint, ["projectCode", "userStoryNumber", "actor", "description", "status", "priority", "acceptanceCriteria"]))
+    const sortedBacklog = JSON.parse(JSON.stringify(backlogForSprint, ["userStoryNumber", "projectCode", "sprintNumber", "userStoryActor",
+        "userStoryDescription", "userStoryAcceptanceCriteria", "userStoryStatus","userStoryEffortEstimate"]))
 
     const finalBacklog = sortedBacklog.map((backlogForSprint) => ({
-        number: backlogForSprint.userStoryNumber,
-        actor: backlogForSprint.actor,
-        description: backlogForSprint.description,
-        status: backlogForSprint.status,
-        priority: backlogForSprint.priority,
-        ac: backlogForSprint.acceptanceCriteria,
+        userStoryNumber: backlogForSprint.userStoryNumber,
+        userStoryActor: backlogForSprint.userStoryActor,
+        userStoryDescription: backlogForSprint.userStoryDescription,
+        userStoryStatus: backlogForSprint.userStoryStatus,
+        userStoryAcceptanceCriteria: backlogForSprint.userStoryAcceptanceCriteria,
+        ef: backlogForSprint.userStoryEffortEstimate,
+
 
     }));
 
