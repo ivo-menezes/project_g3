@@ -42,6 +42,36 @@ export const fetchResourcesFromBackend = (success, failure, projectCode) => {
         .catch(error => failure(error.message))
 }
 
+export const fetchCustomersFromBackend = (success, failure) => {
+    const ENDPOINT = `customers`;
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}
+
+export const fetchTypologiesFromBackend = (success, failure) => {
+    const ENDPOINT = `typologies`;
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}
+
+export const fetchBusinessSectorsFromBackend = (success, failure) => {
+    const ENDPOINT = `businessSectors`;
+    axios.get(API_URL + ENDPOINT)
+        .then(response => {
+            const responseData = response.data;
+            success(responseData);
+        })
+        .catch(error => failure(error.message))
+}
+
 export const postUserStoryToBackend = (success, failure, projectCode, userStory) => {
     const ENDPOINT = `projects/${projectCode}/productbacklog`;
     axios.post(API_URL + ENDPOINT, userStory)

@@ -4,17 +4,35 @@ import React, {useContext, useEffect, useState} from "react";
 import Header from "../components/header";
 import Button from "../components/button";
 import {Link, useNavigate} from "react-router-dom";
-import {addProject, postProject} from "../context/Actions";
+import {postProject} from "../context/Actions";
 import DropDownList from "../components/dropDownList";
 import PickDate from "../components/date";
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CreateProject = () => {
+
+    const {state, dispatch} = useContext(AppContext);
+
     //The effect scrolls the window to the top of the page, ensuring that the header and the top portion
     //of the content are visible when rendering the page.
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const customers = state.customers.data;
+    const typologies = state.typologies.data;
+    const sectors = state.businessSectors.data;
+
+    const customerValues = customers.map((element) => {
+        return element.customerDesignation;
+    })
+
+    const typologyValues = typologies.map((element) => {
+        return element.typologyDesignation;
+    })
+
+    const sectorValues = sectors.map((element) => {
+        return element.businessSectorDesignation;
+    })
 
     // using a local state to save user input before submitting
     const emptyProject = {
@@ -23,9 +41,9 @@ const CreateProject = () => {
         description: '',
         startDate: '',
         endDate: '',
-        customerID: '',
-        typologyID: '',
-        businessSectorID: '',
+        customerID: customers[0].customerID,
+        typologyID: typologies[0].typologyId,
+        businessSectorID: sectors[0].businessSectorId,
         // the following are optional
         projectBudget: '',
         sprintDuration: '',
@@ -33,6 +51,8 @@ const CreateProject = () => {
     }
 
     const [newProject, setNewProject] = useState(emptyProject)
+
+
 
     // updates the corresponding field in newProject when a TextField or DropDownList is changed
     // has to be passed to the component that generates the event
@@ -54,8 +74,43 @@ const CreateProject = () => {
         handleChange(event)
     }
 
+    const handleCustomerChange = (event) => {
+        const name = event.target.name;
+        const designation = event.target.value;
+
+        const customer = customers.filter((customer) => customer.customerDesignation === designation)[0];
+        const id = customer.customerID;
+
+        event.target = {value : id, name : name}
+
+        handleChange(event)
+    }
+
+    const handleTypologyChange = (event) => {
+        const name = event.target.name;
+        const designation = event.target.value;
+
+        const typology = typologies.filter((typology) => typology.typologyDesignation === designation)[0];
+        const id = typology.typologyId;
+
+        event.target = {value : id, name : name}
+
+        handleChange(event)
+    }
+
+    const handleSectorChange = (event) => {
+        const name = event.target.name;
+        const designation = event.target.value;
+
+        const sector = sectors.filter((sector) => sector.businessSectorDesignation === designation)[0];
+        const id = sector.businessSectorId;
+
+        event.target = {value : id, name : name}
+
+        handleChange(event)
+    }
+
     // submits the newProject to the global context via the addProject action
-    const {dispatch} = useContext(AppContext);
     const navigate = useNavigate();
     const handleSubmission = (event) => {
         event.preventDefault();
@@ -76,21 +131,6 @@ const CreateProject = () => {
 
         postProject(dispatch, newProject, navigate)
     }
-
-    const status = [
-        "Planned ",
-        "Inception",
-        "Elaboration",
-        "Construction",
-        "Transition",
-        "Warranty",
-        "Closed"
-    ]
-
-    const typology = [
-        "Fixed Cost",
-        "Time and materials",
-    ]
 
     const sprintDuration = ['1', '2', '3', '4',]
 
@@ -125,26 +165,35 @@ const CreateProject = () => {
                                whenTyped={handleChange}
                     />
 
-                    <TextField className="textField"
-                               mandatory={false}
-                               label='Customer'
-                               name={'customerID'}
-                               whenTyped={handleChange}
-                    />
+                    <div className="dropDownList">
+                        <DropDownList
+                            mandatory={false}
+                            label='Customer'
+                            name={'customerID'}
+                            items={customerValues}
+                            onChange={handleCustomerChange}
+                        />
+                    </div>
 
-                    <TextField className="textField"
-                               mandatory={false}
-                               label='Business Sector'
-                               name={'businessSectorID'}
-                               whenTyped={handleChange}
-                    />
+                    <div className="dropDownList">
+                        <DropDownList
+                            mandatory={false}
+                            label='Typology'
+                            name={'typologyID'}
+                            items={typologyValues}
+                            onChange={handleTypologyChange}
+                        />
+                    </div>
 
-                    <TextField className="textField"
-                               mandatory={false}
-                               label='Typology'
-                               name={'typologyID'}
-                               whenTyped={handleChange}
-                    />
+                    <div className="dropDownList">
+                        <DropDownList
+                            mandatory={false}
+                            label='Business Sector'
+                            name={'businessSectorID'}
+                            items={sectorValues}
+                            onChange={handleSectorChange}
+                        />
+                    </div>
 
                     <div className="date">
                         <PickDate

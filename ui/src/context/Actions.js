@@ -1,76 +1,14 @@
 import {
-    fetchBacklogFromBackend,
+    fetchBacklogFromBackend, fetchBusinessSectorsFromBackend, fetchCustomersFromBackend,
     fetchProjectsFromBackend,
     fetchResourcesFromBackend, fetchSprintBacklogFromBackend,
-    fetchSprintsFromBackend, patchAddUserStoryToSprintBacklog,
+    fetchSprintsFromBackend, fetchTypologiesFromBackend, patchAddUserStoryToSprintBacklog,
     patchStatusSprintToBackend,
     postProjectToBackend,
     postResourceToBackend,
     postSprintToBackend,
     postUserStoryToBackend
 } from "../services/Service";
-
-export const CHANGE_TEXT = 'CHANGE_TEXT';
-export const ADD_USER_STORY = 'ADD_USER_STORY';
-export const  ADD_PROJECT = 'ADD_PROJECT';
-export const SET_START_DATE = 'SET_START_DATE'
-export const SET_END_DATE = 'SET_END_DATE'
-export const ADD_SPRINT = 'ADD_SPRINT'
-export const ADD_RESOURCE = 'ADD_RESOURCE'
-
-
-export function changeText(value) {
-    return {
-        type: CHANGE_TEXT,
-        payload: {
-            value: value
-        },
-    }
-}
-
-export const addUserStory = (dispatch, userStory) => {
-    dispatch ({
-        type: ADD_USER_STORY,
-        payload: userStory,
-    })
-};
-
-export const addProject = (dispatch, project) => {
-    dispatch(
-        {
-            type: ADD_PROJECT,
-            payload: project,
-        }
-    )
-}
-
-export const setStartDate = (startDate) => {
-    return {
-        type: SET_START_DATE,
-        payload: startDate,
-    }
-}
-
-export const setEndDate = (endDate) => {
-    return {
-        type: SET_END_DATE,
-        payload: endDate,
-    }
-}
-
-export const addSprint = (dispatch, sprint) => {
-    dispatch ({
-        type: ADD_SPRINT,
-        payload: sprint,
-    })
-}
-
-export const addResource = (dispatch, resource) => {
-    dispatch({
-        type: ADD_RESOURCE,
-        payload: resource,
-    })
-}
 
 // Fetch backlog actions
 export const FETCH_BACKLOG_STARTED = "FETCH_BACKLOG_STARTED"
@@ -189,6 +127,93 @@ export const fetchResources = (dispatch, projectCode) => {
         (response) => dispatch(fetchResourcesSuccess(response)),
         (errorMessage) => dispatch(fetchResourcesFailure(errorMessage)),
         projectCode
+    )
+}
+
+// Fetch customers actions
+export const FETCH_CUSTOMERS_STARTED = "FETCH_CUSTOMERS_STARTED"
+export const FETCH_CUSTOMERS_SUCCESS = "FETCH_CUSTOMERS_SUCCESS"
+export const FETCH_CUSTOMERS_ERROR = "FETCH_CUSTOMERS_ERROR"
+
+const fetchCustomersSuccess = (customers) => {
+    return {
+        type: FETCH_CUSTOMERS_SUCCESS,
+        payload: customers
+    }
+}
+
+const fetchCustomersFailure = (message) => {
+    return {
+        type: FETCH_CUSTOMERS_ERROR,
+        payload: message
+    }
+}
+
+export const fetchCustomers = (dispatch) => {
+    dispatch({
+        type: FETCH_CUSTOMERS_STARTED
+    })
+    fetchCustomersFromBackend(
+        (response) => dispatch(fetchCustomersSuccess(response)),
+        (errorMessage) => dispatch(fetchCustomersFailure(errorMessage))
+    )
+}
+
+// Fetch typologies actions
+export const FETCH_TYPOLOGIES_STARTED = "FETCH_TYPOLOGIES_STARTED"
+export const FETCH_TYPOLOGIES_SUCCESS = "FETCH_TYPOLOGIES_SUCCESS"
+export const FETCH_TYPOLOGIES_ERROR = "FETCH_TYPOLOGIES_ERROR"
+
+const fetchTypologiesSuccess = (typologies) => {
+    return {
+        type: FETCH_TYPOLOGIES_SUCCESS,
+        payload: typologies
+    }
+}
+
+const fetchTypologiesFailure = (message) => {
+    return {
+        type: FETCH_TYPOLOGIES_ERROR,
+        payload: message
+    }
+}
+
+export const fetchTypologies = (dispatch) => {
+    dispatch({
+        type: FETCH_TYPOLOGIES_STARTED
+    })
+    fetchTypologiesFromBackend(
+        (response) => dispatch(fetchTypologiesSuccess(response)),
+        (errorMessage) => dispatch(fetchTypologiesFailure(errorMessage))
+    )
+}
+
+// Fetch business sectors actions
+export const FETCH_BUSINESSSECTORS_STARTED = "FETCH_BUSINESSSECTORS_STARTED"
+export const FETCH_BUSINESSSECTORS_SUCCESS = "FETCH_BUSINESSSECTORS_SUCCESS"
+export const FETCH_BUSINESSSECTORS_ERROR = "FETCH_BUSINESSSECTORS_ERROR"
+
+const fetchBusinessSectorsSuccess = (businessSectors) => {
+    return {
+        type: FETCH_BUSINESSSECTORS_SUCCESS,
+        payload: businessSectors
+    }
+}
+
+const fetchBusinessSectorsFailure = (message) => {
+    return {
+        type: FETCH_BUSINESSSECTORS_ERROR,
+        payload: message
+    }
+}
+
+export const fetchBusinessSectors = (dispatch) => {
+    dispatch({
+        type: FETCH_BUSINESSSECTORS_STARTED
+    })
+    fetchBusinessSectorsFromBackend(
+        (response) => dispatch(fetchBusinessSectorsSuccess(response)),
+        (errorMessage) => dispatch(fetchBusinessSectorsFailure(errorMessage))
     )
 }
 

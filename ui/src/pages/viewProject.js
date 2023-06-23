@@ -13,19 +13,31 @@ const ViewProject = () => {
     const { id } = useParams();
     const { state } = useContext(AppContext);
 
-    const project = state.projects.data.find((project) => project.projectCode === id);
+    let project = state.projects.data.find((project) => project.projectCode === id);
+
+    const customers = state.customers.data;
+    const customer = customers.find((customer) => customer.customerID === project.customerID);
+    project = {...project, customer : customer.customerDesignation}
+
+    const typologies = state.typologies.data;
+    const typology = typologies.find((typology) => typology.typologyId === project.typologyID);
+    project = {...project, typology : typology.typologyDesignation};
+
+    const sectors = state.businessSectors.data;
+    const sector = sectors.find((sector) => sector.businessSectorId === project.businessSectorID);
+    project = {...project, businessSector : sector.businessSectorDesignation};
 
     // Define column labels and their corresponding attributes
     const columnLabels = [
         { label: "Name:", attribute: "projectName" },
         { label: "Code:", attribute: "projectCode" },
         { label: "Description:", attribute: "description" },
-        { label: "Customer:", attribute: "customerID" },
+        { label: "Customer:", attribute: "customer" },
         { label: "Start date:", attribute: "startDate" },
         { label: "End date:", attribute: "endDate" },
         { label: "Status:", attribute: "projectStatus" },
-        { label: "Typology:", attribute: "typologyID" },
-        { label: "Business Sector:", attribute: "businessSectorID"},
+        { label: "Typology:", attribute: "typology" },
+        { label: "Business Sector:", attribute: "businessSector"},
         { label: "Sprint duration (in weeks):", attribute: "sprintDuration" },
         { label: "Number of planned sprints:", attribute: "projectNumberOfPlannedSprints" },
         { label: "Budget:", attribute: "projectBudget" },

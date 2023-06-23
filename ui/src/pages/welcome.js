@@ -1,8 +1,20 @@
 import Header from "../components/header";
 import Button from "../components/button";
 import { Link } from "react-router-dom";
+import {useContext, useEffect} from "react";
+import {fetchBusinessSectors, fetchCustomers, fetchTypologies} from "../context/Actions";
+import AppContext from "../context/AppContext";
 
 const Welcome = () => {
+
+    const {dispatch} = useContext(AppContext);
+
+    useEffect(() => {
+        fetchCustomers(dispatch);
+        fetchTypologies(dispatch);
+        fetchBusinessSectors(dispatch);
+    }, []);
+
     return (
         <div className="welcome-page">
             <div className="title-welcome-container">
